@@ -1,13 +1,16 @@
 import React from "react";
+import '../stylesheets/home.css'
 
-class Home extends React.Component {
-  render() {
+function Home() {
     return (
       <div>
-        <h1>Home Page</h1>
+        
+        <section className="hero"></section>
+        <h2>Home</h2> 
+
       </div>
     );
-  }
+  
 }
 
 export default Home;
