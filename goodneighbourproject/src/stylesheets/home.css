@@ -108,7 +108,7 @@ p{
 .hero{
   height: 35em;
   width: 100%;
-  background-image: url(hero.jpg);
+  background-image: url(../images/hero.jpg);
   background-size: cover;
 }
 
@@ -170,7 +170,7 @@ p{
   clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%);
   height: 100%;
   width: 100%;
-  background-image: url(who-we-are.jpg);
+  background-image: url(../images/who-we-are.jpg);
   background-size: cover;
 }
 
@@ -180,7 +180,7 @@ p{
   height: 100%;
   background: red;
   width: 100%;
-  background-image: url(what-we-do.jpg);
+  background-image: url(../images/what-we-do.jpg);
   background-size: cover; 
 }
 
