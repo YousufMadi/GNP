@@ -1,10 +1,15 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Media, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, Button } from 'reactstrap';
+import { Container, Row, Col, Collapse, Button, CardBody, Card } from 'reactstrap';
 import NoPic from "../../images/noPhoto.png";
 
 import "./requestpost.css";
 
 const RequestPost = (props) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const openDiscription = () => setIsOpen(!isOpen);
+
+
+
   return (
     <div>
       <Container className="posted-request">
@@ -18,14 +23,27 @@ const RequestPost = (props) => {
             <Row>
               <Col>
                 Size: Small
-                </Col>
+        </Col>
               <Col>
                 Reimbursement: Cash
-                </Col>
+        </Col>
             </Row>
             <Row>
               <Col>
-                lalalalalal
+                <div>
+                  <Button className="description-button" onClick={openDiscription} color="primary" id={`description-${props.id}`} size="sm">
+                    Description
+                  </Button>
+                  <Collapse isOpen={isOpen}>
+                    <Card>
+                      <CardBody>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis
+                        similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed
+                        dignissimos esse fuga! Minus, alias.
+                      </CardBody>
+                    </Card>
+                  </Collapse>
+                </div>
               </Col>
             </Row>
 

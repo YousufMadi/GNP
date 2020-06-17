@@ -5,18 +5,22 @@ import RequestAsk from "../RequestAsk/RequestAsk";
 import RequestPost from "../RequestPost/RequestPost";
 
 
-class RequestContainer extends React.Component {
-  render() {
-    return (
-      <div
-        className="container">
-        placeholder
-        <RequestAsk />
-        <RequestPost />
+const RequestContainer = () => {
 
-      </div>
-    );
-  }
+  const posts = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }];
+
+  return (
+    <div
+      className="container">
+      placeholder
+      <RequestAsk />
+
+      {posts.map((post, index) =>
+        <RequestPost key={index} id={post.id} />)}
+
+
+    </div>
+  );
 }
 
 export default RequestContainer;
