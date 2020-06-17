@@ -1,10 +1,11 @@
 import React from "react";
+import RequestTimeline from "./RequestTimeline/RequestTimeline";
 
 class Feed extends React.Component {
   render() {
     return (
       <div>
-        <h1>Feed Page</h1>
+        <RequestTimeline/>
       </div>
     );
   }

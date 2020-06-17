@@ -1,0 +1,9 @@
+.profile-pic{
+    border-radius: 50%;
+    width: 50%;
+    height: 50%;
+}
+
+.posted-request {
+  background-color: thistle;
+}
