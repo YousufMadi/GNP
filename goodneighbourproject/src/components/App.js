@@ -5,6 +5,8 @@ import Home from "./Home";
 import Feed from "./Feed";
 import history from "../history";
 
+import '../stylesheets/shared.css'
+
 class App extends React.Component {
   render() {
     return (
