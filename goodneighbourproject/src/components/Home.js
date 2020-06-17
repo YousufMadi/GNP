@@ -10,7 +10,7 @@ function Home() {
         <Navbar />
         <section className="hero"></section>
         <section className="mission">
-          <h2>Our Mission</h2>
+          <h3>Our Mission</h3>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit,
             sed do eiusmod tempor incididunt ut labore et dolore
