@@ -130,7 +130,7 @@ p{
 .counter{
   display: flex;
   text-align: center;
-  margin: 1.5em auto 2em;
+  margin: 0em auto 2em;
 
 }
 
@@ -148,7 +148,8 @@ p{
 .description{
   display: flex;
   height: 25em;
-  /*background-color: #ebebeb;*/
+  background-color: #f7f9fb;
+
 }
 
 .about{
@@ -204,7 +205,7 @@ p{
 .footer{
   margin-top: 2em; 
   height: 4em;
-  background-color: #ebebeb;
+  background-color: #f7f9fb;
   text-align: center;
 }
 
