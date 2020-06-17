@@ -10,14 +10,12 @@ import '../stylesheets/shared.css'
 class App extends React.Component {
   render() {
     return (
-      <div>
-        <Router history={history}>
-          <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/feed" exact component={Feed} />
-          </Switch>
-        </Router>
-      </div>
+      <Router history={history}>
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/feed" exact component={Feed} />
+        </Switch>
+      </Router>
     );
   }
 }
