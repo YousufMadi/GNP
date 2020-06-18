@@ -6,8 +6,6 @@ import Footer from "./Footer";
 function Home() {
     return (
       <div>
-        
-        <Navbar />
         <section className="hero"></section>
         <section className="mission">
           <h3>Our Mission</h3>
