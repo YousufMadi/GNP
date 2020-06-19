@@ -12,14 +12,29 @@ class Signup extends React.Component {
   }
 
   handleChange = (e) => {
+    const target = e.target;
+    const value = target.value;
+    const name = target.name;
+
     this.setState({
-      [e.target.id]: e.target.value
-    })
+      [name]: value
+    });
   }
 
   formSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state)
+    this.props.addUser(this.state.first_name,
+                       this.state.last_name,
+                       this.state.email,
+                       this.state.password);
+
+    this.setState({
+      first_name: "",
+      last_name: "",
+      email: "",
+      password: ""
+    })
+
   }
 
   render() {
@@ -27,19 +42,19 @@ class Signup extends React.Component {
       <div className="SignupFormContainer">
         <form className="SignupForm" onSubmit={this.formSubmit}>
           <div className="form-input">
-            <input id="first_name" type="text" 
+            <input name="first_name" type="text" 
                    placeholder="First Name" onChange={this.handleChange}></input>
           </div>
           <div className="form-input">
-            <input id="last_name" type="text"
+            <input name="last_name" type="text"
                    placeholder="Last Name" onChange={this.handleChange}></input>
           </div>
           <div className="form-input">
-            <input id="email" type="email"
+            <input name="email" type="email"
                    placeholder="Email" onChange={this.handleChange}></input>
           </div>
           <div className="form-input">
-            <input id="password" type="password" 
+            <input name="password" type="password" 
                    placeholder="Password" onChange={this.handleChange}></input>
           </div>
           <div>
