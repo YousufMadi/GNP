@@ -1,13 +1,20 @@
 import React from "react";
 
-import '../../stylesheets/shared.css'
+import '../../stylesheets/shared.css';
+import '../../stylesheets/login.css';
+
+const defaultState = {
+  // Fields
+  email: "",
+  password: "",
+
+  // Error message
+  error_msg: ""
+}
 
 class Login extends React.Component {
 
-  state = {
-    email: "",
-    password: ""
-  }
+  state = defaultState;
 
   handleChange = (e) => {
     const target = e.target;
@@ -19,10 +26,10 @@ class Login extends React.Component {
     });
   }
 
-  formSubmit = (e) => {
-    e.preventDefault();
+  validateForm = () => {
 
-    console.log(this.props.users)
+    let is_valid = true;
+    let error_msg = "";
 
     // Get the user object.
     let user = this.props.users.filter((u) => {
@@ -31,15 +38,28 @@ class Login extends React.Component {
 
     // If the user was not found.
     if(user.length != 1){
-      console.log('not found');
+      error_msg = "Email and password combination not found";
+      this.setState({error_msg});
+      is_valid = false;
     }else{
       console.log(user);
     }
 
-    this.setState({
-      email: "",
-      password: ""
-    })
+    return is_valid;
+
+  }
+
+  formSubmit = (e) => {
+    e.preventDefault();
+
+    console.log(this.props.users);
+
+    const form_valid = this.validateForm();
+
+    if(form_valid){
+      this.setState(defaultState);  
+      // TODO: Handle redirection.
+    }
 
   }
 
@@ -47,6 +67,7 @@ class Login extends React.Component {
     return (
       <div className="SignupFormContainer">
         <form className="SignupForm" onSubmit={this.formSubmit}>
+          <p className="error_msg">{this.state.error_msg}</p>
           <div className="form-input">
             <input name="email" type="email"
                    placeholder="Email" onChange={this.handleChange}></input>
