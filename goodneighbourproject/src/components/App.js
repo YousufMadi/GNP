@@ -6,6 +6,7 @@ import Feed from "./Feed";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import Signup from "./Auth/Signup";
+import Login from "./Auth/Login";
 import history from "../history";
 
 import '../stylesheets/shared.css';
@@ -71,6 +72,10 @@ class App extends React.Component {
             
             <Route exact path='/signup' render={() => 
                               (<Signup addUser={this.addUser}/>)}/>
+
+            <Route exact path='/login' render={() => 
+                              (<Login users={this.state.users}/>)}/>
+
           </Switch>
         <Footer />
       </BrowserRouter>
