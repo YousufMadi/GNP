@@ -37,7 +37,7 @@ class Login extends React.Component {
     });
 
     // If the user was not found.
-    if(user.length != 1){
+    if(user.length !== 1){
       error_msg = "Email and password combination not found";
       this.setState({error_msg});
       is_valid = false;
