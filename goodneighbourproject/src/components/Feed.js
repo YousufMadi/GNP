@@ -1,16 +1,16 @@
 import React from "react";
-
-import RequestTimeline from "./RequestTimeline/RequestTimeline";
 import Sidebar from "./Sidebar";
 
 import "../stylesheets/feed.css";
+import RequestTimeline from "./RequestTimeline/RequestTimeline";
 
 class Feed extends React.Component {
   render() {
     return (
       <>
-      <Sidebar />
-      <RequestTimeline/>
+        <Sidebar />
+        <RequestTimeline />
+
       </>
     );
   }
