@@ -81,6 +81,15 @@ p{
 
 /* END OF RESET */
 
+/* CONTENT CONTAINER */
+
+.contentContainer{
+  display: flex;
+  padding-top: 4em;
+  min-height: 85vh;
+
+}
+
 /* NAVBAR */
 .navbar{
   position: fixed;

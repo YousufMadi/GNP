@@ -3,8 +3,6 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import Home from "./Home";
 import Feed from "./Feed";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
 import Signup from "./Auth/Signup";
 import Login from "./Auth/Login";
 import history from "../history";
@@ -65,8 +63,8 @@ class App extends React.Component {
   render() {
     return (
       <BrowserRouter>
-      <Navbar />
           <Switch>
+
             <Route exact path="/" component={Home} />
             <Route exact path="/feed" component={Feed} />
             
@@ -77,7 +75,6 @@ class App extends React.Component {
                               (<Login users={this.state.users}/>)}/>
 
           </Switch>
-        <Footer />
       </BrowserRouter>
     );
   }
