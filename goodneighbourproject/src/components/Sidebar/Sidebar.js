@@ -124,7 +124,6 @@ class Sidebar extends React.Component {
     );
   }
   renderGoogleMap() {
-    console.log("test");
     return (
       <div id="google-maps-section" className="mt-2">
         <Map

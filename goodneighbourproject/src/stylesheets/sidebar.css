@@ -2,10 +2,11 @@
   margin: 0;
   top: 0;
   position: fixed;
+  z-index: 99;
   background-color: rgb(49,54,62);
   width: 315px;
   height: 100%;
-  box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);}
+  box-shadow: 5px 0 5px rgba(0, 0, 0, 0.2);}
 
   #brand-header{
     border-bottom: 2px solid rgba(255, 255, 255, 0.02);
