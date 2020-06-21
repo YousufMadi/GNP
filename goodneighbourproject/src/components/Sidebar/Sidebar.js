@@ -80,40 +80,43 @@ class Sidebar extends React.Component {
           ref={(input) => (this.filterTermInput = input)}
           placeholder="Search term"
         />
-        <select
-          className="form-control my-1"
-          onChange={(e) => this.handleDistanceChange(e)}
-        >
-          <option selected disabled value={null}>
-            Distance
-          </option>
-          <option value="1">{"< 1km"}</option>
-          <option value="5">{"< 5km"}</option>
-          <option value="20">{"< 20km"}</option>
-          <option value="20+">{"20+km"}</option>
-        </select>
-        <select
-          className="form-control"
-          onChange={(e) => this.handleSizeChange(e)}
-        >
-          <option selected disabled value={null}>
-            Size
-          </option>
-          <option value="small">Small</option>
-          <option value="medium">Medium</option>
-          <option value="large">Large</option>
-        </select>
-        <select
-          className="form-control"
-          onChange={(e) => this.handlePaymentChange(e)}
-        >
-          <option selected disabled value={null}>
-            Payment
-          </option>
-          <option value="cash">Cash</option>
-          <option value="etransfer">E-transfer</option>
-          <option value="cheque">Cheque</option>
-        </select>
+        <div id="filter-dropdowns">
+          <select
+            className="form-control my-1"
+            onChange={(e) => this.handleDistanceChange(e)}
+          >
+            <option selected disabled value={null}>
+              Distance
+            </option>
+            <option value="1">{"< 1km"}</option>
+            <option value="5">{"< 5km"}</option>
+            <option value="20">{"< 20km"}</option>
+            <option value="20+">{"20+km"}</option>
+          </select>
+          <select
+            className="form-control"
+            onChange={(e) => this.handleSizeChange(e)}
+          >
+            <option selected disabled value={null}>
+              Size
+            </option>
+            <option value="small">Small</option>
+            <option value="medium">Medium</option>
+            <option value="large">Large</option>
+          </select>
+          <select
+            className="form-control"
+            onChange={(e) => this.handlePaymentChange(e)}
+          >
+            <option selected disabled value={null}>
+              Payment
+            </option>
+            <option value="cash">Cash</option>
+            <option value="etransfer">E-transfer</option>
+            <option value="cheque">Cheque</option>
+          </select>
+        </div>
+
         <button className="btn" onClick={this.handleFilterClick}>
           Filter Requests
         </button>
@@ -121,10 +124,11 @@ class Sidebar extends React.Component {
     );
   }
   renderGoogleMap() {
+    console.log("test");
     return (
       <div id="google-maps-section" className="mt-2">
         <Map
-          googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places`}
+          googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyARRBVg-xS1QeLJMfoCSeQm5At4Q-E7luU`}
           loadingElement={<div style={{ height: "100%" }} />}
           containerElement={<div style={{ height: "100%" }} />}
           mapElement={<div style={{ height: "100%" }} />}

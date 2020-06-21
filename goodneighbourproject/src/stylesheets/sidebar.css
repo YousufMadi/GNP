@@ -51,28 +51,34 @@
     #filter-section input{
       font-size: small;
       color: rgba(255, 255, 255, 0.7);
-      background-color:rgba(0, 0, 0, 0.1) ;
+      background-color: rgba(255, 255, 255, 0.05);
       border: none;
       border-radius: 0;
       width:100%}
+    #filter-dropdowns{
+      text-align: center;
+      width: 100%;
+      margin:auto;}
     #filter-section select{
+      padding-left: 4px;
+      border-radius: 2px;
+      margin: 1px;
       font-size: small;
       color: rgba(255, 255, 255, 0.3);
       border: none;
-      border-radius: 0;
-      background-color:rgba(0, 0, 0, 0.1) ;
+      background-color: rgba(255, 255, 255, 0.05);
       display: inline-block;
-      width: 33.3%}
+      width: 32%}
       #filter-section select:hover{
         cursor: pointer;}
     #filter-section button{
       font-weight: 600;
       color:rgba(255, 255, 255, 0.6);
-      background-color:rgba(255, 255, 255, 0.2) ;
+      background-color:rgba(0, 0, 0, 0.1) ;
       width: 100%;}
       #filter-section button:hover{
         color:rgba(255, 255, 255, 0.8);
-        background-color:rgba(255, 255, 255, 0.3);}
+        background-color:rgba(0, 0, 0, 0.2) ;}
 
   #google-maps-section{
     margin: auto;
@@ -82,8 +88,8 @@
     margin-bottom: 0;
     position: absolute;
     bottom: 0;
-    height: 5.5%;
-    background-color: rgb(30, 33, 37);
+    height: 5%;
+    background-color: rgba(255, 255, 255, 0.05);
     width:100%;}
     #sidebar-actions .action{
       height: 100%;
@@ -91,12 +97,12 @@
       width: 50%;
       display: inline-block;}
       .action.settings-action a{
+        border-right: 0.5px solid rgba(255, 255, 255, 0.02);
         display: inline-block;
         width: 100%;
         cursor: pointer;
-        padding-top: 4.5px;
-        padding-bottom: 4.5px;
-        border:none;
+        padding-top: 3px;
+        padding-bottom: 4px;
         color: rgba(255, 255, 255, 0.2);
         background-color: transparent;
         transition: all 0.2s ease-out;}
@@ -106,9 +112,10 @@
         .action.settings-action a:visited{
           text-decoration: none;}
       .action.logout-action button{
-        padding-top: 4.5px;
-        padding-bottom: 4.5px;
-        border:none;
+        border: none;
+        border-left: 0.5px solid rgba(255, 255, 255, 0.02);
+        padding-top: 3px;
+        padding-bottom: 4px;
         color: rgba(255, 255, 255, 0.2);
         background-color: transparent;
         width: 100%;
