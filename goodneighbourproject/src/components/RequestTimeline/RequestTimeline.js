@@ -7,9 +7,8 @@ class RequestTimeline extends React.Component {
   render() {
     return (
       <div
-      className = "rightSide">
-          PLACEHOLDER [LOGO]
-          <RequestContainer/>
+        className="rightSide">
+        <RequestContainer />
       </div>
     );
   }

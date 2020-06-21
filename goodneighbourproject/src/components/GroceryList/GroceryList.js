@@ -10,7 +10,6 @@ class GroceryList extends React.Component {
 
         this.state = {
             items: [],
-            id: 0
         };
 
         this.addItem = this.addItem.bind(this);
