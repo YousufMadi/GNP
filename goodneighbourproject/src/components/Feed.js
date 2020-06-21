@@ -4,6 +4,7 @@ import RequestTimeline from "./RequestTimeline/RequestTimeline";
 import Sidebar from "./Sidebar/Sidebar";
 
 import "../stylesheets/feed.css";
+import RequestTimeline from "./RequestTimeline/RequestTimeline";
 
 class Feed extends React.Component {
   state = {
@@ -24,6 +25,7 @@ class Feed extends React.Component {
       <>
         <Sidebar changeFilterState={this.handleFilterChange} />
         <RequestTimeline filterState={this.state} />
+
       </>
     );
   }

@@ -18,15 +18,18 @@ const RequestPost = (props) => {
             <Row>
               <img className="profile-pic" src={NoPic} />
             </Row>
+            <Row>
+              {props.name}
+            </Row>
           </Col>
           <Col>
             <Row>
               <Col>
-                Size: Small
-        </Col>
+                Size: {props.size}
+              </Col>
               <Col>
-                Reimbursement: Cash
-        </Col>
+                Reimbursement: {props.reimbursement}
+              </Col>
             </Row>
             <Row>
               <Col>
