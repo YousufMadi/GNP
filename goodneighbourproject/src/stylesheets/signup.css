@@ -1,0 +1,15 @@
+/* Signup form container */
+
+.signupFormContainer{
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+
+/* Error message */
+
+.error_msg{
+  color: red;
+}
+

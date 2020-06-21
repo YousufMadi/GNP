@@ -1,13 +1,10 @@
 import React from "react";
 import '../stylesheets/home.css'
-import Navbar from "./Navbar";
-import Footer from "./Footer";
+
 
 function Home() {
     return (
       <div>
-        
-        <Navbar />
         <section className="hero"></section>
         <section className="mission">
           <h3>Our Mission</h3>
@@ -75,7 +72,6 @@ function Home() {
           </p>
         </section>
 
-        <Footer />
 
       </div>
     );
