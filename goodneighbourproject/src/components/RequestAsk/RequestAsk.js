@@ -3,6 +3,7 @@ import { Container, Row, Col, Media, ButtonDropdown, DropdownToggle, DropdownMen
 import NoPic from "../../images/noPhoto.png";
 
 import "./requestAsk.css";
+import GroceryList from "../GroceryList/GroceryList";
 
 const RequestAsk = () => {
   const [dropdownOpenSize, setOpenSize] = useState(false);
@@ -30,6 +31,9 @@ const RequestAsk = () => {
             </Row>
           </Col>
           <Col xs="Auto">
+            <Row>
+              <GroceryList />
+            </Row>
             <Row>
               <Col>
                 <ButtonDropdown isOpen={dropdownOpenSize} toggle={toggleSize} size="sm">
