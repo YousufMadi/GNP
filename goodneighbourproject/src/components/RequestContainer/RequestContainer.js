@@ -7,7 +7,8 @@ import RequestPost from "../RequestPost/RequestPost";
 
 const RequestContainer = () => {
 
-  const posts = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }];
+  const posts = [{ id: 1, name: "Yousuf", size: "Small", reimbursement: "Cash" },
+  { id: 2, name: "Adham", size: "Large", reimbursement: "cheque" }];
 
   return (
     <div
@@ -16,7 +17,7 @@ const RequestContainer = () => {
       <RequestAsk />
 
       {posts.map((post, index) =>
-        <RequestPost key={index} id={post.id} />)}
+        <RequestPost key={index} id={post.id} name={post.name} size={post.size} reimbursement={post.reimbursement} />)}
 
 
     </div>
