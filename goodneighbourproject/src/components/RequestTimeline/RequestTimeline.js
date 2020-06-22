@@ -2,6 +2,7 @@ import React from "react";
 
 import "./requestTimeline.css";
 import RequestPost from "../RequestPost/RequestPost";
+import RequestAsk from "../RequestAsk/RequestAsk";
 
 class RequestTimeline extends React.Component {
 
@@ -19,7 +20,7 @@ class RequestTimeline extends React.Component {
   render() {
     return (
         <div className="timeline">
-          {/*<RequestAsk />*/}
+          <RequestAsk />
 
           <div className="posts">
             {this.state.posts.map((post, index) =>

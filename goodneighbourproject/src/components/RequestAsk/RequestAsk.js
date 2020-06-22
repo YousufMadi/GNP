@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Media, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, Button } from 'reactstrap';
-import NoPic from "../../images/noPhoto.png";
 
 import "./requestAsk.css";
 import GroceryList from "../GroceryList/GroceryList";
@@ -22,63 +20,45 @@ const RequestAsk = () => {
     setFormValues(prevValue => ({ ...prevValue, [e.target.id]: e.target.value }));
   };
   return (
-    <div>
-      <Container className="askRequest">
-        <Row>
-          <Col xs="3">
-            <Row>
-              <img className="profile-pic-small" src={NoPic} />
-            </Row>
-          </Col>
-          <Col xs="Auto">
-            <Row>
-              <GroceryList />
-            </Row>
-            <Row>
-              <Col>
-                <ButtonDropdown isOpen={dropdownOpenSize} toggle={toggleSize} size="sm">
-                  <DropdownToggle caret>
-                    Size
-                </DropdownToggle>
-                  <DropdownMenu>
-                    <DropdownItem id="size" value="Small" onClick={onChange} >Small</DropdownItem>
-                    <DropdownItem id="size" value="Medium" onClick={onChange}>Medium</DropdownItem>
-                    <DropdownItem id="size" value="Large" onClick={onChange}>Large</DropdownItem>
-                  </DropdownMenu>
-                </ButtonDropdown>
-              </Col>
-              <Col>
-                <p>{formValues.size}</p>
-              </Col>
-              <Col>
-                <ButtonDropdown isOpen={dropdownOpenReimburse} toggle={toggleReimburse} size="sm">
-                  <DropdownToggle caret>
-                    Reimburse
-                </DropdownToggle>
-                  <DropdownMenu>
-                    <DropdownItem id="reimbursement" value="Cash" onClick={onChange}>Cash</DropdownItem>
-                    <DropdownItem id="reimbursement" value="E-Transfer" onClick={onChange}>E-Transfer</DropdownItem>
-                    <DropdownItem id="reimbursement" value="Cheque" onClick={onChange}>Cheque</DropdownItem>
-                  </DropdownMenu>
-                </ButtonDropdown>
-              </Col>
-              <Col>
-                <p>{formValues.reimbursement}</p>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Input type="textarea" id="descriptionInput" />
-              </Col>
-            </Row>
-            <Row>
-              <Col md={{ size: 2, offset: 10 }}>
-                <Button className="send-button" color="info" size="sm">SEND</Button>{' '}
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-      </Container>
+    <div className="new-request">
+      <div className="users-pic-name">
+        <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSf_Bf0-x44hsGqqcQwrTcNeLUSnYjlDuoql-hQHydDdBwxeCT2&usqp=CAU"
+            alt="profile-pic"
+          />
+      </div>
+
+      <div className="post-description">
+        <div className="size-price-selectors">
+
+          <select>
+            <option selected disabled value={null}>
+              Size
+            </option>
+            <option value="Small">{"Small"}</option>
+            <option value="Medium">{"Medium"}</option>
+            <option value="Large">{"Large"}</option>
+          </select>
+
+          <select>
+            <option selected disabled value={null}>
+              Reimburse
+            </option>
+            <option value="Cash">{"Cash"}</option>
+            <option value="E-Transfer">{"E-Transfer"}</option>
+            <option value="Cheque">{"Cheque"}</option>
+          </select>
+        </div>
+
+        <GroceryList />
+
+        <textarea className="new-post-description" placeholder="Enter a description..."></textarea>
+
+        <br/>
+
+        <button type="button" className="new-post-button">Create Request</button>
+        
+      </div>
     </div>
   );
 }
