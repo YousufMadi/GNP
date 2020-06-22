@@ -20,11 +20,12 @@ class Feed extends React.Component {
 
   render() {
     return (
-      <>
+      <div className="feedContainer">
         <Sidebar changeFilterState={this.handleFilterChange} />
-        <RequestTimeline filterState={this.state} />
+        {/*<RequestTimeline filterState={this.state} />*/}
+        <div className="removeThis"></div>
 
-      </>
+      </div>
     );
   }
 }

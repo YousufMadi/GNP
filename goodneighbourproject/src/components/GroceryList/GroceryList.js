@@ -1,7 +1,7 @@
 import React from "react";
 import "./groceryList.css";
 import GroceryItems from "./GroceryItems";
-import { Col, Row } from "reactstrap";
+// import { Col, Row } from "reactstrap";
 
 class GroceryList extends React.Component {
 

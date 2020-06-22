@@ -1,6 +1,5 @@
-.rightSide {
-    float: right;
-    width: 75%;
+/*.rightSide {
+    flex: 1;
     height: 100vh;
-    background-color: #DCDCDC;
-}
+    background-color: red;
+}*/

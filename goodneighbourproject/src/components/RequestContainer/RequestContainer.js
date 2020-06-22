@@ -3,7 +3,7 @@ import React from "react";
 import "./requestContainer.css";
 import RequestAsk from "../RequestAsk/RequestAsk";
 import RequestPost from "../RequestPost/RequestPost";
-import { Container } from "reactstrap";
+// import { Container } from "reactstrap";
 
 
 const RequestContainer = () => {
@@ -17,8 +17,7 @@ const RequestContainer = () => {
   { id: 2, name: "Adham", size: "Large", reimbursement: "cheque" }];
 
   return (
-    <Container
-      className="timeline">
+    <div className="timeline">
       <RequestAsk />
 
       <div className="posts">
@@ -26,7 +25,7 @@ const RequestContainer = () => {
           <RequestPost key={index} id={post.id} name={post.name} size={post.size} reimbursement={post.reimbursement} />)}
       </div>
 
-    </Container>
+    </div>
   );
 }
 

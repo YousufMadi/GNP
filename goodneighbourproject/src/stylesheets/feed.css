@@ -1,3 +1,8 @@
-html, body {
-  margin: 0;
+.feedContainer{
+  display: flex;
+}
+
+.removeThis{
+  background: red;
+  flex: 3;
 }
