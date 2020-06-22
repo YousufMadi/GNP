@@ -1,5 +1,5 @@
-/*.rightSide {
-    flex: 1;
+.rightSide {
+    flex: 3;
     height: 100vh;
-    background-color: red;
-}*/
+    background-color: #F5F5F5;
+}

@@ -1,15 +1,44 @@
-/*.profile-pic{
-    border-radius: 50%;
-    width: 50%;
-    height: 50%;
+
+/**/
+
+.posted-request{
+  width: 95%;
+  height: auto;
+  margin: 1em auto;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.posted-request {
-  background-color: #cce6ff;
-  margin-top: 0rem;
+.users-pic-name{
+  display: flex;
+  align-items: center;
 }
 
-.description-button {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}*/
+.users-pic-name img{
+  height: 5em;
+  margin: 0.5em;
+  width: 5em;
+  border-radius: 100px;
+}
+
+.users-pic-name p{
+  text-align: center;
+  font-size: 1.2em;
+  padding-left: 0.5em;
+}
+
+.post-description{
+  width: 100%;
+}
+
+.post-description p{
+  padding: 0.5em 0 0.5em 0.5em;
+  font-size: 1.2em;
+}
+
+.bold{
+  font-weight: bold;
+}

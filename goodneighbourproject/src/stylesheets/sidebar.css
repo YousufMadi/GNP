@@ -4,6 +4,8 @@
   height: auto;
   min-height: 100vh;
   color: #fff;
+  box-shadow: 0 8px 6px 6px black;
+  z-index: 10;
 }
 
 /* Profile header */
