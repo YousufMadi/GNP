@@ -1,5 +1,11 @@
-.rightSide {
-    flex: 3;
-    height: 100vh;
-    background-color: #F5F5F5;
+.timeline {
+  flex: 3;
+  height: 100vh;
+  background-color: #F5F5F5;
+  overflow: scroll;
+}
+
+.posts{
+  width: 95%;
+  margin: auto;
 }

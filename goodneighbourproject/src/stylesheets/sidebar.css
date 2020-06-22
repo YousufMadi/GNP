@@ -2,9 +2,8 @@
   background-color: #152238;
   flex: 1;
   height: auto;
-  min-height: 100vh;
   color: #fff;
-  box-shadow: 0 8px 6px 6px black;
+  box-shadow: 0 0px 10px 2px black;
   z-index: 10;
 }
 
