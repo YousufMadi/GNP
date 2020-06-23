@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Col, Row } from "reactstrap";
 
-class GroceryItems extends Component {
+class Items extends Component {
     constructor(props) {
         super(props);
 
@@ -17,8 +17,8 @@ class GroceryItems extends Component {
     }
 
     render() {
-        var groceryEntries = this.props.entries;
-        var listItems = groceryEntries.map(this.createTasks);
+        var itemEntries = this.props.entries;
+        var listItems = itemEntries.map(this.createTasks);
 
         return (
             <Row className="theList">
@@ -28,4 +28,4 @@ class GroceryItems extends Component {
     }
 };
 
-export default GroceryItems;
+export default Items;

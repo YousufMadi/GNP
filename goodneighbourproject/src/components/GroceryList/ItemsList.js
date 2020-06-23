@@ -1,9 +1,9 @@
 import React from "react";
 import "./groceryList.css";
-import GroceryItems from "./GroceryItems";
+import Items from "./Items";
 // import { Col, Row } from "reactstrap";
 
-class GroceryList extends React.Component {
+class ItemsList extends React.Component {
 
     constructor(props) {
         super(props);
@@ -48,7 +48,7 @@ class GroceryList extends React.Component {
 
     render() {
         return (
-            <div className="groceryListMain">
+            <div className="itemListMain">
                 <div className="header">
                     <form onSubmit={this.addItem}>
                         <input placeholder="enter item" ref={(a) => this._inputElement = a}>
@@ -56,11 +56,11 @@ class GroceryList extends React.Component {
                         <button type="submit">+</button>
                     </form>
                 </div>
-                <GroceryItems entries={this.state.items}
+                <Items entries={this.state.items}
                     delete={this.deleteItem} />
             </div>
         );
     }
 }
 
-export default GroceryList;
+export default ItemsList;

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import "./requestAsk.css";
-import GroceryList from "../GroceryList/GroceryList";
+import ItemsList from "../GroceryList/ItemsList";
 
 const RequestAsk = () => {
   const [dropdownOpenSize, setOpenSize] = useState(false);
@@ -23,22 +23,13 @@ const RequestAsk = () => {
     <div className="new-request">
       <div className="users-pic-name">
         <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSf_Bf0-x44hsGqqcQwrTcNeLUSnYjlDuoql-hQHydDdBwxeCT2&usqp=CAU"
-            alt="profile-pic"
-          />
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSf_Bf0-x44hsGqqcQwrTcNeLUSnYjlDuoql-hQHydDdBwxeCT2&usqp=CAU"
+          alt="profile-pic"
+        />
       </div>
 
       <div className="post-description">
         <div className="size-price-selectors">
-
-          <select>
-            <option selected disabled value={null}>
-              Size
-            </option>
-            <option value="Small">{"Small"}</option>
-            <option value="Medium">{"Medium"}</option>
-            <option value="Large">{"Large"}</option>
-          </select>
 
           <select>
             <option selected disabled value={null}>
@@ -50,14 +41,14 @@ const RequestAsk = () => {
           </select>
         </div>
 
-        <GroceryList />
+        <ItemsList />
 
         <textarea className="new-post-description" placeholder="Enter a description..."></textarea>
 
-        <br/>
+        <br />
 
         <button type="button" className="new-post-button">Create Request</button>
-        
+
       </div>
     </div>
   );
