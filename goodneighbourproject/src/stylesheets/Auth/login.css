@@ -1,3 +1,8 @@
 .error_msg{
   color: red;
 }
+
+.loginFormContainer{
+  display: flex;
+  justify-content: center;
+}

@@ -5,8 +5,8 @@ import Home from "./Home";
 import Feed from "./Feed";
 import Signup from "./Auth/Signup";
 import Login from "./Auth/Login";
+import Settings from "./Settings/Settings";
 import history from "../history";
-
 import '../stylesheets/shared.css';
 
 import {v4 as uuid} from "uuid"; 
@@ -73,6 +73,8 @@ class App extends React.Component {
 
             <Route exact path='/login' render={() => 
                               (<Login users={this.state.users}/>)}/>
+
+            <Route exact path="/settings" component={Settings} />
 
           </Switch>
       </BrowserRouter>
