@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import "./requestAsk.css";
+import "../../stylesheets/RequestTimeline/requestAsk.css";
 import ItemsList from "../GroceryList/ItemsList";
 
 class RequestAsk extends React.Component {

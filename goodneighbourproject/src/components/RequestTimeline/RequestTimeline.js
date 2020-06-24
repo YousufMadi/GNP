@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./requestTimeline.css";
+import "../../stylesheets/RequestTimeline/requestTimeline.css";
 import RequestPost from "../RequestPost/RequestPost";
 import RequestAsk from "../RequestAsk/RequestAsk";
 

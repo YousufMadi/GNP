@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import NoPic from "../../images/noPhoto.png";
 
-import "./requestpost.css";
+import "../../stylesheets/RequestTimeline/requestpost.css";
 
 const RequestPost = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,14 +11,14 @@ const RequestPost = (props) => {
 
   const sizeEstimate = () => {
     if (props.items.length <= 3) {
-      size = "Small"
+      size = "Small";
     } else if (props.items.length <= 8) {
-      size = "Medium"
+      size = "Medium";
     } else {
-      size = "Large"
+      size = "Large";
     }
-    return size
-  }
+    return size;
+  };
 
   return (
     <div className="posted-request">
@@ -31,17 +31,22 @@ const RequestPost = (props) => {
       </div>
 
       <div className="post-description">
-        <p><span className="bold">Size:</span> {sizeEstimate()}</p>
-        <p><span className="bold">Reimbursement:</span> {props.reimbursement}</p>
+        <p>
+          <span className="bold">Size:</span> {sizeEstimate()}
+        </p>
+        <p>
+          <span className="bold">Reimbursement:</span> {props.reimbursement}
+        </p>
         <p>
           <span className="bold">Description:</span> <br />
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis
-          similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed
-          dignissimos esse fuga! Minus, alias.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
+          magni, voluptas debitis similique porro a molestias consequuntur earum
+          odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus,
+          alias.
         </p>
       </div>
     </div>
   );
-}
+};
 
 export default RequestPost;

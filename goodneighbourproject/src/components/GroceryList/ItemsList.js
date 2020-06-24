@@ -1,5 +1,5 @@
 import React from "react";
-import "./groceryList.css";
+import "../../stylesheets/RequestTimeline/groceryList.css";
 import Items from "./Items";
 
 class ItemsList extends React.Component {

@@ -23,8 +23,6 @@ class Feed extends React.Component {
       <div className="feedContainer">
         <Sidebar changeFilterState={this.handleFilterChange} />
         <RequestTimeline filterState={this.state} />
-        {/*<div className="removeThis"></div>*/}
-
       </div>
     );
   }
