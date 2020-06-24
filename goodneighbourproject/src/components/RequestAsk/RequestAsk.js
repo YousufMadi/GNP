@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import "../../stylesheets/RequestTimeline/requestAsk.css";
 import ItemsList from "../GroceryList/ItemsList";
@@ -35,13 +35,20 @@ class RequestAsk extends React.Component {
         name: "Filler",
         reimbursement: this.state.formReimbursement,
         items: this.state.items,
+        description: this.state.formDescription,
       };
+      this.setState({
+        formDescription: null,
+        formReimbursement: null,
+        items: [],
+        dropdownOpenSize: false,
+        dropdownOpenReimburse: false,
+      });
       this.props.addPostToTimeline(newPost);
     }
   };
 
   render() {
-    console.log(this.state);
     return (
       <div className="new-request">
         <div className="users-pic-name">
@@ -51,28 +58,33 @@ class RequestAsk extends React.Component {
           />
         </div>
 
-        <div className="post-description">
-          <div className="size-price-selectors">
-            <select onChange={(e) => this.handleReimbursementChange(e)}>
-              <option selected disabled value={null}>
-                Reimburse
-              </option>
-              <option value="Cash">{"Cash"}</option>
-              <option value="E-Transfer">{"E-Transfer"}</option>
-              <option value="Cheque">{"Cheque"}</option>
-            </select>
-          </div>
-
-          <ItemsList handleItemsChange={this.handleItemsChange} />
-
+        <div id="new-post-detail">
           <textarea
+            value={this.state.formDescription}
             className="new-post-description"
-            placeholder="Enter a description..."
+            placeholder="Add more information here..."
             onChange={this.handleDescriptionChange}
           ></textarea>
-
+          <div id="new-post-information">
+            <ItemsList
+              handleItemsChange={this.handleItemsChange}
+              items={this.state.items}
+            />
+            <div id="pay-selector">
+              <select
+                className="form-new-post pay-select"
+                onChange={(e) => this.handleReimbursementChange(e)}
+              >
+                <option selected disabled value={null}>
+                  Reimbursement
+                </option>
+                <option value="Cash">{"Cash"}</option>
+                <option value="E-Transfer">{"E-Transfer"}</option>
+                <option value="Cheque">{"Cheque"}</option>
+              </select>
+            </div>
+          </div>
           <br />
-
           <button
             type="button"
             className="new-post-button"
@@ -85,62 +97,5 @@ class RequestAsk extends React.Component {
     );
   }
 }
-/*
-const RequestAsk = () => {
-  const [dropdownOpenSize, setOpenSize] = useState(false);
-  const toggleSize = () => setOpenSize(!dropdownOpenSize);
-
-  const [dropdownOpenReimburse, setOpenReimburse] = useState(false);
-  const toggleReimburse = () => setOpenReimburse(!dropdownOpenReimburse);
-
-  const [formValues, setFormValues] = useState({
-    size: null,
-    reimbursement: null,
-    description: null,
-  });
-
-  const onChange = (e) => {
-    setFormValues((prevValue) => ({
-      ...prevValue,
-      [e.target.id]: e.target.value,
-    }));
-  };
-  return (
-    <div className="new-request">
-      <div className="users-pic-name">
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSf_Bf0-x44hsGqqcQwrTcNeLUSnYjlDuoql-hQHydDdBwxeCT2&usqp=CAU"
-          alt="profile-pic"
-        />
-      </div>
-
-      <div className="post-description">
-        <div className="size-price-selectors">
-          <select>
-            <option selected disabled value={null}>
-              Reimburse
-            </option>
-            <option value="Cash">{"Cash"}</option>
-            <option value="E-Transfer">{"E-Transfer"}</option>
-            <option value="Cheque">{"Cheque"}</option>
-          </select>
-        </div>
-
-        <ItemsList />
-
-        <textarea
-          className="new-post-description"
-          placeholder="Enter a description..."
-        ></textarea>
-
-        <br />
-
-        <button type="button" className="new-post-button">
-          Create Request
-        </button>
-      </div>
-    </div>
-  );
-};*/
 
 export default RequestAsk;
