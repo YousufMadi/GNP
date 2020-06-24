@@ -1,86 +1,101 @@
-import React, { useState } from "react";
-import { Container, Row, Col, Media, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Input, Button } from 'reactstrap';
-import NoPic from "../../images/noPhoto.png";
+import React from "react";
 
-import "./requestAsk.css";
-import GroceryList from "../GroceryList/GroceryList";
+import "../../stylesheets/RequestTimeline/requestAsk.css";
+import ItemsList from "../GroceryList/ItemsList";
 
-const RequestAsk = () => {
-  const [dropdownOpenSize, setOpenSize] = useState(false);
-  const toggleSize = () => setOpenSize(!dropdownOpenSize)
-
-  const [dropdownOpenReimburse, setOpenReimburse] = useState(false);
-  const toggleReimburse = () => setOpenReimburse(!dropdownOpenReimburse)
-
-  const [formValues, setFormValues] = useState({
-    size: null,
-    reimbursement: null,
-    description: null
-  });
-
-  const onChange = (e) => {
-    setFormValues(prevValue => ({ ...prevValue, [e.target.id]: e.target.value }));
+class RequestAsk extends React.Component {
+  state = {
+    dropdownOpenSize: false,
+    dropdownOpenReimburse: false,
+    items: [],
+    formReimbursement: null,
+    formDescription: null,
   };
-  return (
-    <div>
-      <Container className="askRequest">
-        <Row>
-          <Col xs="3">
-            <Row>
-              <img className="profile-pic-small" src={NoPic} />
-            </Row>
-          </Col>
-          <Col xs="Auto">
-            <Row>
-              <GroceryList />
-            </Row>
-            <Row>
-              <Col>
-                <ButtonDropdown isOpen={dropdownOpenSize} toggle={toggleSize} size="sm">
-                  <DropdownToggle caret>
-                    Size
-                </DropdownToggle>
-                  <DropdownMenu>
-                    <DropdownItem id="size" value="Small" onClick={onChange} >Small</DropdownItem>
-                    <DropdownItem id="size" value="Medium" onClick={onChange}>Medium</DropdownItem>
-                    <DropdownItem id="size" value="Large" onClick={onChange}>Large</DropdownItem>
-                  </DropdownMenu>
-                </ButtonDropdown>
-              </Col>
-              <Col>
-                <p>{formValues.size}</p>
-              </Col>
-              <Col>
-                <ButtonDropdown isOpen={dropdownOpenReimburse} toggle={toggleReimburse} size="sm">
-                  <DropdownToggle caret>
-                    Reimburse
-                </DropdownToggle>
-                  <DropdownMenu>
-                    <DropdownItem id="reimbursement" value="Cash" onClick={onChange}>Cash</DropdownItem>
-                    <DropdownItem id="reimbursement" value="E-Transfer" onClick={onChange}>E-Transfer</DropdownItem>
-                    <DropdownItem id="reimbursement" value="Cheque" onClick={onChange}>Cheque</DropdownItem>
-                  </DropdownMenu>
-                </ButtonDropdown>
-              </Col>
-              <Col>
-                <p>{formValues.reimbursement}</p>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Input type="textarea" id="descriptionInput" />
-              </Col>
-            </Row>
-            <Row>
-              <Col md={{ size: 2, offset: 10 }}>
-                <Button className="send-button" color="info" size="sm">SEND</Button>{' '}
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-      </Container>
-    </div>
-  );
+
+  toggleSize() {
+    this.setState({ dropdownOpenSize: !this.state.dropdownOpenSize });
+  }
+  toggleReimburse() {
+    this.setState({ dropdownOpenReimburse: !this.state.dropdownOpenReimburse });
+  }
+  handleItemsChange = (items) => {
+    this.setState({ items: items });
+  };
+  handleReimbursementChange = (e) => {
+    this.setState({ formReimbursement: e.target.value });
+  };
+  handleDescriptionChange = (e) => {
+    this.setState({ formDescription: e.target.value });
+  };
+  handleCreateRequest = (e) => {
+    e.preventDefault();
+    if (this.state.formReimbursement !== null && this.state.items.length > 0) {
+      const newPost = {
+        id: 5,
+        name: "Filler",
+        reimbursement: this.state.formReimbursement,
+        items: this.state.items,
+        description: this.state.formDescription,
+      };
+      this.setState({
+        formDescription: null,
+        formReimbursement: null,
+        items: [],
+        dropdownOpenSize: false,
+        dropdownOpenReimburse: false,
+      });
+      this.props.addPostToTimeline(newPost);
+    }
+  };
+
+  render() {
+    return (
+      <div className="new-request">
+        <div className="users-pic-name">
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSf_Bf0-x44hsGqqcQwrTcNeLUSnYjlDuoql-hQHydDdBwxeCT2&usqp=CAU"
+            alt="profile-pic"
+          />
+        </div>
+
+        <div id="new-post-detail">
+          <textarea
+            value={this.state.formDescription}
+            className="new-post-description"
+            placeholder="Add more information here..."
+            onChange={this.handleDescriptionChange}
+          ></textarea>
+          <div id="new-post-information">
+            <ItemsList
+              handleItemsChange={this.handleItemsChange}
+              items={this.state.items}
+            />
+            <div id="pay-selector">
+              <select
+                className="form-new-post pay-select"
+                onChange={(e) => this.handleReimbursementChange(e)}
+              >
+                <option selected disabled value={null}>
+                  Reimbursement
+                </option>
+                <option value="Cash">{"Cash"}</option>
+                <option value="E-Transfer">{"E-Transfer"}</option>
+                <option value="Cheque">{"Cheque"}</option>
+              </select>
+            </div>
+          </div>
+          <br />
+          <button
+            type="button"
+            className="new-post-button"
+            onClick={this.handleCreateRequest}
+          >
+            Create Request
+          </button>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default RequestAsk;

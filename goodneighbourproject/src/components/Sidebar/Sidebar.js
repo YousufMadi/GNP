@@ -33,58 +33,30 @@ class Sidebar extends React.Component {
   };
 
   /* Render Functions */
-  renderBrandHeader() {
-    return (
-      <div id="brand-header" className="mt-2 ml-1 mr-2">
-        <label id="brand-label" className="py-2">
-          Good Neighbour Project
-        </label>
-        <Link to="/" id="home-nav" className="px-3 py-2">
-          <i className="fas fa-home"></i>
-        </Link>
-      </div>
-    );
-  }
 
   renderProfile() {
     return (
-      <div id="profile-section" className="mt-1 pb-3">
-        <div id="profile-img-area" className="ml-4">
-          <img
+      <div className="profile-header">
+        <img
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSf_Bf0-x44hsGqqcQwrTcNeLUSnYjlDuoql-hQHydDdBwxeCT2&usqp=CAU"
             alt="profile"
           ></img>
-        </div>
-        <div id="profile-info-area" className="ml-2">
-          <label id="profile-info-name" className="mt-2">
-            John Doe
-          </label>
-          <label id="rating-label">Standing</label>
-          <label id="rating-stars">
-            <i className="fas fa-star"></i>
-            <i className="fas fa-star"></i>
-            <i className="fas fa-star"></i>
-            <i className="fas fa-star"></i>
-            <i className="fas fa-star"></i>
-          </label>
+        <div className="profile-info">
+          <p>Robert Lore</p>
+          <p>*****</p>
         </div>
       </div>
     );
   }
   renderFilter() {
     return (
-      <div id="filter-section" className="mx-2 mt-1">
-        <input
-          className="form-control"
-          type="text"
-          ref={(input) => (this.filterTermInput = input)}
-          placeholder="Search term"
-        />
-        <div id="filter-dropdowns">
-          <select
-            className="form-control my-1"
-            onChange={(e) => this.handleDistanceChange(e)}
-          >
+      <div className="filter-section">
+        <input type="text" ref={(input) => (this.filterTermInput = input)}
+               placeholder="Search term"/>
+
+        <div className="dropdown-filters">
+
+          <select onChange={(e) => this.handleDistanceChange(e)}>
             <option selected disabled value={null}>
               Distance
             </option>
@@ -93,10 +65,8 @@ class Sidebar extends React.Component {
             <option value="20">{"< 20km"}</option>
             <option value="20+">{"20+km"}</option>
           </select>
-          <select
-            className="form-control"
-            onChange={(e) => this.handleSizeChange(e)}
-          >
+
+          <select onChange={(e) => this.handleSizeChange(e)}>
             <option selected disabled value={null}>
               Size
             </option>
@@ -104,10 +74,8 @@ class Sidebar extends React.Component {
             <option value="medium">Medium</option>
             <option value="large">Large</option>
           </select>
-          <select
-            className="form-control"
-            onChange={(e) => this.handlePaymentChange(e)}
-          >
+
+          <select onChange={(e) => this.handlePaymentChange(e)}>
             <option selected disabled value={null}>
               Payment
             </option>
@@ -115,9 +83,10 @@ class Sidebar extends React.Component {
             <option value="etransfer">E-transfer</option>
             <option value="cheque">Cheque</option>
           </select>
+
         </div>
 
-        <button className="btn" onClick={this.handleFilterClick}>
+        <button type="button" className="filter-button" onClick={this.handleFilterClick}>
           Filter Requests
         </button>
       </div>
@@ -125,7 +94,7 @@ class Sidebar extends React.Component {
   }
   renderGoogleMap() {
     return (
-      <div id="google-maps-section" className="mt-2">
+      <div className="google-maps-section">
         <Map
           googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyARRBVg-xS1QeLJMfoCSeQm5At4Q-E7luU`}
           loadingElement={<div style={{ height: "100%" }} />}
@@ -135,30 +104,13 @@ class Sidebar extends React.Component {
       </div>
     );
   }
-  renderFooter() {
-    return (
-      <div id="sidebar-actions">
-        <div className="action settings-action">
-          <Link to="/settings">
-            <i className="fas fa-cog"></i>
-          </Link>
-        </div>
-        <div className="action logout-action">
-          <button>
-            <i className="fas fa-power-off"></i>
-          </button>
-        </div>
-      </div>
-    );
-  }
+  
   render() {
     return (
-      <div id="sidebar">
-        {this.renderBrandHeader()}
+      <div className="sidebar">
         {this.renderProfile()}
         {this.renderFilter()}
         {this.renderGoogleMap()}
-        {this.renderFooter()}
       </div>
     );
   }

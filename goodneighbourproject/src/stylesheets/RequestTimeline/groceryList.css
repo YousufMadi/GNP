@@ -1,20 +1,16 @@
-body {
-    padding: 50px;
-    background-color: #66CCFF;
-    font-family: sans-serif;
-  }
+/*
   #container {
     display: flex;
     justify-content: center;
   }
 
-  .groceryListMain .header input {
+  .itemListMain .header input {
     padding: 10px;
     font-size: 16px;
     border: 2px solid #FFF;
     width: 165px;
   }
-  .groceryListMain .header button {
+  .itemListMain .header button {
     padding: 10px;
     font-size: 16px;
     margin: 10px;
@@ -24,17 +20,17 @@ body {
     border: 2px solid #0066FF;
     border-radius: 3px;
   }
-  .groceryListMain .header button:hover {
+  .itemListMain .header button:hover {
     background-color: #003399;
     border: 2px solid #003399;
     cursor: pointer;
   }
-  .groceryListMain .theList {
+  .itemListMain .theList {
     list-style: none;
     padding-left: 0;
     width: 750px;
   } 
-  .groceryListMain .theList li {
+  .itemListMain .theList li {
     color: #333;
     background-color: rgba(255,255,255,.5);
     padding: 5px;
@@ -59,4 +55,4 @@ body {
 
   ul.theList {
     padding: 0;
-  }
+  }*/

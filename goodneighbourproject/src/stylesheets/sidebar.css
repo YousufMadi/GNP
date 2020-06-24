@@ -1,126 +1,77 @@
-#sidebar{
-  margin: 0;
-  top: 0;
+.sidebar{
   position: fixed;
-  z-index: 99;
-  background-color: rgb(49,54,62);
-  width: 315px;
+  width:25%;
+  background-color: #152238;
+  height: auto;
+  color: #fff;
+  box-shadow: 0 0px 10px 2px black;
+  z-index: 10;
+}
+
+/* Profile header */
+
+.profile-header{
+  width: 50%;
+  margin: 1em auto;
+}
+
+.profile-header img{
   height: 100%;
-  box-shadow: 5px 0 5px rgba(0, 0, 0, 0.2);}
+  width: 100%;
+  border-radius: 50px;
+}
 
-  #brand-header{
-    border-bottom: 2px solid rgba(255, 255, 255, 0.02);
-    background-color: rgb(50,55,63);
-    color: rgba(255, 255, 255, 0.7);}
-    #brand-label{
-      font-size: large;
-      text-align: center;
-      width: 70%;}
-    #home-nav{
-      border-radius: 5px;
-      float:right;
-      color: rgba(255, 255, 255, 0.7);
-      transition: all 0.2s ease-out;}
-      #home-nav:hover{
-        color: rgba(255, 255, 255, 0.9);
-        background-color: rgba(255, 255, 255, 0.05);}
-  
-  #profile-section{
-    border-bottom: 2px solid rgba(255, 255, 255, 0.02);}
-    #profile-section div{
-      display: inline-block;}
-    #profile-section img{
-      border-radius: 5px;
-      width: 89px;}
-    #profile-info-area label{
-      margin-bottom: 0;
-      width: 100%;
-      display: block;}
-      #profile-info-name{
-        font-weight: 200;
-        color: rgba(255, 255, 255, 0.7);}
-      #rating-label{
-        color: rgba(255, 255, 255, 0.4);
-        font-size: 11px;
-        font-weight: 600;}
-      #rating-stars{
-        font-size: small;
-        color: rgba(255, 255, 255, 0.4);}
+.profile-info{
+  text-align: center;
+}
 
-  #filter-section{
-    margin: auto;}
-    #filter-section input{
-      font-size: small;
-      color: rgba(255, 255, 255, 0.7);
-      background-color: rgba(255, 255, 255, 0.05);
-      border: none;
-      border-radius: 0;
-      width:100%}
-    #filter-dropdowns{
-      text-align: center;
-      width: 100%;
-      margin:auto;}
-    #filter-section select{
-      padding-left: 4px;
-      border-radius: 2px;
-      margin: 1px;
-      font-size: small;
-      color: rgba(255, 255, 255, 0.3);
-      border: none;
-      background-color: rgba(255, 255, 255, 0.05);
-      display: inline-block;
-      width: 32%}
-      #filter-section select:hover{
-        cursor: pointer;}
-    #filter-section button{
-      font-weight: 600;
-      color:rgba(255, 255, 255, 0.6);
-      background-color:rgba(0, 0, 0, 0.1) ;
-      width: 100%;}
-      #filter-section button:hover{
-        color:rgba(255, 255, 255, 0.8);
-        background-color:rgba(0, 0, 0, 0.2) ;}
+/* Filter section */
+.filter-section{
+  width: 90%;
+  margin: auto;
+}
 
-  #google-maps-section{
-    margin: auto;
-    width: 95%;
-    height: 42%;}
-  #sidebar-actions{
-    margin-bottom: 0;
-    position: absolute;
-    bottom: 0;
-    height: 5%;
-    background-color: rgba(255, 255, 255, 0.05);
-    width:100%;}
-    #sidebar-actions .action{
-      height: 100%;
-      text-align: center;
-      width: 50%;
-      display: inline-block;}
-      .action.settings-action a{
-        border-right: 0.5px solid rgba(255, 255, 255, 0.02);
-        display: inline-block;
-        width: 100%;
-        cursor: pointer;
-        padding-top: 3px;
-        padding-bottom: 4px;
-        color: rgba(255, 255, 255, 0.2);
-        background-color: transparent;
-        transition: all 0.2s ease-out;}
-        .action.settings-action a:hover{
-          color: rgba(255, 255, 255, 0.7);
-          background-color:rgba(255, 255, 255, 0.05);}
-        .action.settings-action a:visited{
-          text-decoration: none;}
-      .action.logout-action button{
-        border: none;
-        border-left: 0.5px solid rgba(255, 255, 255, 0.02);
-        padding-top: 3px;
-        padding-bottom: 4px;
-        color: rgba(255, 255, 255, 0.2);
-        background-color: transparent;
-        width: 100%;
-        transition: all 0.2s ease-out;}
-        .action.logout-action button:hover{
-          color: rgba(255, 255, 255, 0.7);
-          background-color:rgba(255, 255, 255, 0.05);}
+.filter-section input{
+  width: 100%;
+  height: 2em;
+  margin: auto auto 1em;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.dropdown-filters{
+  display: flex;
+  width: 100%;
+  color: #fff;
+}
+
+.dropdown-filters select{
+  flex: 1;
+  height: 2em;
+  border-radius: 5px;
+  background-color: #152238;
+  color: white;
+}
+
+.filter-button{
+  margin-top: 1em;
+  height: 3em;
+  border-radius: 100px;
+  width: 100%;
+  cursor: pointer;
+  background-color: #565656;
+  color: #fff;
+  border: 1px solid black;
+}
+
+.filter-button:hover{
+  opacity: 0.8;
+
+}
+
+/* Google Maps */
+.google-maps-section{
+  margin: 1em auto;
+  height: 20em;
+  width: 95%;
+}

@@ -1,0 +1,12 @@
+.timeline {
+  margin-left: 25%;
+  width: 75%;
+  flex: 3;
+  height: 100%;
+  background-color: #F5F5F5;
+}
+
+.posts{
+  width: 95%;
+  margin: auto;
+}

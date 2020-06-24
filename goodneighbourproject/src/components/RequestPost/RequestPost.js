@@ -1,61 +1,54 @@
-import React, { useState } from "react";
-import { Container, Row, Col, Collapse, Button, CardBody, Card } from 'reactstrap';
-import NoPic from "../../images/noPhoto.png";
+import React from "react";
 
-import "./requestpost.css";
+import "../../stylesheets/RequestTimeline/requestpost.css";
 
-const RequestPost = (props) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const openDiscription = () => setIsOpen(!isOpen);
+class RequestPost extends React.Component {
+  sizeEstimate = () => {
+    let size = null;
+    if (this.props.post.items.length <= 3) {
+      size = "Small";
+    } else if (this.props.post.items.length <= 8) {
+      size = "Medium";
+    } else {
+      size = "Large";
+    }
+    return size;
+  };
+  renderItems() {
+    return this.props.post.items.map((item) => {
+      return <li className="request-item">{item}</li>;
+    });
+  }
+  render() {
+    return (
+      <div className="posted-request">
+        <div className="users-pic-name">
+          <img
+            className="post-user-pic"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSf_Bf0-x44hsGqqcQwrTcNeLUSnYjlDuoql-hQHydDdBwxeCT2&usqp=CAU"
+            alt="profile-pic"
+          />
+          <label className="post-user-title">
+            <span className="post-user-name">{this.props.post.name}</span>{" "}
+            <span className="post-user-payment">
+              is paying by{" "}
+              <span className="payment-type">
+                {this.props.post.reimbursement}
+              </span>
+            </span>
+          </label>
+        </div>
 
-
-
-  return (
-    <div>
-      <Container className="posted-request">
-        <Row>
-          <Col xs="3">
-            <Row>
-              <img className="profile-pic" src={NoPic} />
-            </Row>
-            <Row>
-              {props.name}
-            </Row>
-          </Col>
-          <Col>
-            <Row>
-              <Col>
-                Size: {props.size}
-              </Col>
-              <Col>
-                Reimbursement: {props.reimbursement}
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <div>
-                  <Button className="description-button" onClick={openDiscription} color="primary" id={`description-${props.id}`} size="sm">
-                    Description
-                  </Button>
-                  <Collapse isOpen={isOpen}>
-                    <Card>
-                      <CardBody>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis
-                        similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed
-                        dignissimos esse fuga! Minus, alias.
-                      </CardBody>
-                    </Card>
-                  </Collapse>
-                </div>
-              </Col>
-            </Row>
-
-          </Col>
-
-        </Row>
-      </Container>
-    </div>
-  );
+        <div className="post-description">
+          <ul className="request-items-list">{this.renderItems()}</ul>
+          <p className="additional-information">
+            <label className="more-info">Additional Information</label>
+            {this.props.post.description}
+          </p>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default RequestPost;
