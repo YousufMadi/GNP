@@ -1,7 +1,7 @@
 import React from "react";
 
-import '../../stylesheets/shared.css';
-import '../../stylesheets/login.css';
+import "../../stylesheets/shared.css";
+import "../../stylesheets/Auth/login.css";
 
 const defaultState = {
   // Fields
@@ -9,11 +9,10 @@ const defaultState = {
   password: "",
 
   // Error message
-  error_msg: ""
-}
+  error_msg: "",
+};
 
 class Login extends React.Component {
-
   state = defaultState;
 
   handleChange = (e) => {
@@ -22,12 +21,11 @@ class Login extends React.Component {
     const name = target.name;
 
     this.setState({
-      [name]: value
+      [name]: value,
     });
-  }
+  };
 
   validateForm = () => {
-
     let is_valid = true;
     let error_msg = "";
 
@@ -37,17 +35,16 @@ class Login extends React.Component {
     });
 
     // If the user was not found.
-    if(user.length !== 1){
+    if (user.length !== 1) {
       error_msg = "Email and password combination not found";
-      this.setState({error_msg});
+      this.setState({ error_msg });
       is_valid = false;
-    }else{
+    } else {
       console.log(user);
     }
 
     return is_valid;
-
-  }
+  };
 
   formSubmit = (e) => {
     e.preventDefault();
@@ -56,12 +53,11 @@ class Login extends React.Component {
 
     const form_valid = this.validateForm();
 
-    if(form_valid){
-      this.setState(defaultState);  
+    if (form_valid) {
+      this.setState(defaultState);
       // TODO: Handle redirection.
     }
-
-  }
+  };
 
   render() {
     return (
@@ -69,15 +65,25 @@ class Login extends React.Component {
         <form className="SignupForm" onSubmit={this.formSubmit}>
           <p className="error_msg">{this.state.error_msg}</p>
           <div className="form-input">
-            <input name="email" type="email"
-                   placeholder="Email" onChange={this.handleChange}></input>
+            <input
+              name="email"
+              type="email"
+              placeholder="Email"
+              onChange={this.handleChange}
+            ></input>
           </div>
           <div className="form-input">
-            <input name="password" type="password" 
-                   placeholder="Password" onChange={this.handleChange}></input>
+            <input
+              name="password"
+              type="password"
+              placeholder="Password"
+              onChange={this.handleChange}
+            ></input>
           </div>
           <div>
-            <button id="submit" type="button" onSubmit={this.formSubmit}>Submit</button>
+            <button id="submit" type="button" onSubmit={this.formSubmit}>
+              Submit
+            </button>
           </div>
         </form>
       </div>
