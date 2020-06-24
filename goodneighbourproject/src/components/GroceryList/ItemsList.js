@@ -20,9 +20,14 @@ class ItemsList extends React.Component {
           items: prevState.items.concat(newItem),
         };
       });
-
+      const itemListWithoutKey = this.state.items.map((item) => {
+        return item.text;
+      });
+      this.props.handleItemsChange([
+        ...itemListWithoutKey,
+        this._inputElement.value,
+      ]);
       this._inputElement.value = "";
-      this.props.handleItemsChange([...this.state.items, newItem]);
     }
   };
 
@@ -42,11 +47,14 @@ class ItemsList extends React.Component {
       <div className="itemListMain">
         <div className="header">
           <form onSubmit={this.addItem}>
+            <button id="add-item-btn" type="submit">
+              Add Item
+            </button>
             <input
-              placeholder="enter item"
+              className="form-new-post item-input"
+              placeholder="Enter an item"
               ref={(a) => (this._inputElement = a)}
             ></input>
-            <button type="submit">+</button>
           </form>
         </div>
         <Items entries={this.state.items} delete={this.deleteItem} />
