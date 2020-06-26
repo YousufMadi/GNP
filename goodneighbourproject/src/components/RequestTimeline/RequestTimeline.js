@@ -126,6 +126,7 @@ class RequestTimeline extends React.Component {
   }
 
   render() {
+
     if (this.state.filteredPosts != null) {
       const { posts, currentPage, postsPerPage } = this.state;
       const filteredPosts = this.filterPosts(posts);

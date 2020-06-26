@@ -81,6 +81,7 @@ class Signup extends React.Component {
     e.preventDefault();
     const form_valid = this.validateForm();
 
+
     if (form_valid) {
       this.props.addUser(
         this.state.first_name,
