@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "../Navbar";
-
+import { Redirect } from "react-router-dom";
 import "../../stylesheets/shared.css";
 import "../../stylesheets/auth-forms.css";
 import signupPic from "./signup.svg";
@@ -94,13 +94,16 @@ class Signup extends React.Component {
   };
 
   render() {
+    if (this.props.currentUser) {
+      return <Redirect to="/feed" />;
+    }
     return (
       <>
         <Navbar />
         <div className="contentContainer">
           <div className="form-container">
             <h3>Signup</h3>
-            <img src={signupPic}></img>
+            <img src={signupPic} alt="signup"></img>
             <form onSubmit={this.formSubmit}>
               <div className="form-input">
                 <input

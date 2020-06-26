@@ -52,10 +52,7 @@ class RequestAsk extends React.Component {
     return (
       <div className="new-request">
         <div className="users-pic-name">
-          <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSf_Bf0-x44hsGqqcQwrTcNeLUSnYjlDuoql-hQHydDdBwxeCT2&usqp=CAU"
-            alt="profile-pic"
-          />
+          <img src={this.props.currentUser.profile_picture} alt="profile-pic" />
         </div>
 
         <div id="new-post-detail">

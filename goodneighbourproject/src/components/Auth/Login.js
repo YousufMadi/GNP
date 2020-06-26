@@ -9,9 +9,7 @@ const defaultState = {
   // Fields
   email: "",
   password: "",
-  // Redirect State
-  logged_in: false,
-  loggedInUser: null,
+
   // Error message
   error_msg: "",
 };
@@ -58,7 +56,6 @@ class Login extends React.Component {
       this.setState(defaultState);
       // TODO: Handle redirection.
       this.props.handleUserLogin(valid_user);
-      this.setState({ logged_in: true, loggedInUser: valid_user });
     }
   };
 
@@ -72,7 +69,7 @@ class Login extends React.Component {
         <div className="contentContainer">
           <div className="form-container">
             <h3>Login</h3>
-            <img src={loginPic}></img>
+            <img src={loginPic} alt="login"></img>
             <form onSubmit={this.formSubmit}>
               <p className="error_msg">{this.state.error_msg}</p>
               <div className="form-input">

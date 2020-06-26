@@ -19,18 +19,20 @@ class Feed extends React.Component {
   };
 
   render() {
-    console.log(this.props.location);
-    if (
-      this.props.currentUser === null &&
-      (this.props.location ? this.props.location.state.currentUser : null) ===
-        null
-    ) {
+    if (this.props.currentUser === null) {
       return <Redirect to="/login" />;
     }
     return (
       <div className="feedContainer">
-        <Sidebar changeFilterState={this.handleFilterChange} />
-        <RequestTimeline filterState={this.state} />
+        <Sidebar
+          currentUser={this.props.currentUser}
+          changeFilterState={this.handleFilterChange}
+        />
+        <RequestTimeline
+          currentUser={this.props.currentUser}
+          users={this.props.users}
+          filterState={this.state}
+        />
       </div>
     );
   }

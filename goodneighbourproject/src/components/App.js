@@ -6,55 +6,62 @@ import Feed from "./Feed";
 import Signup from "./Auth/Signup";
 import Login from "./Auth/Login";
 import Settings from "./Settings/Settings";
-import history from "../history";
 import "../stylesheets/shared.css";
-
-import { v4 as uuid } from "uuid";
 
 class App extends React.Component {
   state = {
     currentUser: null,
     users: [
       {
-        id: uuid,
+        id: 0,
         first_name: "Sam",
         last_name: "Apple",
         email: "sam@apple.com",
         password: "password",
-        is_logged_in: false,
+        rating: 4,
+        profile_picture:
+          "https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80",
       },
       {
-        id: uuid,
+        id: 1,
         first_name: "John",
         last_name: "Pole",
         email: "john@pole.com",
         password: "password",
-        is_logged_in: false,
+        rating: 5,
+        profile_picture:
+          "https://cdn.fastly.picmonkey.com/contentful/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=800&q=70",
       },
 
       {
-        id: uuid,
+        id: 2,
         first_name: "Robert",
         last_name: "Hartz",
         email: "robert@hartz.com",
         password: "password",
-        is_logged_in: false,
+        rating: 3,
+        profile_picture:
+          "https://miro.medium.com/max/2048/0*0fClPmIScV5pTLoE.jpg",
       },
     ],
   };
 
   addUser = (first_name, last_name, email, password) => {
     const newUser = {
-      id: uuid,
+      id: this.state.users.length,
       first_name,
       last_name,
       email,
       password,
-      is_logged_in: false,
+      rating: 5,
+      profile_picture:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSf_Bf0-x44hsGqqcQwrTcNeLUSnYjlDuoql-hQHydDdBwxeCT2&usqp=CAU",
     };
 
-    this.setState({ users: [...this.state.users, newUser] });
-    console.log(this.state.users);
+    this.setState({
+      currentUser: newUser,
+      users: [...this.state.users, newUser],
+    });
   };
 
   handleUserLogin = (user) => {
@@ -62,14 +69,18 @@ class App extends React.Component {
   };
 
   render() {
-    console.log(this.state.currentUser);
     return (
-      <BrowserRouter history={history}>
+      <BrowserRouter>
         <Switch>
           <Route path="/" exact component={Home} />
           <Route
             path="/feed"
-            component={() => <Feed currentUser={this.state.currentUser} />}
+            component={() => (
+              <Feed
+                currentUser={this.state.currentUser}
+                users={this.state.users}
+              />
+            )}
           />
 
           <Route
