@@ -9,63 +9,63 @@ class RequestTimeline extends React.Component {
     super();
     this.state = {
       posts: [
-        {
-          id: 1,
-          name: "Yousuf",
-          reimbursement: "Cash",
-          items: ["Chips", "Apples", "Flour"],
-          description:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
-        },
-        {
-          id: 2,
-          name: "Adham",
-          reimbursement: "Cheque",
-          items: [],
-          description:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
-        },
-        {
-          id: 3,
-          name: "Omar",
-          reimbursement: "Cheque",
-          items: [1, 2, 3, 4, 5],
-          description:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
-        },
-        {
-          id: 4,
-          name: "Donia",
-          reimbursement: "Cheque",
-          items: [1, 2, 3, 4, 5, 6, 7, 8],
-          description:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
-        },
-        {
-          id: 2,
-          name: "Adham",
-          reimbursement: "Cheque",
-          items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-          description:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
-        },
-        {
-          id: 2,
-          name: "Adham",
-          reimbursement: "Cheque",
-          items: [1, 2, 3],
-          description:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
-        },
-        {
-          id: 2,
-          name: "Adham",
-          reimbursement: "Cheque",
-          items: [1, 2, 3, 4],
-          description:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
-        },
-      ],
+      {
+        id: 1,
+        reimbursement: "Cash",
+        items: ["Chips", "Apples", "Flour"],
+        author: 1,
+        description:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
+      },
+      {
+        id: 2,
+        reimbursement: "Cheque",
+        items: ["Honey Nut Cheerios"],
+        author: 2,
+        description:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
+      },
+      {
+        id: 3,
+        reimbursement: "Cheque",
+        items: [1, 2, 3, 4, 5],
+        author: 0,
+        description:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
+      },
+      {
+        id: 4,
+        reimbursement: "Cheque",
+        items: [1, 2, 3, 4, 5, 6, 7, 8],
+        author: 2,
+        description:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
+      },
+      {
+        id: 2,
+        reimbursement: "Cheque",
+        items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        author: 0,
+        description:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
+      },
+      {
+        id: 2,
+        reimbursement: "Cheque",
+        items: [1, 2, 3],
+        author: 1,
+        description:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
+      },
+      {
+        id: 2,
+        reimbursement: "Cheque",
+        items: [1, 2, 3, 4],
+        author: 1,
+        description:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
+      },
+    ],
       currentPage: 1,
       postsPerPage: 5
     };
@@ -86,7 +86,7 @@ class RequestTimeline extends React.Component {
     const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
     const renderPosts = currentPosts.map((post, index) => {
-      return <RequestPost key={index} post={post} />
+      return <RequestPost users={this.props.users} key={index} post={post} />
     });
 
     const pageNumbers = [];
@@ -107,7 +107,10 @@ class RequestTimeline extends React.Component {
 
     return (
       <div className="timeline">
-        <RequestAsk addPostToTimeline={this.addPostToState} />
+        <RequestAsk
+          currentUser={this.props.currentUser}
+          addPostToTimeline={this.addPostToState}
+        />
         <ul className="posts">
           {renderPosts}
         </ul>
