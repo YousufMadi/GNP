@@ -16,8 +16,8 @@ class App extends React.Component {
         id: 0,
         first_name: "Sam",
         last_name: "Apple",
-        email: "sam@apple.com",
-        password: "password",
+        email: "user@user.com",
+        password: "user",
         rating: 4,
         profile_picture:
           "https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80",
