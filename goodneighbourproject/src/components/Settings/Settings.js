@@ -102,6 +102,14 @@ class Settings extends React.Component {
     console.log(this.state);
   }
 
+  renderRating() {
+    let renderStarsReturn = [];
+    for (let i = 0; i < this.props.currentUser.rating; i++) {
+      renderStarsReturn.push(<i className="fas fa-star"></i>);
+    }
+    return renderStarsReturn;
+  }
+
   handleChange = (e) => {
     const target = e.target;
     const value = target.value;
@@ -116,7 +124,7 @@ class Settings extends React.Component {
 
   render() {
     if (this.props.currentUser === null) {
-      return <Redirect to="/feed" />;
+      return <Redirect to="/login" />;
     }
     return (
         <div className="settings-container">
@@ -126,14 +134,11 @@ class Settings extends React.Component {
 
             <div className="user-curr-info">
               <div className="profile-img">
-                <img src="https://miro.medium.com/max/2048/0*0fClPmIScV5pTLoE.jpg"/>
+                <img src={this.props.currentUser.profile_picture}/>
               </div>
               <h3>{this.props.currentUser.first_name} {this.props.currentUser.last_name} </h3>
               <div className="user-ratings">
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
+                {this.renderRating()}
               </div>
               <h4>{this.props.currentUser.email}</h4>
               <div className="requests-info">
