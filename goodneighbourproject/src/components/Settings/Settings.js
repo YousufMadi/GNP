@@ -1,6 +1,7 @@
 import React from "react";
 import './settings.css';
 import { Redirect } from "react-router-dom";
+import Navbar from "../Navbar";
 
 const defaultState = {
   // Fields
@@ -96,7 +97,7 @@ class Settings extends React.Component {
     const form_valid = this.validateForm();
 
     if (form_valid){
-
+      
     }
 
     console.log(this.state);
@@ -128,6 +129,7 @@ class Settings extends React.Component {
     }
     return (
         <div className="settings-container">
+        <Navbar />
           <div className="settings-cover"></div>
           
           <div className="user-container">
@@ -153,7 +155,7 @@ class Settings extends React.Component {
 
             <div className="user-update-info">
               <h2>Update Information</h2>
-              <form className="update-form">
+              <form className="update-form" onSubmit={this.formSubmit}>
                 <p className="error_msg"></p>
 
                 <div className="update-input-container">
