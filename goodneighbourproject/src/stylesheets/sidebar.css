@@ -55,7 +55,7 @@
   color: white;
   text-decoration: none;
   padding: .575rem 0rem;
-  transition: all 0.2s ease-out;
+  transition: background-color 0.2s ease-out;
 }
 
 #sidebar-tabs a:hover{
@@ -74,7 +74,7 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   background-color: transparent;
   padding: .575rem 0rem;
-  transition: all 0.2s ease-out;
+  transition: background-color 0.2s ease-out;
 }
 #sidebar-tabs button:hover{
   font-size: small;
