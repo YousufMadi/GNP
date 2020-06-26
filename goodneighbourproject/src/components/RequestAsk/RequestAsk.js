@@ -32,6 +32,7 @@ class RequestAsk extends React.Component {
     if (this.state.formReimbursement !== null && this.state.items.length > 0) {
       const newPost = {
         id: 5,
+        author: this.props.currentUser.id,
         name: "Filler",
         reimbursement: this.state.formReimbursement,
         items: this.state.items,
