@@ -64,6 +64,10 @@ class App extends React.Component {
     });
   };
 
+  // updateUser = (first_name, last_name, email, password) => {
+  //     this.setState({user:});
+  // }
+
   handleUserLogin = (user) => {
     this.setState({ currentUser: user });
   };
@@ -110,7 +114,16 @@ class App extends React.Component {
             )}
           />
 
-          <Route path="/settings" exact component={Settings} />
+          <Route 
+            exact
+            path="/settings"
+            component={() => (
+              <Settings
+                currentUser={this.state.currentUser}
+
+              />
+            )}
+           />
         </Switch>
       </BrowserRouter>
     );
