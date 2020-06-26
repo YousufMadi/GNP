@@ -67,6 +67,9 @@ class App extends React.Component {
   handleUserLogin = (user) => {
     this.setState({ currentUser: user });
   };
+  handleUserLogout = () => {
+    this.setState({ currentUser: null });
+  };
 
   render() {
     return (
@@ -77,6 +80,7 @@ class App extends React.Component {
             path="/feed"
             component={() => (
               <Feed
+                handleUserLogout={this.handleUserLogout}
                 currentUser={this.state.currentUser}
                 users={this.state.users}
               />
