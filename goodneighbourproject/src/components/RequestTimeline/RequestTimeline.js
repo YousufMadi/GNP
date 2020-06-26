@@ -5,8 +5,10 @@ import RequestPost from "../RequestPost/RequestPost";
 import RequestAsk from "../RequestAsk/RequestAsk";
 
 class RequestTimeline extends React.Component {
-  state = {
-    posts: [
+  constructor() {
+    super();
+    this.state = {
+      posts: [
       {
         id: 1,
         reimbursement: "Cash",
@@ -64,26 +66,57 @@ class RequestTimeline extends React.Component {
           "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
       },
     ],
-  };
+      currentPage: 1,
+      postsPerPage: 5
+    };
+    this.handleClick = this.handleClick.bind(this);
+  }
 
-  addPostToState = (post) => {
-    console.log(post);
-    this.setState({ posts: [...this.state.posts, post] });
-  };
+  handleClick(event) {
+    this.setState({
+      currentPage: Number(event.target.id)
+    });
+  }
 
   render() {
+    const { posts, currentPage, postsPerPage } = this.state;
+
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+
+    const renderPosts = currentPosts.map((post, index) => {
+      return <RequestPost users={this.props.users} key={index} post={post} />
+    });
+
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(posts.length / postsPerPage); i++) {
+      pageNumbers.push(i);
+    }
+
+    const renderPageNumbers = pageNumbers.map(number => {
+      return (
+        <li
+          key={number}
+          id={number}
+          onClick={this.handleClick}>
+          {number}
+        </li>
+      );
+    });
+
     return (
       <div className="timeline">
         <RequestAsk
           currentUser={this.props.currentUser}
           addPostToTimeline={this.addPostToState}
         />
-
-        <div className="posts">
-          {this.state.posts.map((post, index) => (
-            <RequestPost users={this.props.users} key={index} post={post} />
-          ))}
-        </div>
+        <ul className="posts">
+          {renderPosts}
+        </ul>
+        <ul id="page-numbers">
+          {renderPageNumbers}
+        </ul>
       </div>
     );
   }
