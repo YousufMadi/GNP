@@ -55,7 +55,10 @@ class App extends React.Component {
       is_logged_in: false
     }
 
-    this.setState({ users: [...this.state.users, newUser] });
+    this.setState({
+      users: [...this.state.users, newUser]
+    });
+
     console.log(this.state.users)
   }
 

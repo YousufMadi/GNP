@@ -86,7 +86,7 @@ class Signup extends React.Component {
       this.props.addUser(this.state.first_name,
                          this.state.last_name,
                          this.state.email,
-                         this.state.password);  
+                         this.state.password);
 
       this.setState(default_state);
 

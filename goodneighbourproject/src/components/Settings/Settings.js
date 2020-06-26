@@ -1,7 +1,5 @@
 import React from "react";
 import './settings.css'
-import Sidebar from "../Sidebar/Sidebar";
-import '../../stylesheets/sidebar.css'
 
 const defaultState = {
   // Fields
@@ -68,8 +66,17 @@ class Settings extends React.Component {
   render() {
     return (
       <div>
-        {/*<Sidebar changeFilterState={this.handleFilterChange} />*/}
-        <div className="settings-container"></div>
+        <div className="settings-container">
+          <div className="settings-cover"></div>
+          
+          <div className="user-container">
+
+            <div className="user-curr-info">
+              <h2>User</h2>
+            </div>
+            
+          </div>
+        </div>
       </div>
     );
   }
