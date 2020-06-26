@@ -9,10 +9,7 @@ import "./stylesheets/shared.css";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Navbar />
-    <div className="contentContainer">
-      <App />
-    </div>
+    <App />
   </React.StrictMode>,
   document.getElementById("root")
 );
