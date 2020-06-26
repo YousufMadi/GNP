@@ -8,6 +8,7 @@ class RequestTimeline extends React.Component {
   constructor() {
     super();
     this.state = {
+      filteredPosts: null,
       posts: [
         {
           id: 1,
@@ -27,7 +28,7 @@ class RequestTimeline extends React.Component {
         },
         {
           id: 3,
-          reimbursement: "Cheque",
+          reimbursement: "E-transfer",
           items: [1, 2, 3, 4, 5],
           author: 0,
           description:
@@ -35,7 +36,7 @@ class RequestTimeline extends React.Component {
         },
         {
           id: 4,
-          reimbursement: "Cheque",
+          reimbursement: "Cash",
           items: [1, 2, 3, 4, 5, 6, 7, 8],
           author: 2,
           description:
@@ -43,7 +44,7 @@ class RequestTimeline extends React.Component {
         },
         {
           id: 2,
-          reimbursement: "Cheque",
+          reimbursement: "E-transfer",
           items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
           author: 0,
           description:
@@ -71,6 +72,49 @@ class RequestTimeline extends React.Component {
     };
     this.handleClick = this.handleClick.bind(this);
   }
+  componentDidMount() {
+    this.setState({ filteredPosts: this.state.posts });
+  }
+  sizeEstimate = (post) => {
+    let size = null;
+    if (post.items.length <= 3) {
+      size = "small";
+    } else if (post.items.length <= 8) {
+      size = "medium";
+    } else {
+      size = "large";
+    }
+    return size;
+  };
+  filterPosts() {
+    let newFilteredPosts = [...this.state.posts];
+    if (
+      this.props.filterState.filterPayment !== null &&
+      this.props.filterState.filterPayment !== "any"
+    ) {
+      // Filter by payment
+      newFilteredPosts = this.state.posts.filter((post) => {
+        return (
+          this.props.filterState.filterPayment ===
+          post.reimbursement.toLowerCase()
+        );
+      });
+    }
+    if (
+      this.props.filterState.filterSize !== null &&
+      this.props.filterState.filterSize !== "any"
+    ) {
+      // Filter by request size
+      newFilteredPosts = newFilteredPosts.filter((post) => {
+        return (
+          !this.props.filterState.filterSize ||
+          this.props.filterState.filterSize === this.sizeEstimate(post)
+        );
+      });
+    }
+    return newFilteredPosts;
+  }
+
   addPostToState = (post) => {
     this.setState({ posts: [...this.state.posts, post] });
   };
@@ -82,39 +126,50 @@ class RequestTimeline extends React.Component {
   }
 
   render() {
-    const { posts, currentPage, postsPerPage } = this.state;
-
-    const indexOfLastPost = currentPage * postsPerPage;
-    const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
-
-    const renderPosts = currentPosts.map((post, index) => {
-      return <RequestPost users={this.props.users} key={index} post={post} />;
-    });
-
-    const pageNumbers = [];
-    for (let i = 1; i <= Math.ceil(posts.length / postsPerPage); i++) {
-      pageNumbers.push(i);
-    }
-
-    const renderPageNumbers = pageNumbers.map((number) => {
-      return (
-        <li key={number} id={number} onClick={this.handleClick}>
-          {number}
-        </li>
+    if (this.state.filteredPosts != null) {
+      const { posts, currentPage, postsPerPage } = this.state;
+      const filteredPosts = this.filterPosts(posts);
+      const indexOfLastPost = currentPage * postsPerPage;
+      const indexOfFirstPost = indexOfLastPost - postsPerPage;
+      const currentPosts = filteredPosts.slice(
+        indexOfFirstPost,
+        indexOfLastPost
       );
-    });
 
-    return (
-      <div className="timeline">
-        <RequestAsk
-          currentUser={this.props.currentUser}
-          addPostToTimeline={this.addPostToState}
-        />
-        <ul className="posts">{renderPosts}</ul>
-        <ul id="page-numbers">{renderPageNumbers}</ul>
-      </div>
-    );
+      const renderPosts = currentPosts.map((post, index) => {
+        return <RequestPost users={this.props.users} key={index} post={post} />;
+      });
+
+      const pageNumbers = [];
+      for (
+        let i = 1;
+        i <= Math.ceil(filteredPosts.length / postsPerPage);
+        i++
+      ) {
+        pageNumbers.push(i);
+      }
+
+      const renderPageNumbers = pageNumbers.map((number) => {
+        return (
+          <li key={number} id={number} onClick={this.handleClick}>
+            {number}
+          </li>
+        );
+      });
+
+      return (
+        <div className="timeline">
+          <RequestAsk
+            currentUser={this.props.currentUser}
+            addPostToTimeline={this.addPostToState}
+          />
+          <ul className="posts">{renderPosts}</ul>
+          <ul id="page-numbers">{renderPageNumbers}</ul>
+        </div>
+      );
+    } else {
+      return <></>;
+    }
   }
 }
 

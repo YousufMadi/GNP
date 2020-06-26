@@ -5,8 +5,6 @@ import "../../stylesheets/RequestTimeline/requestpost.css";
 class RequestPost extends React.Component {
   state = { postUser: null };
   componentDidMount() {
-    console.log(this.props.post.author);
-
     for (let i = 0; i < this.props.users.length; i++) {
       if (this.props.users[i].id === this.props.post.author) {
         this.setState({ postUser: this.props.users[i] });

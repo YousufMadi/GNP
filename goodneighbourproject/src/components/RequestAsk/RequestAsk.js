@@ -77,7 +77,7 @@ class RequestAsk extends React.Component {
                   Reimbursement
                 </option>
                 <option value="Cash">{"Cash"}</option>
-                <option value="E-Transfer">{"E-Transfer"}</option>
+                <option value="E-transfer">{"E-Transfer"}</option>
                 <option value="Cheque">{"Cheque"}</option>
               </select>
             </div>
