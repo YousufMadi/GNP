@@ -9,10 +9,17 @@ class Sidebar extends React.Component {
    the dropdown filter options defaulting to null */
   state = { filterDistance: null, filterSize: null, filterPayment: null };
 
+  /* This function handles the situation where the user clicks log out */
+  handleUserLogout = () => {
+    this.props.handleUserLogout();
+  };
   /* The functions that will handle a change in it's
      respective select html */
   handleDistanceChange(e) {
-    this.setState({ filterDistance: e.target.value });
+    if (e.target.value === "Any Distance") {
+    } else {
+      this.setState({ filterDistance: e.target.value });
+    }
   }
   handleSizeChange(e) {
     this.setState({ filterSize: e.target.value });
@@ -32,33 +39,49 @@ class Sidebar extends React.Component {
     this.props.changeFilterState(filterRequest);
   };
 
-  /* Render Functions */
+  renderRating() {
+    let renderStarsReturn = [];
+    for (let i = 0; i < this.props.currentUser.rating; i++) {
+      renderStarsReturn.push(<i className="fas fa-star"></i>);
+    }
+    return renderStarsReturn;
+  }
 
+  /* Render Functions */
   renderProfile() {
     return (
-      <div className="profile-header">
-        <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSf_Bf0-x44hsGqqcQwrTcNeLUSnYjlDuoql-hQHydDdBwxeCT2&usqp=CAU"
-            alt="profile"
-          ></img>
-        <div className="profile-info">
-          <p>Robert Lore</p>
-          <p>*****</p>
+      <>
+        <div className="profile-header">
+          <img src={this.props.currentUser.profile_picture} alt="profile"></img>
+          <div className="profile-info">
+            <p>
+              {this.props.currentUser.first_name}{" "}
+              {this.props.currentUser.last_name}
+            </p>
+            <div id="profile-rating">{this.renderRating()}</div>
+          </div>
         </div>
-      </div>
+        <div id="sidebar-tabs">
+          <Link to="/">Home</Link>
+          <Link to="/settings">Settings</Link>
+          <button onClick={this.handleUserLogout}>Log out</button>
+        </div>
+      </>
     );
   }
   renderFilter() {
     return (
       <div className="filter-section">
-        <input type="text" ref={(input) => (this.filterTermInput = input)}
-               placeholder="Search term"/>
+        <input
+          type="text"
+          ref={(input) => (this.filterTermInput = input)}
+          placeholder="Search term"
+        />
 
         <div className="dropdown-filters">
-
           <select onChange={(e) => this.handleDistanceChange(e)}>
-            <option selected disabled value={null}>
-              Distance
+            <option selected value="any">
+              Any Distance
             </option>
             <option value="1">{"< 1km"}</option>
             <option value="5">{"< 5km"}</option>
@@ -67,8 +90,8 @@ class Sidebar extends React.Component {
           </select>
 
           <select onChange={(e) => this.handleSizeChange(e)}>
-            <option selected disabled value={null}>
-              Size
+            <option selected value="any">
+              Any Size
             </option>
             <option value="small">Small</option>
             <option value="medium">Medium</option>
@@ -76,17 +99,20 @@ class Sidebar extends React.Component {
           </select>
 
           <select onChange={(e) => this.handlePaymentChange(e)}>
-            <option selected disabled value={null}>
-              Payment
+            <option selected value="any">
+              Any Payment
             </option>
             <option value="cash">Cash</option>
-            <option value="etransfer">E-transfer</option>
+            <option value="e-transfer">E-transfer</option>
             <option value="cheque">Cheque</option>
           </select>
-
         </div>
 
-        <button type="button" className="filter-button" onClick={this.handleFilterClick}>
+        <button
+          type="button"
+          className="filter-button"
+          onClick={this.handleFilterClick}
+        >
           Filter Requests
         </button>
       </div>
@@ -104,7 +130,7 @@ class Sidebar extends React.Component {
       </div>
     );
   }
-  
+
   render() {
     return (
       <div className="sidebar">

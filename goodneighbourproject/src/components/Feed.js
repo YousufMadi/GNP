@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Redirect } from "react-router-dom";
 import RequestTimeline from "./RequestTimeline/RequestTimeline";
 import Sidebar from "./Sidebar/Sidebar";
 
@@ -19,10 +19,21 @@ class Feed extends React.Component {
   };
 
   render() {
+    if (this.props.currentUser === null) {
+      return <Redirect to="/login" />;
+    }
     return (
       <div className="feedContainer">
-        <Sidebar changeFilterState={this.handleFilterChange} />
-        <RequestTimeline filterState={this.state} />
+        <Sidebar
+          handleUserLogout={this.props.handleUserLogout}
+          currentUser={this.props.currentUser}
+          changeFilterState={this.handleFilterChange}
+        />
+        <RequestTimeline
+          currentUser={this.props.currentUser}
+          users={this.props.users}
+          filterState={this.state}
+        />
       </div>
     );
   }
