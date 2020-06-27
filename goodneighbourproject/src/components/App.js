@@ -64,13 +64,21 @@ class App extends React.Component {
     });
   };
 
-  // updateUser = (first_name, last_name, email, password) => {
-  //     this.setState({user:});
-  // }
+  updateUser = (user) => {
+    let id = user.id;
+    let users = [...this.state.users];
+    users[id] = user;
+
+    this.setState({
+      currentUser: user,
+      users
+    });
+  }
 
   handleUserLogin = (user) => {
     this.setState({ currentUser: user });
   };
+
   handleUserLogout = () => {
     this.setState({ currentUser: null });
   };
@@ -120,6 +128,8 @@ class App extends React.Component {
             component={() => (
               <Settings
                 currentUser={this.state.currentUser}
+                users={this.state.users}
+                updateUser={this.updateUser}
 
               />
             )}

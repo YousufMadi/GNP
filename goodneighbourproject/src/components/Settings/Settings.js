@@ -3,46 +3,18 @@ import './settings.css';
 import { Redirect } from "react-router-dom";
 import Navbar from "../Navbar";
 
-const defaultState = {
-  // Fields
-  first_name: "",
-  last_name: "",
-  email: "",
-  password: "",
-
-  // Error message
-  error_msg: "",
-  first_name_error: "",
-  last_name_error: "",
-  email_error: "",
-  password_error: "",
-}
-
 class Settings extends React.Component {
 
-  state = {
-    // Fields
-    first_name: "",
-    last_name: "",
-    email: "",
-    password: "",
-
-    // Error message
-    error_msg: "",
-    first_name_error: "",
-    last_name_error: "",
-    email_error: "",
-    password_error: "",
-  };
-
-  handleChange = (e) => {
-    const target = e.target;
-    const value = target.value;
-    const name = target.name;
-
-    this.setState({
-      [name]: value
-    });
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: this.props.currentUser,
+      // Error message
+      first_name_error: "",
+      last_name_error: "",
+      email_error: "",
+      password_error: "",
+    };
   }
 
 
@@ -55,26 +27,26 @@ class Settings extends React.Component {
     let is_valid = true;
 
     // Validate first name
-    if (this.state.first_name === "") {
+    if (this.state.user.first_name === "") {
       first_name_error = "Please enter your first name";
       is_valid = false;
     }
 
     // Validate last name
-    if (this.state.last_name === "") {
+    if (this.state.user.last_name === "") {
       last_name_error = "Please enter your last name";
       is_valid = false;
     }
 
     // Validate email
-    const email_valid = valid_email_regex.test(this.state.email);
+    const email_valid = valid_email_regex.test(this.state.user.email);
     if (!email_valid) {
       email_error = "Email entered is not valid";
       is_valid = false;
     }
 
     // Validate password
-    if (this.state.password === "") {
+    if (this.state.user.password === "") {
       password_error = "Password is invalid";
       is_valid = false;
     }
@@ -97,10 +69,10 @@ class Settings extends React.Component {
     const form_valid = this.validateForm();
 
     if (form_valid){
-      
+      this.props.updateUser(this.state.user);
     }
 
-    console.log(this.state);
+    console.log(this.props.users);
   }
 
   renderRating() {
@@ -116,8 +88,12 @@ class Settings extends React.Component {
     const value = target.value;
     const name = target.name;
 
+
     this.setState({
-      [name]: value,
+      user: {
+        ...this.state.user,
+        [name]: value,
+      }
     });
 
     console.log(this.state);
@@ -156,7 +132,6 @@ class Settings extends React.Component {
             <div className="user-update-info">
               <h2>Update Information</h2>
               <form className="update-form" onSubmit={this.formSubmit}>
-                <p className="error_msg"></p>
 
                 <div className="update-input-container">
                   <label>First Name</label>
@@ -167,6 +142,7 @@ class Settings extends React.Component {
                     defaultValue={this.props.currentUser.first_name}
                     onChange={this.handleChange}
                   ></input>
+                  <p className="error_msg">{this.state.first_name_error}</p>
                 </div>
 
                 <div className="update-input-container">
@@ -178,6 +154,7 @@ class Settings extends React.Component {
                     defaultValue={this.props.currentUser.last_name}
                     onChange={this.handleChange}
                   ></input>
+                  <p className="error_msg">{this.state.last_name_error}</p>
                 </div>
 
                 <div className="update-input-container">
@@ -189,6 +166,7 @@ class Settings extends React.Component {
                     defaultValue={this.props.currentUser.email}
                     onChange={this.handleChange}
                   ></input>
+                  <p className="error_msg">{this.state.email_error}</p>
                 </div>
 
                 <div className="update-input-container">
@@ -200,6 +178,7 @@ class Settings extends React.Component {
                     defaultValue={this.props.currentUser.password}
                     onChange={this.handleChange}
                   ></input>
+                  <p className="error_msg">{this.state.password_error}</p>
                 </div>
 
                 <div className="update-input-container">
