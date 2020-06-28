@@ -8,6 +8,8 @@ import Login from "./Auth/Login";
 import Settings from "./Settings/Settings";
 import "../stylesheets/shared.css";
 
+import {handleUserLogin} from "../actions/user";
+
 class App extends React.Component {
   state = {
     currentUser: null,
@@ -44,6 +46,7 @@ class App extends React.Component {
           "https://miro.medium.com/max/2048/0*0fClPmIScV5pTLoE.jpg",
       },
     ],
+    setState: this.setState.bind(this),
   };
 
   addUser = (first_name, last_name, email, password) => {
@@ -75,9 +78,9 @@ class App extends React.Component {
     });
   }
 
-  handleUserLogin = (user) => {
-    this.setState({ currentUser: user });
-  };
+  // handleUserLogin = (user) => {
+  //   this.setState({ currentUser: user });
+  // };
 
   handleUserLogout = () => {
     this.setState({ currentUser: null });
@@ -120,9 +123,8 @@ class App extends React.Component {
             path="/login"
             component={() => (
               <Login
-                currentUser={this.state.currentUser}
-                handleUserLogin={this.handleUserLogin}
-                users={this.state.users}
+                handleUserLogin={handleUserLogin}
+                users_state={this.state}
               />
             )}
           />
