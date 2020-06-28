@@ -22,9 +22,19 @@ class NavbarLinks extends React.Component {
           </li>
         }
 
-        <li>
-          <Link to="/feed">Feed</Link>
-        </li>
+        {this.props.currentUser &&
+          <li>
+            <Link to="/feed">Feed</Link>
+          </li>
+        }
+
+        {this.props.currentUser &&
+          <li>
+            <Link to="/logout">Logout</Link>
+          </li>
+        }
+
+
       </ul>
     );    
   }

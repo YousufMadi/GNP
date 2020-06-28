@@ -5,6 +5,7 @@ import Home from "./Home";
 import Feed from "./Feed";
 import Signup from "./Auth/Signup";
 import Login from "./Auth/Login";
+import Logout from "./Auth/Logout";
 import Settings from "./Settings/Settings";
 import "../stylesheets/shared.css";
 
@@ -51,10 +52,6 @@ class App extends React.Component {
   };
 
 
-  // handleUserLogout = () => {
-  //   this.setState({ currentUser: null });
-  // };
-
   render() {
     return (
       <BrowserRouter>
@@ -92,6 +89,17 @@ class App extends React.Component {
             component={() => (
               <Login
                 handleUserLogin={handleUserLogin}
+                users_state={this.state}
+              />
+            )}
+          />
+
+          <Route
+            exact
+            path="/logout"
+            component={() => (
+              <Logout
+                logout={handleUserLogout}
                 users_state={this.state}
               />
             )}
