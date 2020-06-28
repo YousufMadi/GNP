@@ -1,3 +1,8 @@
+.success_msg{
+  color: green;
+  text-align: center;  
+}
+
 .settings-container{
   position: relative;
 }
@@ -80,7 +85,7 @@
 }
 
 .user-update-info h2{
-  margin: 1em;
+  margin: 1em auto 0.5em;
   text-align: center;
 }
 

@@ -14,6 +14,9 @@ class Settings extends React.Component {
       last_name_error: "",
       email_error: "",
       password_error: "",
+
+      // Success message
+      success_msg: "",
     };
   }
 
@@ -61,18 +64,18 @@ class Settings extends React.Component {
     }
 
     return is_valid;
-
   }
 
   formSubmit = (e) => {
     e.preventDefault();
     const form_valid = this.validateForm();
+    const success_msg = "Profile updated successfully!";
 
     if (form_valid){
       this.props.updateUser(this.state.user);
+      this.setState({success_msg})
     }
 
-    console.log(this.props.users);
   }
 
   renderRating() {
@@ -105,9 +108,8 @@ class Settings extends React.Component {
     }
     return (
         <div className="settings-container">
-        <Navbar />
+        <Navbar currentUser={this.props.currentUser}/>
           <div className="settings-cover"></div>
-          
           <div className="user-container">
 
             <div className="user-curr-info">
@@ -130,7 +132,8 @@ class Settings extends React.Component {
             </div>
 
             <div className="user-update-info">
-              <h2>Update Information</h2>
+              <h2>Update Information</h2>              
+              <p className="success_msg">{this.state.success_msg}</p>
               <form className="update-form" onSubmit={this.formSubmit}>
 
                 <div className="update-input-container">
@@ -143,6 +146,7 @@ class Settings extends React.Component {
                     onChange={this.handleChange}
                   ></input>
                   <p className="error_msg">{this.state.first_name_error}</p>
+
                 </div>
 
                 <div className="update-input-container">

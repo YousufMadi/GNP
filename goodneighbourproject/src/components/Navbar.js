@@ -1,13 +1,16 @@
 import React from "react";
 import NavbarLinks from "./NavbarLinks";
 
-function Navbar() {
-  
+class Navbar extends React.Component {
+    
+  render(){
     return (
       <nav className="navbar">
-        <NavbarLinks />
+        <NavbarLinks currentUser={this.props.currentUser}/>
       </nav>
     );
+
+  }
 }
 
 export default Navbar;

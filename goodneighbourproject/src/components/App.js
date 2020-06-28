@@ -87,7 +87,12 @@ class App extends React.Component {
     return (
       <BrowserRouter>
         <Switch>
-          <Route path="/" exact component={Home} />
+          <Route path="/" exact component={() => (
+              <Home
+                currentUser={this.state.currentUser}
+              />
+            )} 
+          />
           <Route
             path="/feed"
             component={() => (
