@@ -188,7 +188,7 @@ class Settings extends React.Component {
                 </div>
 
                 <div className="update-input-container">
-                  <button id="submit" type="buton" onSubmit={this.formSubmit}>
+                  <button className="update-submit" type="buton" onSubmit={this.formSubmit}>
                     Update info
                   </button>
                 </div>

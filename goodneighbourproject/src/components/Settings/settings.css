@@ -102,7 +102,7 @@
   width: 60%;
 }
 
-.update-input-container label, input, #submit{
+.update-input-container label, input, .update-submit{
   display: block;
   margin: auto;
   width: 80%;
@@ -116,7 +116,22 @@
   height: 2em;
 }
 
-.update-input-container #submit{
+.update-input-container .update-submit{
   width: 50%;
   cursor: pointer;
+}
+
+.update-submit{
+  margin: 1.5em auto;
+  height: 2.5em;
+  color: #000;
+  background-color: #152238;
+  color: #fff;
+  border: 0.5px solid black;
+  border-radius: 5px;
+}
+
+.update-submit:hover{
+  opacity: 0.8;
+  transition: 0.4s;
 }
