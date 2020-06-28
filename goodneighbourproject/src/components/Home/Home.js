@@ -1,6 +1,6 @@
 import React from "react";
-import Navbar from "./Navbar";
-import "../stylesheets/home.css";
+import Navbar from "../Navbar";
+import "../../stylesheets/home.css";
 
 class Home extends React.Component {
 
