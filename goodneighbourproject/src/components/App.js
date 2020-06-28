@@ -8,7 +8,7 @@ import Login from "./Auth/Login";
 import Settings from "./Settings/Settings";
 import "../stylesheets/shared.css";
 
-import {handleUserLogin} from "../actions/user";
+import {addUser, updateUser, handleUserLogin} from "../actions/user";
 
 class App extends React.Component {
   state = {
@@ -46,41 +46,10 @@ class App extends React.Component {
           "https://miro.medium.com/max/2048/0*0fClPmIScV5pTLoE.jpg",
       },
     ],
+
     setState: this.setState.bind(this),
   };
 
-  addUser = (first_name, last_name, email, password) => {
-    const newUser = {
-      id: this.state.users.length,
-      first_name,
-      last_name,
-      email,
-      password,
-      rating: 5,
-      profile_picture:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSf_Bf0-x44hsGqqcQwrTcNeLUSnYjlDuoql-hQHydDdBwxeCT2&usqp=CAU",
-    };
-
-    this.setState({
-      currentUser: newUser,
-      users: [...this.state.users, newUser],
-    });
-  };
-
-  updateUser = (user) => {
-    let id = user.id;
-    let users = [...this.state.users];
-    users[id] = user;
-
-    this.setState({
-      currentUser: user,
-      users
-    });
-  }
-
-  // handleUserLogin = (user) => {
-  //   this.setState({ currentUser: user });
-  // };
 
   handleUserLogout = () => {
     this.setState({ currentUser: null });
@@ -112,8 +81,8 @@ class App extends React.Component {
             path="/signup"
             component={() => (
               <Signup
-                currentUser={this.state.currentUser}
-                addUser={this.addUser}
+                users_state={this.state}
+                addUser={addUser}
               />
             )}
           />
@@ -134,9 +103,8 @@ class App extends React.Component {
             path="/settings"
             component={() => (
               <Settings
-                currentUser={this.state.currentUser}
-                users={this.state.users}
-                updateUser={this.updateUser}
+                users_state={this.state}
+                updateUser={updateUser}
 
               />
             )}
