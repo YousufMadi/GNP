@@ -1,7 +1,7 @@
 import React from "react";
 import './settings.css';
 import { Redirect } from "react-router-dom";
-import Navbar from "../Navbar";
+import Navbar from "../Navigation/Navbar";
 
 class Settings extends React.Component {
 

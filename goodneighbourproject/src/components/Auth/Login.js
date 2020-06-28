@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "../Navbar";
+import Navbar from "../Navigation/Navbar";
 import { Redirect } from "react-router-dom";
 import "../../stylesheets/shared.css";
 import "../../stylesheets/auth-forms.css";
