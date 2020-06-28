@@ -27,6 +27,10 @@ export const updateUser = (users_state, user) => {
   });
 }
 
-export const handleUserLogin = (users, user) => {
-  users.setState({ currentUser: user });
+export const handleUserLogin = (users_state, user) => {
+  users_state.setState({ currentUser: user });
 };
+
+export const handleUserLogout = (users_state) => {
+    users_state.setState({ currentUser: null });
+  };

@@ -28,7 +28,7 @@ class Feed extends React.Component {
       <div className="feedContainer">
         <Sidebar
           handleUserLogout={this.props.handleUserLogout}
-          currentUser={currentUser}
+          users_state={this.props.users_state}
           changeFilterState={this.handleFilterChange}
         />
         <RequestTimeline
