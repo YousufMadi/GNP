@@ -5,8 +5,8 @@ import RequestPost from "../RequestPost/RequestPost";
 import RequestAsk from "../RequestAsk/RequestAsk";
 
 class RequestTimeline extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       filteredPosts: null,
       posts: [
@@ -72,9 +72,11 @@ class RequestTimeline extends React.Component {
     };
     this.handleClick = this.handleClick.bind(this);
   }
+
   componentDidMount() {
     this.setState({ filteredPosts: this.state.posts });
   }
+
   sizeEstimate = (post) => {
     let size = null;
     if (post.items.length <= 3) {
@@ -86,6 +88,7 @@ class RequestTimeline extends React.Component {
     }
     return size;
   };
+
   filterPosts() {
     let newFilteredPosts = [...this.state.posts];
     if (
@@ -138,7 +141,7 @@ class RequestTimeline extends React.Component {
       );
 
       const renderPosts = currentPosts.map((post, index) => {
-        return <RequestPost users={this.props.users} key={index} post={post} />;
+        return <RequestPost users={this.props.users_state.users} key={index} post={post} />;
       });
 
       const pageNumbers = [];
@@ -161,7 +164,7 @@ class RequestTimeline extends React.Component {
       return (
         <div className="timeline">
           <RequestAsk
-            currentUser={this.props.currentUser}
+            currentUser={this.props.users_state.currentUser}
             addPostToTimeline={this.addPostToState}
           />
           <ul className="posts">{renderPosts}</ul>

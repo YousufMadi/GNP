@@ -28,6 +28,5 @@ export const updateUser = (users_state, user) => {
 }
 
 export const handleUserLogin = (users, user) => {
-  // debugger;
   users.setState({ currentUser: user });
 };

@@ -70,8 +70,7 @@ class App extends React.Component {
             component={() => (
               <Feed
                 handleUserLogout={this.handleUserLogout}
-                currentUser={this.state.currentUser}
-                users={this.state.users}
+                users_state={this.state}
               />
             )}
           />

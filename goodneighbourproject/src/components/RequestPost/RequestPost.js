@@ -4,6 +4,7 @@ import "../../stylesheets/RequestTimeline/requestpost.css";
 
 class RequestPost extends React.Component {
   state = { postUser: null };
+
   componentDidMount() {
     for (let i = 0; i < this.props.users.length; i++) {
       if (this.props.users[i].id === this.props.post.author) {
@@ -12,6 +13,7 @@ class RequestPost extends React.Component {
       }
     }
   }
+
   sizeEstimate = () => {
     let size = null;
     if (this.props.post.items.length <= 3) {
@@ -23,11 +25,13 @@ class RequestPost extends React.Component {
     }
     return size;
   };
+
   renderItems() {
     return this.props.post.items.map((item) => {
       return <li className="request-item">{item}</li>;
     });
   }
+  
   render() {
     if (this.state.postUser !== null) {
       return (
