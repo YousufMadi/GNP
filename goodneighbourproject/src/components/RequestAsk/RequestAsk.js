@@ -1,7 +1,7 @@
 import React from "react";
 
 import "../../stylesheets/RequestTimeline/requestAsk.css";
-import ItemsList from "../GroceryList/ItemsList";
+import ItemsList from "../ItemsList/ItemsList";
 
 class RequestAsk extends React.Component {
   state = {
@@ -76,7 +76,7 @@ class RequestAsk extends React.Component {
             >
               <option selected disabled value={null}>
                 Reimbursement
-                </option>
+              </option>
               <option value="Cash">{"Cash"}</option>
               <option value="E-transfer">{"E-Transfer"}</option>
               <option value="Cheque">{"Cheque"}</option>

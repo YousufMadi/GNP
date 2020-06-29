@@ -63,8 +63,10 @@
   text-align: center;
   font-size: 1.1em;
   font-weight: 600;
-  background-color: #152238;
-  color: #fafafa;
+  border: solid 1px rgba(75, 75, 75, 0.2);
+  border-radius: 8px;
+  color: rgba(75, 75, 75, 0.7);
+  background-color: #fafafa;
   padding: 1em 0;
   border-radius: 3px;
 }
@@ -83,14 +85,12 @@
 
 .request-item{
   font-size: 14px;
-  padding-top: 0.3em;
-  padding-bottom: 0.3em;
-  padding-left: 0.7em;
-  padding-right: 0.7em;
-  background-color: white;
+  padding: 0.3em 0.7em;
+  background-color: #fafafa;
+  color: rgba(75, 75, 75, 0.7);
   border: solid 1px rgba(75, 75, 75, 0.2);
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
+  border-radius: 2px;
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1);
   margin-left: 0.5em;
   margin-top: 0.3em;
   display: inline;
@@ -141,6 +141,29 @@
 .post-edit-save:hover{
   background-color: lightgreen;
   color:white;
+}
+
+#item-input-container{
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+#items-list-container{
+  margin-bottom: 0.5em;
+}
+
+#items-list-container .request-item{
+  cursor: pointer;
+}
+
+#items-list-container .request-item:hover{
+  background-color: rgba(233, 66, 66, 0.5);
+  color: white;
+}
+
+#items-list-container .request-item i{
+  color: rgba(75, 75, 75, 0.3);
+  margin-left: 0.25em;
 }
 
 #edit-post-description{

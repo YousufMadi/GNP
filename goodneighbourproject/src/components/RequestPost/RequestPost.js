@@ -24,6 +24,11 @@ class RequestPost extends React.Component {
     this.setState({ editState: false });
   }
 
+  handleEditPost = (id, post) => {
+    this.handleExitEdit();
+    this.props.editPost(id, post);
+  };
+
   renderItems = () => {
     return this.props.post.items.map((item) => {
       return <li className="request-item">{item}</li>;
@@ -45,6 +50,7 @@ class RequestPost extends React.Component {
       } else {
         return (
           <RequestPostEdit
+            editPost={this.handleEditPost}
             exitEdit={this.handleExitEdit}
             currentUser={this.props.currentUser}
             post={this.props.post}

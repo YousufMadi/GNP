@@ -1,10 +1,14 @@
 import React from "react";
+import ItemsList from "./ItemsList";
 
 class RequestPostEdit extends React.Component {
   state = {
     formReimbursement: this.props.post.reimbursement,
     formDescription: this.props.post.description,
     items: this.props.post.items,
+  };
+  handleItemsChange = (items) => {
+    this.setState({ items: items });
   };
   handleReimbursementChange = (e) => {
     this.setState({ formReimbursement: e.target.value });
@@ -14,6 +18,12 @@ class RequestPostEdit extends React.Component {
   };
   handleEditRequest = (e) => {
     e.preventDefault();
+    const newPost = {
+      reimbursement: this.state.formReimbursement,
+      items: this.state.items,
+      description: this.state.formDescription,
+    };
+    this.props.editPost(this.props.post.id, newPost);
   };
   renderOtherPaymentOptions() {
     switch (this.props.post.reimbursement) {
@@ -38,6 +48,8 @@ class RequestPostEdit extends React.Component {
             <option value="E-transfer">{"E-Transfer"}</option>
           </>
         );
+      default:
+        return <></>;
     }
   }
   render() {
@@ -65,9 +77,15 @@ class RequestPostEdit extends React.Component {
             </option>
             {this.renderOtherPaymentOptions()}
           </select>
-          <button className="post-edit-save">
+          <button className="post-edit-save" onClick={this.handleEditRequest}>
             <i className="fas fa-check"></i>
           </button>
+        </div>
+        <div id="edit-item-list">
+          <ItemsList
+            changeItems={this.handleItemsChange}
+            items={this.state.items}
+          />
         </div>
         <div id="edit-post-description">
           <label className="more-info">Additional Information</label>
