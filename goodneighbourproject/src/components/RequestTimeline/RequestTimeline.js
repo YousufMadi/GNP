@@ -11,7 +11,7 @@ class RequestTimeline extends React.Component {
       filteredPosts: null,
       posts: [
         {
-          id: 1,
+          id: 0,
           reimbursement: "Cash",
           items: ["Chips", "Apples", "Flour"],
           author: 1,
@@ -19,7 +19,7 @@ class RequestTimeline extends React.Component {
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
         },
         {
-          id: 2,
+          id: 1,
           reimbursement: "Cheque",
           items: ["Honey Nut Cheerios"],
           author: 2,
@@ -27,7 +27,7 @@ class RequestTimeline extends React.Component {
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
         },
         {
-          id: 3,
+          id: 2,
           reimbursement: "E-transfer",
           items: ["Drawer", "Brush", "Canvas", "Lamp", "Blouse"],
           author: 0,
@@ -35,7 +35,7 @@ class RequestTimeline extends React.Component {
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
         },
         {
-          id: 4,
+          id: 3,
           reimbursement: "Cash",
           items: [
             "Boat",
@@ -52,7 +52,7 @@ class RequestTimeline extends React.Component {
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
         },
         {
-          id: 2,
+          id: 4,
           reimbursement: "E-transfer",
           items: [
             "Wagon",
@@ -71,7 +71,7 @@ class RequestTimeline extends React.Component {
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
         },
         {
-          id: 2,
+          id: 5,
           reimbursement: "Cheque",
           items: ["Blue Blanket", "Red Blanket", "Orange Blanket"],
           author: 1,
@@ -79,7 +79,7 @@ class RequestTimeline extends React.Component {
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
         },
         {
-          id: 2,
+          id: 6,
           reimbursement: "Cheque",
           items: ["24 pc Water", "Crackers", "Apple pie", "Cake"],
           author: 1,
@@ -141,7 +141,13 @@ class RequestTimeline extends React.Component {
   addPostToState = (post) => {
     this.setState({ posts: [...this.state.posts, post] });
   };
-
+  handleDeletePost = (id) => {
+    const newPosts = this.state.posts.filter((post) => {
+      return post.id !== id;
+    });
+    console.log(newPosts);
+    this.setState({ posts: newPosts });
+  };
   handleEditPost = (id, post) => {
     let newPosts = this.state.posts;
     for (let i = 0; i < newPosts.length; i++) {
@@ -175,6 +181,7 @@ class RequestTimeline extends React.Component {
       const renderPosts = currentPosts.map((post, index) => {
         return (
           <RequestPost
+            deletePost={this.handleDeletePost}
             editPost={this.handleEditPost}
             currentUser={this.props.users_state.currentUser}
             users={this.props.users_state.users}
