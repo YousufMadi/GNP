@@ -47,11 +47,19 @@ class RequestPostView extends React.Component {
             </span>
           </label>
           {this.props.postUser.id === this.props.currentUser.id ? (
-            <button className="edit-post" onClick={this.props.editClick}>
-              <i class="fas fa-pencil-alt"></i>
-            </button>
+            <>
+              <button className="edit-post" onClick={this.props.editClick}>
+                <i class="fas fa-pencil-alt"></i>
+              </button>
+              <button
+                className="delete-post"
+                onClick={() => this.props.deleteClick(this.props.post.id)}
+              >
+                <i className="fas fa-trash"></i>
+              </button>
+            </>
           ) : (
-            <></>
+            <button className="accept-request">Accept Request</button>
           )}
         </div>
         <div className="post-description">

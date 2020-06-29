@@ -80,6 +80,9 @@ class RequestPostEdit extends React.Component {
           <button className="post-edit-save" onClick={this.handleEditRequest}>
             <i className="fas fa-check"></i>
           </button>
+          <button className="post-edit-cancel" onClick={this.props.exitEdit}>
+            <i className="fas fa-times"></i>
+          </button>
         </div>
         <div id="edit-item-list">
           <ItemsList
