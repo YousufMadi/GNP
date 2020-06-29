@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Col, Row } from "reactstrap";
+import "../../stylesheets/RequestTimeline/itemList.css";
 
 class Items extends Component {
     constructor(props) {
@@ -13,7 +13,7 @@ class Items extends Component {
     }
 
     createTasks(item) {
-        return <Col onClick={() => this.delete(item.key)} className="itemBox" xs="3" key={item.key}>{item.text}</Col>
+        return <li onClick={() => this.delete(item.key)} className="itemBox" xs="3" key={item.key}>{item.text}</li>
     }
 
     render() {
@@ -21,9 +21,9 @@ class Items extends Component {
         var listItems = itemEntries.map(this.createTasks);
 
         return (
-            <Row className="theList">
+            <ul className="theList">
                 {listItems}
-            </Row>
+            </ul>
         );
     }
 };
