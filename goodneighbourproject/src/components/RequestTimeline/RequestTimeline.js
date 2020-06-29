@@ -33,18 +33,6 @@ class RequestTimeline extends React.Component {
     this.props.addPostToState(this.props.database, post);
   };
 
-  handleEditPost = (id, post) => {
-    let newPosts = this.state.posts;
-    for (let i = 0; i < newPosts.length; i++) {
-      if (newPosts[i].id === id) {
-        newPosts[i].description = post.description;
-        newPosts[i].items = post.items;
-        newPosts[i].reimbursement = post.reimbursement;
-        break;
-      }
-    }
-    this.setState({ posts: newPosts });
-  };
 
   handleClick(event) {
     this.setState({
@@ -67,7 +55,7 @@ class RequestTimeline extends React.Component {
         return (
           <RequestPost
             deletePost={this.props.deletePost}
-            editPost={this.handleEditPost}
+            editPost={this.props.editPost}
             currentUser={this.props.database.currentUser}
             users={this.props.database.users}
             key={index}

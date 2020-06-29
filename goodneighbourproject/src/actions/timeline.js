@@ -13,8 +13,23 @@ export const deletePost = (database, id) => {
   database.setState({ posts: newPosts });
 };
 
+export const editPost = (database, id, post) => {
+  let newPosts = database.posts;
+  for (let i = 0; i < newPosts.length; i++) {
+    if (newPosts[i].id === id) {
+      newPosts[i].description = post.description;
+      newPosts[i].items = post.items;
+      newPosts[i].reimbursement = post.reimbursement;
+      break;
+    }
+  }
+  database.setState({ 
+    posts: newPosts
+  });
+
+};
+
 export const filterPosts = (posts, filter) => {
-  debugger;
   let newFilteredPosts = posts;
   if (
     filter.filterPayment !== null &&

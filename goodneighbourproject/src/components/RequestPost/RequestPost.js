@@ -40,7 +40,7 @@ class RequestPost extends React.Component {
 
   handleEditPost = (id, post) => {
     this.handleExitEdit();
-    this.props.editPost(id, post);
+    this.props.editPost(this.props.database, id, post);
   };
 
   renderItems = () => {
@@ -71,6 +71,7 @@ class RequestPost extends React.Component {
             currentUser={this.props.currentUser}
             post={this.props.post}
             postUser={this.state.postUser}
+            database={this.props.database}
           />
         );
       }
