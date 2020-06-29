@@ -9,7 +9,6 @@ class Navbar extends React.Component {
         <NavbarLinks currentUser={this.props.currentUser}/>
       </nav>
     );
-
   }
 }
 

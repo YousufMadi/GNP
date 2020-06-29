@@ -1,0 +1,65 @@
+.success_msg{
+  color: green;
+  text-align: center;  
+}
+
+.user-update-info{
+  flex: 2.5;
+  background: #fff;
+  border-radius: 10px;
+  height: 100%;
+  width: 100%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.user-update-info h2{
+  margin: 1em auto 0.5em;
+  text-align: center;
+}
+
+.update-form{
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.update-input-container{
+  box-sizing: border-box;
+  margin: 1em auto;
+  padding: 1em auto;
+  width: 60%;
+}
+
+.update-input-container label, input, .update-submit{
+  display: block;
+  margin: auto;
+  width: 80%;
+}
+
+.update-input-container label{
+  margin-bottom: 0.3em;
+}
+
+.update-input-container input{
+  height: 2em;
+}
+
+.update-input-container .update-submit{
+  width: 50%;
+  cursor: pointer;
+}
+
+.update-submit{
+  margin: 1.5em auto;
+  height: 2.5em;
+  color: #000;
+  background-color: #152238;
+  color: #fff;
+  border: 0.5px solid black;
+  border-radius: 5px;
+}
+
+.update-submit:hover{
+  opacity: 0.8;
+  transition: 0.4s;
+}
