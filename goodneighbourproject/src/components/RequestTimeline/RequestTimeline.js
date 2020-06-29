@@ -129,7 +129,6 @@ class RequestTimeline extends React.Component {
   }
 
   render() {
-
     if (this.state.filteredPosts != null) {
       const { posts, currentPage, postsPerPage } = this.state;
       const filteredPosts = this.filterPosts(posts);
@@ -141,7 +140,14 @@ class RequestTimeline extends React.Component {
       );
 
       const renderPosts = currentPosts.map((post, index) => {
-        return <RequestPost users={this.props.users_state.users} key={index} post={post} />;
+        return (
+          <RequestPost
+            currentUser={this.props.users_state.currentUser}
+            users={this.props.users_state.users}
+            key={index}
+            post={post}
+          />
+        );
       });
 
       const pageNumbers = [];
