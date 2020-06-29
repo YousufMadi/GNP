@@ -25,51 +25,14 @@ class RequestTimeline extends React.Component {
     this.setState({ filteredPosts: this.state.posts });
   }
 
-  sizeEstimate = (post) => {
-    let size = null;
-    if (post.items.length <= 3) {
-      size = "small";
-    } else if (post.items.length <= 8) {
-      size = "medium";
-    } else {
-      size = "large";
-    }
-    return size;
-  };
-
-  filterPosts() {
-    let newFilteredPosts = [...this.state.posts];
-    if (
-      this.props.filterState.filterPayment !== null &&
-      this.props.filterState.filterPayment !== "any"
-    ) {
-      // Filter by payment
-      newFilteredPosts = this.state.posts.filter((post) => {
-        return (
-          this.props.filterState.filterPayment ===
-          post.reimbursement.toLowerCase()
-        );
-      });
-    }
-    if (
-      this.props.filterState.filterSize !== null &&
-      this.props.filterState.filterSize !== "any"
-    ) {
-      // Filter by request size
-      newFilteredPosts = newFilteredPosts.filter((post) => {
-        return (
-          !this.props.filterState.filterSize ||
-          this.props.filterState.filterSize === this.sizeEstimate(post)
-        );
-      });
-    }
-    return newFilteredPosts;
+  filterPosts(posts) {
+    return this.props.filterPosts(posts, this.props.filterState);
   }
 
   addPostToState = (post) => {
     this.setState({ posts: [...this.state.posts, post] });
   };
-  
+
   handleDeletePost = (id) => {
     const newPosts = this.state.posts.filter((post) => {
       return post.id !== id;

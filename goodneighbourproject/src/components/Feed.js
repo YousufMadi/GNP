@@ -35,6 +35,7 @@ class Feed extends React.Component {
           users_state={this.props.users_state}
           filterState={this.state}
           posts={this.props.posts}
+          filterPosts={this.props.filterPosts}
         />
       </div>
     );

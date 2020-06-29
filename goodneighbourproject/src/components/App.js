@@ -10,6 +10,7 @@ import Settings from "./Settings/Settings";
 import "../stylesheets/shared.css";
 
 import { addUser, updateUser, handleUserLogin, handleUserLogout } from "../actions/user";
+import { filterPosts } from "../actions/timeline";
 
 class App extends React.Component {
   state = {
@@ -147,6 +148,7 @@ class App extends React.Component {
                 handleUserLogout={handleUserLogout}
                 users_state={this.state}
                 posts={this.state.posts}
+                filterPosts={filterPosts}
               />
             )}
           />
