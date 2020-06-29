@@ -4,7 +4,7 @@ import Items from "./Items";
 
 class ItemsList extends React.Component {
   state = {
-    items: [],
+    items: this.props.items,
   };
   addItem = (e) => {
     e.preventDefault();

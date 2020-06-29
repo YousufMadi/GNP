@@ -29,7 +29,7 @@ class RequestTimeline extends React.Component {
         {
           id: 3,
           reimbursement: "E-transfer",
-          items: [1, 2, 3, 4, 5],
+          items: ["Drawer", "Brush", "Canvas", "Lamp", "Blouse"],
           author: 0,
           description:
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
@@ -37,7 +37,16 @@ class RequestTimeline extends React.Component {
         {
           id: 4,
           reimbursement: "Cash",
-          items: [1, 2, 3, 4, 5, 6, 7, 8],
+          items: [
+            "Boat",
+            "Frame",
+            "Clamp",
+            "Cell Phone",
+            "Fridge",
+            "Drill",
+            "Puddle",
+            "Couch",
+          ],
           author: 2,
           description:
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
@@ -45,7 +54,18 @@ class RequestTimeline extends React.Component {
         {
           id: 2,
           reimbursement: "E-transfer",
-          items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+          items: [
+            "Wagon",
+            "Stop Cream",
+            "Thermometer",
+            "Shoes",
+            "Pillow",
+            "Milk",
+            "Radio",
+            "Towel",
+            "PS4",
+            "Clock",
+          ],
           author: 0,
           description:
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
@@ -53,7 +73,7 @@ class RequestTimeline extends React.Component {
         {
           id: 2,
           reimbursement: "Cheque",
-          items: [1, 2, 3],
+          items: ["Blue Blanket", "Red Blanket", "Orange Blanket"],
           author: 1,
           description:
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
@@ -61,7 +81,7 @@ class RequestTimeline extends React.Component {
         {
           id: 2,
           reimbursement: "Cheque",
-          items: [1, 2, 3, 4],
+          items: ["24 pc Water", "Crackers", "Apple pie", "Cake"],
           author: 1,
           description:
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
@@ -122,6 +142,19 @@ class RequestTimeline extends React.Component {
     this.setState({ posts: [...this.state.posts, post] });
   };
 
+  handleEditPost = (id, post) => {
+    let newPosts = this.state.posts;
+    for (let i = 0; i < newPosts.length; i++) {
+      if (newPosts[i].id === id) {
+        newPosts[i].description = post.description;
+        newPosts[i].items = post.items;
+        newPosts[i].reimbursement = post.reimbursement;
+        break;
+      }
+    }
+    this.setState({ posts: newPosts });
+  };
+
   handleClick(event) {
     this.setState({
       currentPage: Number(event.target.id),
@@ -129,7 +162,6 @@ class RequestTimeline extends React.Component {
   }
 
   render() {
-
     if (this.state.filteredPosts != null) {
       const { posts, currentPage, postsPerPage } = this.state;
       const filteredPosts = this.filterPosts(posts);
@@ -141,7 +173,15 @@ class RequestTimeline extends React.Component {
       );
 
       const renderPosts = currentPosts.map((post, index) => {
-        return <RequestPost users={this.props.users_state.users} key={index} post={post} />;
+        return (
+          <RequestPost
+            editPost={this.handleEditPost}
+            currentUser={this.props.users_state.currentUser}
+            users={this.props.users_state.users}
+            key={index}
+            post={post}
+          />
+        );
       });
 
       const pageNumbers = [];
