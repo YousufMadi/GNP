@@ -56,11 +56,14 @@
   outline: 0;
 }
 #new-post-information{
-  margin-top: 1em;
+  margin-top: 0em;
+  width: 75%;
+  float: left;
 }
 #pay-selector{
   display: inline-block;
   width: 25%;
+  float: right;
 }
 .form-new-post{
   display: block;
