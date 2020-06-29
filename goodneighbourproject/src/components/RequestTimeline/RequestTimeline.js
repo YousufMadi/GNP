@@ -3,6 +3,7 @@ import React from "react";
 import "../../stylesheets/RequestTimeline/requestTimeline.css";
 import RequestPost from "../RequestPost/RequestPost";
 import RequestAsk from "../RequestAsk/RequestAsk";
+import PostModal from "./PostModal";
 
 class RequestTimeline extends React.Component {
   constructor(props) {
@@ -87,6 +88,10 @@ class RequestTimeline extends React.Component {
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
         },
       ],
+      confirmationModal: {
+        display: true,
+        selectedPost: null,
+      },
       currentPage: 1,
       postsPerPage: 5,
     };
@@ -209,14 +214,17 @@ class RequestTimeline extends React.Component {
       });
 
       return (
-        <div className="timeline">
-          <RequestAsk
-            currentUser={this.props.users_state.currentUser}
-            addPostToTimeline={this.addPostToState}
-          />
-          <ul className="posts">{renderPosts}</ul>
-          <ul id="page-numbers">{renderPageNumbers}</ul>
-        </div>
+        <>
+          <div className="timeline">
+            <RequestAsk
+              currentUser={this.props.users_state.currentUser}
+              addPostToTimeline={this.addPostToState}
+            />
+            <ul className="posts">{renderPosts}</ul>
+            <ul id="page-numbers">{renderPageNumbers}</ul>
+          </div>
+          <PostModal confirmation={this.state.confirmationModal} />
+        </>
       );
     } else {
       return <></>;
