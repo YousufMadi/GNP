@@ -16,13 +16,27 @@ class RequestPost extends React.Component {
     }
   }
 
+  componentDidUpdate() {
+    for (let i = 0; i < this.props.users.length; i++) {
+      if (this.props.users[i].id === this.props.post.author) {
+        if (
+          this.state.postUser &&
+          this.props.users[i].id !== this.state.postUser.id
+        ) {
+          this.setState({ postUser: this.props.users[i] });
+        }
+        break;
+      }
+    }
+  }
+
   handleEditClick = () => {
     this.setState({ editState: true });
   };
 
-  handleExitEdit() {
+  handleExitEdit = () => {
     this.setState({ editState: false });
-  }
+  };
 
   handleEditPost = (id, post) => {
     this.handleExitEdit();
@@ -40,6 +54,7 @@ class RequestPost extends React.Component {
       if (!this.state.editState) {
         return (
           <RequestPostView
+            deleteClick={this.props.deletePost}
             renderItems={this.renderItems}
             editClick={this.handleEditClick}
             currentUser={this.props.currentUser}
