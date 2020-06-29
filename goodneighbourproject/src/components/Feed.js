@@ -34,6 +34,7 @@ class Feed extends React.Component {
         <RequestTimeline
           users_state={this.props.users_state}
           filterState={this.state}
+          posts={this.props.posts}
         />
       </div>
     );

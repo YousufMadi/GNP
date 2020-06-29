@@ -47,6 +47,84 @@ class App extends React.Component {
           "https://miro.medium.com/max/2048/0*0fClPmIScV5pTLoE.jpg",
       },
     ],
+    posts: [
+        {
+          id: 0,
+          reimbursement: "Cash",
+          items: ["Chips", "Apples", "Flour"],
+          author: 1,
+          description:
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
+        },
+        {
+          id: 1,
+          reimbursement: "Cheque",
+          items: ["Honey Nut Cheerios"],
+          author: 2,
+          description:
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
+        },
+        {
+          id: 2,
+          reimbursement: "E-transfer",
+          items: ["Drawer", "Brush", "Canvas", "Lamp", "Blouse"],
+          author: 0,
+          description:
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
+        },
+        {
+          id: 3,
+          reimbursement: "Cash",
+          items: [
+            "Boat",
+            "Frame",
+            "Clamp",
+            "Cell Phone",
+            "Fridge",
+            "Drill",
+            "Puddle",
+            "Couch",
+          ],
+          author: 2,
+          description:
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
+        },
+        {
+          id: 4,
+          reimbursement: "E-transfer",
+          items: [
+            "Wagon",
+            "Stop Cream",
+            "Thermometer",
+            "Shoes",
+            "Pillow",
+            "Milk",
+            "Radio",
+            "Towel",
+            "PS4",
+            "Clock",
+          ],
+          author: 0,
+          description:
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
+        },
+        {
+          id: 5,
+          reimbursement: "Cheque",
+          items: ["Blue Blanket", "Red Blanket", "Orange Blanket"],
+          author: 1,
+          description:
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
+        },
+        {
+          id: 6,
+          reimbursement: "Cheque",
+          items: ["24 pc Water", "Crackers", "Apple pie", "Cake"],
+          author: 1,
+          description:
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
+        },
+      ],
 
     setState: this.setState.bind(this),
   };
@@ -68,6 +146,7 @@ class App extends React.Component {
               <Feed
                 handleUserLogout={handleUserLogout}
                 users_state={this.state}
+                posts={this.state.posts}
               />
             )}
           />
