@@ -9,7 +9,7 @@ import Logout from "./Auth/Logout";
 import Settings from "./Settings/Settings";
 import "../stylesheets/shared.css";
 
-import {addUser, updateUser, handleUserLogin, handleUserLogout} from "../actions/user";
+import { addUser, updateUser, handleUserLogin, handleUserLogout } from "../actions/user";
 
 class App extends React.Component {
   state = {
@@ -57,10 +57,10 @@ class App extends React.Component {
       <BrowserRouter>
         <Switch>
           <Route path="/" exact component={() => (
-              <Home
-                currentUser={this.state.currentUser}
-              />
-            )} 
+            <Home
+              currentUser={this.state.currentUser}
+            />
+          )}
           />
           <Route
             path="/feed"
@@ -105,7 +105,7 @@ class App extends React.Component {
             )}
           />
 
-          <Route 
+          <Route
             exact
             path="/settings"
             component={() => (
@@ -115,7 +115,7 @@ class App extends React.Component {
 
               />
             )}
-           />
+          />
         </Switch>
       </BrowserRouter>
     );

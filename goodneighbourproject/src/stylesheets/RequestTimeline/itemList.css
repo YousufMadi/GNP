@@ -1,0 +1,71 @@
+#container {
+  display: flex;
+  justify-content: center;
+}
+
+.itemListMain .header input {
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #FFF;
+  width: 165px;
+}
+.itemListMain .header button {
+  padding: 10px;
+  font-size: 16px;
+  margin: 10px;
+  margin-right: 0px;
+  background-color: #0066FF;
+  color: #FFF;
+  border: 2px solid #0066FF;
+  border-radius: 3px;
+}
+.itemListMain .header button:hover {
+  background-color: #003399;
+  border: 2px solid #003399;
+  cursor: pointer;
+}
+.itemListMain .theList {
+  list-style: none;
+  padding-left: 0;
+  width: 750px;
+  display: flex;
+  flex-wrap: wrap;
+} 
+.itemListMain .theList li {
+  color: #333;
+  background-color: rgb(170, 201, 247);;
+  padding: 5px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  margin-left: 5px;
+  transition: background-color .2s ease-out;
+}
+
+.itemListMain .theList li:hover {
+  background-color: pink;
+  cursor: pointer;
+}
+
+
+/* .itemBox {
+  color: #333;
+  background-color: rgb(170, 201, 247);;
+  padding: 5px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  margin-left: 5px;
+  transition: background-color .2s ease-out;
+} */
+
+/* .itemBox:hover {
+  background-color: pink;
+  cursor: pointer;
+} */
+
+ul.theList {
+  padding: 0;
+}
+
+.theList{
+  display: flex;
+}

@@ -68,19 +68,19 @@ class RequestAsk extends React.Component {
               handleItemsChange={this.handleItemsChange}
               items={this.state.items}
             />
-            <div id="pay-selector">
-              <select
-                className="form-new-post pay-select"
-                onChange={(e) => this.handleReimbursementChange(e)}
-              >
-                <option selected disabled value={null}>
-                  Reimbursement
+          </div>
+          <div id="pay-selector">
+            <select
+              className="form-new-post pay-select"
+              onChange={(e) => this.handleReimbursementChange(e)}
+            >
+              <option selected disabled value={null}>
+                Reimbursement
                 </option>
-                <option value="Cash">{"Cash"}</option>
-                <option value="E-transfer">{"E-Transfer"}</option>
-                <option value="Cheque">{"Cheque"}</option>
-              </select>
-            </div>
+              <option value="Cash">{"Cash"}</option>
+              <option value="E-transfer">{"E-Transfer"}</option>
+              <option value="Cheque">{"Cheque"}</option>
+            </select>
           </div>
           <br />
           <button
