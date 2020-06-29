@@ -112,7 +112,6 @@ class App extends React.Component {
               <Settings
                 users_state={this.state}
                 updateUser={updateUser}
-
               />
             )}
           />

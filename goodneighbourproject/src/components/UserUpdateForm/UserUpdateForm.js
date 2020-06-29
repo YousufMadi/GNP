@@ -1,5 +1,6 @@
 import React from "react";
 import './userupdateform.css';
+import NavbarLinks from "../Navigation/NavbarLinks";
 
 class UserUpdateForm extends React.Component{
 
@@ -96,7 +97,10 @@ class UserUpdateForm extends React.Component{
     const currentUser = this.props.users_state.currentUser;
     return(
       <div className="user-update-info">
-        <h2>Update Information</h2>
+        <div className="update-form-nav">
+          <NavbarLinks currentUser={currentUser} />
+        </div>
+        <h3>Update Information</h3>
 
         <p className="success_msg">{this.state.success_msg}</p>
         <form className="update-form" onSubmit={this.formSubmit}>

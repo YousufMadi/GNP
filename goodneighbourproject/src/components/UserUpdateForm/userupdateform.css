@@ -3,6 +3,22 @@
   text-align: center;  
 }
 
+.update-form-nav{
+  text-align: center;
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+  box-shadow: 0 8px 6px -10px black;
+
+}
+
+.update-form-nav ul li{
+  border-right: 1px solid black;
+}
+
+
+.update-form-nav ul li a{
+  padding-right: 1em;
+}
+
 .user-update-info{
   flex: 2.5;
   background: #fff;
@@ -12,7 +28,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.user-update-info h2{
+.user-update-info h3{
   margin: 1em auto 0.5em;
   text-align: center;
 }
