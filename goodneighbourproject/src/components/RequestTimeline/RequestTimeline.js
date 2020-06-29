@@ -30,7 +30,7 @@ class RequestTimeline extends React.Component {
   }
 
   addPostToState = (post) => {
-    this.setState({ posts: [...this.state.posts, post] });
+    this.props.addPostToState(this.props.database, post);
   };
 
   handleDeletePost = (id) => {
@@ -40,6 +40,7 @@ class RequestTimeline extends React.Component {
     console.log(newPosts);
     this.setState({ posts: newPosts });
   };
+
   handleEditPost = (id, post) => {
     let newPosts = this.state.posts;
     for (let i = 0; i < newPosts.length; i++) {
@@ -75,8 +76,8 @@ class RequestTimeline extends React.Component {
           <RequestPost
             deletePost={this.handleDeletePost}
             editPost={this.handleEditPost}
-            currentUser={this.props.users_state.currentUser}
-            users={this.props.users_state.users}
+            currentUser={this.props.database.currentUser}
+            users={this.props.database.users}
             key={index}
             post={post}
           />
@@ -104,7 +105,7 @@ class RequestTimeline extends React.Component {
         <>
           <div className="timeline">
             <RequestAsk
-              currentUser={this.props.users_state.currentUser}
+              currentUser={this.props.database.currentUser}
               addPostToTimeline={this.addPostToState}
             />
             <ul className="posts">{renderPosts}</ul>

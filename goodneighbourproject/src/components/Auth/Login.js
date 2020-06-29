@@ -32,7 +32,7 @@ class Login extends React.Component {
     let error_msg = "";
 
     // Get the user object.
-    let user = this.props.users_state.users.filter((u) => {
+    let user = this.props.database.users.filter((u) => {
       return u.email === this.state.email && u.password === this.state.password;
     });
 
@@ -54,12 +54,12 @@ class Login extends React.Component {
 
     if (valid_user !== null) {
       this.setState(defaultState);
-      this.props.handleUserLogin(this.props.users_state, valid_user);
+      this.props.handleUserLogin(this.props.database, valid_user);
     }
   };
 
   render() {
-    if (this.props.users_state.currentUser) {
+    if (this.props.database.currentUser) {
       return <Redirect to="/feed" />;
     }
     return (

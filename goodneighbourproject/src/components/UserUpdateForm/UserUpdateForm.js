@@ -7,7 +7,7 @@ class UserUpdateForm extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      user: this.props.users_state.currentUser,
+      user: this.props.database.currentUser,
       // Error message
       first_name_error: "",
       last_name_error: "",
@@ -70,7 +70,7 @@ class UserUpdateForm extends React.Component{
     const success_msg = "Profile updated successfully!";
 
     if (form_valid){
-      this.props.updateUser(this.props.users_state, this.state.user);
+      this.props.updateUser(this.props.database, this.state.user);
       this.setState({success_msg})
     }
 
@@ -94,7 +94,7 @@ class UserUpdateForm extends React.Component{
 
   render(){
 
-    const currentUser = this.props.users_state.currentUser;
+    const currentUser = this.props.database.currentUser;
     return(
       <div className="user-update-info">
         <div className="update-form-nav">

@@ -10,7 +10,7 @@ import Settings from "./Settings/Settings";
 import "../stylesheets/shared.css";
 
 import { addUser, updateUser, handleUserLogin, handleUserLogout } from "../actions/user";
-import { filterPosts } from "../actions/timeline";
+import { filterPosts, addPostToState } from "../actions/timeline";
 
 class App extends React.Component {
   state = {
@@ -146,9 +146,10 @@ class App extends React.Component {
             component={() => (
               <Feed
                 handleUserLogout={handleUserLogout}
-                users_state={this.state}
+                database={this.state}
                 posts={this.state.posts}
                 filterPosts={filterPosts}
+                addPostToState={addPostToState}
               />
             )}
           />
@@ -158,7 +159,7 @@ class App extends React.Component {
             path="/signup"
             component={() => (
               <Signup
-                users_state={this.state}
+                database={this.state}
                 addUser={addUser}
               />
             )}
@@ -170,7 +171,7 @@ class App extends React.Component {
             component={() => (
               <Login
                 handleUserLogin={handleUserLogin}
-                users_state={this.state}
+                database={this.state}
               />
             )}
           />
@@ -181,7 +182,7 @@ class App extends React.Component {
             component={() => (
               <Logout
                 logout={handleUserLogout}
-                users_state={this.state}
+                database={this.state}
               />
             )}
           />
@@ -191,7 +192,7 @@ class App extends React.Component {
             path="/settings"
             component={() => (
               <Settings
-                users_state={this.state}
+                database={this.state}
                 updateUser={updateUser}
               />
             )}

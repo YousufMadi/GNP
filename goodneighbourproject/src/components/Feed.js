@@ -19,7 +19,7 @@ class Feed extends React.Component {
   };
 
   render() {
-    const currentUser = this.props.users_state.currentUser;
+    const currentUser = this.props.database.currentUser;
 
     if (currentUser === null) {
       return <Redirect to="/login" />;
@@ -28,14 +28,15 @@ class Feed extends React.Component {
       <div className="feedContainer">
         <Sidebar
           handleUserLogout={this.props.handleUserLogout}
-          users_state={this.props.users_state}
+          database={this.props.database}
           changeFilterState={this.handleFilterChange}
         />
         <RequestTimeline
-          users_state={this.props.users_state}
+          database={this.props.database}
           filterState={this.state}
           posts={this.props.posts}
           filterPosts={this.props.filterPosts}
+          addPostToState={this.props.addPostToState}
         />
       </div>
     );

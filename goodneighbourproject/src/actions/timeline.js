@@ -1,3 +1,11 @@
+export const addPostToState = (database, new_post) =>{
+
+  database.setState({
+    posts: [...database.posts, new_post]
+  });
+}
+
+
 export const filterPosts = (posts, filter) => {
   debugger;
   let newFilteredPosts = posts;

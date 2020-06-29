@@ -93,7 +93,7 @@ class Signup extends React.Component {
 
     if (form_valid) {
       this.props.addUser(
-        this.props.users_state,
+        this.props.database,
         this.state.first_name,
         this.state.last_name,
         this.state.email,
@@ -105,7 +105,7 @@ class Signup extends React.Component {
   };
 
   render() {
-    if (this.props.users_state.currentUser) {
+    if (this.props.database.currentUser) {
       return <Redirect to="/feed" />;
     }
     return (
