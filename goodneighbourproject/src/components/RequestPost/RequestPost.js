@@ -54,12 +54,13 @@ class RequestPost extends React.Component {
       if (!this.state.editState) {
         return (
           <RequestPostView
-            deleteClick={this.props.deletePost}
+            deletePost={this.props.deletePost}
             renderItems={this.renderItems}
             editClick={this.handleEditClick}
             currentUser={this.props.currentUser}
             post={this.props.post}
             postUser={this.state.postUser}
+            database={this.props.database}
           />
         );
       } else {

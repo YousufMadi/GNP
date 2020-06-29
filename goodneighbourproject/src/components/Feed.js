@@ -37,6 +37,7 @@ class Feed extends React.Component {
           posts={this.props.posts}
           filterPosts={this.props.filterPosts}
           addPostToState={this.props.addPostToState}
+          deletePost={this.props.deletePost}
         />
       </div>
     );

@@ -5,6 +5,13 @@ export const addPostToState = (database, new_post) =>{
   });
 }
 
+export const deletePost = (database, id) => {
+  const newPosts = database.posts.filter((post) => {
+    return post.id !== id;
+  });
+  console.log(newPosts);
+  database.setState({ posts: newPosts });
+};
 
 export const filterPosts = (posts, filter) => {
   debugger;

@@ -10,7 +10,7 @@ import Settings from "./Settings/Settings";
 import "../stylesheets/shared.css";
 
 import { addUser, updateUser, handleUserLogin, handleUserLogout } from "../actions/user";
-import { filterPosts, addPostToState } from "../actions/timeline";
+import { filterPosts, addPostToState, deletePost } from "../actions/timeline";
 
 class App extends React.Component {
   state = {
@@ -150,6 +150,7 @@ class App extends React.Component {
                 posts={this.state.posts}
                 filterPosts={filterPosts}
                 addPostToState={addPostToState}
+                deletePost={deletePost}
               />
             )}
           />

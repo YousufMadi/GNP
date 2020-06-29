@@ -53,7 +53,7 @@ class RequestPostView extends React.Component {
               </button>
               <button
                 className="delete-post"
-                onClick={() => this.props.deleteClick(this.props.post.id)}
+                onClick={() => this.props.deletePost(this.props.database, this.props.post.id)}
               >
                 <i className="fas fa-trash"></i>
               </button>
