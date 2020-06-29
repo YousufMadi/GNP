@@ -59,7 +59,7 @@ class RequestPostView extends React.Component {
               </button>
             </>
           ) : (
-            <></>
+            <button className="accept-request">Accept Request</button>
           )}
         </div>
         <div className="post-description">
