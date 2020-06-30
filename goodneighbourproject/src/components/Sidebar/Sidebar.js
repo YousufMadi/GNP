@@ -26,7 +26,7 @@ class Sidebar extends React.Component {
   handleSizeChange(e) {
     this.setState({ filterSize: e.target.value });
   }
-  
+
   handlePaymentChange(e) {
     this.setState({ filterPayment: e.target.value });
   }
@@ -68,6 +68,7 @@ class Sidebar extends React.Component {
         <div id="sidebar-tabs">
           <Link to="/">Home</Link>
           <Link to="/settings">Settings</Link>
+          <Link to="/adminsettings">Admin</Link>
           <button onClick={this.handleUserLogout}>Log out</button>
         </div>
       </>

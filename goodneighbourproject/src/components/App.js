@@ -7,7 +7,10 @@ import Signup from "./Auth/Signup";
 import Login from "./Auth/Login";
 import Logout from "./Auth/Logout";
 import Settings from "./Settings/Settings";
+import SettingsAdmin from "./SettingsAdmin/SettingsAdmin";
+
 import "../stylesheets/shared.css";
+
 
 import { addUser, updateUser, handleUserLogin, handleUserLogout } from "../actions/user";
 
@@ -116,6 +119,19 @@ class App extends React.Component {
               />
             )}
           />
+
+          <Route
+            exact
+            path="/adminsettings"
+            component={() => (
+              <SettingsAdmin
+                users_state={this.state}
+                updateUser={updateUser}
+
+              />
+            )}
+          />
+
         </Switch>
       </BrowserRouter>
     );

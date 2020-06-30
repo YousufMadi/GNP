@@ -1,7 +1,7 @@
 import React from "react";
 
 import "../../stylesheets/RequestTimeline/requestAsk.css";
-import ItemsList from "../GroceryList/ItemsList";
+import ItemsList from "../ItemsList/ItemsList";
 
 class RequestAsk extends React.Component {
   state = {
