@@ -78,7 +78,7 @@ class App extends React.Component {
             path="/signup"
             component={() => (
               <Signup
-                database={this.state}
+                users_state={this.state}
                 addUser={addUser}
               />
             )}
@@ -90,7 +90,7 @@ class App extends React.Component {
             component={() => (
               <Login
                 handleUserLogin={handleUserLogin}
-                database={this.state}
+                users_state={this.state}
               />
             )}
           />
@@ -101,7 +101,7 @@ class App extends React.Component {
             component={() => (
               <Logout
                 logout={handleUserLogout}
-                database={this.state}
+                users_state={this.state}
               />
             )}
           />
@@ -111,7 +111,7 @@ class App extends React.Component {
             path="/settings"
             component={() => (
               <Settings
-                database={this.state}
+                users_state={this.state}
                 updateUser={updateUser}
               />
             )}

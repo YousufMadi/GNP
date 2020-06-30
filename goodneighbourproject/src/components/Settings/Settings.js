@@ -9,7 +9,7 @@ class Settings extends React.Component {
 
   render() {
 
-    const currentUser = this.props.database.currentUser;
+    const currentUser = this.props.users_state.currentUser;
     if (currentUser === null) {
       return <Redirect to="/login" />;
     }
@@ -20,7 +20,7 @@ class Settings extends React.Component {
 
             <UserInfo currentUser={currentUser}/>
 
-            <UserUpdateForm database={this.props.database} 
+            <UserUpdateForm users_state={this.props.users_state} 
                             updateUser={this.props.updateUser}/>
             
           </div>

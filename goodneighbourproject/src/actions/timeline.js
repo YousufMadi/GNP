@@ -4,7 +4,6 @@ export const addPostToState = (posts_state, new_post) =>{
     posts: [...posts_state.posts, new_post]
   });
 
-  // debugger;
   console.log(posts_state)
 }
 
