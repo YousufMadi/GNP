@@ -12,7 +12,7 @@ class RequestTimeline extends React.Component {
       filteredPosts: null,
       posts: this.props.posts,
       confirmationModal: {
-        display: true,
+        display: false,
         selectedPost: null,
       },
       currentPage: 1,
@@ -33,6 +33,24 @@ class RequestTimeline extends React.Component {
     this.props.addPostToState(this.props.database, post);
   };
 
+  handleConfirmationModal = (post) => {
+    this.setState({ confirmationModal: { display: true, selectedPost: post } });
+  };
+
+  handleCloseModal = () => {
+    this.setState({
+      confirmationModal: { display: false, selectedPost: null },
+    });
+  };
+
+  handleAcceptPost = (post) => {
+    this.handleCloseModal();
+    const updated_user = {
+      ...this.props.database.currentUser,
+      active_post: post,
+    };
+    this.props.updateUser(this.props.database, updated_user);
+  };
 
   handleClick(event) {
     this.setState({
@@ -54,6 +72,7 @@ class RequestTimeline extends React.Component {
       const renderPosts = currentPosts.map((post, index) => {
         return (
           <RequestPost
+            showConfirmation={this.handleConfirmationModal}
             deletePost={this.props.deletePost}
             editPost={this.props.editPost}
             currentUser={this.props.database.currentUser}
@@ -92,7 +111,12 @@ class RequestTimeline extends React.Component {
             <ul className="posts">{renderPosts}</ul>
             <ul id="page-numbers">{renderPageNumbers}</ul>
           </div>
-          <PostModal confirmation={this.state.confirmationModal} />
+          <PostModal
+            users={this.props.database.users}
+            acceptPost={this.handleAcceptPost}
+            confirmation={this.state.confirmationModal}
+            closeModal={this.handleCloseModal}
+          />
         </>
       );
     } else {

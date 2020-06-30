@@ -45,6 +45,19 @@ export const filterPosts = (posts, filter) => {
   return newFilteredPosts;
 };
 
+export const fetchPostAuthor = (post, users) => {
+  for (let i = 0; i < users.length; i++) {
+    if (users[i].id === post.author) {
+      return users[i];
+    }
+  }
+  return null;
+};
+
+export const getSizeEstimate = (post) => {
+  return sizeEstimate(post);
+};
+
 const sizeEstimate = (post) => {
   let size = null;
   if (post.items.length <= 3) {

@@ -32,6 +32,7 @@ class Feed extends React.Component {
           changeFilterState={this.handleFilterChange}
         />
         <RequestTimeline
+          updateUser={this.props.updateUser}
           database={this.props.database}
           filterState={this.state}
           posts={this.props.posts}
