@@ -90,8 +90,7 @@ p{
 
 /* NAVBAR */
 .navbar{
-  position: fixed;
-  height: 4em;
+  height: 2em;
   background-color: #fff;
   width: 100%;
   text-align: center;
@@ -99,7 +98,7 @@ p{
 
 .navbar-links li{
   display: inline-block;
-  margin: 1.5em 1em;
+  margin: 0.5em 1em;
 }
 
 .navbar-links li a{
