@@ -23,7 +23,8 @@ class RequestPostEdit extends React.Component {
       items: this.state.items,
       description: this.state.formDescription,
     };
-    this.props.editPost(this.props.database, this.props.post.id, newPost);
+    this.props.editPost(this.props.post.id, newPost);
+    console.log(this.props.post.id);
   };
   renderOtherPaymentOptions() {
     switch (this.props.post.reimbursement) {

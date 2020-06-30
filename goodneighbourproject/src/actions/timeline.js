@@ -1,9 +1,8 @@
-export const addPostToState = (database, new_post) =>{
-
+export const addPostToState = (database, new_post) => {
   database.setState({
-    posts: [...database.posts, new_post]
+    posts: [...database.posts, new_post],
   });
-}
+};
 
 export const deletePost = (database, id) => {
   const newPosts = database.posts.filter((post) => {
@@ -14,6 +13,7 @@ export const deletePost = (database, id) => {
 };
 
 export const editPost = (database, id, post) => {
+  console.log(id);
   let newPosts = database.posts;
   for (let i = 0; i < newPosts.length; i++) {
     if (newPosts[i].id === id) {
@@ -23,40 +23,27 @@ export const editPost = (database, id, post) => {
       break;
     }
   }
-  database.setState({ 
-    posts: newPosts
+  database.setState({
+    posts: newPosts,
   });
-
 };
 
 export const filterPosts = (posts, filter) => {
   let newFilteredPosts = posts;
-  if (
-    filter.filterPayment !== null &&
-    filter.filterPayment !== "any"
-  ) {
+  if (filter.filterPayment !== null && filter.filterPayment !== "any") {
     // Filter by payment
     newFilteredPosts = posts.filter((post) => {
-      return (
-        filter.filterPayment ===
-        post.reimbursement.toLowerCase()
-      );
+      return filter.filterPayment === post.reimbursement.toLowerCase();
     });
   }
-  if (
-    filter.filterSize !== null &&
-    filter.filterSize !== "any"
-  ) {
+  if (filter.filterSize !== null && filter.filterSize !== "any") {
     // Filter by request size
     newFilteredPosts = newFilteredPosts.filter((post) => {
-      return (
-        !filter.filterSize ||
-        filter.filterSize === sizeEstimate(post)
-      );
+      return !filter.filterSize || filter.filterSize === sizeEstimate(post);
     });
   }
   return newFilteredPosts;
-}
+};
 
 const sizeEstimate = (post) => {
   let size = null;
