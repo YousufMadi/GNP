@@ -1,20 +1,23 @@
-export const addPostToState = (database, new_post) =>{
+export const addPostToState = (posts_state, new_post) =>{
 
-  database.setState({
-    posts: [...database.posts, new_post]
+  posts_state.setState({
+    posts: [...posts_state.posts, new_post]
   });
+
+  // debugger;
+  console.log(posts_state)
 }
 
-export const deletePost = (database, id) => {
-  const newPosts = database.posts.filter((post) => {
+export const deletePost = (posts_state, id) => {
+  const newPosts = posts_state.posts.filter((post) => {
     return post.id !== id;
   });
   console.log(newPosts);
-  database.setState({ posts: newPosts });
+  posts_state.setState({ posts: newPosts });
 };
 
-export const editPost = (database, id, post) => {
-  let newPosts = database.posts;
+export const editPost = (posts_state, id, post) => {
+  let newPosts = posts_state.posts;
   for (let i = 0; i < newPosts.length; i++) {
     if (newPosts[i].id === id) {
       newPosts[i].description = post.description;
@@ -23,40 +26,28 @@ export const editPost = (database, id, post) => {
       break;
     }
   }
-  database.setState({ 
+  posts_state.setState({ 
     posts: newPosts
   });
 
 };
 
-export const filterPosts = (posts, filter) => {
+export const filterPosts = (posts, posts_state) => {
   let newFilteredPosts = posts;
-  if (
-    filter.filterPayment !== null &&
-    filter.filterPayment !== "any"
-  ) {
+  if (posts_state.filterPayment !== null && posts_state.filterPayment !== "any") {
     // Filter by payment
     newFilteredPosts = posts.filter((post) => {
-      return (
-        filter.filterPayment ===
-        post.reimbursement.toLowerCase()
-      );
+      return posts_state.filterPayment === post.reimbursement.toLowerCase();
     });
   }
-  if (
-    filter.filterSize !== null &&
-    filter.filterSize !== "any"
-  ) {
+  if (posts_state.filterSize !== null && posts_state.filterSize !== "any") {
     // Filter by request size
     newFilteredPosts = newFilteredPosts.filter((post) => {
-      return (
-        !filter.filterSize ||
-        filter.filterSize === sizeEstimate(post)
-      );
+      return !posts_state.filterSize || posts_state.filterSize === sizeEstimate(post);
     });
   }
   return newFilteredPosts;
-}
+};
 
 const sizeEstimate = (post) => {
   let size = null;

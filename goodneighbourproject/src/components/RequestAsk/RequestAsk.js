@@ -15,18 +15,23 @@ class RequestAsk extends React.Component {
   toggleSize() {
     this.setState({ dropdownOpenSize: !this.state.dropdownOpenSize });
   }
+
   toggleReimburse() {
     this.setState({ dropdownOpenReimburse: !this.state.dropdownOpenReimburse });
   }
+
   handleItemsChange = (items) => {
     this.setState({ items: items });
   };
+
   handleReimbursementChange = (e) => {
     this.setState({ formReimbursement: e.target.value });
   };
+
   handleDescriptionChange = (e) => {
     this.setState({ formDescription: e.target.value });
   };
+
   handleCreateRequest = (e) => {
     e.preventDefault();
     if (this.state.formReimbursement !== null && this.state.items.length > 0) {
@@ -38,6 +43,7 @@ class RequestAsk extends React.Component {
         items: this.state.items,
         description: this.state.formDescription,
       };
+
       this.setState({
         formDescription: null,
         formReimbursement: null,
@@ -45,7 +51,7 @@ class RequestAsk extends React.Component {
         dropdownOpenSize: false,
         dropdownOpenReimburse: false,
       });
-      this.props.addPostToTimeline(newPost);
+      this.props.addPostToState(this.props.posts_state, newPost);
     }
   };
 

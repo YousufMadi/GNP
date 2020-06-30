@@ -7,15 +7,19 @@ class RequestPostEdit extends React.Component {
     formDescription: this.props.post.description,
     items: this.props.post.items,
   };
+
   handleItemsChange = (items) => {
     this.setState({ items: items });
   };
+
   handleReimbursementChange = (e) => {
     this.setState({ formReimbursement: e.target.value });
   };
+
   handleDescriptionChange = (e) => {
     this.setState({ formDescription: e.target.value });
   };
+
   handleEditRequest = (e) => {
     e.preventDefault();
     const newPost = {
@@ -23,8 +27,10 @@ class RequestPostEdit extends React.Component {
       items: this.state.items,
       description: this.state.formDescription,
     };
-    this.props.editPost(this.props.database, this.props.post.id, newPost);
+    
+    this.props.editPost(this.props.posts_state, this.props.post.id, newPost);
   };
+
   renderOtherPaymentOptions() {
     switch (this.props.post.reimbursement) {
       case "Cash":

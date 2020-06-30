@@ -8,22 +8,22 @@ class RequestPost extends React.Component {
   state = { postUser: null, editState: false };
 
   componentDidMount() {
-    for (let i = 0; i < this.props.users.length; i++) {
-      if (this.props.users[i].id === this.props.post.author) {
-        this.setState({ postUser: this.props.users[i] });
+    for (let i = 0; i < this.props.users_state.users.length; i++) {
+      if (this.props.users_state.users[i].id === this.props.post.author) {
+        this.setState({ postUser: this.props.users_state.users[i] });
         break;
       }
     }
   }
 
   componentDidUpdate() {
-    for (let i = 0; i < this.props.users.length; i++) {
-      if (this.props.users[i].id === this.props.post.author) {
+    for (let i = 0; i < this.props.users_state.users.length; i++) {
+      if (this.props.users_state.users[i].id === this.props.post.author) {
         if (
           this.state.postUser &&
-          this.props.users[i].id !== this.state.postUser.id
+          this.props.users_state.users[i].id !== this.state.postUser.id
         ) {
-          this.setState({ postUser: this.props.users[i] });
+          this.setState({ postUser: this.props.users_state.users[i] });
         }
         break;
       }
@@ -40,7 +40,7 @@ class RequestPost extends React.Component {
 
   handleEditPost = (id, post) => {
     this.handleExitEdit();
-    this.props.editPost(this.props.database, id, post);
+    this.props.editPost(this.props.posts_state, id, post);
   };
 
   renderItems = () => {
@@ -60,7 +60,7 @@ class RequestPost extends React.Component {
             currentUser={this.props.currentUser}
             post={this.props.post}
             postUser={this.state.postUser}
-            database={this.props.database}
+            posts_state={this.props.posts_state}
           />
         );
       } else {
@@ -71,7 +71,7 @@ class RequestPost extends React.Component {
             currentUser={this.props.currentUser}
             post={this.props.post}
             postUser={this.state.postUser}
-            database={this.props.database}
+            posts_state={this.props.posts_state}
           />
         );
       }
