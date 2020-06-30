@@ -2,6 +2,7 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import RequestTimeline from "./RequestTimeline/RequestTimeline";
 import Sidebar from "./Sidebar/Sidebar";
+import ActiveRequest from "./ActiveRequest/ActiveRequest";
 
 import "../stylesheets/feed.css";
 class Feed extends React.Component {
@@ -23,6 +24,22 @@ class Feed extends React.Component {
 
     if (currentUser === null) {
       return <Redirect to="/login" />;
+    } else if (currentUser.active_post) {
+      return (
+        <div className="feedContainer">
+          <Sidebar
+            handleUserLogout={this.props.handleUserLogout}
+            database={this.props.database}
+            changeFilterState={this.handleFilterChange}
+          />
+          <ActiveRequest
+            database={this.props.database}
+            updateUser={this.props.updateUser}
+            users={this.props.database.users}
+            currentUser={currentUser}
+          />
+        </div>
+      );
     }
     return (
       <div className="feedContainer">

@@ -1,0 +1,92 @@
+#active-request-container{
+  font-family: 'Montserrat', sans-serif;
+  padding-top: 1em;
+  padding-left: 1em;
+  padding-right: 1em;
+  height: 80%;
+  width: 50%;
+  margin: auto;
+  margin-top: 2em;
+  background-color: #fff;  
+  border: 1px solid rgba(72,72,72,0.8);
+  border-radius: 3px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+  overflow: auto;
+}
+
+#active-request-header h5{
+  display: inline-block;
+}
+
+#active-request-header button {
+  cursor: pointer;
+  display: block;
+  width: fit-content;
+  margin-left: auto;
+  background-color: rgba(72,72,72,0.05);
+  border: 2px solid rgba(72,72,72,0.2);
+  padding: 1em 1.5em;
+  border-radius: 3px;
+  color: rgb(6, 143, 6);
+  font-size: small;
+  transition: all 0.2s ease-in-out;
+}
+
+#active-request-header button:hover{
+  background-color: rgba(72,72,72,0.1);
+}
+
+#active-request-author{
+  text-align: center;
+  margin-top: 1.5em;
+  font-weight: 600;
+}
+
+#active-items-requested{
+  margin-top: 1em;
+}
+
+#active-items-requested label{
+  margin-left: 1em;
+  font-size: small;
+  color: grey;
+  font-weight: 600;
+}
+
+#active-description{
+  margin-top: 1.5em;
+}
+
+#active-description label{
+  margin-left: 1em;
+  font-size: small;
+  color: grey;
+  font-weight: 600;
+}
+
+#active-description p{
+  margin-top: 0.5em;
+  font-size: medium;
+}
+
+#end-active-request{
+  margin-top: 4em;
+}
+
+#end-active-request button{
+  cursor: pointer;
+  display: block;
+  width: 90%;
+  margin: auto;
+  background-color: rgba(219, 12, 12, 0.8);
+  border: 2px solid rgba(72,72,72,0.2);
+  padding: 1em 1.5em;
+  border-radius: 3px;
+  color: white;
+  font-size: small;
+  transition: all 0.2s ease-in-out;
+}
+
+#end-active-request button:hover{
+  background-color: rgba(219, 12, 12, 0.9);
+}

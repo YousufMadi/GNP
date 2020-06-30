@@ -50,6 +50,7 @@ class RequestTimeline extends React.Component {
       active_post: post,
     };
     this.props.updateUser(this.props.database, updated_user);
+    this.props.deletePost(this.props.database, post.id);
   };
 
   handleClick(event) {

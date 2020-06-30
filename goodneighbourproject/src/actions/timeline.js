@@ -8,7 +8,6 @@ export const deletePost = (database, id) => {
   const newPosts = database.posts.filter((post) => {
     return post.id !== id;
   });
-  console.log(newPosts);
   database.setState({ posts: newPosts });
 };
 
