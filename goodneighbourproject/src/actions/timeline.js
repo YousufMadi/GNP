@@ -1,11 +1,8 @@
-export const addPostToState = (posts_state, new_post) =>{
-
+export const addPostToState = (posts_state, new_post) => {
   posts_state.setState({
-    posts: [...posts_state.posts, new_post]
+    posts: [...posts_state.posts, new_post],
   });
-
-  console.log(posts_state)
-}
+};
 
 export const deletePost = (posts_state, id) => {
   const newPosts = posts_state.posts.filter((post) => {
@@ -25,15 +22,18 @@ export const editPost = (posts_state, id, post) => {
       break;
     }
   }
-  posts_state.setState({ 
-    posts: newPosts
-  });
 
+  posts_state.setState({
+    posts: newPosts,
+  });
 };
 
 export const filterPosts = (posts, posts_state) => {
   let newFilteredPosts = posts;
-  if (posts_state.filterPayment !== null && posts_state.filterPayment !== "any") {
+  if (
+    posts_state.filterPayment !== null &&
+    posts_state.filterPayment !== "any"
+  ) {
     // Filter by payment
     newFilteredPosts = posts.filter((post) => {
       return posts_state.filterPayment === post.reimbursement.toLowerCase();
@@ -42,10 +42,25 @@ export const filterPosts = (posts, posts_state) => {
   if (posts_state.filterSize !== null && posts_state.filterSize !== "any") {
     // Filter by request size
     newFilteredPosts = newFilteredPosts.filter((post) => {
-      return !posts_state.filterSize || posts_state.filterSize === sizeEstimate(post);
+      return (
+        !posts_state.filterSize || posts_state.filterSize === sizeEstimate(post)
+      );
     });
   }
   return newFilteredPosts;
+};
+
+export const fetchPostAuthor = (post, users) => {
+  for (let i = 0; i < users.length; i++) {
+    if (users[i].id === post.author) {
+      return users[i];
+    }
+  }
+  return null;
+};
+
+export const getSizeEstimate = (post) => {
+  return sizeEstimate(post);
 };
 
 const sizeEstimate = (post) => {

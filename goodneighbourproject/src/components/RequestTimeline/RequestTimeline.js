@@ -12,7 +12,7 @@ class RequestTimeline extends React.Component {
       filteredPosts: null,
       posts: this.props.posts_state.posts,
       confirmationModal: {
-        display: true,
+        display: false,
         selectedPost: null,
       },
       currentPage: 1,
@@ -26,8 +26,35 @@ class RequestTimeline extends React.Component {
   }
 
   filterPosts(posts) {
-    return this.props.filterPosts(this.props.posts_state.posts, this.props.posts_state);
+    return this.props.filterPosts(
+      this.props.posts_state.posts,
+      this.props.posts_state
+    );
   }
+
+  addPostToState = (post) => {
+    this.props.addPostToState(this.props.posts_state, post);
+  };
+
+  handleConfirmationModal = (post) => {
+    this.setState({ confirmationModal: { display: true, selectedPost: post } });
+  };
+
+  handleCloseModal = () => {
+    this.setState({
+      confirmationModal: { display: false, selectedPost: null },
+    });
+  };
+
+  handleAcceptPost = (post) => {
+    this.handleCloseModal();
+    const updated_user = {
+      ...this.props.users_state.currentUser,
+      active_post: post,
+    };
+    this.props.deletePost(this.props.posts_state, post.id);
+    this.props.updateUser(this.props.users_state, updated_user);
+  };
 
   handleClick(event) {
     this.setState({
@@ -49,6 +76,7 @@ class RequestTimeline extends React.Component {
       const renderPosts = currentPosts.map((post, index) => {
         return (
           <RequestPost
+            showConfirmation={this.handleConfirmationModal}
             deletePost={this.props.deletePost}
             editPost={this.props.editPost}
             currentUser={this.props.users_state.currentUser}
@@ -88,7 +116,12 @@ class RequestTimeline extends React.Component {
             <ul className="posts">{renderPosts}</ul>
             <ul id="page-numbers">{renderPageNumbers}</ul>
           </div>
-          <PostModal confirmation={this.state.confirmationModal} />
+          <PostModal
+            users={this.props.users_state.users}
+            acceptPost={this.handleAcceptPost}
+            confirmation={this.state.confirmationModal}
+            closeModal={this.handleCloseModal}
+          />
         </>
       );
     } else {

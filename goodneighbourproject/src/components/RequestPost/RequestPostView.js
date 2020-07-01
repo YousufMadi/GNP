@@ -53,14 +53,20 @@ class RequestPostView extends React.Component {
               </button>
               <button
                 className="delete-post"
+
                 onClick={() => this.props.deletePost(this.props.posts_state, this.props.post.id)}
               >
                 <i className="fas fa-trash"></i>
               </button>
             </>
           ) : (
-              <button className="accept-request">Accept Request</button>
-            )}
+            <button
+              className="accept-request"
+              onClick={() => this.props.showConfirmation(this.props.post)}
+            >
+              Accept Request
+            </button>
+          )}
         </div>
         <div className="post-description">
           {this.renderItemSizeOrList()}

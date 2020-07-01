@@ -11,9 +11,12 @@ import SettingsAdmin from "./SettingsAdmin/SettingsAdmin";
 
 import "../stylesheets/shared.css";
 
-
-import { addUser, updateUser, handleUserLogin, handleUserLogout } from "../actions/user";
-import { filterPosts, addPostToState, deletePost, editPost } from "../actions/timeline";
+import {
+  addUser,
+  updateUser,
+  handleUserLogin,
+  handleUserLogout,
+} from "../actions/user";
 
 class App extends React.Component {
   state = {
@@ -26,6 +29,7 @@ class App extends React.Component {
         email: "sam@apple.com",
         password: "password",
         rating: 4,
+        active_post: null,
         profile_picture:
           "https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80",
         admin: true
@@ -37,6 +41,7 @@ class App extends React.Component {
         email: "john@pole.com",
         password: "password",
         rating: 5,
+        active_post: null,
         profile_picture:
           "https://cdn.fastly.picmonkey.com/contentful/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=800&q=70",
         admin: false
@@ -49,6 +54,7 @@ class App extends React.Component {
         email: "robert@hartz.com",
         password: "password",
         rating: 3,
+        active_post: null,
         profile_picture:
           "https://miro.medium.com/max/2048/0*0fClPmIScV5pTLoE.jpg",
         admin: false
@@ -58,21 +64,20 @@ class App extends React.Component {
     setState: this.setState.bind(this),
   };
 
-
   render() {
     return (
       <BrowserRouter>
         <Switch>
-          <Route path="/" exact component={() => (
-            <Home
-              currentUser={this.state.currentUser}
-            />
-          )}
+          <Route
+            path="/"
+            exact
+            component={() => <Home currentUser={this.state.currentUser} />}
           />
           <Route
             path="/feed"
             component={() => (
               <Feed
+                updateUser={updateUser}
                 handleUserLogout={handleUserLogout}
                 users_state={this.state}
               />
@@ -83,10 +88,7 @@ class App extends React.Component {
             exact
             path="/signup"
             component={() => (
-              <Signup
-                users_state={this.state}
-                addUser={addUser}
-              />
+              <Signup users_state={this.state} addUser={addUser} />
             )}
           />
 
@@ -105,10 +107,7 @@ class App extends React.Component {
             exact
             path="/logout"
             component={() => (
-              <Logout
-                logout={handleUserLogout}
-                users_state={this.state}
-              />
+              <Logout logout={handleUserLogout} users_state={this.state} />
             )}
           />
 
@@ -116,10 +115,7 @@ class App extends React.Component {
             exact
             path="/settings"
             component={() => (
-              <Settings
-                users_state={this.state}
-                updateUser={updateUser}
-              />
+              <Settings users_state={this.state} updateUser={updateUser} />
             )}
           />
 
@@ -133,7 +129,6 @@ class App extends React.Component {
               />
             )}
           />
-
         </Switch>
       </BrowserRouter>
     );
