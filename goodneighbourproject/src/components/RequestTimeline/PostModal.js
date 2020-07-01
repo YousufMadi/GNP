@@ -9,7 +9,7 @@ class PostModal extends React.Component {
   renderRating(author) {
     let renderStarsReturn = [];
     for (let i = 0; i < author.rating; i++) {
-      renderStarsReturn.push(<i className="fas fa-star"></i>);
+      renderStarsReturn.push(<i key={i} className="fas fa-star"></i>);
     }
     return renderStarsReturn;
   }
@@ -22,7 +22,7 @@ class PostModal extends React.Component {
       return (
         <Modal
           isOpen={this.props.confirmation.display ? true : false}
-          onRequestClose={this.props.confirmation}
+          onRequestClose={this.props.closeModal}
           style={{
             overlay: {
               backgroundColor: "rgba(0,0,0,0.3)",

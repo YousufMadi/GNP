@@ -92,6 +92,7 @@
 
 
 #pay-selector{
+  margin-top: 0.5em;
   float: right;
   display: inline-block;
   width: 25%;

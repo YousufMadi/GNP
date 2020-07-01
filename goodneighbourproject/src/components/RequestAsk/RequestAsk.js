@@ -1,14 +1,15 @@
 import React from "react";
+import AutoComplete from "react-google-autocomplete";
 
 import "../../stylesheets/RequestTimeline/requestAsk.css";
 import ItemsList from "../RequestPost/ItemsList";
-import Items from "../RequestPost/Items";
 
 class RequestAsk extends React.Component {
   state = {
     items: [],
     formReimbursement: null,
     formDescription: null,
+    location: { lat: null, lng: null },
   };
 
   handleItemsChange = (items) => {
@@ -25,11 +26,21 @@ class RequestAsk extends React.Component {
 
   handleCreateRequest = (e) => {
     e.preventDefault();
-    if (this.state.formReimbursement !== null && this.state.items.length > 0) {
+    if (
+      this.state.formReimbursement !== null &&
+      this.state.items.length > 0 &&
+      this.state.location.lat !== null &&
+      this.state.location.lng !== null
+    ) {
+      // This guarentees a unique id by getting the last elements id, which has the largest
+      // id of all the posts, and adding 1 to it. This will be handled automatically by
+      // the database we later implement.
       const newPost = {
-        id: 5,
+        id:
+          this.props.posts_state.posts[this.props.posts_state.posts.length - 1]
+            .id + 1,
         author: this.props.currentUser.id,
-        name: "Filler",
+        location: this.state.location,
         reimbursement: this.state.formReimbursement,
         items: this.state.items,
         description: this.state.formDescription,
@@ -39,6 +50,7 @@ class RequestAsk extends React.Component {
         formDescription: null,
         formReimbursement: null,
         items: [],
+        location: { lat: null, lng: null },
       });
       this.props.addPostToState(this.props.posts_state, newPost);
     }
@@ -50,7 +62,7 @@ class RequestAsk extends React.Component {
         <div id="new-request-description">
           <img src={this.props.currentUser.profile_picture} alt="profile-pic" />
           <textarea
-            value={this.state.formDescription}
+            value={this.state.formDescription ? this.state.formDescription : ""}
             className="new-post-description"
             placeholder="Provide information about your request here..."
             onChange={this.handleDescriptionChange}
@@ -58,9 +70,19 @@ class RequestAsk extends React.Component {
           />
         </div>
         <div id="new-post-address">
-          <input
+          <AutoComplete
             id="address-input"
             placeholder="Enter your delivery address here"
+            apiKey={"AIzaSyARRBVg-xS1QeLJMfoCSeQm5At4Q-E7luU"}
+            types={["address"]}
+            onPlaceSelected={(place) => {
+              this.setState({
+                location: {
+                  lat: place.geometry.location.lat(),
+                  lng: place.geometry.location.lng(),
+                },
+              });
+            }}
           />
           <div id="pay-selector">
             <select
@@ -83,7 +105,9 @@ class RequestAsk extends React.Component {
           />
         </div>
         {this.state.formReimbursement !== null &&
-        this.state.items.length > 0 ? (
+        this.state.items.length > 0 &&
+        this.state.location.lat !== null &&
+        this.state.location.lng !== null ? (
           <button
             type="button"
             className="new-post-button"

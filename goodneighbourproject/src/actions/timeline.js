@@ -8,7 +8,6 @@ export const deletePost = (posts_state, id) => {
   const newPosts = posts_state.posts.filter((post) => {
     return post.id !== id;
   });
-  console.log(newPosts);
   posts_state.setState({ posts: newPosts });
 };
 

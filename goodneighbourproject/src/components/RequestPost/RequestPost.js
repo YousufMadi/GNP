@@ -1,6 +1,7 @@
 import React from "react";
 import RequestPostView from "./RequestPostView";
 import RequestPostEdit from "./RequestPostEdit";
+import { v4 as uuid } from "uuid";
 
 import "../../stylesheets/RequestTimeline/requestpost.css";
 
@@ -45,7 +46,11 @@ class RequestPost extends React.Component {
 
   renderItems = () => {
     return this.props.post.items.map((item) => {
-      return <li className="request-item">{item}</li>;
+      return (
+        <li key={uuid()} className="request-item">
+          {item}
+        </li>
+      );
     });
   };
 
