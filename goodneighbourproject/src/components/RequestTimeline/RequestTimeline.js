@@ -10,7 +10,7 @@ class RequestTimeline extends React.Component {
     super(props);
     this.state = {
       filteredPosts: null,
-      posts: this.props.posts,
+      posts: this.props.posts_state.posts,
       confirmationModal: {
         display: false,
         selectedPost: null,
@@ -22,11 +22,11 @@ class RequestTimeline extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({ filteredPosts: this.state.posts });
+    this.setState({ filteredPosts: this.props.posts_state.posts });
   }
 
   filterPosts(posts) {
-    return this.props.filterPosts(posts, this.props.filterState);
+    return this.props.filterPosts(this.props.posts_state.posts, this.props.posts_state);
   }
 
   addPostToState = (post) => {
@@ -76,11 +76,11 @@ class RequestTimeline extends React.Component {
             showConfirmation={this.handleConfirmationModal}
             deletePost={this.props.deletePost}
             editPost={this.props.editPost}
-            currentUser={this.props.database.currentUser}
-            users={this.props.database.users}
+            currentUser={this.props.users_state.currentUser}
+            users_state={this.props.users_state}
             key={index}
             post={post}
-            database={this.props.database}
+            posts_state={this.props.posts_state}
           />
         );
       });
@@ -106,8 +106,9 @@ class RequestTimeline extends React.Component {
         <>
           <div className="timeline">
             <RequestAsk
-              currentUser={this.props.database.currentUser}
-              addPostToTimeline={this.addPostToState}
+              currentUser={this.props.users_state.currentUser}
+              addPostToState={this.props.addPostToState}
+              posts_state={this.props.posts_state}
             />
             <ul className="posts">{renderPosts}</ul>
             <ul id="page-numbers">{renderPageNumbers}</ul>

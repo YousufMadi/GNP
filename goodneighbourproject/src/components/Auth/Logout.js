@@ -4,7 +4,7 @@ import { Redirect } from "react-router-dom";
 class Logout extends React.Component {
 
   render(){
-    this.props.logout(this.props.database);
+    this.props.logout(this.props.users_state);
     return <Redirect to="/login" />;
   }
 }
