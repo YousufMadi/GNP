@@ -8,7 +8,6 @@ import PostModal from "./PostModal";
 import {
   filterPosts,
   deletePost,
-  editPost,
 } from "../../actions/timeline";
 
 
@@ -81,7 +80,6 @@ class RequestTimeline extends React.Component {
         return (
           <RequestPost
             showConfirmation={this.handleConfirmationModal}
-            editPost={this.props.editPost}
             currentUser={this.props.users_state.currentUser}
             users_state={this.props.users_state}
             key={index}

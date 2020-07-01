@@ -1,6 +1,8 @@
 import React from "react";
 import ItemsList from "./ItemsList";
 
+import {editPost} from "../../actions/timeline";
+
 class RequestPostEdit extends React.Component {
   state = {
     formReimbursement: this.props.post.reimbursement,
@@ -29,7 +31,7 @@ class RequestPostEdit extends React.Component {
     };
 
     console.log(newPost);
-    this.props.editPost(this.props.post.id, newPost);
+    editPost(this.props.posts_state, this.props.post.id, newPost);
   };
 
   renderOtherPaymentOptions() {
