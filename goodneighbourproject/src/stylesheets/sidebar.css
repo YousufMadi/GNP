@@ -96,7 +96,7 @@
   color: white;
   background-color: rgba(0, 0, 0, 0.1);
   background-clip: padding-box;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.2)!important;
   border-radius: 5px;
   margin-bottom: 0.2em;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;

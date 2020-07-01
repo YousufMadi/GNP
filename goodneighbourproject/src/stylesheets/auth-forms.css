@@ -41,8 +41,8 @@
   outline: none;
 }
 
-#submit{
-  margin: 2em auto 1.5em;
+.form-submit{
+  margin: 1.5em auto 1.5em;
   height: 2.5em;
   width: 100%;
   color: #000;
@@ -52,7 +52,7 @@
   border-radius: 5px;
 }
 
-#submit:hover{
+.form-submit:hover{
   opacity: 0.8;
   transition: 0.4s;
 }

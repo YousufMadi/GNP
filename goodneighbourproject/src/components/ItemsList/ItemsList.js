@@ -1,10 +1,10 @@
 import React from "react";
-import "../../stylesheets/RequestTimeline/groceryList.css";
+import "../../stylesheets/RequestTimeline/itemList.css";
 import Items from "./Items";
 
 class ItemsList extends React.Component {
   state = {
-    items: [],
+    items: this.props.items,
   };
   addItem = (e) => {
     e.preventDefault();
@@ -57,7 +57,9 @@ class ItemsList extends React.Component {
             ></input>
           </form>
         </div>
-        <Items entries={this.state.items} delete={this.deleteItem} />
+        <div>
+          <Items entries={this.state.items} delete={this.deleteItem} />
+        </div>
       </div>
     );
   }

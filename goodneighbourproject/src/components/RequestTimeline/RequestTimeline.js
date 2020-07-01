@@ -3,120 +3,56 @@ import React from "react";
 import "../../stylesheets/RequestTimeline/requestTimeline.css";
 import RequestPost from "../RequestPost/RequestPost";
 import RequestAsk from "../RequestAsk/RequestAsk";
+import PostModal from "./PostModal";
+import Sidebar from "../Sidebar/Sidebar";
+
+import { updateUser } from "../../actions/user";
+
+import { filterPosts, deletePost } from "../../actions/timeline";
 
 class RequestTimeline extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       filteredPosts: null,
-      posts: [
-        {
-          id: 1,
-          reimbursement: "Cash",
-          items: ["Chips", "Apples", "Flour"],
-          author: 1,
-          description:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
-        },
-        {
-          id: 2,
-          reimbursement: "Cheque",
-          items: ["Honey Nut Cheerios"],
-          author: 2,
-          description:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
-        },
-        {
-          id: 3,
-          reimbursement: "E-transfer",
-          items: [1, 2, 3, 4, 5],
-          author: 0,
-          description:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
-        },
-        {
-          id: 4,
-          reimbursement: "Cash",
-          items: [1, 2, 3, 4, 5, 6, 7, 8],
-          author: 2,
-          description:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
-        },
-        {
-          id: 2,
-          reimbursement: "E-transfer",
-          items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-          author: 0,
-          description:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
-        },
-        {
-          id: 2,
-          reimbursement: "Cheque",
-          items: [1, 2, 3],
-          author: 1,
-          description:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
-        },
-        {
-          id: 2,
-          reimbursement: "Cheque",
-          items: [1, 2, 3, 4],
-          author: 1,
-          description:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
-        },
-      ],
+      posts: this.props.posts_state.posts,
+      confirmationModal: {
+        display: false,
+        selectedPost: null,
+      },
       currentPage: 1,
       postsPerPage: 5,
     };
     this.handleClick = this.handleClick.bind(this);
   }
+
   componentDidMount() {
-    this.setState({ filteredPosts: this.state.posts });
-  }
-  sizeEstimate = (post) => {
-    let size = null;
-    if (post.items.length <= 3) {
-      size = "small";
-    } else if (post.items.length <= 8) {
-      size = "medium";
-    } else {
-      size = "large";
-    }
-    return size;
-  };
-  filterPosts() {
-    let newFilteredPosts = [...this.state.posts];
-    if (
-      this.props.filterState.filterPayment !== null &&
-      this.props.filterState.filterPayment !== "any"
-    ) {
-      // Filter by payment
-      newFilteredPosts = this.state.posts.filter((post) => {
-        return (
-          this.props.filterState.filterPayment ===
-          post.reimbursement.toLowerCase()
-        );
-      });
-    }
-    if (
-      this.props.filterState.filterSize !== null &&
-      this.props.filterState.filterSize !== "any"
-    ) {
-      // Filter by request size
-      newFilteredPosts = newFilteredPosts.filter((post) => {
-        return (
-          !this.props.filterState.filterSize ||
-          this.props.filterState.filterSize === this.sizeEstimate(post)
-        );
-      });
-    }
-    return newFilteredPosts;
+    this.setState({ filteredPosts: this.props.posts_state.posts });
   }
 
-  addPostToState = (post) => {
-    this.setState({ posts: [...this.state.posts, post] });
+  filterPosts(posts) {
+    return filterPosts(this.props.posts_state.posts, this.props.posts_state);
+  }
+
+  handleConfirmationModal = (post) => {
+    this.setState({ confirmationModal: { display: true, selectedPost: post } });
+  };
+
+  handleCloseModal = () => {
+    this.setState({
+      confirmationModal: { display: false, selectedPost: null },
+    });
+  };
+
+  handleAcceptPost = (post) => {
+    this.handleCloseModal();
+    const updated_user = {
+      ...this.props.users_state.currentUser,
+      active_post: post,
+    };
+
+    deletePost(this.props.posts_state, post.id);
+    updateUser(this.props.users_state, updated_user);
   };
 
   handleClick(event) {
@@ -126,7 +62,6 @@ class RequestTimeline extends React.Component {
   }
 
   render() {
-
     if (this.state.filteredPosts != null) {
       const { posts, currentPage, postsPerPage } = this.state;
       const filteredPosts = this.filterPosts(posts);
@@ -138,7 +73,16 @@ class RequestTimeline extends React.Component {
       );
 
       const renderPosts = currentPosts.map((post, index) => {
-        return <RequestPost users={this.props.users} key={index} post={post} />;
+        return (
+          <RequestPost
+            showConfirmation={this.handleConfirmationModal}
+            currentUser={this.props.users_state.currentUser}
+            users_state={this.props.users_state}
+            key={index}
+            post={post}
+            posts_state={this.props.posts_state}
+          />
+        );
       });
 
       const pageNumbers = [];
@@ -157,16 +101,29 @@ class RequestTimeline extends React.Component {
           </li>
         );
       });
-
       return (
-        <div className="timeline">
-          <RequestAsk
-            currentUser={this.props.currentUser}
-            addPostToTimeline={this.addPostToState}
+        <>
+          <Sidebar
+            active_post={false}
+            posts={filteredPosts}
+            users_state={this.props.users_state}
+            changeFilterState={this.props.changeFilterState}
           />
-          <ul className="posts">{renderPosts}</ul>
-          <ul id="page-numbers">{renderPageNumbers}</ul>
-        </div>
+          <div className="timeline">
+            <RequestAsk
+              currentUser={this.props.users_state.currentUser}
+              posts_state={this.props.posts_state}
+            />
+            <ul className="posts">{renderPosts}</ul>
+            <ul id="page-numbers">{renderPageNumbers}</ul>
+          </div>
+          <PostModal
+            users={this.props.users_state.users}
+            acceptPost={this.handleAcceptPost}
+            confirmation={this.state.confirmationModal}
+            closeModal={this.handleCloseModal}
+          />
+        </>
       );
     } else {
       return <></>;

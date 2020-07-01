@@ -1,0 +1,97 @@
+#close-modal-container{
+  margin:0;
+}
+
+#close-modal-btn{
+  margin-top: 0.2em;
+  margin-left: auto;
+}
+#close-modal-btn:focus{
+  outline:transparent;
+}
+#close-modal-btn:hover{
+  background-color: transparent;
+  color: rgba(75, 75, 75, 0.9)
+}
+.confirmation-modal-header{
+  font-size: medium;
+  font-weight: 700;
+  text-align: center;
+  color: #152238;
+}
+
+.confirmation-author, .confirmation-size{
+  font-family: 'Montserrat', sans-serif;
+  vertical-align: top;
+  text-align: center;
+  display: inline-block;
+  width: 50%;
+}
+
+.confirmation-info{
+  margin-top: 1em;
+}
+
+.confirmation-author label, .confirmation-size label{
+  display: block;  
+  font-family: 'Montserrat', sans-serif;
+  color: rgba(75, 75, 75, 0.8);
+  font-size: small;
+  font-weight: 500;
+}
+
+.confirmation-author{
+  font-size: x-small;
+  font-weight: 600;
+  text-align: center;
+}
+.confirmation-author img{
+  margin-top: 1.2em;
+  width: 90px;
+  border-radius: 3px;
+}
+
+.confirmation-size{
+  font-size: large;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.confirmation-size p {
+  margin-top: 1.5em;
+}
+
+.confirmation-actions{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 20%;
+  text-align: center;
+}
+.confirmation-actions button{
+  cursor: pointer;
+  border: none;
+  width: 50%;
+  height: 100%;
+  background-color: lightgray;
+  padding: 0.5em 0.75em;
+  font-size: medium;
+  transition: all 0.2s ease-out;
+}
+
+.accept-action{
+  font-weight: 600;
+  color: white;
+  background-color: rgba(125, 200, 51, 0.8)!important;
+}
+.accept-action:hover{
+  background-color: rgba(125, 200, 51, 1)!important;
+}
+.cancel-action{
+  font-weight: 600;
+  color: rgba(75, 75, 75, 1);
+}
+
+.cancel-action:hover{
+  background-color: rgb(197, 197, 197);
+}

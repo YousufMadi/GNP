@@ -4,7 +4,7 @@ import NavbarLinks from "./NavbarLinks";
 function Navbar() {
   
     return (
-      <nav className="navbar">
+      <nav className="footer">
         <NavbarLinks />
       </nav>
     );

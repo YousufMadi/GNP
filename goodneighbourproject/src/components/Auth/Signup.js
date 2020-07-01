@@ -1,9 +1,13 @@
 import React from "react";
-import Navbar from "../Navbar";
+import Navbar from "../Navigation/Navbar";
 import { Redirect } from "react-router-dom";
 import "../../stylesheets/shared.css";
 import "../../stylesheets/auth-forms.css";
 import signupPic from "./signup.svg";
+
+import {
+  addUser,
+} from "../../actions/user";
 
 const default_state = {
   // Fields
@@ -11,12 +15,14 @@ const default_state = {
   last_name: "",
   email: "",
   password: "",
+  password_confirmation: "",
 
   // Errors
   first_name_error: "",
   last_name_error: "",
   email_error: "",
   password_error: "",
+  password_confirmation_error: "",
 };
 
 class Signup extends React.Component {
@@ -38,6 +44,7 @@ class Signup extends React.Component {
     let email_error = "";
     let valid_email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     let password_error = "";
+    let password_confirmation_error = "";
     let is_valid = true;
 
     // Validate first name
@@ -65,12 +72,18 @@ class Signup extends React.Component {
       is_valid = false;
     }
 
+    if (!(this.state.password === this.state.password_confirmation)) {
+      password_confirmation_error = "Passwords do not match";
+      is_valid = false;
+    }    
+
     if (!is_valid) {
       this.setState({
         first_name_error,
         last_name_error,
         email_error,
         password_error,
+        password_confirmation_error
       });
     }
 
@@ -83,7 +96,8 @@ class Signup extends React.Component {
 
 
     if (form_valid) {
-      this.props.addUser(
+      addUser(
+        this.props.users_state,
         this.state.first_name,
         this.state.last_name,
         this.state.email,
@@ -95,7 +109,7 @@ class Signup extends React.Component {
   };
 
   render() {
-    if (this.props.currentUser) {
+    if (this.props.users_state.currentUser) {
       return <Redirect to="/feed" />;
     }
     return (
@@ -145,7 +159,17 @@ class Signup extends React.Component {
                 <p className="error_msg">{this.state.password_error}</p>
               </div>
               <div className="form-input">
-                <button id="submit" type="buton" onSubmit={this.formSubmit}>
+                <input
+                  name="password_confirmation"
+                  type="password"
+                  placeholder="Confirm Password"
+                  onChange={this.handleChange}
+                ></input>
+
+                <p className="error_msg">{this.state.password_confirmation_error}</p>
+              </div>
+              <div className="form-input">
+                <button className="form-submit" type="buton" onSubmit={this.formSubmit}>
                   Submit
                 </button>
               </div>

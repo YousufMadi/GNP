@@ -1,9 +1,13 @@
 import React from "react";
-import Navbar from "../Navbar";
+import Navbar from "../Navigation/Navbar";
 import { Redirect } from "react-router-dom";
 import "../../stylesheets/shared.css";
 import "../../stylesheets/auth-forms.css";
 import loginPic from "./login.svg";
+
+import {
+  handleUserLogin,
+} from "../../actions/user";
 
 const defaultState = {
   // Fields
@@ -32,7 +36,7 @@ class Login extends React.Component {
     let error_msg = "";
 
     // Get the user object.
-    let user = this.props.users.filter((u) => {
+    let user = this.props.users_state.users.filter((u) => {
       return u.email === this.state.email && u.password === this.state.password;
     });
 
@@ -54,13 +58,12 @@ class Login extends React.Component {
 
     if (valid_user !== null) {
       this.setState(defaultState);
-      // TODO: Handle redirection.
-      this.props.handleUserLogin(valid_user);
+      handleUserLogin(this.props.users_state, valid_user);
     }
   };
 
   render() {
-    if (this.props.currentUser) {
+    if (this.props.users_state.currentUser) {
       return <Redirect to="/feed" />;
     }
     return (
@@ -89,7 +92,7 @@ class Login extends React.Component {
                 ></input>
               </div>
               <div className="form-input">
-                <button id="submit" type="buton" onSubmit={this.formSubmit}>
+                <button className="form-submit" type="buton" onSubmit={this.formSubmit}>
                   Submit
                 </button>
               </div>

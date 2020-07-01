@@ -4,6 +4,13 @@ import { Link } from "react-router-dom";
 import Map from "./Map";
 import "../../stylesheets/sidebar.css";
 
+import { handleUserLogout } from "../../actions/user";
+
+const keys = {
+  key1: "AIzaSyCx3EBDjdwQ4Gb6698FPEWsTB7bNL_o7Ow",
+  key2: "AIzaSyARRBVg-xS1QeLJMfoCSeQm5At4Q-E7luU",
+};
+
 class Sidebar extends React.Component {
   /* Initializing this component's state with 
    the dropdown filter options defaulting to null */
@@ -11,8 +18,9 @@ class Sidebar extends React.Component {
 
   /* This function handles the situation where the user clicks log out */
   handleUserLogout = () => {
-    this.props.handleUserLogout();
+    handleUserLogout(this.props.users_state);
   };
+
   /* The functions that will handle a change in it's
      respective select html */
   handleDistanceChange(e) {
@@ -21,9 +29,11 @@ class Sidebar extends React.Component {
       this.setState({ filterDistance: e.target.value });
     }
   }
+
   handleSizeChange(e) {
     this.setState({ filterSize: e.target.value });
   }
+
   handlePaymentChange(e) {
     this.setState({ filterPayment: e.target.value });
   }
@@ -41,22 +51,22 @@ class Sidebar extends React.Component {
 
   renderRating() {
     let renderStarsReturn = [];
-    for (let i = 0; i < this.props.currentUser.rating; i++) {
-      renderStarsReturn.push(<i className="fas fa-star"></i>);
+    for (let i = 0; i < this.props.users_state.currentUser.rating; i++) {
+      renderStarsReturn.push(<i key={i} className="fas fa-star"></i>);
     }
     return renderStarsReturn;
   }
 
   /* Render Functions */
   renderProfile() {
+    const currentUser = this.props.users_state.currentUser;
     return (
       <>
         <div className="profile-header">
-          <img src={this.props.currentUser.profile_picture} alt="profile"></img>
+          <img src={currentUser.profile_picture} alt="profile"></img>
           <div className="profile-info">
             <p>
-              {this.props.currentUser.first_name}{" "}
-              {this.props.currentUser.last_name}
+              {currentUser.first_name} {currentUser.last_name}
             </p>
             <div id="profile-rating">{this.renderRating()}</div>
           </div>
@@ -64,6 +74,7 @@ class Sidebar extends React.Component {
         <div id="sidebar-tabs">
           <Link to="/">Home</Link>
           <Link to="/settings">Settings</Link>
+          <Link to="/adminsettings">Admin</Link>
           <button onClick={this.handleUserLogout}>Log out</button>
         </div>
       </>
@@ -122,7 +133,9 @@ class Sidebar extends React.Component {
     return (
       <div className="google-maps-section">
         <Map
-          googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyARRBVg-xS1QeLJMfoCSeQm5At4Q-E7luU`}
+          active_post={this.props.active_post}
+          posts={this.props.posts}
+          googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${keys.key2}`}
           loadingElement={<div style={{ height: "100%" }} />}
           containerElement={<div style={{ height: "100%" }} />}
           mapElement={<div style={{ height: "100%" }} />}
