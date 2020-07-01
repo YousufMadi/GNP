@@ -6,6 +6,10 @@ import RequestAsk from "../RequestAsk/RequestAsk";
 import PostModal from "./PostModal";
 
 import {
+  updateUser,
+} from "../../actions/user";
+
+import {
   filterPosts,
   deletePost,
 } from "../../actions/timeline";
@@ -32,7 +36,7 @@ class RequestTimeline extends React.Component {
   }
 
   filterPosts(posts) {
-    return this.props.filterPosts(
+    return filterPosts(
       this.props.posts_state.posts,
       this.props.posts_state
     );
@@ -56,7 +60,7 @@ class RequestTimeline extends React.Component {
     };
 
     deletePost(this.props.posts_state, post.id);
-    this.props.updateUser(this.props.users_state, updated_user);
+    updateUser(this.props.users_state, updated_user);
   };
 
   handleClick(event) {

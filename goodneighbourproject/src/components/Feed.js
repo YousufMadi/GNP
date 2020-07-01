@@ -4,9 +4,6 @@ import RequestTimeline from "./RequestTimeline/RequestTimeline";
 import Sidebar from "./Sidebar/Sidebar";
 import ActiveRequest from "./ActiveRequest/ActiveRequest";
 
-import {
-  filterPosts,
-} from "../actions/timeline";
 
 import "../stylesheets/feed.css";
 
@@ -127,7 +124,6 @@ class Feed extends React.Component {
           />
           <ActiveRequest
             users_state={this.props.users_state}
-            updateUser={this.props.updateUser}
             currentUser={currentUser}
           />
         </div>
@@ -143,10 +139,8 @@ class Feed extends React.Component {
         />
 
         <RequestTimeline
-          updateUser={this.props.updateUser}
           users_state={this.props.users_state}
           posts_state={this.state}
-          filterPosts={filterPosts}
         />
       </div>
     );

@@ -8,7 +8,9 @@ import AppStats from './AppStats';
 import { Redirect } from "react-router-dom";
 import Navbar from "../Navigation/Navbar";
 
-
+import {
+  updateUser,
+} from "../../actions/user";
 
 const SettingsAdmin = (props) => {
 
@@ -88,7 +90,7 @@ const SettingsAdmin = (props) => {
                             </ul>
                         </div>
                         <div className="content">
-                            {adminOption && <SelectedOption users={props.users_state} updateUser={props.updateUser} />}
+                            {adminOption && <SelectedOption users={props.users_state} updateUser={updateUser} />}
                         </div>
                     </div>
                 </div>

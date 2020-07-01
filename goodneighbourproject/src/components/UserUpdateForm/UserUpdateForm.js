@@ -2,6 +2,10 @@ import React from "react";
 import './userupdateform.css';
 import NavbarLinks from "../Navigation/NavbarLinks";
 
+import {
+  updateUser,
+} from "../../actions/user";
+
 class UserUpdateForm extends React.Component {
 
   constructor(props) {
@@ -70,7 +74,7 @@ class UserUpdateForm extends React.Component {
     const success_msg = "Profile updated successfully!";
 
     if (form_valid) {
-      this.props.updateUser(this.props.users_state, this.state.user);
+      updateUser(this.props.users_state, this.state.user);
       this.setState({ success_msg })
     }
 

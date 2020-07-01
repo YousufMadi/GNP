@@ -2,6 +2,10 @@ import React from "react";
 import { v4 as uuidv4 } from "uuid";
 import "../../stylesheets/RequestTimeline/activerequest.css";
 
+import {
+  updateUser,
+} from "../../actions/user";
+
 import { fetchPostAuthor } from "../../actions/timeline";
 
 class ActiveRequest extends React.Component {
@@ -17,7 +21,7 @@ class ActiveRequest extends React.Component {
       ...this.props.currentUser,
       active_post: null,
     };
-    this.props.updateUser(this.props.users_state, updated_user);
+    updateUser(this.props.users_state, updated_user);
   };
 
   renderItems = () => {
