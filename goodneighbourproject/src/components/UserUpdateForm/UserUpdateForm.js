@@ -81,10 +81,9 @@ class UserUpdateForm extends React.Component {
   }
 
   handleChange = (e) => {
-    const { value, name } = e.target;
-    console.log(e);
-    e.persist();
-
+    const target = e.target;
+    const value = target.value;
+    const name = target.name;
 
 
     this.setState({

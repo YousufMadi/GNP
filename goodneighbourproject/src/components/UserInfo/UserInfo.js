@@ -1,7 +1,7 @@
 import React from "react";
 import './userinfo.css';
-
-class UserInfo extends React.Component{
+import { Link } from "react-router-dom";
+class UserInfo extends React.Component {
 
   renderRating() {
     let renderStarsReturn = [];
@@ -11,13 +11,15 @@ class UserInfo extends React.Component{
     return renderStarsReturn;
   }
 
-  render(){
+  render() {
     const currentUser = this.props.currentUser;
 
-    return(
+    return (
       <div className="user-curr-info">
+        <Link to='/feed'><button className="back-button"><i class="fa fa-chevron-left" aria-hidden="true"></i>
+        </button></Link>
         <div className="profile-img">
-          <img src={currentUser.profile_picture}/>
+          <img src={currentUser.profile_picture} />
         </div>
         <h3>{currentUser.first_name} {currentUser.last_name} </h3>
         <div className="user-ratings">

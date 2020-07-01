@@ -6,6 +6,7 @@
   padding: 0;
   margin: 0;
   list-style: none;
+  margin-left: 1em;
 }
 
 .flex-options{
@@ -37,7 +38,9 @@
   border-radius: 5px; 
   background-color: #f2f2f2;
   padding: 20px;
-  margin:auto;
+  margin-right: 2.5em;
+  margin-top: 0.5em;
+  width: 50%;
 }
 
 .promoteButton {
