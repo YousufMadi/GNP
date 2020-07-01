@@ -1,24 +1,15 @@
 import React from "react";
 
 import "../../stylesheets/RequestTimeline/requestAsk.css";
-import ItemsList from "../ItemsList/ItemsList";
+import ItemsList from "../RequestPost/ItemsList";
+import Items from "../RequestPost/Items";
 
 class RequestAsk extends React.Component {
   state = {
-    dropdownOpenSize: false,
-    dropdownOpenReimburse: false,
     items: [],
     formReimbursement: null,
     formDescription: null,
   };
-
-  toggleSize() {
-    this.setState({ dropdownOpenSize: !this.state.dropdownOpenSize });
-  }
-
-  toggleReimburse() {
-    this.setState({ dropdownOpenReimburse: !this.state.dropdownOpenReimburse });
-  }
 
   handleItemsChange = (items) => {
     this.setState({ items: items });
@@ -48,8 +39,6 @@ class RequestAsk extends React.Component {
         formDescription: null,
         formReimbursement: null,
         items: [],
-        dropdownOpenSize: false,
-        dropdownOpenReimburse: false,
       });
       this.props.addPostToState(this.props.posts_state, newPost);
     }
@@ -58,23 +47,21 @@ class RequestAsk extends React.Component {
   render() {
     return (
       <div className="new-request">
-        <div className="users-pic-name">
+        <div id="new-request-description">
           <img src={this.props.currentUser.profile_picture} alt="profile-pic" />
-        </div>
-
-        <div id="new-post-detail">
           <textarea
             value={this.state.formDescription}
             className="new-post-description"
-            placeholder="Add more information here..."
+            placeholder="Provide information about your request here..."
             onChange={this.handleDescriptionChange}
-          ></textarea>
-          <div id="new-post-information">
-            <ItemsList
-              handleItemsChange={this.handleItemsChange}
-              items={this.state.items}
-            />
-          </div>
+            rows="3"
+          />
+        </div>
+        <div id="new-post-address">
+          <input
+            id="address-input"
+            placeholder="Enter your delivery address here"
+          />
           <div id="pay-selector">
             <select
               className="form-new-post pay-select"
@@ -88,7 +75,15 @@ class RequestAsk extends React.Component {
               <option value="Cheque">{"Cheque"}</option>
             </select>
           </div>
-          <br />
+        </div>
+        <div id="new-request-detail">
+          <ItemsList
+            changeItems={this.handleItemsChange}
+            items={this.state.items}
+          />
+        </div>
+        {this.state.formReimbursement !== null &&
+        this.state.items.length > 0 ? (
           <button
             type="button"
             className="new-post-button"
@@ -96,7 +91,11 @@ class RequestAsk extends React.Component {
           >
             Create Request
           </button>
-        </div>
+        ) : (
+          <button type="button" className="new-post-button disabled" disabled>
+            Create Request
+          </button>
+        )}
       </div>
     );
   }
