@@ -1,29 +1,10 @@
 import React, { useState } from "react";
-import Toast from '../Toast/Toast';
-import checkIcon from "../Toast/icons/check.svg";
-import errorIcon from "../Toast/icons/error.svg";
 import './settingsAdmin.css';
 
 const CreateAdmin = (props) => {
 
     const [userToPromote, setUserToPromote] = useState("");
 
-    const appToasts = [
-        {
-            id: 1,
-            title: 'Success',
-            description: 'Promotion Successful!',
-            backgroundColor: '#5cb85c',
-            icon: checkIcon
-        },
-        {
-            id: 2,
-            title: 'Danger',
-            description: 'User is already an Admin',
-            backgroundColor: '#d9534f',
-            icon: errorIcon
-        }
-    ]
 
     const promoteUser = (e) => {
         e.preventDefault();
