@@ -14,16 +14,15 @@ class Settings extends React.Component {
       return <Redirect to="/login" />;
     }
     return (
-        <div className="settings-container">
-          <div className="settings-cover"></div>
-          <div className="user-container">
+      <div className="settings-container settings">
+        <div className="user-container">
 
-            <UserInfo currentUser={currentUser}/>
+          <UserInfo currentUser={currentUser} />
 
-            <UserUpdateForm users_state={this.props.users_state} />
-            
-          </div>
+          <UserUpdateForm users_state={this.props.users_state} />
+
         </div>
+      </div>
     );
   }
 }

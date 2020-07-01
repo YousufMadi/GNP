@@ -77,6 +77,8 @@ class App extends React.Component {
             path="/feed"
             component={() => (
               <Feed
+                updateUser={updateUser}
+                handleUserLogout={handleUserLogout}
                 users_state={this.state}
               />
             )}
@@ -86,7 +88,7 @@ class App extends React.Component {
             exact
             path="/signup"
             component={() => (
-              <Signup users_state={this.state} />
+              <Signup users_state={this.state} addUser={addUser} />
             )}
           />
 
@@ -95,6 +97,7 @@ class App extends React.Component {
             path="/login"
             component={() => (
               <Login
+                handleUserLogin={handleUserLogin}
                 users_state={this.state}
               />
             )}
@@ -104,7 +107,7 @@ class App extends React.Component {
             exact
             path="/logout"
             component={() => (
-              <Logout users_state={this.state} />
+              <Logout logout={handleUserLogout} users_state={this.state} />
             )}
           />
 
@@ -112,16 +115,18 @@ class App extends React.Component {
             exact
             path="/settings"
             component={() => (
-              <Settings users_state={this.state}  />
+              <Settings users_state={this.state} updateUser={updateUser} />
             )}
           />
 
           <Route
             exact
-            path="/adminsettings"
+            path="/admin"
             component={() => (
               <SettingsAdmin
                 users_state={this.state}
+                updateUser={updateUser}
+
               />
             )}
           />
