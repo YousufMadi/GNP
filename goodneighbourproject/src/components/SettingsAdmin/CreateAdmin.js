@@ -23,7 +23,7 @@ const CreateAdmin = (props) => {
 
     return (
         <div>
-            <p>Promote User</p>
+            {console.log(props.users)}
             <form>
                 <label>
                     <input type="text" name="name" value={userToPromote} placeholder="Email" onChange={e => setUserToPromote(e.target.value)} />

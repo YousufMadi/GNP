@@ -5,15 +5,13 @@
 
 .settings-cover{
   height: 7em;
+  background-image: linear-gradient(#152238, #537895);
 }
 
 .user-container{
-  height: 100vh;
+  height: 40em;
+  width: 90%;
   margin: auto;
   display: flex;
   margin-top: -5em;
-}
-
-.settings {
-  margin-top:5em;
 }
