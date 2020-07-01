@@ -11,6 +11,7 @@ import Navbar from "../Navigation/Navbar";
 
 import { updateUser } from "../../actions/user";
 
+
 const SettingsAdmin = (props) => {
   console.log(props);
   const adminOptions = {
@@ -41,12 +42,37 @@ const SettingsAdmin = (props) => {
   if (currentUser === null) {
     return <Redirect to="/login" />;
   }
+    const currentUser = props.users_state.currentUser;
+    if (currentUser === null) {
+        return <Redirect to="/login" />;
+    }
 
-  return (
-    <div className="settings-container">
-      <div>
-        <UserInfo currentUser={currentUser} />
-      </div>
+    return (
+        <div className="settings-container">
+            <div>
+                <UserInfo currentUser={currentUser} />
+            </div>
+
+
+            <div className="user-update-info">
+                <div className="dashboard-title">
+                    <p className="page-title">Admin Dashboard</p>
+                </div>
+                <div>
+
+                    <div className="options">
+                        <ul className="flex-container">
+                            <button className="flex-options" onClick={(e) => setAdminOption(adminOptions.CREATE_ADMIN)}>Create Admin</button>
+                            <button className="flex-options" onClick={(e) => setAdminOption(adminOptions.VIEW_USERS)}>View Users</button>
+                            <button className="flex-options" onClick={(e) => setAdminOption(adminOptions.APP_STATS)}>View App Stats</button>
+                            <button className="flex-options">Update Info</button>
+                        </ul>
+                    </div>
+                    <div className="content">
+                        {adminOption && <SelectedOption users={props.users_state} updateUser={props.updateUser} toast={props.toast} />}
+                    </div>
+                </div>
+            </div>
 
       <div className="user-update-info">
         <h2>Admin Dashboard</h2>
