@@ -44,8 +44,8 @@ class RequestPost extends React.Component {
   };
 
   renderItems = () => {
-    return this.props.post.items.map((item) => {
-      return <li className="request-item">{item}</li>;
+    return this.props.post.items.map((item, i) => {
+      return <li key={i} className="request-item">{item}</li>;
     });
   };
 

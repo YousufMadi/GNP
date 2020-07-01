@@ -49,7 +49,7 @@ class RequestPostView extends React.Component {
           {this.props.postUser.id === this.props.currentUser.id ? (
             <>
               <button className="edit-post" onClick={this.props.editClick}>
-                <i class="fas fa-pencil-alt"></i>
+                <i className="fas fa-pencil-alt"></i>
               </button>
               <button
                 className="delete-post"
@@ -59,8 +59,8 @@ class RequestPostView extends React.Component {
               </button>
             </>
           ) : (
-            <button className="accept-request">Accept Request</button>
-          )}
+              <button className="accept-request">Accept Request</button>
+            )}
         </div>
         <div className="post-description">
           {this.renderItemSizeOrList()}

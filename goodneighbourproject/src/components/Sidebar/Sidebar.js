@@ -45,7 +45,7 @@ class Sidebar extends React.Component {
   renderRating() {
     let renderStarsReturn = [];
     for (let i = 0; i < this.props.users_state.currentUser.rating; i++) {
-      renderStarsReturn.push(<i className="fas fa-star"></i>);
+      renderStarsReturn.push(<i key={i} className="fas fa-star"></i>);
     }
     return renderStarsReturn;
   }

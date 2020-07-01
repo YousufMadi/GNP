@@ -16,13 +16,13 @@ export const addUser = (users_state, first_name, last_name, email, password) => 
   });
 };
 
-export const updateUser = (users_state, user) => {
+export const updateUser = (users_state, user, changeCurrentUser = true) => {
   let id = user.id;
   let users = [...users_state.users];
   users[id] = user;
 
   users_state.setState({
-    currentUser: user,
+    currentUser: changeCurrentUser ? user : users_state.currentUser,
     users
   });
 }
@@ -32,5 +32,5 @@ export const handleUserLogin = (users_state, user) => {
 };
 
 export const handleUserLogout = (users_state) => {
-    users_state.setState({ currentUser: null });
-  };
+  users_state.setState({ currentUser: null });
+};
