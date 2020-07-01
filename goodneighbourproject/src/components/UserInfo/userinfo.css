@@ -1,19 +1,26 @@
+#admin-nav {
+  background-color: #c3d0e0;
+}
+
 .user-curr-info{
-  height: 100%;
-  flex: 1;
-  background: #fff;
-  margin-right: 3em;
-  border-radius: 10px;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  margin-right:0em;
+  border-radius: 0px;
+  height: 100vh;
+  padding-top: 0.5em;
+  width: 25%;
+  background-color: #152238;
+  color: white;
+  float: left;
+  box-shadow:1px 10px 20px 0px black;
 }
 
 .profile-img{
   height: 12em;
   width: 12em;
-  margin: 2em auto;
+  margin: 0.5em auto;
   border-radius: 50%;
   overflow: hidden;
-  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.7);
+  /* box-shadow: 0 20px 30px rgba(0, 0, 0, 0.7); */
 }
 
 .profile-img img{

@@ -4,6 +4,7 @@ import './settingsAdmin.css';
 import CreateAdmin from './CreateAdmin';
 import ViewUsers from './ViewUsers';
 import AppStats from './AppStats';
+import UserInfo from '../UserInfo/UserInfo'
 
 import { Redirect } from "react-router-dom";
 import Navbar from "../Navigation/Navbar";
@@ -40,60 +41,32 @@ const SettingsAdmin = (props) => {
         return <Redirect to="/login" />;
     }
 
-    const renderRating = () => {
-        let renderStarsReturn = [];
-        for (let i = 0; i < currentUser.rating; i++) {
-            renderStarsReturn.push(<i key={i} className="fas fa-star"></i>);
-        }
-        return renderStarsReturn;
-    }
-
-
-
     return (
         <div className="settings-container">
-            <Navbar currentUser={currentUser} />
-            <div className="settings-cover"></div>
-            <div className="user-container">
-
-                <div className="user-curr-info">
-                    <div className="profile-img">
-                        <img src={currentUser.profile_picture} />
-                    </div>
-                    <h3>{currentUser.first_name} {currentUser.last_name} </h3>
-                    <div className="user-ratings">
-                        {renderRating()}
-                    </div>
-                    <h4>{currentUser.email}</h4>
-                    <div className="requests-info">
-                        <p>Number of requests made: </p>
-                        <p>4</p>
-                    </div>
-                    <div className="requests-info">
-                        <p>Number of requests accepted: </p>
-                        <p>10</p>
-                    </div>
-                </div>
-
-                <div className="user-update-info">
-                    <h2>Admin Dashboard</h2>
-                    <div>
-
-                        <div className="options">
-                            <ul className="flex-container">
-                                <button className="flex-options" onClick={(e) => setAdminOption(adminOptions.CREATE_ADMIN)}>Create Admin</button>
-                                <button className="flex-options" onClick={(e) => setAdminOption(adminOptions.VIEW_USERS)}>View Users</button>
-                                <button className="flex-options" onClick={(e) => setAdminOption(adminOptions.APP_STATS)}>View App Stats</button>
-                                <button className="flex-options">Update Info</button>
-                            </ul>
-                        </div>
-                        <div className="content">
-                            {adminOption && <SelectedOption users={props.users_state} updateUser={props.updateUser} />}
-                        </div>
-                    </div>
-                </div>
-
+            <Navbar currentUser={currentUser} id="admin-nav" sidebar="user-curr-info" />
+            <div>
+                <UserInfo currentUser={currentUser} />
             </div>
+
+
+            <div className="user-update-info">
+                <h2>Admin Dashboard</h2>
+                <div>
+
+                    <div className="options">
+                        <ul className="flex-container">
+                            <button className="flex-options" onClick={(e) => setAdminOption(adminOptions.CREATE_ADMIN)}>Create Admin</button>
+                            <button className="flex-options" onClick={(e) => setAdminOption(adminOptions.VIEW_USERS)}>View Users</button>
+                            <button className="flex-options" onClick={(e) => setAdminOption(adminOptions.APP_STATS)}>View App Stats</button>
+                            <button className="flex-options">Update Info</button>
+                        </ul>
+                    </div>
+                    <div className="content">
+                        {adminOption && <SelectedOption users={props.users_state} updateUser={props.updateUser} toast={props.toast} />}
+                    </div>
+                </div>
+            </div>
+
         </div>
     );
 
