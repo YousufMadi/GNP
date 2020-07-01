@@ -2,7 +2,7 @@ import React from "react";
 import './userupdateform.css';
 import NavbarLinks from "../Navigation/NavbarLinks";
 
-class UserUpdateForm extends React.Component{
+class UserUpdateForm extends React.Component {
 
   constructor(props) {
     super(props);
@@ -69,17 +69,18 @@ class UserUpdateForm extends React.Component{
     const form_valid = this.validateForm();
     const success_msg = "Profile updated successfully!";
 
-    if (form_valid){
+    if (form_valid) {
       this.props.updateUser(this.props.users_state, this.state.user);
-      this.setState({success_msg})
+      this.setState({ success_msg })
     }
 
   }
 
   handleChange = (e) => {
-    const target = e.target;
-    const value = target.value;
-    const name = target.name;
+    const { value, name } = e.target;
+    console.log(e);
+    e.persist();
+
 
 
     this.setState({
@@ -92,10 +93,10 @@ class UserUpdateForm extends React.Component{
     console.log(this.state);
   };
 
-  render(){
+  render() {
 
     const currentUser = this.props.users_state.currentUser;
-    return(
+    return (
       <div className="user-update-info">
         <div className="update-form-nav">
           <NavbarLinks currentUser={currentUser} />
