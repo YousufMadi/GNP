@@ -12,7 +12,7 @@ import Navbar from "../Navigation/Navbar";
 
 
 const SettingsAdmin = (props) => {
-
+    console.log(props)
     const adminOptions = {
         CREATE_ADMIN: "Create Admin",
         VIEW_USERS: "View Users",
@@ -43,7 +43,6 @@ const SettingsAdmin = (props) => {
 
     return (
         <div className="settings-container">
-            <Navbar currentUser={currentUser} id="admin-nav" sidebar="user-curr-info" />
             <div>
                 <UserInfo currentUser={currentUser} />
             </div>

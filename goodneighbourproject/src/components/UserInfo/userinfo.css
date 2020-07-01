@@ -14,6 +14,13 @@
   box-shadow:1px 10px 20px 0px black;
 }
 
+.back-button{
+  border: none;
+  background-color: #152338;
+  color: white;
+  font-size: 24px;
+}
+
 .profile-img{
   height: 12em;
   width: 12em;
