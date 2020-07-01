@@ -4,9 +4,7 @@ import { Link } from "react-router-dom";
 import Map from "./Map";
 import "../../stylesheets/sidebar.css";
 
-import {
-  handleUserLogout,
-} from "../../actions/user";
+import { handleUserLogout } from "../../actions/user";
 
 const keys = {
   key1: "AIzaSyCx3EBDjdwQ4Gb6698FPEWsTB7bNL_o7Ow",

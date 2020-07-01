@@ -1,10 +1,10 @@
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
+import Sidebar from "../Sidebar/Sidebar";
+
 import "../../stylesheets/RequestTimeline/activerequest.css";
 
-import {
-  updateUser,
-} from "../../actions/user";
+import { updateUser } from "../../actions/user";
 
 import { fetchPostAuthor } from "../../actions/timeline";
 
@@ -36,36 +36,44 @@ class ActiveRequest extends React.Component {
 
   render() {
     return (
-      <div className="timeline">
-        <div className="active-request-container">
-          <div className="active-request-header">
-            <h5>You have an active request...</h5>
-            <button>
-              View {this.state.postAuthor.first_name}'s location{" "}
-              <i className="fas fa-angle-double-right"></i>
-            </button>
-          </div>
-          <div className="active-request-author">
-            <h4>
-              {this.state.postAuthor.first_name}
-              's Request
-            </h4>
-          </div>
-          <div className="active-items-requested">
-            <label>Items Requested</label>
-            <ul className="request-items-list">{this.renderItems()}</ul>
-          </div>
-          <div className="active-description">
-            <label>Description Provided</label>
-            <p>{this.props.currentUser.active_post.description}</p>
-          </div>
-          <div className="end-active-request">
-            <button id="complete-request" onClick={this.completeRequest}>
-              Request Completed
-            </button>
+      <>
+        <Sidebar
+          active_post={true}
+          posts={[this.props.currentUser.active_post]}
+          users_state={this.props.users_state}
+          changeFilterState={this.props.changeFilterState}
+        />
+        <div className="timeline">
+          <div className="active-request-container">
+            <div className="active-request-header">
+              <h5>You have an active request...</h5>
+              <button>
+                View {this.state.postAuthor.first_name}'s location{" "}
+                <i className="fas fa-angle-double-right"></i>
+              </button>
+            </div>
+            <div className="active-request-author">
+              <h4>
+                {this.state.postAuthor.first_name}
+                's Request
+              </h4>
+            </div>
+            <div className="active-items-requested">
+              <label>Items Requested</label>
+              <ul className="request-items-list">{this.renderItems()}</ul>
+            </div>
+            <div className="active-description">
+              <label>Description Provided</label>
+              <p>{this.props.currentUser.active_post.description}</p>
+            </div>
+            <div className="end-active-request">
+              <button id="complete-request" onClick={this.completeRequest}>
+                Request Completed
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 }

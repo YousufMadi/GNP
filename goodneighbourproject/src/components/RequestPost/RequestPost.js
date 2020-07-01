@@ -4,7 +4,7 @@ import RequestPostEdit from "./RequestPostEdit";
 
 import "../../stylesheets/RequestTimeline/requestpost.css";
 
-import {editPost} from "../../actions/timeline";
+import { editPost } from "../../actions/timeline";
 
 class RequestPost extends React.Component {
   state = { postUser: null, editState: false };
@@ -47,7 +47,11 @@ class RequestPost extends React.Component {
 
   renderItems = () => {
     return this.props.post.items.map((item, i) => {
-      return <li key={i} className="request-item">{item}</li>;
+      return (
+        <li key={i} className="request-item">
+          {item}
+        </li>
+      );
     });
   };
 
@@ -68,6 +72,7 @@ class RequestPost extends React.Component {
       } else {
         return (
           <RequestPostEdit
+            editPost={this.handleEditPost}
             exitEdit={this.handleExitEdit}
             currentUser={this.props.currentUser}
             post={this.props.post}
