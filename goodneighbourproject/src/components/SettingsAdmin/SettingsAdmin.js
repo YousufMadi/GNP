@@ -49,6 +49,7 @@ const SettingsAdmin = (props) => {
     }
 
 
+
     return (
         <div className="settings-container">
             <Navbar currentUser={currentUser} />
@@ -87,7 +88,7 @@ const SettingsAdmin = (props) => {
                             </ul>
                         </div>
                         <div className="content">
-                            {adminOption && <SelectedOption />}
+                            {adminOption && <SelectedOption users={props.users_state} updateUser={props.updateUser} />}
                         </div>
                     </div>
                 </div>
