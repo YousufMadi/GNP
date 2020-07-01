@@ -1,11 +1,11 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import RequestTimeline from "./RequestTimeline/RequestTimeline";
-import Sidebar from "./Sidebar/Sidebar";
-import ActiveRequest from "./ActiveRequest/ActiveRequest";
+import RequestTimeline from "../RequestTimeline/RequestTimeline";
+import Sidebar from "../Sidebar/Sidebar";
+import ActiveRequest from "../ActiveRequest/ActiveRequest";
 
 
-import "../stylesheets/feed.css";
+import "../../stylesheets/feed.css";
 
 class Feed extends React.Component {
   state = {

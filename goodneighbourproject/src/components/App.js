@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import Home from "./Home/Home";
-import Feed from "./Feed";
+import Feed from "./Feed/Feed";
 import Signup from "./Auth/Signup";
 import Login from "./Auth/Login";
 import Logout from "./Auth/Logout";
