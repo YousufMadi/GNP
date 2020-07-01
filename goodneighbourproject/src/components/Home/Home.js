@@ -13,33 +13,33 @@ class Home extends React.Component {
           <section className="mission">
             <h3>Our Mission</h3>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              Providing an easy and convenient way to meet the needs
+              of the elderly population and those affected by COVID-19
             </p>
           </section>
 
           <section className="counter">
             <div>
               <h3>Volunteers</h3>
-              <p>100</p>
+              <p>30</p>
             </div>
 
             <div>
               <h3>People Helped</h3>
-              <p>70</p>
+              <p>55</p>
             </div>
           </section>
 
           <section className="description">
             <div className="about">
-              <h2>Who we are</h2>
+              <h2>What We Do?</h2>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur.
+                The Good Neighbour project is a community-based organization that 
+                aims at providing to the needs of the elderly population and 
+                those affected by COVID-19. Simply Sign-up to make requests 
+                for services such as buying groceries or food items and one of 
+                our community volunteers will be at your service. Want to give
+                back to the community?
               </p>
             </div>
             <div className="who-we-are-img"></div>
@@ -48,23 +48,23 @@ class Home extends React.Component {
           <section className="description">
             <div className="what-we-do-img"></div>
             <div className="about">
-              <h2>What we do</h2>
+              <h2>Get Involved</h2>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur.
+                The elderly population is the worst affected by COVID-19
+                and are most at risk of contracting the virus. Help them 
+                come through this pandemic by signing up to be a volunteer!
+                Select and complete the requests made by their requestors
+                and get in touch with them directly to help them out.
+                Reimbursement for your services will be provided.
               </p>
             </div>
           </section>
 
           <section className="contact">
             <h2>Contact us</h2>
-            <p>If you have any questions, feel free to contact us directly at:</p>
+            <p>If you have any questions or concerns, feel free to contact us directly at:</p>
             <p>
-              Email: sample@email.com<br></br>
+              Email: good.neighbour@gmail.com<br></br>
               Phone: 999-999-9999
             </p>
           </section>
