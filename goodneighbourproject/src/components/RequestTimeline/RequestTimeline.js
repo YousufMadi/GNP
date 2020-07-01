@@ -7,7 +7,6 @@ import PostModal from "./PostModal";
 
 import {
   filterPosts,
-  addPostToState,
   deletePost,
   editPost,
 } from "../../actions/timeline";
@@ -39,10 +38,6 @@ class RequestTimeline extends React.Component {
       this.props.posts_state
     );
   }
-
-  addPostToState = (post) => {
-    this.props.addPostToState(this.props.posts_state, post);
-  };
 
   handleConfirmationModal = (post) => {
     this.setState({ confirmationModal: { display: true, selectedPost: post } });
@@ -118,7 +113,6 @@ class RequestTimeline extends React.Component {
           <div className="timeline">
             <RequestAsk
               currentUser={this.props.users_state.currentUser}
-              addPostToState={this.props.addPostToState}
               posts_state={this.props.posts_state}
             />
             <ul className="posts">{renderPosts}</ul>

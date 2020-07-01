@@ -4,6 +4,8 @@ import AutoComplete from "react-google-autocomplete";
 import "../../stylesheets/RequestTimeline/requestAsk.css";
 import ItemsList from "../RequestPost/ItemsList";
 
+import {addPostToState} from "../../actions/timeline";
+
 class RequestAsk extends React.Component {
   state = {
     items: [],
@@ -52,7 +54,8 @@ class RequestAsk extends React.Component {
         items: [],
         location: { lat: null, lng: null },
       });
-      this.props.addPostToState(this.props.posts_state, newPost);
+
+      addPostToState(this.props.posts_state, newPost);
     }
   };
 

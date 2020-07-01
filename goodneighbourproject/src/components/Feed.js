@@ -6,8 +6,6 @@ import ActiveRequest from "./ActiveRequest/ActiveRequest";
 
 import {
   filterPosts,
-  addPostToState,
-  deletePost,
   editPost,
 } from "../actions/timeline";
 
@@ -152,7 +150,6 @@ class Feed extends React.Component {
           users_state={this.props.users_state}
           posts_state={this.state}
           filterPosts={filterPosts}
-          addPostToState={addPostToState}
           editPost={editPost}
         />
       </div>
