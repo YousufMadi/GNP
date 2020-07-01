@@ -1,7 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import RequestTimeline from "../RequestTimeline/RequestTimeline";
-import Sidebar from "../Sidebar/Sidebar";
 import ActiveRequest from "../ActiveRequest/ActiveRequest";
 
 import "../../stylesheets/feed.css";
@@ -130,13 +129,9 @@ class Feed extends React.Component {
     } else if (currentUser.active_post) {
       return (
         <div className="feedContainer">
-          <Sidebar
-            active_post={true}
-            posts={[currentUser.active_post]}
-            users_state={this.props.users_state}
-            changeFilterState={this.handleFilterChange}
-          />
           <ActiveRequest
+            posts={[currentUser.active_post]}
+            changeFilterState={this.handleFilterChange}
             users_state={this.props.users_state}
             currentUser={currentUser}
           />
@@ -145,14 +140,8 @@ class Feed extends React.Component {
     }
     return (
       <div className="feedContainer">
-        <Sidebar
-          active_post={false}
-          posts={this.state.posts}
-          users_state={this.props.users_state}
-          changeFilterState={this.handleFilterChange}
-        />
-
         <RequestTimeline
+          changeFilterState={this.handleFilterChange}
           users_state={this.props.users_state}
           posts_state={this.state}
         />

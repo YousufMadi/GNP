@@ -4,7 +4,7 @@ import AutoComplete from "react-google-autocomplete";
 import "../../stylesheets/RequestTimeline/requestAsk.css";
 import ItemsList from "../RequestPost/ItemsList";
 
-import {addPostToState} from "../../actions/timeline";
+import { addPostToState } from "../../actions/timeline";
 
 class RequestAsk extends React.Component {
   state = {
