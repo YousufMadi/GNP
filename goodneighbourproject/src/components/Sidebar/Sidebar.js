@@ -74,7 +74,7 @@ class Sidebar extends React.Component {
         <div id="sidebar-tabs">
           <Link to="/">Home</Link>
           <Link to="/settings">Settings</Link>
-          <Link to="/admin">Admin</Link>
+          <Link to="/adminsettings">Admin</Link>
           <button onClick={this.handleUserLogout}>Log out</button>
         </div>
       </>

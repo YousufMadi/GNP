@@ -101,6 +101,9 @@ class UserUpdateForm extends React.Component {
     const currentUser = this.props.users_state.currentUser;
     return (
       <div className="user-update-info">
+        <div className="update-form-nav">
+          <NavbarLinks currentUser={currentUser} />
+        </div>
         <h3>Update Information</h3>
 
         <p className="success_msg">{this.state.success_msg}</p>

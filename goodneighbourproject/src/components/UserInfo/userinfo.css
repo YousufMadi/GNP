@@ -19,11 +19,6 @@
   background-color: #152338;
   color: white;
   font-size: 24px;
-  transition-duration: 0.2s;
-}
-
-.back-button:hover {
-  font-size: 32px;
 }
 
 .profile-img{
