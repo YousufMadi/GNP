@@ -4,6 +4,8 @@ import RequestPostEdit from "./RequestPostEdit";
 
 import "../../stylesheets/RequestTimeline/requestpost.css";
 
+import {editPost} from "../../actions/timeline";
+
 class RequestPost extends React.Component {
   state = { postUser: null, editState: false };
 
@@ -40,7 +42,7 @@ class RequestPost extends React.Component {
 
   handleEditPost = (id, post) => {
     this.handleExitEdit();
-    this.props.editPost(this.props.posts_state, id, post);
+    editPost(this.props.posts_state, id, post);
   };
 
   renderItems = () => {
@@ -55,7 +57,6 @@ class RequestPost extends React.Component {
         return (
           <RequestPostView
             showConfirmation={this.props.showConfirmation}
-            deletePost={this.props.deletePost}
             renderItems={this.renderItems}
             editClick={this.handleEditClick}
             currentUser={this.props.currentUser}
@@ -67,7 +68,6 @@ class RequestPost extends React.Component {
       } else {
         return (
           <RequestPostEdit
-            editPost={this.handleEditPost}
             exitEdit={this.handleExitEdit}
             currentUser={this.props.currentUser}
             post={this.props.post}

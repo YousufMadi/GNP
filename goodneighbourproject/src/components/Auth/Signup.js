@@ -5,6 +5,10 @@ import "../../stylesheets/shared.css";
 import "../../stylesheets/auth-forms.css";
 import signupPic from "./signup.svg";
 
+import {
+  addUser,
+} from "../../actions/user";
+
 const default_state = {
   // Fields
   first_name: "",
@@ -92,7 +96,7 @@ class Signup extends React.Component {
 
 
     if (form_valid) {
-      this.props.addUser(
+      addUser(
         this.props.users_state,
         this.state.first_name,
         this.state.last_name,

@@ -5,6 +5,16 @@ import RequestPost from "../RequestPost/RequestPost";
 import RequestAsk from "../RequestAsk/RequestAsk";
 import PostModal from "./PostModal";
 
+import {
+  updateUser,
+} from "../../actions/user";
+
+import {
+  filterPosts,
+  deletePost,
+} from "../../actions/timeline";
+
+
 class RequestTimeline extends React.Component {
   constructor(props) {
     super(props);
@@ -26,15 +36,11 @@ class RequestTimeline extends React.Component {
   }
 
   filterPosts(posts) {
-    return this.props.filterPosts(
+    return filterPosts(
       this.props.posts_state.posts,
       this.props.posts_state
     );
   }
-
-  addPostToState = (post) => {
-    this.props.addPostToState(this.props.posts_state, post);
-  };
 
   handleConfirmationModal = (post) => {
     this.setState({ confirmationModal: { display: true, selectedPost: post } });
@@ -52,8 +58,9 @@ class RequestTimeline extends React.Component {
       ...this.props.users_state.currentUser,
       active_post: post,
     };
-    this.props.deletePost(this.props.posts_state, post.id);
-    this.props.updateUser(this.props.users_state, updated_user);
+
+    deletePost(this.props.posts_state, post.id);
+    updateUser(this.props.users_state, updated_user);
   };
 
   handleClick(event) {
@@ -77,8 +84,6 @@ class RequestTimeline extends React.Component {
         return (
           <RequestPost
             showConfirmation={this.handleConfirmationModal}
-            deletePost={this.props.deletePost}
-            editPost={this.props.editPost}
             currentUser={this.props.users_state.currentUser}
             users_state={this.props.users_state}
             key={index}
@@ -110,7 +115,6 @@ class RequestTimeline extends React.Component {
           <div className="timeline">
             <RequestAsk
               currentUser={this.props.users_state.currentUser}
-              addPostToState={this.props.addPostToState}
               posts_state={this.props.posts_state}
             />
             <ul className="posts">{renderPosts}</ul>

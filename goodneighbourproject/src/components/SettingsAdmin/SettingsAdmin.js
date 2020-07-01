@@ -9,7 +9,9 @@ import UserInfo from '../UserInfo/UserInfo'
 import { Redirect } from "react-router-dom";
 import Navbar from "../Navigation/Navbar";
 
-
+import {
+  updateUser,
+} from "../../actions/user";
 
 const SettingsAdmin = (props) => {
     console.log(props)
