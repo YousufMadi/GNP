@@ -21,6 +21,15 @@
   text-align: center;
   border: none;
 }
+.page-title{
+  text-align: center;
+  width: 75%;
+  float:right;
+  background-color: #a7b9d4;
+}
+.dashboard-title {
+  background-color: #a7b9d4;
+}
 
 .flex-options:hover{
     background: #527794;

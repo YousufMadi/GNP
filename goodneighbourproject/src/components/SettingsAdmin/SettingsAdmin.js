@@ -10,7 +10,7 @@ import { Redirect } from "react-router-dom";
 import Navbar from "../Navigation/Navbar";
 
 import {
-  updateUser,
+    updateUser,
 } from "../../actions/user";
 
 const SettingsAdmin = (props) => {
@@ -51,7 +51,9 @@ const SettingsAdmin = (props) => {
 
 
             <div className="user-update-info">
-                <h2>Admin Dashboard</h2>
+                <div className="dashboard-title">
+                    <p className="page-title">Admin Dashboard</p>
+                </div>
                 <div>
 
                     <div className="options">
