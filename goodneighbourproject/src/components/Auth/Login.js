@@ -5,6 +5,10 @@ import "../../stylesheets/shared.css";
 import "../../stylesheets/auth-forms.css";
 import loginPic from "./login.svg";
 
+import {
+  handleUserLogin,
+} from "../../actions/user";
+
 const defaultState = {
   // Fields
   email: "",
@@ -54,7 +58,7 @@ class Login extends React.Component {
 
     if (valid_user !== null) {
       this.setState(defaultState);
-      this.props.handleUserLogin(this.props.users_state, valid_user);
+      handleUserLogin(this.props.users_state, valid_user);
     }
   };
 

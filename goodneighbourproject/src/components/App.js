@@ -87,7 +87,7 @@ class App extends React.Component {
             exact
             path="/signup"
             component={() => (
-              <Signup users_state={this.state} addUser={addUser} />
+              <Signup users_state={this.state} />
             )}
           />
 
@@ -96,7 +96,6 @@ class App extends React.Component {
             path="/login"
             component={() => (
               <Login
-                handleUserLogin={handleUserLogin}
                 users_state={this.state}
               />
             )}
