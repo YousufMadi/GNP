@@ -55,7 +55,6 @@ class RequestPost extends React.Component {
         return (
           <RequestPostView
             showConfirmation={this.props.showConfirmation}
-            deletePost={this.props.deletePost}
             renderItems={this.renderItems}
             editClick={this.handleEditClick}
             currentUser={this.props.currentUser}

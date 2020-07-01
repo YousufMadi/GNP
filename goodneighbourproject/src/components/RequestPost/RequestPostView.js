@@ -1,4 +1,5 @@
 import React from "react";
+import {deletePost} from "../../actions/timeline";
 
 class RequestPostView extends React.Component {
   sizeEstimate = () => {
@@ -54,7 +55,7 @@ class RequestPostView extends React.Component {
               <button
                 className="delete-post"
                 onClick={() =>
-                  this.props.deletePost(
+                  deletePost(
                     this.props.posts_state,
                     this.props.post.id
                   )

@@ -5,6 +5,14 @@ import RequestPost from "../RequestPost/RequestPost";
 import RequestAsk from "../RequestAsk/RequestAsk";
 import PostModal from "./PostModal";
 
+import {
+  filterPosts,
+  addPostToState,
+  deletePost,
+  editPost,
+} from "../../actions/timeline";
+
+
 class RequestTimeline extends React.Component {
   constructor(props) {
     super(props);
@@ -52,7 +60,8 @@ class RequestTimeline extends React.Component {
       ...this.props.users_state.currentUser,
       active_post: post,
     };
-    this.props.deletePost(this.props.posts_state, post.id);
+
+    deletePost(this.props.posts_state, post.id);
     this.props.updateUser(this.props.users_state, updated_user);
   };
 
@@ -77,7 +86,6 @@ class RequestTimeline extends React.Component {
         return (
           <RequestPost
             showConfirmation={this.handleConfirmationModal}
-            deletePost={this.props.deletePost}
             editPost={this.props.editPost}
             currentUser={this.props.users_state.currentUser}
             users_state={this.props.users_state}
