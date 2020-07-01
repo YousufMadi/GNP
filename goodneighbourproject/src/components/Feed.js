@@ -26,6 +26,7 @@ class Feed extends React.Component {
         reimbursement: "Cash",
         items: ["Chips", "Apples", "Flour"],
         author: 1,
+        location: { lat: 43.680978, lng: -79.337887 },
         description:
           "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
       },
@@ -34,6 +35,7 @@ class Feed extends React.Component {
         reimbursement: "Cheque",
         items: ["Honey Nut Cheerios"],
         author: 2,
+        location: { lat: 43.64422, lng: -79.473842 },
         description:
           "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
       },
@@ -42,6 +44,7 @@ class Feed extends React.Component {
         reimbursement: "E-transfer",
         items: ["Drawer", "Brush", "Canvas", "Lamp", "Blouse"],
         author: 0,
+        location: { lat: 43.756411, lng: -79.458736 },
         description:
           "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
       },
@@ -59,6 +62,7 @@ class Feed extends React.Component {
           "Couch",
         ],
         author: 2,
+        location: { lat: 43.635275, lng: -79.526027 },
         description:
           "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
       },
@@ -78,6 +82,7 @@ class Feed extends React.Component {
           "Clock",
         ],
         author: 0,
+        location: { lat: 43.656101, lng: -79.659355 },
         description:
           "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
       },
@@ -86,6 +91,7 @@ class Feed extends React.Component {
         reimbursement: "Cheque",
         items: ["Blue Blanket", "Red Blanket", "Orange Blanket"],
         author: 1,
+        location: { lat: 43.775169, lng: -79.54424 },
         description:
           "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
       },
@@ -94,6 +100,7 @@ class Feed extends React.Component {
         reimbursement: "Cheque",
         items: ["24 pc Water", "Crackers", "Apple pie", "Cake"],
         author: 1,
+        location: { lat: 43.756325, lng: -79.43987 },
         description:
           "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed dignissimos esse fuga! Minus, alias.",
       },
@@ -113,10 +120,11 @@ class Feed extends React.Component {
     if (currentUser === null) {
       return <Redirect to="/login" />;
     } else if (currentUser.active_post) {
-      console.log(this.state.posts);
       return (
         <div className="feedContainer">
           <Sidebar
+            active_post={true}
+            posts={[currentUser.active_post]}
             handleUserLogout={this.props.handleUserLogout}
             users_state={this.props.users_state}
             changeFilterState={this.handleFilterChange}
@@ -132,6 +140,8 @@ class Feed extends React.Component {
     return (
       <div className="feedContainer">
         <Sidebar
+          active_post={false}
+          posts={this.state.posts}
           handleUserLogout={this.props.handleUserLogout}
           users_state={this.props.users_state}
           changeFilterState={this.handleFilterChange}

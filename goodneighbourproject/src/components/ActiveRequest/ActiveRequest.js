@@ -1,4 +1,5 @@
 import React from "react";
+import { v4 as uuidv4 } from "uuid";
 import "../../stylesheets/RequestTimeline/activerequest.css";
 
 import { fetchPostAuthor } from "../../actions/timeline";
@@ -21,7 +22,11 @@ class ActiveRequest extends React.Component {
 
   renderItems = () => {
     return this.props.currentUser.active_post.items.map((item) => {
-      return <li className="request-item">{item}</li>;
+      return (
+        <li key={uuidv4()} className="request-item">
+          {item}
+        </li>
+      );
     });
   };
 

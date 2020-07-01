@@ -1,30 +1,30 @@
+
 .new-request{
+  font-family: 'Montserrat', sans-serif;
   width: 95%;
   height: auto;
   margin: 1em auto;
   padding-bottom: 1em;
   padding-top: 1em;
   background-color: #fff;
-  display: flex;
-  border-radius: 10px;
+  border-radius: 5px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-#new-post-detail{
-  font-size: small;
-    margin-right: 3em;
-    width: 100%;
-}
-.users-pic-name{
+
+/* CSS for the textarea description and profile image */
+
+#new-request-description{
   display: flex;
-  align-items: center;
+  width: 95%;
+  padding: 0.5em 1em;
 }
 
-.users-pic-name img{
-  height: 5em;
-  margin: 0.5em;
-  width: 5em;
-  border-radius: 100px;
+#new-request-description img{
+  width: 3em;
+  height: 3em;
+  border-radius: 50%;
 }
+
 .new-post-description{
   font: inherit;
   margin: 0;
@@ -50,21 +50,65 @@
   overflow-wrap: break-word;
   transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
 }
+
 .new-post-description:focus{
-  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
+  border-color: #66afe9;
+  outline: 0;
+  box-shadow: none;
+}
+
+/* CSS for the address input */
+
+#new-post-address{
+  width: 95%;
+  padding: 0em 0em;
+  margin: auto;
+}
+
+#new-post-address input{
+  font-family: 'Montserrat', sans-serif;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  box-shadow: none;
+  border-radius: 0;
+  height: 28px;
+  display: inline-block;
+  padding: 0.25em 1em;
+  width: 68%;
+  line-height: 1.42857143;
+  color: #555;
+  font: inherit;
+  background-color: #fff;
+  background-image: none;
+  border-bottom: 1px solid #ccc;
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+#new-post-address input:focus{
   border-color: #66afe9;
   outline: 0;
 }
-#new-post-information{
-  margin-top: 0em;
-  width: 75%;
-  float: left;
-}
+
+
 #pay-selector{
+  margin-top: 0.5em;
+  float: right;
   display: inline-block;
   width: 25%;
-  float: right;
 }
+
+.form-new-post.pay-select{
+  padding: 6px 12px;
+}
+
+/* CSS for Items List area */
+
+#new-request-detail{
+  width: 95%;
+  margin: auto;
+}
+
 .form-new-post{
   display: block;
   height: 30px;
@@ -81,22 +125,23 @@
   font: inherit;
   margin: 0;
 }
-.form-new-post.pay-select{
-  margin-left: auto;
-  padding: 6px 12px;
-  width: 100%;
-}
+
 .form-new-post.item-input{
   border-top: none;
   border-left: none;
   border-right: none;
   box-shadow: none;
   border-radius: 0;
-  height: 28px;
+  height: 35px;
   display: inline-block;
   padding: 0px 12px;
-  width: 75%;
+  width: 100%;
 }
+
+#new-request-detail .form-new-post.item-input{
+  width: 80%;
+}
+
 .form-new-post:focus{
   border-color: #66afe9;
   outline: 0;
@@ -107,6 +152,7 @@
   width: 75%;
 }
 #add-item-btn{
+  width: 15%;
   cursor: pointer;
   color: #fff;
   background-color: #28a745;
@@ -128,14 +174,18 @@
   background-color: #218838;
   border-color: #1e7e34;
 }
+
+/* CSS for the create request button */
+
 .new-post-button{
   display: block;
-  width: 100%;
+  width: 95%;
+  margin: auto;
   padding-left: 1em;
   padding-right: 1em;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
-  background-color: #314464;
+  background-color: rgba(66, 103, 178, 0.9);
   color: #fff;
   border-radius: 5px;
   height: 2.5em;
@@ -144,6 +194,15 @@
   transition: all 0.2s ease-out;
 }
 .new-post-button:hover{
-  background-color: #152238;
-  box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2);
+  background-color: rgba(66, 103, 178, 1);
+  box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.3);
+}
+
+.new-post-button.disabled{
+  cursor: not-allowed;
+}
+
+.new-post-button.disabled:hover{
+  background-color: rgba(66, 103, 178, 0.9);
+  box-shadow: none;
 }

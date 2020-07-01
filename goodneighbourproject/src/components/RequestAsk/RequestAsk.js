@@ -1,24 +1,16 @@
 import React from "react";
+import AutoComplete from "react-google-autocomplete";
 
 import "../../stylesheets/RequestTimeline/requestAsk.css";
-import ItemsList from "../ItemsList/ItemsList";
+import ItemsList from "../RequestPost/ItemsList";
 
 class RequestAsk extends React.Component {
   state = {
-    dropdownOpenSize: false,
-    dropdownOpenReimburse: false,
     items: [],
     formReimbursement: null,
     formDescription: null,
+    location: { lat: null, lng: null },
   };
-
-  toggleSize() {
-    this.setState({ dropdownOpenSize: !this.state.dropdownOpenSize });
-  }
-
-  toggleReimburse() {
-    this.setState({ dropdownOpenReimburse: !this.state.dropdownOpenReimburse });
-  }
 
   handleItemsChange = (items) => {
     this.setState({ items: items });
@@ -34,11 +26,21 @@ class RequestAsk extends React.Component {
 
   handleCreateRequest = (e) => {
     e.preventDefault();
-    if (this.state.formReimbursement !== null && this.state.items.length > 0) {
+    if (
+      this.state.formReimbursement !== null &&
+      this.state.items.length > 0 &&
+      this.state.location.lat !== null &&
+      this.state.location.lng !== null
+    ) {
+      // This guarentees a unique id by getting the last elements id, which has the largest
+      // id of all the posts, and adding 1 to it. This will be handled automatically by
+      // the database we later implement.
       const newPost = {
-        id: 5,
+        id:
+          this.props.posts_state.posts[this.props.posts_state.posts.length - 1]
+            .id + 1,
         author: this.props.currentUser.id,
-        name: "Filler",
+        location: this.state.location,
         reimbursement: this.state.formReimbursement,
         items: this.state.items,
         description: this.state.formDescription,
@@ -48,8 +50,7 @@ class RequestAsk extends React.Component {
         formDescription: null,
         formReimbursement: null,
         items: [],
-        dropdownOpenSize: false,
-        dropdownOpenReimburse: false,
+        location: { lat: null, lng: null },
       });
       this.props.addPostToState(this.props.posts_state, newPost);
     }
@@ -58,23 +59,31 @@ class RequestAsk extends React.Component {
   render() {
     return (
       <div className="new-request">
-        <div className="users-pic-name">
+        <div id="new-request-description">
           <img src={this.props.currentUser.profile_picture} alt="profile-pic" />
-        </div>
-
-        <div id="new-post-detail">
           <textarea
-            value={this.state.formDescription}
+            value={this.state.formDescription ? this.state.formDescription : ""}
             className="new-post-description"
-            placeholder="Add more information here..."
+            placeholder="Provide information about your request here..."
             onChange={this.handleDescriptionChange}
-          ></textarea>
-          <div id="new-post-information">
-            <ItemsList
-              handleItemsChange={this.handleItemsChange}
-              items={this.state.items}
-            />
-          </div>
+            rows="3"
+          />
+        </div>
+        <div id="new-post-address">
+          <AutoComplete
+            id="address-input"
+            placeholder="Enter your delivery address here"
+            apiKey={"AIzaSyARRBVg-xS1QeLJMfoCSeQm5At4Q-E7luU"}
+            types={["address"]}
+            onPlaceSelected={(place) => {
+              this.setState({
+                location: {
+                  lat: place.geometry.location.lat(),
+                  lng: place.geometry.location.lng(),
+                },
+              });
+            }}
+          />
           <div id="pay-selector">
             <select
               className="form-new-post pay-select"
@@ -88,7 +97,17 @@ class RequestAsk extends React.Component {
               <option value="Cheque">{"Cheque"}</option>
             </select>
           </div>
-          <br />
+        </div>
+        <div id="new-request-detail">
+          <ItemsList
+            changeItems={this.handleItemsChange}
+            items={this.state.items}
+          />
+        </div>
+        {this.state.formReimbursement !== null &&
+        this.state.items.length > 0 &&
+        this.state.location.lat !== null &&
+        this.state.location.lng !== null ? (
           <button
             type="button"
             className="new-post-button"
@@ -96,7 +115,11 @@ class RequestAsk extends React.Component {
           >
             Create Request
           </button>
-        </div>
+        ) : (
+          <button type="button" className="new-post-button disabled" disabled>
+            Create Request
+          </button>
+        )}
       </div>
     );
   }
