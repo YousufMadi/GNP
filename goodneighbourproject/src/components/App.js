@@ -78,7 +78,6 @@ class App extends React.Component {
             component={() => (
               <Feed
                 updateUser={updateUser}
-                handleUserLogout={handleUserLogout}
                 users_state={this.state}
               />
             )}

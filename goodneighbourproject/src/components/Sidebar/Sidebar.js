@@ -4,6 +4,10 @@ import { Link } from "react-router-dom";
 import Map from "./Map";
 import "../../stylesheets/sidebar.css";
 
+import {
+  handleUserLogout,
+} from "../../actions/user";
+
 const keys = {
   key1: "AIzaSyCx3EBDjdwQ4Gb6698FPEWsTB7bNL_o7Ow",
   key2: "AIzaSyARRBVg-xS1QeLJMfoCSeQm5At4Q-E7luU",
@@ -16,7 +20,7 @@ class Sidebar extends React.Component {
 
   /* This function handles the situation where the user clicks log out */
   handleUserLogout = () => {
-    this.props.handleUserLogout(this.props.users_state);
+    handleUserLogout(this.props.users_state);
   };
 
   /* The functions that will handle a change in it's

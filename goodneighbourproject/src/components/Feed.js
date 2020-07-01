@@ -122,7 +122,6 @@ class Feed extends React.Component {
           <Sidebar
             active_post={true}
             posts={[currentUser.active_post]}
-            handleUserLogout={this.props.handleUserLogout}
             users_state={this.props.users_state}
             changeFilterState={this.handleFilterChange}
           />
@@ -139,7 +138,6 @@ class Feed extends React.Component {
         <Sidebar
           active_post={false}
           posts={this.state.posts}
-          handleUserLogout={this.props.handleUserLogout}
           users_state={this.props.users_state}
           changeFilterState={this.handleFilterChange}
         />
