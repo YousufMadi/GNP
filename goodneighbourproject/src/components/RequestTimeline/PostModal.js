@@ -41,7 +41,7 @@ class PostModal extends React.Component {
             },
           }}
         >
-          <div id="confirmation-modal-header">
+          <div className="confirmation-modal-header">
             <button
               id="close-modal-btn"
               className="post-edit-cancel"
@@ -51,8 +51,8 @@ class PostModal extends React.Component {
             </button>
             <span>Are you sure you want to accept this request?</span>
           </div>
-          <div id="confirmation-info">
-            <div id="confirmation-author">
+          <div className="confirmation-info">
+            <div className="confirmation-author">
               <label>Request made by</label>
               <img
                 src={request_author.profile_picture}
@@ -65,17 +65,17 @@ class PostModal extends React.Component {
                 </div>
               </div>
             </div>
-            <div id="confirmation-size">
+            <div className="confirmation-size">
               <label>Size of Request</label>
               <p>{getSizeEstimate(this.props.confirmation.selectedPost)}</p>
             </div>
           </div>
-          <div id="confirmation-actions">
-            <button id="cancel-action" onClick={this.props.closeModal}>
+          <div className="confirmation-actions">
+            <button className="cancel-action" onClick={this.props.closeModal}>
               Cancel
             </button>
             <button
-              id="accept-action"
+              className="accept-action"
               onClick={() =>
                 this.props.acceptPost(this.props.confirmation.selectedPost)
               }

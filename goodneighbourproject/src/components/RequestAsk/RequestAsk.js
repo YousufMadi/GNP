@@ -62,7 +62,7 @@ class RequestAsk extends React.Component {
   render() {
     return (
       <div className="new-request">
-        <div id="new-request-description">
+        <div className="new-request-description">
           <img src={this.props.currentUser.profile_picture} alt="profile-pic" />
           <textarea
             value={this.state.formDescription ? this.state.formDescription : ""}
@@ -72,7 +72,7 @@ class RequestAsk extends React.Component {
             rows="3"
           />
         </div>
-        <div id="new-post-address">
+        <div className="new-post-address">
           <AutoComplete
             id="address-input"
             placeholder="Enter your delivery address here"
@@ -87,7 +87,7 @@ class RequestAsk extends React.Component {
               });
             }}
           />
-          <div id="pay-selector">
+          <div className="pay-selector">
             <select
               className="form-new-post pay-select"
               onChange={(e) => this.handleReimbursementChange(e)}
@@ -101,7 +101,7 @@ class RequestAsk extends React.Component {
             </select>
           </div>
         </div>
-        <div id="new-request-detail">
+        <div className="new-request-detail">
           <ItemsList
             changeItems={this.handleItemsChange}
             items={this.state.items}

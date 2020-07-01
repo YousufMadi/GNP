@@ -1,4 +1,4 @@
-#active-request-container{
+.active-request-container{
   font-family: 'Montserrat', sans-serif;
   padding-top: 1em;
   padding-left: 1em;
@@ -14,11 +14,11 @@
   overflow: auto;
 }
 
-#active-request-header h5{
+.active-request-header h5{
   display: inline-block;
 }
 
-#active-request-header button {
+.active-request-header button {
   cursor: pointer;
   display: block;
   width: fit-content;
@@ -32,48 +32,48 @@
   transition: all 0.2s ease-in-out;
 }
 
-#active-request-header button:hover{
+.active-request-header button:hover{
   background-color: rgba(72,72,72,0.1);
 }
 
-#active-request-author{
+.active-request-author{
   text-align: center;
   margin-top: 1.5em;
   font-weight: 600;
 }
 
-#active-items-requested{
+.active-items-requested{
   margin-top: 1em;
 }
 
-#active-items-requested label{
+.active-items-requested label{
   margin-left: 1em;
   font-size: small;
   color: grey;
   font-weight: 600;
 }
 
-#active-description{
+.active-description{
   margin-top: 1.5em;
 }
 
-#active-description label{
+.active-description label{
   margin-left: 1em;
   font-size: small;
   color: grey;
   font-weight: 600;
 }
 
-#active-description p{
+.active-description p{
   margin-top: 0.5em;
   font-size: medium;
 }
 
-#end-active-request{
+.end-active-request{
   margin-top: 4em;
 }
 
-#end-active-request button{
+.end-active-request button{
   cursor: pointer;
   display: block;
   width: 90%;
@@ -87,6 +87,6 @@
   transition: all 0.2s ease-in-out;
 }
 
-#end-active-request button:hover{
+.end-active-request button:hover{
   background-color: rgba(219, 12, 12, 0.9);
 }
