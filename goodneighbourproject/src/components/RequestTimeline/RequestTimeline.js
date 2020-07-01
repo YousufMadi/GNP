@@ -4,16 +4,11 @@ import "../../stylesheets/RequestTimeline/requestTimeline.css";
 import RequestPost from "../RequestPost/RequestPost";
 import RequestAsk from "../RequestAsk/RequestAsk";
 import PostModal from "./PostModal";
+import Sidebar from "../Sidebar/Sidebar";
 
-import {
-  updateUser,
-} from "../../actions/user";
+import { updateUser } from "../../actions/user";
 
-import {
-  filterPosts,
-  deletePost,
-} from "../../actions/timeline";
-
+import { filterPosts, deletePost } from "../../actions/timeline";
 
 class RequestTimeline extends React.Component {
   constructor(props) {
@@ -36,10 +31,7 @@ class RequestTimeline extends React.Component {
   }
 
   filterPosts(posts) {
-    return filterPosts(
-      this.props.posts_state.posts,
-      this.props.posts_state
-    );
+    return filterPosts(this.props.posts_state.posts, this.props.posts_state);
   }
 
   handleConfirmationModal = (post) => {
@@ -109,9 +101,14 @@ class RequestTimeline extends React.Component {
           </li>
         );
       });
-
       return (
         <>
+          <Sidebar
+            active_post={false}
+            posts={filteredPosts}
+            users_state={this.props.users_state}
+            changeFilterState={this.props.changeFilterState}
+          />
           <div className="timeline">
             <RequestAsk
               currentUser={this.props.users_state.currentUser}
