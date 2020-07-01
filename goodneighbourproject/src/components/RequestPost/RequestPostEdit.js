@@ -28,8 +28,8 @@ class RequestPostEdit extends React.Component {
       description: this.state.formDescription,
     };
 
-    
-    this.props.editPost(this.props.posts_state, this.props.post.id, newPost);
+    console.log(newPost);
+    this.props.editPost(this.props.post.id, newPost);
   };
 
   renderOtherPaymentOptions() {

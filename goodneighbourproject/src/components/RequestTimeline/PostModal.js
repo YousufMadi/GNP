@@ -4,6 +4,7 @@ import "../../stylesheets/RequestTimeline/postmodal.css";
 
 import { fetchPostAuthor, getSizeEstimate } from "../../actions/timeline";
 
+Modal.setAppElement("#root");
 class PostModal extends React.Component {
   renderRating(author) {
     let renderStarsReturn = [];
@@ -53,7 +54,10 @@ class PostModal extends React.Component {
           <div id="confirmation-info">
             <div id="confirmation-author">
               <label>Request made by</label>
-              <img src={request_author.profile_picture}></img>
+              <img
+                src={request_author.profile_picture}
+                alt="requester-profile"
+              ></img>
               <div className="profile-info">
                 <p>{request_author.first_name}</p>
                 <div id="profile-rating">

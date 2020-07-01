@@ -26,11 +26,14 @@ class RequestTimeline extends React.Component {
   }
 
   filterPosts(posts) {
-    return this.props.filterPosts(this.props.posts_state.posts, this.props.posts_state);
+    return this.props.filterPosts(
+      this.props.posts_state.posts,
+      this.props.posts_state
+    );
   }
 
   addPostToState = (post) => {
-    this.props.addPostToState(this.props.database, post);
+    this.props.addPostToState(this.props.posts_state, post);
   };
 
   handleConfirmationModal = (post) => {
@@ -46,11 +49,11 @@ class RequestTimeline extends React.Component {
   handleAcceptPost = (post) => {
     this.handleCloseModal();
     const updated_user = {
-      ...this.props.database.currentUser,
+      ...this.props.users_state.currentUser,
       active_post: post,
     };
-    this.props.updateUser(this.props.database, updated_user);
-    this.props.deletePost(this.props.database, post.id);
+    this.props.deletePost(this.props.posts_state, post.id);
+    this.props.updateUser(this.props.users_state, updated_user);
   };
 
   handleClick(event) {
@@ -114,7 +117,7 @@ class RequestTimeline extends React.Component {
             <ul id="page-numbers">{renderPageNumbers}</ul>
           </div>
           <PostModal
-            users={this.props.database.users}
+            users={this.props.users_state.users}
             acceptPost={this.handleAcceptPost}
             confirmation={this.state.confirmationModal}
             closeModal={this.handleCloseModal}

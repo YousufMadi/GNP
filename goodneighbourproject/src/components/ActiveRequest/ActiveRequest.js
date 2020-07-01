@@ -7,7 +7,7 @@ class ActiveRequest extends React.Component {
   state = {
     postAuthor: fetchPostAuthor(
       this.props.currentUser.active_post,
-      this.props.users
+      this.props.users_state.users
     ),
   };
 
@@ -16,7 +16,7 @@ class ActiveRequest extends React.Component {
       ...this.props.currentUser,
       active_post: null,
     };
-    this.props.updateUser(this.props.database, updated_user);
+    this.props.updateUser(this.props.users_state, updated_user);
   };
 
   renderItems = () => {

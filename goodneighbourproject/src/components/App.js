@@ -11,10 +11,12 @@ import SettingsAdmin from "./SettingsAdmin/SettingsAdmin";
 
 import "../stylesheets/shared.css";
 
-
-
-import { addUser, updateUser, handleUserLogin, handleUserLogout } from "../actions/user";
-import { filterPosts, addPostToState, deletePost, editPost } from "../actions/timeline";
+import {
+  addUser,
+  updateUser,
+  handleUserLogin,
+  handleUserLogout,
+} from "../actions/user";
 
 class App extends React.Component {
   state = {
@@ -82,12 +84,8 @@ class App extends React.Component {
           <Route
             exact
             path="/signup"
-
             component={() => (
-              <Signup
-                users_state={this.state}
-                addUser={addUser}
-              />
+              <Signup users_state={this.state} addUser={addUser} />
             )}
           />
 
@@ -95,7 +93,6 @@ class App extends React.Component {
             exact
             path="/login"
             component={() => (
-
               <Login
                 handleUserLogin={handleUserLogin}
                 users_state={this.state}
@@ -107,11 +104,7 @@ class App extends React.Component {
             exact
             path="/logout"
             component={() => (
-
-              <Logout
-                logout={handleUserLogout}
-                users_state={this.state}
-              />
+              <Logout logout={handleUserLogout} users_state={this.state} />
             )}
           />
 
@@ -119,11 +112,7 @@ class App extends React.Component {
             exact
             path="/settings"
             component={() => (
-
-              <Settings
-                users_state={this.state}
-                updateUser={updateUser}
-              />
+              <Settings users_state={this.state} updateUser={updateUser} />
             )}
           />
 
@@ -131,14 +120,9 @@ class App extends React.Component {
             exact
             path="/adminsettings"
             component={() => (
-              <SettingsAdmin
-                users_state={this.state}
-                updateUser={updateUser}
-
-              />
+              <SettingsAdmin users_state={this.state} updateUser={updateUser} />
             )}
           />
-
         </Switch>
       </BrowserRouter>
     );
