@@ -94,6 +94,7 @@ p{
 /* CONTENT CONTAINER */
 
 .contentContainer{
+  background-color: white;
   padding-top: 4em;
   min-height: 85vh;
 }

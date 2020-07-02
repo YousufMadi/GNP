@@ -43,7 +43,6 @@ class Sidebar extends React.Component {
      that the RequestContainer can update it's filtering state. */
   handleFilterClick = () => {
     const filterRequest = {
-      filterTerm: this.filterTermInput.value,
       ...this.state,
     };
     this.props.changeFilterState(filterRequest);
@@ -83,12 +82,6 @@ class Sidebar extends React.Component {
   renderFilter() {
     return (
       <div className="filter-section">
-        <input
-          type="text"
-          ref={(input) => (this.filterTermInput = input)}
-          placeholder="Search term"
-        />
-
         <div className="dropdown-filters">
           <select onChange={(e) => this.handleDistanceChange(e)}>
             <option selected value="any">

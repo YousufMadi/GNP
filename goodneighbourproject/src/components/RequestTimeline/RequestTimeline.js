@@ -64,6 +64,14 @@ class RequestTimeline extends React.Component {
     });
   }
 
+  renderEmptyMessage() {
+    return (
+      <div className="empty-message">
+        No requests exist or match your filter.
+      </div>
+    );
+  }
+
   render() {
     if (this.state.filteredPosts != null) {
       const { posts, currentPage, postsPerPage } = this.state;
@@ -120,8 +128,14 @@ class RequestTimeline extends React.Component {
               currentUser={this.props.users_state.currentUser}
               posts_state={this.props.posts_state}
             />
-            <ul className="posts">{renderPosts}</ul>
-            <ul id="page-numbers">{renderPageNumbers}</ul>
+            {currentPosts.length === 0 ? (
+              this.renderEmptyMessage()
+            ) : (
+              <>
+                <ul className="posts">{renderPosts}</ul>
+                <ul id="page-numbers">{renderPageNumbers}</ul>
+              </>
+            )}
           </div>
           <PostModal
             users={this.props.users_state.users}
