@@ -5,12 +5,12 @@
   padding-bottom: 1em;
   padding-left: 1em;
   padding-right: 1em;
-  margin: 1em auto;
+  margin: 0 auto;
   background-color: #fff;
   display: flex;
   flex-direction: column;
-  border-radius: 3px;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  border: 2px solid transparent;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
 }
 
 .posted-request.posted-request.other-author{
@@ -18,8 +18,9 @@
 }
 
 .posted-request.other-author:hover{
+  background-color: rgba(75, 75, 75, 0.04);
+  border: 2px solid rgba(0, 0, 0, 0.1);
   border-color: #80bdff;
-  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
 }
 
 .users-pic-name{

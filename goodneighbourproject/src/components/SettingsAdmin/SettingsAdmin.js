@@ -1,16 +1,12 @@
 import React, { useState } from "react";
-// import "../../components/Settings/settings.css";
-import "./settingsAdmin.css";
+import "../../stylesheets/settingsAdmin.css";
 import CreateAdmin from "./CreateAdmin";
 import ViewUsers from "./ViewUsers";
 import AppStats from "./AppStats";
 import UserInfo from "../UserInfo/UserInfo";
-import UserUpdateForm from "../UserUpdateForm/UserUpdateForm"
+import UserUpdateForm from "../UserUpdateForm/UserUpdateForm";
 
 import { Redirect } from "react-router-dom";
-import Navbar from "../Navigation/Navbar";
-
-import { updateUser } from "../../actions/user";
 
 const SettingsAdmin = (props) => {
   console.log(props);
@@ -75,8 +71,12 @@ const SettingsAdmin = (props) => {
               >
                 View App Stats
               </button>
-              <button className="flex-options"
-                onClick={(e) => setAdminOption(adminOptions.UPDATE_INFO)}>Update Info</button>
+              <button
+                className="flex-options"
+                onClick={(e) => setAdminOption(adminOptions.UPDATE_INFO)}
+              >
+                Update Info
+              </button>
             </ul>
           </div>
           <div className="content">

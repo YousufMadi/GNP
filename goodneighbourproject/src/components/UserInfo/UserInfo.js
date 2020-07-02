@@ -1,8 +1,7 @@
 import React from "react";
-import './userinfo.css';
+import "../../stylesheets/userinfo.css";
 import { Link } from "react-router-dom";
 class UserInfo extends React.Component {
-
   renderRating() {
     let renderStarsReturn = [];
     for (let i = 0; i < this.props.currentUser.rating; i++) {
@@ -16,15 +15,18 @@ class UserInfo extends React.Component {
 
     return (
       <div className="user-curr-info">
-        <Link to='/feed'><button className="back-button"><i className="fa fa-chevron-left" aria-hidden="true"></i>
-        </button></Link>
+        <Link to="/feed">
+          <button className="back-button">
+            <i className="fa fa-chevron-left" aria-hidden="true"></i>
+          </button>
+        </Link>
         <div className="profile-img">
-          <img src={currentUser.profile_picture} />
+          <img src={currentUser.profile_picture} alt="profile" />
         </div>
-        <h3>{currentUser.first_name} {currentUser.last_name} </h3>
-        <div className="user-ratings">
-          {this.renderRating()}
-        </div>
+        <h3>
+          {currentUser.first_name} {currentUser.last_name}{" "}
+        </h3>
+        <div className="user-ratings">{this.renderRating()}</div>
         <h4>{currentUser.email}</h4>
         <div className="requests-info">
           <p>Number of requests made: </p>
@@ -35,7 +37,7 @@ class UserInfo extends React.Component {
           <p>10</p>
         </div>
       </div>
-    )
+    );
   }
 }
 

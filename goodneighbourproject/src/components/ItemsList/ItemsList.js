@@ -1,5 +1,4 @@
 import React from "react";
-import Items from "./Items";
 
 class ItemsList extends React.Component {
   /*
@@ -43,6 +42,22 @@ class ItemsList extends React.Component {
     this.props.changeItems(filteredItems);
   };
 
+  /* This function maps through the items prop and renders each item as an li, with
+     an onClick function that allows the user to delete the item if the li is clicked */
+  renderItems() {
+    return this.state.items.map((item, index) => {
+      return (
+        <li
+          key={index}
+          onClick={() => this.deleteItem(item)}
+          className="request-item"
+        >
+          {item} <i className="fas fa-times"></i>
+        </li>
+      );
+    });
+  }
+
   /* 
   
   ------- Render function ----------
@@ -69,7 +84,9 @@ class ItemsList extends React.Component {
             ></input>
           </form>
         </div>
-        <Items deleteItem={this.deleteItem} items={this.state.items} />
+        <div id="items-list-container">
+          <ul className="request-items-list">{this.renderItems()}</ul>
+        </div>
       </>
     );
   }
