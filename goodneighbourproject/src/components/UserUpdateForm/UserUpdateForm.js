@@ -8,6 +8,7 @@ import {
 
 class UserUpdateForm extends React.Component {
 
+
   constructor(props) {
     super(props);
     this.state = {
@@ -96,11 +97,12 @@ class UserUpdateForm extends React.Component {
     console.log(this.state);
   };
 
+
   render() {
 
     const currentUser = this.props.users_state.currentUser;
     return (
-      <div className="user-update-info">
+      <div className={`user-update-info ${this.props.adminClass}`}>
         <h3>Update Information</h3>
 
         <p className="success_msg">{this.state.success_msg}</p>
@@ -111,8 +113,7 @@ class UserUpdateForm extends React.Component {
             <input
               name="first_name"
               type="text"
-              placeholder="First Name"
-              defaultValue={currentUser.first_name}
+              placeholder={currentUser.first_name}
               onChange={this.handleChange}
             ></input>
             <p className="error_msg">{this.state.first_name_error}</p>
@@ -124,8 +125,7 @@ class UserUpdateForm extends React.Component {
             <input
               name="last_name"
               type="text"
-              placeholder="Last Name"
-              defaultValue={currentUser.last_name}
+              placeholder={currentUser.last_name}
               onChange={this.handleChange}
             ></input>
             <p className="error_msg">{this.state.last_name_error}</p>
@@ -136,8 +136,7 @@ class UserUpdateForm extends React.Component {
             <input
               name="email"
               type="email"
-              placeholder="Email"
-              defaultValue={currentUser.email}
+              placeholder={currentUser.email}
               onChange={this.handleChange}
             ></input>
             <p className="error_msg">{this.state.email_error}</p>
@@ -149,7 +148,7 @@ class UserUpdateForm extends React.Component {
               name="password"
               type="password"
               placeholder="Password"
-              defaultValue={currentUser.password}
+              // defaultValue={currentUser.password}
               onChange={this.handleChange}
             ></input>
             <p className="error_msg">{this.state.password_error}</p>
