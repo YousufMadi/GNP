@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import "../../components/Settings/settings.css";
+// import "../../components/Settings/settings.css";
 import "./settingsAdmin.css";
 import CreateAdmin from "./CreateAdmin";
 import ViewUsers from "./ViewUsers";
 import AppStats from "./AppStats";
 import UserInfo from "../UserInfo/UserInfo";
+import UserUpdateForm from "../UserUpdateForm/UserUpdateForm"
 
 import { Redirect } from "react-router-dom";
 import Navbar from "../Navigation/Navbar";
@@ -32,6 +33,9 @@ const SettingsAdmin = (props) => {
       break;
     case adminOptions.APP_STATS:
       SelectedOption = AppStats;
+      break;
+    case adminOptions.UPDATE_INFO:
+      SelectedOption = UserUpdateForm;
       break;
     default:
       break;
@@ -71,15 +75,17 @@ const SettingsAdmin = (props) => {
               >
                 View App Stats
               </button>
-              <button className="flex-options">Update Info</button>
+              <button className="flex-options"
+                onClick={(e) => setAdminOption(adminOptions.UPDATE_INFO)}>Update Info</button>
             </ul>
           </div>
           <div className="content">
             {adminOption && (
               <SelectedOption
                 users={props.users_state}
+                users_state={props.users_state}
                 updateUser={props.updateUser}
-                toast={props.toast}
+                adminClass="admin-class"
               />
             )}
           </div>

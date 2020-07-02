@@ -6,7 +6,7 @@ class UserInfo extends React.Component {
   renderRating() {
     let renderStarsReturn = [];
     for (let i = 0; i < this.props.currentUser.rating; i++) {
-      renderStarsReturn.push(<i className="fas fa-star"></i>);
+      renderStarsReturn.push(<i key={i} className="fas fa-star"></i>);
     }
     return renderStarsReturn;
   }
@@ -16,7 +16,7 @@ class UserInfo extends React.Component {
 
     return (
       <div className="user-curr-info">
-        <Link to='/feed'><button className="back-button"><i class="fa fa-chevron-left" aria-hidden="true"></i>
+        <Link to='/feed'><button className="back-button"><i className="fa fa-chevron-left" aria-hidden="true"></i>
         </button></Link>
         <div className="profile-img">
           <img src={currentUser.profile_picture} />
