@@ -1,6 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import RequestTimeline from "../RequestTimeline/RequestTimeline";
+import Timeline from "../Timeline/Timeline";
 import ActiveRequest from "../ActiveRequest/ActiveRequest";
 
 import "../../stylesheets/feed.css";
@@ -164,7 +164,7 @@ class Feed extends React.Component {
     }
     return (
       <div className="feedContainer">
-        <RequestTimeline
+        <Timeline
           changeFilterState={this.handleFilterChange}
           users_state={this.props.users_state}
           posts_state={this.state}

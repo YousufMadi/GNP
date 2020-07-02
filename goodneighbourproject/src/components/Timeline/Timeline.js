@@ -1,16 +1,16 @@
 import React from "react";
 
 import "../../stylesheets/RequestTimeline/requestTimeline.css";
-import RequestPost from "../RequestPost/RequestPost";
-import RequestAsk from "../RequestAsk/RequestAsk";
-import PostModal from "./PostModal";
+import Request from "../Request/Request";
+import NewRequest from "../NewRequest/NewRequest";
+import ConfirmationModal from "./ConfirmationModal";
 import Sidebar from "../Sidebar/Sidebar";
 
 import { updateUser } from "../../actions/user";
 
 import { filterPosts, deletePost } from "../../actions/timeline";
 
-class RequestTimeline extends React.Component {
+class Timeline extends React.Component {
   constructor(props) {
     super(props);
     /*
@@ -127,7 +127,7 @@ class RequestTimeline extends React.Component {
 
       const renderPosts = currentPosts.map((post, index) => {
         return (
-          <RequestPost
+          <Request
             highlightPost={this.handleHighlightedPostChange}
             showConfirmation={this.handleConfirmationModal}
             currentUser={this.props.users_state.currentUser}
@@ -166,7 +166,7 @@ class RequestTimeline extends React.Component {
             changeFilterState={this.props.changeFilterState}
           />
           <div className="timeline">
-            <RequestAsk
+            <NewRequest
               currentUser={this.props.users_state.currentUser}
               posts_state={this.props.posts_state}
             />
@@ -179,7 +179,7 @@ class RequestTimeline extends React.Component {
               </>
             )}
           </div>
-          <PostModal
+          <ConfirmationModal
             users={this.props.users_state.users}
             acceptPost={this.handleAcceptPost}
             confirmation={this.state.confirmationModal}
@@ -193,4 +193,4 @@ class RequestTimeline extends React.Component {
   }
 }
 
-export default RequestTimeline;
+export default Timeline;

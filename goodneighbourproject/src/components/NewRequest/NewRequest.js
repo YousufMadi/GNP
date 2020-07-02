@@ -6,7 +6,7 @@ import ItemsList from "../ItemsList/ItemsList";
 
 import { addPostToState } from "../../actions/timeline";
 
-class RequestAsk extends React.Component {
+class NewRequest extends React.Component {
   /*
 
   ------- State Initialization ----------
@@ -181,4 +181,4 @@ class RequestAsk extends React.Component {
   }
 }
 
-export default RequestAsk;
+export default NewRequest;

@@ -1,5 +1,4 @@
 import React from "react";
-import Items from "./Items";
 
 class ItemsList extends React.Component {
   /*

@@ -5,7 +5,7 @@ import "../../stylesheets/RequestTimeline/postmodal.css";
 import { fetchPostAuthor, getSizeEstimate } from "../../actions/timeline";
 
 Modal.setAppElement("#root");
-class PostModal extends React.Component {
+class ConfirmationModal extends React.Component {
   /* This functions is responsible for retrieving the rating, in terms of stars, associated with the author's account */
   renderRating(author) {
     let renderStarsReturn = [];
@@ -104,4 +104,4 @@ class PostModal extends React.Component {
   }
 }
 
-export default PostModal;
+export default ConfirmationModal;

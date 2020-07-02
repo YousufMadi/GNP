@@ -1,7 +1,7 @@
 import React from "react";
 import ItemsList from "../ItemsList/ItemsList";
 
-class RequestPostEdit extends React.Component {
+class EditRequest extends React.Component {
   /*
 
   ------- State Initialization ----------
@@ -137,4 +137,4 @@ class RequestPostEdit extends React.Component {
   }
 }
 
-export default RequestPostEdit;
+export default EditRequest;
