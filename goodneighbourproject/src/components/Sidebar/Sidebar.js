@@ -90,7 +90,7 @@ class Sidebar extends React.Component {
             <option value="1">{"< 1km"}</option>
             <option value="5">{"< 5km"}</option>
             <option value="20">{"< 20km"}</option>
-            <option value="20+">{"20+km"}</option>
+            <option value="21">{"20+km"}</option>
           </select>
 
           <select onChange={(e) => this.handleSizeChange(e)}>

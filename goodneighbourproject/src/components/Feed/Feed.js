@@ -7,7 +7,6 @@ import "../../stylesheets/feed.css";
 
 class Feed extends React.Component {
   state = {
-    filterTerm: "",
     filterDistance: null,
     filterSize: null,
     filterPayment: null,

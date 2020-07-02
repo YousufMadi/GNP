@@ -31,8 +31,12 @@ class RequestTimeline extends React.Component {
     this.setState({ filteredPosts: this.props.posts_state.posts });
   }
 
-  filterPosts(posts) {
-    return filterPosts(this.props.posts_state.posts, this.props.posts_state);
+  filterPosts() {
+    return filterPosts(
+      this.props.posts_state.posts,
+      this.props.posts_state,
+      this.props.users_state.currentUserLocation
+    );
   }
   handleHighlightedPostChange = (post) => {
     this.setState({ highlightedPost: post });

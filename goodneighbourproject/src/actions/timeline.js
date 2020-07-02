@@ -1,3 +1,5 @@
+import { getDistance, convertDistance } from "geolib";
+
 export const addPostToState = (posts_state, new_post) => {
   posts_state.setState({
     posts: [...posts_state.posts, new_post],
@@ -27,7 +29,7 @@ export const editPost = (posts_state, id, post) => {
   });
 };
 
-export const filterPosts = (posts, posts_state) => {
+export const filterPosts = (posts, posts_state, currentUserLocation) => {
   let newFilteredPosts = posts;
   if (
     posts_state.filterPayment !== null &&
@@ -43,6 +45,37 @@ export const filterPosts = (posts, posts_state) => {
     newFilteredPosts = newFilteredPosts.filter((post) => {
       return (
         !posts_state.filterSize || posts_state.filterSize === sizeEstimate(post)
+      );
+    });
+  }
+  if (
+    posts_state.filterDistance !== null &&
+    posts_state.filterDistance !== "any" &&
+    currentUserLocation !== null
+  ) {
+    let filterValue = null;
+    if (posts_state.filterDistance === "1") {
+      filterValue = 1;
+    } else if (posts_state.filterDistance === "5") {
+      filterValue = 5;
+    } else if (posts_state.filterDistance === "20") {
+      filterValue = 20;
+    } else if (posts_state.filterDistance === "21") {
+      filterValue = 40075;
+    }
+    // Filter by distance
+    newFilteredPosts = newFilteredPosts.filter((post) => {
+      return (
+        convertDistance(
+          getDistance(
+            {
+              latitude: currentUserLocation.latitude,
+              longitude: currentUserLocation.longitude,
+            },
+            { latitude: post.location.lat, longitude: post.location.lng }
+          ),
+          "km"
+        ) < filterValue
       );
     });
   }

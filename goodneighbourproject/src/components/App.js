@@ -16,7 +16,6 @@ import {
   updateUser,
   handleUserLogin,
   handleUserLogout,
-  getUserLocation,
 } from "../actions/user";
 
 class App extends React.Component {
