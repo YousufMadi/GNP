@@ -10,12 +10,23 @@ import {
 } from "react-google-maps";
 
 class Map extends React.Component {
+  /*
+
+  ------- State Initialization ----------
+    
+    previousLocation: This state holds the previously selected location by the user so that the
+                      map stays on its current position upon rerender.
+    mapSelectedPost: This state holds the selected request by the user using the map.
+    activeRequest: This state holds the request that is currently active for the user. 
+    
+  */
   state = {
     previousLocation: null,
     mapSelectedPost: null,
     activeRequest: this.props.active_post ? this.props.posts[0] : null,
   };
 
+  /* This function is responsible for changing the mapSelectedPost state when the user clicks on a circle within the Map */
   setSelectedRequest(post) {
     const previousLocation = this.props.highlightedPost
       ? this.props.highlightedPost
@@ -27,6 +38,8 @@ class Map extends React.Component {
     });
   }
 
+  /* This function is responsible for determining where the default center is for the map. Precedence is determined by the if condifiton 
+     Defaults to the co-ordinates of Toronto */
   setDefaultCenter() {
     if (this.state.activeRequest) {
       return this.state.activeRequest.location;
@@ -46,6 +59,9 @@ class Map extends React.Component {
     }
   }
 
+  /* This function renders the markers within the map.
+     If the user has an active request, it only renders that one request with a precise marker
+     otherwise it renders circles around the location of the requests currently displayed in the timeline. */
   renderLocations() {
     if (this.state.activeRequest) {
       return this.props.posts.map((post) => (
@@ -102,6 +118,7 @@ class Map extends React.Component {
     }
   }
   render() {
+    // Force re-render, otherwise, markers are not changed.
     const newKey = uuidv4();
     return (
       <GoogleMap

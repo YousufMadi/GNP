@@ -5,7 +5,6 @@ import Sidebar from "../Sidebar/Sidebar";
 import "../../stylesheets/RequestTimeline/activerequest.css";
 
 import { updateUser } from "../../actions/user";
-
 import { fetchPostAuthor } from "../../actions/timeline";
 
 class ActiveRequest extends React.Component {

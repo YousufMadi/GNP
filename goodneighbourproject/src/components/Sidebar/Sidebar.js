@@ -21,19 +21,16 @@ class Sidebar extends React.Component {
     handleUserLogout(this.props.users_state);
   };
 
-  /* The functions that will handle a change in it's
-     respective select html */
+  /* The functions that will handle a change in it's respective select html element */
   handleDistanceChange(e) {
     if (e.target.value === "Any Distance") {
     } else {
       this.setState({ filterDistance: e.target.value });
     }
   }
-
   handleSizeChange(e) {
     this.setState({ filterSize: e.target.value });
   }
-
   handlePaymentChange(e) {
     this.setState({ filterPayment: e.target.value });
   }
@@ -48,6 +45,7 @@ class Sidebar extends React.Component {
     this.props.changeFilterState(filterRequest);
   };
 
+  /* This functions is responsible for retrieving the rating, in terms of stars, associated with the author's account */
   renderRating() {
     let renderStarsReturn = [];
     for (let i = 0; i < this.props.users_state.currentUser.rating; i++) {

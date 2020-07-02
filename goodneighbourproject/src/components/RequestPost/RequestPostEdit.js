@@ -2,24 +2,40 @@ import React from "react";
 import ItemsList from "../ItemsList/ItemsList";
 
 class RequestPostEdit extends React.Component {
+  /*
+
+  ------- State Initialization ----------
+
+    formReimbursement: The state that manages the reimbursement select option.
+    formDescription: The state that manages the description textarea for the new requst.
+
+    items: The state that manages all the items the users wants to add to their request.
+
+  */
   state = {
     formReimbursement: this.props.post.reimbursement,
     formDescription: this.props.post.description,
     items: this.props.post.items,
   };
 
+  /* This function handles changes to the item list */
   handleItemsChange = (items) => {
     this.setState({ items: items });
   };
 
+  /* This function handles changes to the reimbursement value */
   handleReimbursementChange = (e) => {
     this.setState({ formReimbursement: e.target.value });
   };
 
+  /* This function handles changes to the description textarea */
   handleDescriptionChange = (e) => {
     this.setState({ formDescription: e.target.value });
   };
 
+  /* This function is responsible for handling the save request button in the edit view
+     It creates a new post with values stored in the state, and sends it to the parent component
+     to save as the new values. */
   handleEditRequest = (e) => {
     e.preventDefault();
     const newPost = {
@@ -30,6 +46,7 @@ class RequestPostEdit extends React.Component {
     this.props.editPost(this.props.post.id, newPost);
   };
 
+  /* This function renders the other options for the payment select to avoid duplicates */
   renderOtherPaymentOptions() {
     switch (this.props.post.reimbursement) {
       case "Cash":
@@ -57,6 +74,16 @@ class RequestPostEdit extends React.Component {
         return <></>;
     }
   }
+
+  /* 
+
+  ------- Render function ----------
+
+    Renders the select option where the payment is specified to allow the user to pick a new payment type.
+    Renders the ItemsList component to manage the item list for this request and also renders a text area,
+    allowing the user to change their description of their request.
+
+  */
   render() {
     return (
       <div className="posted-request">

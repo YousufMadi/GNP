@@ -6,6 +6,18 @@ import ActiveRequest from "../ActiveRequest/ActiveRequest";
 import "../../stylesheets/feed.css";
 
 class Feed extends React.Component {
+  /*
+
+    ------- State Initialization ----------
+
+      filterDistance: The value given by the select distance element in the sidebar
+      filterSize: The value given by the select favour size element in the sidebar
+      filterPayment: The value given by the select payment type element in the sidebar
+
+      posts: Hardcoded requests and their information. This will require a databse fetch in later phases of the project.
+
+    */
+
   state = {
     filterDistance: null,
     filterSize: null,
@@ -121,6 +133,19 @@ class Feed extends React.Component {
     this.setState({ ...newFilter });
   };
 
+  /* 
+  
+  ------- Render function ----------
+     
+     If the current user is not logged in, it redirects to the login page.
+
+     If the current user has an active request they need to finish, it renders the 
+     ActiveRequest component.
+
+     If the current user is logged in and has no active request, they will be able to
+     view the feed and all of the requests currently pending. 
+
+  */
   render() {
     const currentUser = this.props.users_state.currentUser;
     if (currentUser === null) {

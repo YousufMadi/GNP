@@ -2,6 +2,7 @@ import React from "react";
 import { deletePost } from "../../actions/timeline";
 
 class RequestPostView extends React.Component {
+  /* This function returns an estimate for the size of the favour given the amount of elements in the items list. */
   sizeEstimate = () => {
     let size = null;
     if (this.props.post.items.length <= 3) {
@@ -14,6 +15,8 @@ class RequestPostView extends React.Component {
     return size;
   };
 
+  /* Depending on if the current user is the author of this post, it shows the items list or just the estimate
+     If the current user is the author, it shows the items list. Otherwise shows the estimate. */
   renderItemSizeOrList() {
     if (this.props.postUser.id === this.props.currentUser.id) {
       return <ul className="request-items-list">{this.props.renderItems()}</ul>;
@@ -27,13 +30,25 @@ class RequestPostView extends React.Component {
     }
   }
 
+  /* This function handles the clicking of a post to highlight it in the google maps area with in the sidebar.
+     Can only be highlighted if the post does not belong to the current user.  */
   handlePostClick = () => {
     if (this.props.postUser.id !== this.props.currentUser.id) {
-      console.log("test");
       this.props.highlightPost(this.props.post);
     }
   };
 
+  /* 
+
+  ------- Render function ----------
+
+    If the current user is the author of this post, it renders an edit and delete button that allows the user
+    to edit or delete the post accordingly. 
+
+    If the current user is not the author of this post, it renders an accept request button that allows the user
+    to accept this post, following their confirmation.
+
+  */
   render() {
     return (
       <div

@@ -6,6 +6,7 @@ import { fetchPostAuthor, getSizeEstimate } from "../../actions/timeline";
 
 Modal.setAppElement("#root");
 class PostModal extends React.Component {
+  /* This functions is responsible for retrieving the rating, in terms of stars, associated with the author's account */
   renderRating(author) {
     let renderStarsReturn = [];
     for (let i = 0; i < author.rating; i++) {
@@ -13,6 +14,18 @@ class PostModal extends React.Component {
     }
     return renderStarsReturn;
   }
+
+  /* 
+
+  ------- Render function ----------
+
+    This component renders a modal on the screen that asks the user to confirm whether
+    they are willing to accept the request they clicked accept request on.
+
+    The modal is displayed depending on the confirmation prop that is passed down from the parent.
+    If confirmation is true, it displays the modal, otherwise the modal is hidden.
+
+  */
   render() {
     if (this.props.confirmation.display) {
       const request_author = fetchPostAuthor(

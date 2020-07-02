@@ -7,6 +7,18 @@ import ItemsList from "../ItemsList/ItemsList";
 import { addPostToState } from "../../actions/timeline";
 
 class RequestAsk extends React.Component {
+  /*
+
+  ------- State Initialization ----------
+
+    formReimbursement: The state that manages the reimbursement select option.
+    formDescription: The state that manages the description textarea for the new requst.
+    autocompleteValue: The state that manages the input value for the autocomplete
+    location: The state that holds the currently selected location, provided by the autocomplete.
+
+    items: The state that manages all the items the users wants to add to their request.
+
+  */
   state = {
     items: [],
     formReimbursement: null,
@@ -15,22 +27,32 @@ class RequestAsk extends React.Component {
     location: { lat: null, lng: null },
   };
 
+  /* This function handles changes to the item list */
   handleItemsChange = (items) => {
     this.setState({ items: items });
   };
 
+  /* This function handles changes to the reimbursement value */
   handleReimbursementChange = (e) => {
     this.setState({ formReimbursement: e.target.value });
   };
 
+  /* This function handles changes to the description textarea */
   handleDescriptionChange = (e) => {
     this.setState({ formDescription: e.target.value });
   };
 
+  /* This function handles changes to the autocomplete input */
   handleAutocompleteChange = (e) => {
     this.setState({ autocompleteValue: e.target.value });
   };
 
+  /* This function is responsible for creating a new request
+    
+     It validates the inputs and creates a new request.
+     Upon creating a new request, it resets the input values.
+
+     This is where we will make a database call to create a new post */
   handleCreateRequest = (e) => {
     e.preventDefault();
     if (
@@ -65,8 +87,25 @@ class RequestAsk extends React.Component {
     }
   };
 
+  /*
+  
+  ------- Render function ----------
+     
+  This component renders all the inputs required to create a new request.
+
+  They are:
+    - Textarea for the description
+    - Input for the address (Google Autocomplete)
+    - Select for the payment type
+    - Input for the item list
+
+  It uses Google's Autocomplete API to retrieve addresses matching the user's input/
+
+  If the inputs are not valid, the create request button is disabled and the user 
+  cannot create a new request.
+
+  */
   render() {
-    console.log(this.state.autocompleteValue);
     return (
       <div className="new-request">
         <div className="new-request-description">
