@@ -2,7 +2,7 @@ import React from "react";
 import AutoComplete from "react-google-autocomplete";
 
 import "../../stylesheets/RequestTimeline/requestAsk.css";
-import ItemsList from "../RequestPost/ItemsList";
+import ItemsList from "../ItemsList/ItemsList";
 
 import { addPostToState } from "../../actions/timeline";
 
@@ -11,6 +11,7 @@ class RequestAsk extends React.Component {
     items: [],
     formReimbursement: null,
     formDescription: null,
+    autocompleteValue: "",
     location: { lat: null, lng: null },
   };
 
@@ -24,6 +25,10 @@ class RequestAsk extends React.Component {
 
   handleDescriptionChange = (e) => {
     this.setState({ formDescription: e.target.value });
+  };
+
+  handleAutocompleteChange = (e) => {
+    this.setState({ autocompleteValue: e.target.value });
   };
 
   handleCreateRequest = (e) => {
@@ -51,6 +56,7 @@ class RequestAsk extends React.Component {
       this.setState({
         formDescription: null,
         formReimbursement: null,
+        autocompleteValue: "",
         items: [],
         location: { lat: null, lng: null },
       });
@@ -60,6 +66,7 @@ class RequestAsk extends React.Component {
   };
 
   render() {
+    console.log(this.state.autocompleteValue);
     return (
       <div className="new-request">
         <div className="new-request-description">
@@ -74,6 +81,8 @@ class RequestAsk extends React.Component {
         </div>
         <div className="new-post-address">
           <AutoComplete
+            onChange={this.handleAutocompleteChange}
+            value={this.state.autocompleteValue}
             id="address-input"
             placeholder="Enter your delivery address here"
             apiKey={"AIzaSyARRBVg-xS1QeLJMfoCSeQm5At4Q-E7luU"}
@@ -84,6 +93,7 @@ class RequestAsk extends React.Component {
                   lat: place.geometry.location.lat(),
                   lng: place.geometry.location.lng(),
                 },
+                autocompleteValue: place.formatted_address,
               });
             }}
           />
@@ -92,9 +102,13 @@ class RequestAsk extends React.Component {
               className="form-new-post pay-select"
               onChange={(e) => this.handleReimbursementChange(e)}
             >
-              <option selected disabled value={null}>
-                Reimbursement
-              </option>
+              {this.state.formReimbursement ? (
+                <></>
+              ) : (
+                <option selected disabled value={null}>
+                  Reimbursement
+                </option>
+              )}
               <option value="Cash">{"Cash"}</option>
               <option value="E-transfer">{"E-Transfer"}</option>
               <option value="Cheque">{"Cheque"}</option>

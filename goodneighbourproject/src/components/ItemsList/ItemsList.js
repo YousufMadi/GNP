@@ -1,51 +1,41 @@
 import React from "react";
-import "../../stylesheets/RequestTimeline/itemList.css";
 import Items from "./Items";
 
 class ItemsList extends React.Component {
   state = {
     items: this.props.items,
   };
+
+  componentDidUpdate() {
+    if (this.props.items.length === 0 && this.state.items.length !== 0) {
+      this.setState({ items: [] });
+    }
+  }
+
   addItem = (e) => {
     e.preventDefault();
-
-    if (this._inputElement.value !== "") {
-      var newItem = {
-        text: this._inputElement.value,
-        key: Date.now(),
-      };
-
-      this.setState((prevState) => {
-        return {
-          items: prevState.items.concat(newItem),
-        };
-      });
-      const itemListWithoutKey = this.state.items.map((item) => {
-        return item.text;
-      });
-      this.props.handleItemsChange([
-        ...itemListWithoutKey,
-        this._inputElement.value,
-      ]);
+    if (
+      this._inputElement.value !== "" &&
+      this._inputElement.value[0] !== " "
+    ) {
+      this.setState({ items: [...this.state.items, this._inputElement.value] });
+      this.props.changeItems([...this.state.items, this._inputElement.value]);
       this._inputElement.value = "";
     }
   };
 
-  deleteItem = (key) => {
-    var filteredItems = this.state.items.filter(function (item) {
-      return item.key !== key;
+  deleteItem = (removeItem) => {
+    const filteredItems = this.state.items.filter((item) => {
+      return item !== removeItem;
     });
-
-    this.setState({
-      items: filteredItems,
-    });
-    this.props.handleItemsChange(filteredItems);
+    this.setState({ items: filteredItems });
+    this.props.changeItems(filteredItems);
   };
 
   render() {
     return (
-      <div className="itemListMain">
-        <div className="header">
+      <>
+        <div id="item-input-container">
           <form onSubmit={this.addItem}>
             <button id="add-item-btn" type="submit">
               Add Item
@@ -53,14 +43,12 @@ class ItemsList extends React.Component {
             <input
               className="form-new-post item-input"
               placeholder="Enter an item"
-              ref={(a) => (this._inputElement = a)}
+              ref={(input) => (this._inputElement = input)}
             ></input>
           </form>
         </div>
-        <div>
-          <Items entries={this.state.items} delete={this.deleteItem} />
-        </div>
-      </div>
+        <Items deleteItem={this.deleteItem} items={this.state.items} />
+      </>
     );
   }
 }

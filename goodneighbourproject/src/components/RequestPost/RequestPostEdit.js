@@ -1,5 +1,5 @@
 import React from "react";
-import ItemsList from "./ItemsList";
+import ItemsList from "../ItemsList/ItemsList";
 
 class RequestPostEdit extends React.Component {
   state = {
