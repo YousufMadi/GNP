@@ -1,6 +1,6 @@
 import React from "react";
 import Modal from "react-modal";
-import "../../stylesheets/RequestTimeline/postmodal.css";
+import "../../stylesheets/confirmationmodal.css";
 
 import { fetchPostAuthor, getSizeEstimate } from "../../actions/timeline";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import AutoComplete from "react-google-autocomplete";
 
-import "../../stylesheets/RequestTimeline/requestAsk.css";
+import "../../stylesheets/newrequest.css";
 import ItemsList from "../ItemsList/ItemsList";
 
 import { addPostToState } from "../../actions/timeline";

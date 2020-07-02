@@ -1,6 +1,6 @@
 import React from "react";
 
-import "../../stylesheets/RequestTimeline/requestTimeline.css";
+import "../../stylesheets/timeline.css";
 import Request from "../Request/Request";
 import NewRequest from "../NewRequest/NewRequest";
 import ConfirmationModal from "./ConfirmationModal";

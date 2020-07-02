@@ -2,7 +2,7 @@ import React from "react";
 import ViewRequest from "./ViewRequest";
 import EditRequest from "./EditRequest";
 
-import "../../stylesheets/RequestTimeline/requestpost.css";
+import "../../stylesheets/request.css";
 
 import { editPost } from "../../actions/timeline";
 
