@@ -149,11 +149,24 @@ class Timeline extends React.Component {
       }
 
       const renderPageNumbers = pageNumbers.map((number) => {
-        return (
-          <li key={number} id={number} onClick={this.handlePageClick}>
-            {number}
-          </li>
-        );
+        if (number === currentPage) {
+          return (
+            <li
+              className="current-page"
+              key={number}
+              id={number}
+              onClick={this.handlePageClick}
+            >
+              {number}
+            </li>
+          );
+        } else {
+          return (
+            <li key={number} id={number} onClick={this.handlePageClick}>
+              {number}
+            </li>
+          );
+        }
       });
       return (
         <>
