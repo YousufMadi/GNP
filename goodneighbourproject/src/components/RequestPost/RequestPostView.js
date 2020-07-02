@@ -1,5 +1,5 @@
 import React from "react";
-import {deletePost} from "../../actions/timeline";
+import { deletePost } from "../../actions/timeline";
 
 class RequestPostView extends React.Component {
   sizeEstimate = () => {
@@ -27,9 +27,23 @@ class RequestPostView extends React.Component {
     }
   }
 
+  handlePostClick = () => {
+    if (this.props.postUser.id !== this.props.currentUser.id) {
+      console.log("test");
+      this.props.highlightPost(this.props.post);
+    }
+  };
+
   render() {
     return (
-      <div className="posted-request">
+      <div
+        className={`posted-request  ${
+          this.props.postUser.id === this.props.currentUser.id
+            ? ""
+            : "other-author"
+        }`}
+        onClick={this.handlePostClick}
+      >
         <div className="users-pic-name">
           <img
             className="post-user-pic"
@@ -55,10 +69,7 @@ class RequestPostView extends React.Component {
               <button
                 className="delete-post"
                 onClick={() =>
-                  deletePost(
-                    this.props.posts_state,
-                    this.props.post.id
-                  )
+                  deletePost(this.props.posts_state, this.props.post.id)
                 }
               >
                 <i className="fas fa-trash"></i>

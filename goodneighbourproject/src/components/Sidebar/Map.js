@@ -11,17 +11,28 @@ import {
 
 class Map extends React.Component {
   state = {
-    selectedRequest: this.props.active_post
-      ? this.props.posts[0].location
-      : null,
-    mapPosition: this.props.active_post
-      ? this.props.posts[0].location
-      : { lat: 43.65107, lng: -79.347015 },
+    mapSelectedPost: null,
+    activeRequest: this.props.active_post ? this.props.posts[0] : null,
   };
 
-  setSelectedRequest(location) {
-    this.setState({ selectedRequest: location });
+  setSelectedRequest(post) {
+    this.props.resetFeedSelectedPost(null);
+    this.setState({ mapSelectedPost: post });
   }
+
+  setDefaultCenter() {
+    if (this.state.activeRequest) {
+      return this.state.activeRequest.location;
+    } else if (this.props.highlightedPost) {
+      return this.props.highlightedPost.location;
+    } else if (this.state.mapSelectedPost) {
+      return this.state.mapSelectedPost.location;
+    } else {
+      return { lat: 43.65107, lng: -79.347015 };
+    }
+  }
+
+  setInfoMarkerLocation() {}
 
   renderLocations() {
     return this.props.posts.map((post) => (
@@ -31,22 +42,36 @@ class Map extends React.Component {
           radius={2000}
           center={{ lat: post.location.lat, lng: post.location.lng }}
           onClick={() => {
-            this.setSelectedRequest(post.location);
+            this.setSelectedRequest(post);
           }}
           strokeColor="transparent"
-          strokeOpacity={0}
+          strokeOpacity={0.5}
           strokeWeight={1}
           fillColor="#FFFFFF"
           fillOpacity={0.2}
         ></Circle>
-        {this.state.selectedRequest &&
-        post.location.lat === this.state.selectedRequest.lat &&
-        post.location.lng === this.state.selectedRequest.lng ? (
+        {this.state.mapSelectedPost &&
+        post.location.lat === this.state.mapSelectedPost.location.lat &&
+        post.location.lng === this.state.mapSelectedPost.location.lng ? (
           <InfoWindow
-            position={this.state.selectedRequest}
+            position={this.state.mapSelectedPost.location}
             onCloseClick={() => this.setSelectedRequest(null)}
           >
-            <div>{this.state.selectedRequest.name}</div>
+            <div className="marker-description">
+              {this.state.mapSelectedPost.description}
+            </div>
+          </InfoWindow>
+        ) : null}
+        {this.props.highlightedPost &&
+        post.location.lat === this.props.highlightedPost.location.lat &&
+        post.location.lng === this.props.highlightedPost.location.lng ? (
+          <InfoWindow
+            position={this.props.highlightedPost.location}
+            onCloseClick={() => this.setSelectedRequest(null)}
+          >
+            <div className="marker-description">
+              {this.props.highlightedPost.description}
+            </div>
           </InfoWindow>
         ) : null}
       </>
@@ -58,10 +83,7 @@ class Map extends React.Component {
       <GoogleMap
         key={newKey}
         defaultZoom={10}
-        defaultCenter={{
-          lat: this.state.mapPosition.lat,
-          lng: this.state.mapPosition.lng,
-        }}
+        defaultCenter={this.setDefaultCenter()}
       >
         {this.renderLocations()}
       </GoogleMap>

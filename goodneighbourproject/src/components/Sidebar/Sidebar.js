@@ -133,6 +133,8 @@ class Sidebar extends React.Component {
     return (
       <div className="google-maps-section">
         <Map
+          resetFeedSelectedPost={this.props.resetFeedSelectedPost}
+          highlightedPost={this.props.highlightedPost}
           active_post={this.props.active_post}
           posts={this.props.posts}
           googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${keys.key2}`}

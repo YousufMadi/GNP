@@ -60,6 +60,7 @@ class RequestPost extends React.Component {
       if (!this.state.editState) {
         return (
           <RequestPostView
+            highlightPost={this.props.highlightPost}
             showConfirmation={this.props.showConfirmation}
             renderItems={this.renderItems}
             editClick={this.handleEditClick}
