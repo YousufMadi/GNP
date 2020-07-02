@@ -16,10 +16,12 @@ import {
   updateUser,
   handleUserLogin,
   handleUserLogout,
+  getUserLocation,
 } from "../actions/user";
 
 class App extends React.Component {
   state = {
+    currentUserLocation: null,
     currentUser: null,
     users: [
       {
@@ -32,7 +34,7 @@ class App extends React.Component {
         active_post: null,
         profile_picture:
           "https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80",
-        admin: true
+        admin: true,
       },
       {
         id: 1,
@@ -44,7 +46,7 @@ class App extends React.Component {
         active_post: null,
         profile_picture:
           "https://cdn.fastly.picmonkey.com/contentful/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=800&q=70",
-        admin: false
+        admin: false,
       },
 
       {
@@ -57,11 +59,23 @@ class App extends React.Component {
         active_post: null,
         profile_picture:
           "https://miro.medium.com/max/2048/0*0fClPmIScV5pTLoE.jpg",
-        admin: false
+        admin: false,
       },
     ],
 
     setState: this.setState.bind(this),
+  };
+
+  componentDidMount() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.getUserLocation);
+    } else {
+      alert("Geolocation is not supported on this browser");
+    }
+  }
+
+  getUserLocation = (position) => {
+    this.setState({ currentUserLocation: position.coords });
   };
 
   render() {
@@ -123,11 +137,7 @@ class App extends React.Component {
             exact
             path="/admin"
             component={() => (
-              <SettingsAdmin
-                users_state={this.state}
-                updateUser={updateUser}
-
-              />
+              <SettingsAdmin users_state={this.state} updateUser={updateUser} />
             )}
           />
         </Switch>

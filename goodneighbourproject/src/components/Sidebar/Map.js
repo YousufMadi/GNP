@@ -11,13 +11,20 @@ import {
 
 class Map extends React.Component {
   state = {
+    previousLocation: null,
     mapSelectedPost: null,
     activeRequest: this.props.active_post ? this.props.posts[0] : null,
   };
 
   setSelectedRequest(post) {
+    const previousLocation = this.props.highlightedPost
+      ? this.props.highlightedPost
+      : this.state.mapSelectedPost;
     this.props.resetFeedSelectedPost(null);
-    this.setState({ mapSelectedPost: post });
+    this.setState({
+      previousLocation: previousLocation ? previousLocation.location : null,
+      mapSelectedPost: post,
+    });
   }
 
   setDefaultCenter() {
@@ -27,55 +34,72 @@ class Map extends React.Component {
       return this.props.highlightedPost.location;
     } else if (this.state.mapSelectedPost) {
       return this.state.mapSelectedPost.location;
+    } else if (this.state.previousLocation) {
+      return this.state.previousLocation;
+    } else if (this.props.currentUserLocation) {
+      return {
+        lat: this.props.currentUserLocation.latitude,
+        lng: this.props.currentUserLocation.longitude,
+      };
     } else {
       return { lat: 43.65107, lng: -79.347015 };
     }
   }
 
-  setInfoMarkerLocation() {}
-
   renderLocations() {
-    return this.props.posts.map((post) => (
-      <>
-        <Circle
-          key={post.id}
-          radius={2000}
-          center={{ lat: post.location.lat, lng: post.location.lng }}
-          onClick={() => {
-            this.setSelectedRequest(post);
-          }}
-          strokeColor="transparent"
-          strokeOpacity={0.5}
-          strokeWeight={1}
-          fillColor="#FFFFFF"
-          fillOpacity={0.2}
-        ></Circle>
-        {this.state.mapSelectedPost &&
-        post.location.lat === this.state.mapSelectedPost.location.lat &&
-        post.location.lng === this.state.mapSelectedPost.location.lng ? (
-          <InfoWindow
-            position={this.state.mapSelectedPost.location}
-            onCloseClick={() => this.setSelectedRequest(null)}
-          >
+    if (this.state.activeRequest) {
+      return this.props.posts.map((post) => (
+        <Marker key={post.id} position={this.state.activeRequest.location}>
+          <InfoWindow>
             <div className="marker-description">
-              {this.state.mapSelectedPost.description}
+              {this.state.activeRequest.description}
             </div>
           </InfoWindow>
-        ) : null}
-        {this.props.highlightedPost &&
-        post.location.lat === this.props.highlightedPost.location.lat &&
-        post.location.lng === this.props.highlightedPost.location.lng ? (
-          <InfoWindow
-            position={this.props.highlightedPost.location}
-            onCloseClick={() => this.setSelectedRequest(null)}
-          >
-            <div className="marker-description">
-              {this.props.highlightedPost.description}
-            </div>
-          </InfoWindow>
-        ) : null}
-      </>
-    ));
+        </Marker>
+      ));
+    } else {
+      return this.props.posts.map((post) => (
+        <>
+          <Circle
+            key={post.id}
+            radius={2000}
+            center={{ lat: post.location.lat, lng: post.location.lng }}
+            onClick={() => {
+              this.setSelectedRequest(post);
+            }}
+            strokeColor="transparent"
+            strokeOpacity={0.5}
+            strokeWeight={1}
+            fillColor="#FFFFFF"
+            fillOpacity={0.2}
+          ></Circle>
+          {this.state.mapSelectedPost &&
+          post.location.lat === this.state.mapSelectedPost.location.lat &&
+          post.location.lng === this.state.mapSelectedPost.location.lng ? (
+            <InfoWindow
+              position={this.state.mapSelectedPost.location}
+              onCloseClick={() => this.setSelectedRequest(null)}
+            >
+              <div className="marker-description">
+                {this.state.mapSelectedPost.description}
+              </div>
+            </InfoWindow>
+          ) : null}
+          {this.props.highlightedPost &&
+          post.location.lat === this.props.highlightedPost.location.lat &&
+          post.location.lng === this.props.highlightedPost.location.lng ? (
+            <InfoWindow
+              position={this.props.highlightedPost.location}
+              onCloseClick={() => this.setSelectedRequest(null)}
+            >
+              <div className="marker-description">
+                {this.props.highlightedPost.description}
+              </div>
+            </InfoWindow>
+          ) : null}
+        </>
+      ));
+    }
   }
   render() {
     const newKey = uuidv4();

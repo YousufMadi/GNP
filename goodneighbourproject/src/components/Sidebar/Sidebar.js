@@ -133,6 +133,7 @@ class Sidebar extends React.Component {
     return (
       <div className="google-maps-section">
         <Map
+          currentUserLocation={this.props.users_state.currentUserLocation}
           resetFeedSelectedPost={this.props.resetFeedSelectedPost}
           highlightedPost={this.props.highlightedPost}
           active_post={this.props.active_post}

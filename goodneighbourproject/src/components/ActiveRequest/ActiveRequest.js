@@ -47,10 +47,6 @@ class ActiveRequest extends React.Component {
           <div className="active-request-container">
             <div className="active-request-header">
               <h5>You have an active request...</h5>
-              <button>
-                View {this.state.postAuthor.first_name}'s location{" "}
-                <i className="fas fa-angle-double-right"></i>
-              </button>
             </div>
             <div className="active-request-author">
               <h4>
