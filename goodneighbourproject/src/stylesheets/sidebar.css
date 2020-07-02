@@ -87,28 +87,8 @@
   margin: auto;
 }
 
-.filter-section input{
-  display: block;
-  width: 91%;
-  padding: .5rem .75rem;
-  font-size: small;
-  line-height: 1.5em;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.1);
-  background-clip: padding-box;
-  border: 1px solid rgba(0, 0, 0, 0.2)!important;
-  border-radius: 5px;
-  margin-bottom: 0.2em;
-  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-}
-
-.filter-section input:focus{
-  color: white;
-  outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25)
-}
-
 .dropdown-filters{
+  margin-top: 1em;
   display: block;
   width: 100%;
   color: #fff;
