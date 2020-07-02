@@ -70,7 +70,7 @@
   background-color: #14b1e4;
 }
 
-input[type=text], select {
+.update-input-container input[type=text], select {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
