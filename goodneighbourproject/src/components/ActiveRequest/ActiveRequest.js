@@ -54,6 +54,7 @@ class ActiveRequest extends React.Component {
                 's Request
               </h4>
             </div>
+            <div className="map-route"></div>
             <div className="active-items-requested">
               <label>Items Requested</label>
               <ul className="request-items-list">{this.renderItems()}</ul>
