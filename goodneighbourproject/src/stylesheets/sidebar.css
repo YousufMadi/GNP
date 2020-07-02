@@ -175,6 +175,10 @@
   width: 95%;
 }
 
+.marker-description{
+  color: black;
+}
+
 /* Placeholder Configuration */
 .sidebar ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: rgba(255, 255, 255, 0.2);

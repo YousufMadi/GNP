@@ -14,6 +14,7 @@ class RequestTimeline extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      highlightedPost: null,
       filteredPosts: null,
       posts: this.props.posts_state.posts,
       confirmationModal: {
@@ -33,7 +34,9 @@ class RequestTimeline extends React.Component {
   filterPosts(posts) {
     return filterPosts(this.props.posts_state.posts, this.props.posts_state);
   }
-
+  handleHighlightedPostChange = (post) => {
+    this.setState({ highlightedPost: post });
+  };
   handleConfirmationModal = (post) => {
     this.setState({ confirmationModal: { display: true, selectedPost: post } });
   };
@@ -75,6 +78,7 @@ class RequestTimeline extends React.Component {
       const renderPosts = currentPosts.map((post, index) => {
         return (
           <RequestPost
+            highlightPost={this.handleHighlightedPostChange}
             showConfirmation={this.handleConfirmationModal}
             currentUser={this.props.users_state.currentUser}
             users_state={this.props.users_state}
@@ -104,6 +108,8 @@ class RequestTimeline extends React.Component {
       return (
         <>
           <Sidebar
+            resetFeedSelectedPost={this.handleHighlightedPostChange}
+            highlightedPost={this.state.highlightedPost}
             active_post={false}
             posts={filteredPosts}
             users_state={this.props.users_state}
