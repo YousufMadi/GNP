@@ -1,3 +1,6 @@
+#id{
+  background-color: #5e5e5e;
+}
 .flex-container {
   display: flex;
   flex-direction: column;
@@ -44,8 +47,8 @@
   float: right;
   width: 75%;
   border-color: grey;
-  border-radius: 5px; 
-  background-color: #f2f2f2;
+  border-radius: 3px; 
+  background-color: #bdc8d4;
   padding: 20px;
   margin-right: 2.5em;
   margin-top: 0.5em;
@@ -69,16 +72,7 @@
 .promoteButton:hover {
   background-color: #14b1e4;
 }
-
-.update-input-container input[type=text], select {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
+ 
 
 table {
   border-collapse: collapse;
@@ -90,8 +84,8 @@ th, td {
   padding: 8px;
 }
 
-tr:nth-child(even){background-color: white}
-tr:nth-child(odd){background-color: #fcd5a0}
+tr:nth-child(odd){background-color: white}
+tr:nth-child(even){background-color: #fcd5a0}
 
 th {
   background-color: #527794;

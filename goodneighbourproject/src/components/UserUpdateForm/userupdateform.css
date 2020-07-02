@@ -21,10 +21,14 @@
 
 .user-update-info{
   flex: 2.5;
-  background: #fff;
+  background: #F5F5F5;
   height: 100%;
   width: 100%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); */
+}
+
+.admin-class{
+  background-color: #bdc8d4;
 }
 
 .user-update-info h3{
