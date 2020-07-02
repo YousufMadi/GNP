@@ -1,7 +1,6 @@
 import React from "react";
 import "../../stylesheets/settings.css";
 import { Redirect } from "react-router-dom";
-import Navbar from "../Navigation/Navbar";
 import UserInfo from "../UserInfo/UserInfo";
 import UserUpdateForm from "../UserUpdateForm/UserUpdateForm";
 

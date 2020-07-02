@@ -1,14 +1,9 @@
 import React from "react";
-import './userupdateform.css';
-import NavbarLinks from "../Navigation/NavbarLinks";
+import "./userupdateform.css";
 
-import {
-  updateUser,
-} from "../../actions/user";
+import { updateUser } from "../../actions/user";
 
 class UserUpdateForm extends React.Component {
-
-
   constructor(props) {
     super(props);
     this.state = {
@@ -67,7 +62,7 @@ class UserUpdateForm extends React.Component {
     }
 
     return is_valid;
-  }
+  };
 
   formSubmit = (e) => {
     e.preventDefault();
@@ -76,30 +71,26 @@ class UserUpdateForm extends React.Component {
 
     if (form_valid) {
       updateUser(this.props.users_state, this.state.user);
-      this.setState({ success_msg })
+      this.setState({ success_msg });
     }
-
-  }
+  };
 
   handleChange = (e) => {
     const target = e.target;
     const value = target.value;
     const name = target.name;
 
-
     this.setState({
       user: {
         ...this.state.user,
         [name]: value,
-      }
+      },
     });
 
     console.log(this.state);
   };
 
-
   render() {
-
     const currentUser = this.props.users_state.currentUser;
     return (
       <div className={`user-update-info ${this.props.adminClass}`}>
@@ -107,7 +98,6 @@ class UserUpdateForm extends React.Component {
 
         <p className="success_msg">{this.state.success_msg}</p>
         <form className="update-form" onSubmit={this.formSubmit}>
-
           <div className="update-input-container">
             <label>First Name</label>
             <input
@@ -117,7 +107,6 @@ class UserUpdateForm extends React.Component {
               onChange={this.handleChange}
             ></input>
             <p className="error_msg">{this.state.first_name_error}</p>
-
           </div>
 
           <div className="update-input-container">
@@ -155,13 +144,17 @@ class UserUpdateForm extends React.Component {
           </div>
 
           <div className="update-input-container">
-            <button className="update-submit" type="buton" onSubmit={this.formSubmit}>
+            <button
+              className="update-submit"
+              type="buton"
+              onSubmit={this.formSubmit}
+            >
               Update info
             </button>
           </div>
         </form>
       </div>
-    )
+    );
   }
 }
 

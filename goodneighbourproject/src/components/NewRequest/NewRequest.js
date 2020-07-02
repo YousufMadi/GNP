@@ -1,5 +1,5 @@
 import React from "react";
-import AutoComplete from "react-google-autocomplete";
+//import AutoComplete from "react-google-autocomplete";
 
 import "../../stylesheets/newrequest.css";
 import ItemsList from "../ItemsList/ItemsList";
@@ -24,7 +24,7 @@ class NewRequest extends React.Component {
     formReimbursement: null,
     formDescription: null,
     autocompleteValue: "",
-    location: { lat: null, lng: null },
+    location: { lat: 43.65107, lng: -79.347015 },
   };
 
   /* This function handles changes to the item list */
@@ -56,6 +56,7 @@ class NewRequest extends React.Component {
   handleCreateRequest = (e) => {
     e.preventDefault();
     if (
+      this.state.autocompleteValue !== "" &&
       this.state.formReimbursement !== null &&
       this.state.items.length > 0 &&
       this.state.location.lat !== null &&
@@ -119,7 +120,13 @@ class NewRequest extends React.Component {
           />
         </div>
         <div className="new-post-address">
-          <AutoComplete
+          <input
+            id="address-input"
+            placeholder="Enter your delivery address here"
+            onChange={this.handleAutocompleteChange}
+            value={this.state.autocompleteValue}
+          />
+          {/*<AutoComplete
             onChange={this.handleAutocompleteChange}
             value={this.state.autocompleteValue}
             id="address-input"
@@ -135,7 +142,7 @@ class NewRequest extends React.Component {
                 autocompleteValue: place.formatted_address,
               });
             }}
-          />
+          />*/}
           <div className="pay-selector">
             <select
               className="form-new-post pay-select"
@@ -161,6 +168,7 @@ class NewRequest extends React.Component {
           />
         </div>
         {this.state.formReimbursement !== null &&
+        this.state.autocompleteValue !== "" &&
         this.state.items.length > 0 &&
         this.state.location.lat !== null &&
         this.state.location.lng !== null ? (

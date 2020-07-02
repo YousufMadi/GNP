@@ -1,15 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import Map from "./Map";
+//import Map from "./Map";
 import "../../stylesheets/sidebar.css";
 
 import { handleUserLogout } from "../../actions/user";
 
-const keys = {
+/*const keys = {
   key1: "AIzaSyCx3EBDjdwQ4Gb6698FPEWsTB7bNL_o7Ow",
   key2: "AIzaSyARRBVg-xS1QeLJMfoCSeQm5At4Q-E7luU",
-};
+};*/
 
 class Sidebar extends React.Component {
   /* Initializing this component's state with 
@@ -81,29 +81,32 @@ class Sidebar extends React.Component {
     return (
       <div className="filter-section">
         <div className="dropdown-filters">
-          <select onChange={(e) => this.handleDistanceChange(e)}>
-            <option selected value="any">
-              Any Distance
-            </option>
+          <select
+            defaultValue={"any"}
+            onChange={(e) => this.handleDistanceChange(e)}
+          >
+            <option value="any">Any Distance</option>
             <option value="1">{"< 1km"}</option>
             <option value="5">{"< 5km"}</option>
             <option value="20">{"< 20km"}</option>
             <option value="21">{"20+km"}</option>
           </select>
 
-          <select onChange={(e) => this.handleSizeChange(e)}>
-            <option selected value="any">
-              Any Size
-            </option>
+          <select
+            defaultValue={"any"}
+            onChange={(e) => this.handleSizeChange(e)}
+          >
+            <option value="any">Any Size</option>
             <option value="small">Small</option>
             <option value="medium">Medium</option>
             <option value="large">Large</option>
           </select>
 
-          <select onChange={(e) => this.handlePaymentChange(e)}>
-            <option selected value="any">
-              Any Payment
-            </option>
+          <select
+            defaultValue={"any"}
+            onChange={(e) => this.handlePaymentChange(e)}
+          >
+            <option value="any">Any Payment</option>
             <option value="cash">Cash</option>
             <option value="e-transfer">E-transfer</option>
             <option value="cheque">Cheque</option>
@@ -123,7 +126,7 @@ class Sidebar extends React.Component {
   renderGoogleMap() {
     return (
       <div className="google-maps-section">
-        <Map
+        {/*<Map
           currentUserLocation={this.props.users_state.currentUserLocation}
           resetFeedSelectedPost={this.props.resetFeedSelectedPost}
           highlightedPost={this.props.highlightedPost}
@@ -133,7 +136,7 @@ class Sidebar extends React.Component {
           loadingElement={<div style={{ height: "100%" }} />}
           containerElement={<div style={{ height: "100%" }} />}
           mapElement={<div style={{ height: "100%" }} />}
-        />
+        />*/}
       </div>
     );
   }
