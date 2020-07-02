@@ -1,12 +1,12 @@
 import React from "react";
 import AutoComplete from "react-google-autocomplete";
 
-import "../../stylesheets/RequestTimeline/requestAsk.css";
+import "../../stylesheets/newrequest.css";
 import ItemsList from "../ItemsList/ItemsList";
 
 import { addPostToState } from "../../actions/timeline";
 
-class RequestAsk extends React.Component {
+class NewRequest extends React.Component {
   /*
 
   ------- State Initialization ----------
@@ -181,4 +181,4 @@ class RequestAsk extends React.Component {
   }
 }
 
-export default RequestAsk;
+export default NewRequest;

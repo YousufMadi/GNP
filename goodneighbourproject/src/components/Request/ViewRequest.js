@@ -1,7 +1,7 @@
 import React from "react";
 import { deletePost } from "../../actions/timeline";
 
-class RequestPostView extends React.Component {
+class ViewRequest extends React.Component {
   /* This function returns an estimate for the size of the favour given the amount of elements in the items list. */
   sizeEstimate = () => {
     let size = null;
@@ -111,4 +111,4 @@ class RequestPostView extends React.Component {
   }
 }
 
-export default RequestPostView;
+export default ViewRequest;

@@ -37,7 +37,7 @@ class Sidebar extends React.Component {
 
   /* The function that will handle a click on the filter request button.
      This function returns the current filter states back to the feed so
-     that the RequestContainer can update it's filtering state. */
+     that the RequestTimeline can update it's filtering state. */
   handleFilterClick = () => {
     const filterRequest = {
       ...this.state,

@@ -1,12 +1,12 @@
 import React from "react";
-import RequestPostView from "./RequestPostView";
-import RequestPostEdit from "./RequestPostEdit";
+import ViewRequest from "./ViewRequest";
+import EditRequest from "./EditRequest";
 
-import "../../stylesheets/RequestTimeline/requestpost.css";
+import "../../stylesheets/request.css";
 
 import { editPost } from "../../actions/timeline";
 
-class RequestPost extends React.Component {
+class Request extends React.Component {
   /*
 
   ------- State Initialization ----------
@@ -85,7 +85,7 @@ class RequestPost extends React.Component {
     if (this.state.postUser !== null) {
       if (!this.state.editState) {
         return (
-          <RequestPostView
+          <ViewRequest
             highlightPost={this.props.highlightPost}
             showConfirmation={this.props.showConfirmation}
             renderItems={this.renderItems}
@@ -98,7 +98,7 @@ class RequestPost extends React.Component {
         );
       } else {
         return (
-          <RequestPostEdit
+          <EditRequest
             editPost={this.handleEditPost}
             exitEdit={this.handleExitEdit}
             currentUser={this.props.currentUser}
@@ -114,4 +114,4 @@ class RequestPost extends React.Component {
   }
 }
 
-export default RequestPost;
+export default Request;

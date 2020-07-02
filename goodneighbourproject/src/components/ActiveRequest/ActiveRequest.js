@@ -2,7 +2,7 @@ import React from "react";
 import { v4 as uuidv4 } from "uuid";
 import Sidebar from "../Sidebar/Sidebar";
 
-import "../../stylesheets/RequestTimeline/activerequest.css";
+import "../../stylesheets/activerequest.css";
 
 import { updateUser } from "../../actions/user";
 import { fetchPostAuthor } from "../../actions/timeline";
