@@ -11,7 +11,7 @@ Yousuf Madi
 ## Accounts ##
   
   ### Admin ###
-  __Username:__ admin@admin.com 
+  __Username:__ admin@admin.com <br/>
   __Password:__ admin
   ### User ###
   __Username:__ user@user.com
