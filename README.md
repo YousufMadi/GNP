@@ -18,7 +18,7 @@ Yousuf Madi <br/>
   __Password:__ user
 
 
-## Admin Functionality ## _(Features unique to Admins only)
+## Admin Functionality ## _(Features unique to Admins only)_
    __Timeline Deleting:__ Admins are able to delete any posts, regardless if they are not the author.<br />
    __Timeline Viewing:__ Admins are able to see all the items of a specific request prior to accepting it. <br />
 
