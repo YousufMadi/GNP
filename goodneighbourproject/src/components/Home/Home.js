@@ -8,7 +8,7 @@ class Home extends React.Component {
   render() {
     return (
       <div className="home-container">
-        <Navbar currentUser={this.props.currentUser} />
+        <Navbar currentUser={this.props.users_state.currentUser} />
         <div className="slide">
           <section className="hero"></section>
           <section className="mission">

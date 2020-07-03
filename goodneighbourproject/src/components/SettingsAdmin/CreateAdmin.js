@@ -2,11 +2,6 @@ import React, { useState } from "react";
 
 import { promoteUser } from "../../actions/user";
 
-import {
-  notifyError,
-  notifySuccess,
-  notifyWarn,
-} from "../../Utils/notificationUtils";
 
 import "react-toastify/dist/ReactToastify.css";
 import "../../stylesheets/settingsAdmin.css";
@@ -16,7 +11,7 @@ const CreateAdmin = (props) => {
 
   const promoteUserObject = (e) => {
     e.preventDefault();
-    promoteUser(props.users, userToPromote);
+    promoteUser(props.users_state, userToPromote);
   };
 
   return (

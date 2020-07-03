@@ -10,7 +10,7 @@ class ViewUsers extends React.Component {
   };
 
   renderUsers() {
-    return this.props.users.users.map((user) => {
+    return this.props.users_state.users.map((user) => {
       return (
         <tr className="user-row">
           <td>{user.admin ? "Yes" : "No"}</td>
@@ -33,7 +33,6 @@ class ViewUsers extends React.Component {
     return (
       <>
         <CreateAdmin
-          updateUser={this.props.updateUser}
           users={this.props.users}
         />
         <table className="user-list-table">

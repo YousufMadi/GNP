@@ -77,10 +77,7 @@ const SettingsAdmin = (props) => {
         <div className="content">
           {adminOption && (
             <SelectedOption
-              users={props.users_state}
               users_state={props.users_state}
-              updateUser={props.updateUser}
-              deleteUser={props.deleteUser}
               adminClass="admin-class"
               posts_state={props.posts_state}
             />
