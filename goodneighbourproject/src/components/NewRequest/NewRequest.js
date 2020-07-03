@@ -3,7 +3,7 @@ import React from "react";
 
 import "../../stylesheets/newrequest.css";
 import ItemsList from "../ItemsList/ItemsList";
-import { notifySuccess } from "../../Utils/notificationUtils";
+import { notifySuccess, notifyInfo } from "../../Utils/notificationUtils";
 
 import { addPostToState } from "../../actions/timeline";
 
@@ -87,6 +87,12 @@ class NewRequest extends React.Component {
 
       notifySuccess("Successfully created a new request.");
       addPostToState(this.props.posts_state, newPost);
+    } else if (this.state.autocompleteValue === "") {
+      notifyInfo("Please make sure your address is entered.");
+    } else if (this.state.formReimbursement === null) {
+      notifyInfo("Please make sure your payment type is chosen.");
+    } else if (this.state.items.length === 0) {
+      notifyInfo("Please enter the items you require for this request.");
     }
   };
 
@@ -169,23 +175,13 @@ class NewRequest extends React.Component {
             items={this.state.items}
           />
         </div>
-        {this.state.formReimbursement !== null &&
-        this.state.autocompleteValue !== "" &&
-        this.state.items.length > 0 &&
-        this.state.location.lat !== null &&
-        this.state.location.lng !== null ? (
-          <button
-            type="button"
-            className="new-post-button"
-            onClick={this.handleCreateRequest}
-          >
-            Create Request
-          </button>
-        ) : (
-          <button type="button" className="new-post-button disabled" disabled>
-            Create Request
-          </button>
-        )}
+        <button
+          type="button"
+          className="new-post-button"
+          onClick={this.handleCreateRequest}
+        >
+          Create Request
+        </button>
       </div>
     );
   }
