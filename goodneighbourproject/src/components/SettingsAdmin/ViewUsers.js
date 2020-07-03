@@ -2,6 +2,14 @@ import React from "react";
 import CreateAdmin from "./CreateAdmin";
 
 class ViewUsers extends React.Component {
+
+  deleteUserAndPosts = (user) => {
+    this.props.deleteUser(this.props.users_state, user.email);
+    
+  };
+
+
+
   renderUsers() {
     return this.props.users.users.map((user) => {
       return (
@@ -14,7 +22,7 @@ class ViewUsers extends React.Component {
           <td>{user.rating}</td>
           <td>
             <button className="remove-user">
-              <i className="fas fa-trash" onClick={(e) => this.props.deleteUser(this.props.users_state, user.email)}></i>
+              <i className="fas fa-trash" onClick={() => this.deleteUserAndPosts(user)}></i>
 
             </button>
           </td>
