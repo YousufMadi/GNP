@@ -1,9 +1,9 @@
 # team03 - The Good Neighbor Project #
 
 ## Members ##
-Ayub Hassan
-Anirudha Kanodia
-Yousuf Madi
+Ayub Hassan <br/>
+Anirudha Kanodia <br/>
+Yousuf Madi <br/>
 
 ## What is TGNP? ##
   The Good Neighbor Project is a community reponse to the Covid-19 pandemic. The purpose of this web application is to help those who are not able to leave thier homes find help with thier groceries and other errands they would be able to do on thier own if not for the virus.
