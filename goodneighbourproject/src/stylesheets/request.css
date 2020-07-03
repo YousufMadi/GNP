@@ -84,6 +84,10 @@
 .delete-post{
   margin-left: auto;
 }
+
+.delete-post.admin-delete-post{
+  margin-left: 1em;
+}
 .delete-post:hover{
   color: rgba(240, 33, 33, 0.85);
   background-color: rgba(75,75,75,0.1);
