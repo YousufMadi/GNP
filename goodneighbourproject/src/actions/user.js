@@ -1,4 +1,4 @@
-import { notifySuccess, notifyError } from "../Utils/notificationUtils";
+import { notifyWarn, notifySuccess, notifyError } from "../Utils/notificationUtils";
 
 
 export const addUser = (users_state, first_name, last_name, email, password) => {
@@ -58,3 +58,28 @@ export const deleteUser = (users_state, email) => {
     notifyError("You cannot delete your self");
   }
 }
+
+export const promoteUser = (users_state, user_to_promote_email) => {
+  let check = false;
+  let newUser;
+  
+  for (let i = 0; i < users_state.users.length; i++) {
+    if (users_state.users[i].email === user_to_promote_email) {
+      if (users_state.users[i].admin === true) {
+        notifyError("Error! User is already an admin");
+        check = true;
+        break;
+      }
+      newUser = { ...users_state.users[i], admin: true };
+      console.log('new')
+      console.log(newUser)
+      updateUser(users_state, newUser, false);
+      notifySuccess("User has been promoted!");
+      check = true;
+      break;
+    }
+  }
+  if (check === false) {
+    notifyError("Error! Email address is not registered");
+  }
+};

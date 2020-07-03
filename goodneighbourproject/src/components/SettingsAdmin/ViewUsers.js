@@ -1,14 +1,13 @@
 import React from "react";
 import CreateAdmin from "./CreateAdmin";
 
+import { deleteUser } from "../../actions/user";
+
 class ViewUsers extends React.Component {
 
   deleteUserAndPosts = (user) => {
-    this.props.deleteUser(this.props.users_state, user.email);
-    
+    deleteUser(this.props.users_state, user.email);
   };
-
-
 
   renderUsers() {
     return this.props.users.users.map((user) => {

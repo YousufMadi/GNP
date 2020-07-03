@@ -82,6 +82,7 @@ const SettingsAdmin = (props) => {
               updateUser={props.updateUser}
               deleteUser={props.deleteUser}
               adminClass="admin-class"
+              posts_state={props.posts_state}
             />
           )}
         </div>

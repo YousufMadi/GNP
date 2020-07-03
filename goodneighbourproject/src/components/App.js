@@ -175,7 +175,6 @@ class App extends React.Component {
                 <SettingsAdmin
                   users_state={this.state}
                   updateUser={updateUser}
-                  deleteUser={deleteUser}
                 />
               )}
             />
