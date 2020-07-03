@@ -18,16 +18,18 @@ Yousuf Madi <br/>
   __Password:__ user
 
 
-## Admin Functionality ##
-   __Timeline Deleting:__ Admins are able to delete any posts, regardless if they are not the author. __(This is a unique feature that Admins have)__
-   __Timeline Viewing:__ Admins are able to see all the items of a specific request prior to accepting it. __(This is a unique feature that Admins have)__
+## Admin Functionality ## _(Features unique to Admins only)
+   __Timeline Deleting:__ Admins are able to delete any posts, regardless if they are not the author.<br />
+   __Timeline Viewing:__ Admins are able to see all the items of a specific request prior to accepting it. <br />
 
   ### Admin Dashboard ###
-  After logging in, clicking on settings as an admin will redirect you to the Admin Dashboard. __(This is a unique feature that Admins have)__ <br/>
+  After logging in, clicking on settings as an admin will redirect you to the Admin Dashboard. <br/>
     __Create Admin:__ This is where you can insert a users email and promote them to an Admin.<br/>
     __View Users:__ This where you can see the accounts of all the users. By clicking on the trash can under delete user, you will delete them.<br/>
     __View Stats:__ This is where you can view some stats about the application.<br/>
     __Personal Settings:__ This where you can update your personal information.<br/>
+  
+  _NOTE: Admins are capable of doing everything users are capable of doing as well_
     
   ## User Functionality ##
    __Request a favour:__ On the feed page, you can request a favour by filling out the description, address, adding items and choosing a reimbursement type. This                            will then put your post at the last page of the paginated requests (We put the newest posts at the end so that the older posts can get                              completed first).<br/>
