@@ -20,7 +20,7 @@ Yousuf Madi
 
 ## Admin Functionality ##
   ### Admin Dashboard ###
-  After logging in, clicking on settings as an admin will redirect you to the Admin Dashboard. __(This is the only unique feature that Admins currently have)__
+  After logging in, clicking on settings as an admin will redirect you to the Admin Dashboard. __(This is the only unique feature that Admins currently have)__ <br/>
     __Create Admin:__ This is where you can insert a users email and promote them to an Admin.<br/>
     __View Users:__ This where you can see the accounts of all the users. By clicking on the trash can under delete user, you will delete them.<br/>
     __View Stats:__ This is where you can view some stats about the application.<br/>
