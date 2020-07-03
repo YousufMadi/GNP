@@ -19,8 +19,8 @@ Yousuf Madi <br/>
 
 
 ## Admin Functionality ##
-   __Timeline Deleting:__: Admins are able to delete any posts, regardless if they are not the author. __(This is a unique feature that Admins have)__
-   __Timeline Viewing:__: Admins are able to see all the items of a specific request prior to accepting it. __(This is a unique feature that Admins have)__
+   __Timeline Deleting:__ Admins are able to delete any posts, regardless if they are not the author. __(This is a unique feature that Admins have)__
+   __Timeline Viewing:__ Admins are able to see all the items of a specific request prior to accepting it. __(This is a unique feature that Admins have)__
 
   ### Admin Dashboard ###
   After logging in, clicking on settings as an admin will redirect you to the Admin Dashboard. __(This is a unique feature that Admins have)__ <br/>
