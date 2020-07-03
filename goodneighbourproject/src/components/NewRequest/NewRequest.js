@@ -85,6 +85,7 @@ class NewRequest extends React.Component {
         location: { lat: null, lng: null },
       });
 
+      notifySuccess("Successfully created a new request.");
       addPostToState(this.props.posts_state, newPost);
     }
   };
