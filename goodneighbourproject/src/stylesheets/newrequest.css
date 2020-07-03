@@ -195,12 +195,3 @@
   background-color: rgba(66, 103, 178, 1);
   box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.3);
 }
-
-.new-post-button.disabled{
-  cursor: not-allowed;
-}
-
-.new-post-button.disabled:hover{
-  background-color: rgba(66, 103, 178, 0.9);
-  box-shadow: none;
-}
