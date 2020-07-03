@@ -1,4 +1,5 @@
 import React from "react";
+import { notifySuccess } from "../../Utils/notificationUtils";
 import "../../stylesheets/userupdateform.css";
 
 import { updateUser } from "../../actions/user";
@@ -72,6 +73,7 @@ class UserUpdateForm extends React.Component {
     if (form_valid) {
       updateUser(this.props.users_state, this.state.user);
       this.setState({ success_msg });
+      notifySuccess(success_msg);
     }
   };
 
