@@ -78,6 +78,7 @@ const SettingsAdmin = (props) => {
           {adminOption && (
             <SelectedOption
               users_state={props.users_state}
+              users={props.users_state}
               adminClass="admin-class"
               posts_state={props.posts_state}
             />

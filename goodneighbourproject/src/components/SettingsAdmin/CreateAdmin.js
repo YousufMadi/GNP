@@ -11,7 +11,7 @@ const CreateAdmin = (props) => {
 
   const promoteUserObject = (e) => {
     e.preventDefault();
-    promoteUser(props.users_state, userToPromote);
+    promoteUser(props.users, userToPromote);
   };
 
   return (
