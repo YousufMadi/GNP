@@ -19,6 +19,7 @@ const CreateAdmin = (props) => {
             if (props.users.users[i].email === userToPromote) {
                 if (props.users.users[i].admin === true) {
                     userIsAdmin();
+                    check = true;
                     break;
                 }
                 newUser = { ...props.users.users[i], admin: true };
