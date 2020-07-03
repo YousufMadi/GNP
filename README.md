@@ -46,6 +46,7 @@ John is an administrator of the website. He can perform the following actions:
 - __Make others admin__: He can make other users an admin.
 - __View app stats__: He can view statistics regarding the website by navigating to the "App Stats" tab inside Settings.
 - __Delete posts__: John has the power to delete posts in the timeline by clicking on the delete button in the post.
+- __View Request Items__: John has the ability to view the items in a request prior to accepting it, an ability regular volunteers do not possess. This reserves the privacy of the requestor.
 
 Like all other users, John can create a request or volunteer and accept one.
 
