@@ -1,10 +1,8 @@
-export const addUser = (
-  users_state,
-  first_name,
-  last_name,
-  email,
-  password
-) => {
+import { notifySuccess, notifyError } from "../Utils/notificationUtils";
+
+
+export const addUser = (users_state, first_name, last_name, email, password) => {
+
   const newUser = {
     id: users_state.users.length,
     first_name,
@@ -46,8 +44,17 @@ export const handleUserLogout = (users_state) => {
 };
 
 export const deleteUser = (users_state, email) => {
-  let newUsers = users_state.users.filter((user) => user.email !== email);
-  users_state.setState({
-    users: newUsers,
-  });
-};
+  if (users_state.currentUser.email !== email) {
+    let users = [...users_state.users];
+    let deletedUser = users.filter(users => users.email === email);
+    console.log(deletedUser)
+    let newUsers = users.filter(users => users.email !== email);
+    notifySuccess(deletedUser[0].first_name + " " + deletedUser[0].last_name + " has been deleted");
+
+    users_state.setState({
+      users: newUsers
+    })
+  } else {
+    notifyError("You cannot delete your self");
+  }
+}
