@@ -28,8 +28,6 @@ Yousuf Madi <br/>
     __View Users:__ This where you can see the accounts of all the users. By clicking on the trash can under delete user, you will delete them.<br/>
     __View Stats:__ This is where you can view some stats about the application.<br/>
     __Personal Settings:__ This where you can update your personal information.<br/>
-
-    <br/>
     
   ## User Functionality ##
    __Request a favour:__ On the feed page, you can request a favour by filling out the description, address, adding items and choosing a reimbursement type. This                            will then put your post at the last page of the paginated requests (We put the newest posts at the end so that the older posts can get                              completed first).<br/>
