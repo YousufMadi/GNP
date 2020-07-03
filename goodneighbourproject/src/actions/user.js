@@ -34,3 +34,12 @@ export const handleUserLogin = (users_state, user) => {
 export const handleUserLogout = (users_state) => {
   users_state.setState({ currentUser: null });
 };
+
+export const deleteUser = (users_state, email) => {
+  let users = [...users_state.users];
+  let newUsers = users.filter(users => users.email !== email);
+
+  users_state.setState({
+    users: newUsers
+  })
+}
