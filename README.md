@@ -26,7 +26,7 @@ Yousuf Madi <br/>
     __View Stats:__ This is where you can view some stats about the application.<br/>
     __Personal Settings:__ This where you can update your personal information.<br/>
     
-  ### User Functionality ###
+  ## User Functionality ##
    __Request a favour:__ On the feed page, you can request a favour by filling out the description, address, adding items and choosing a reimbursement type. This                            will then put your post at the last page of the paginated requests (We put the newest posts at the end so that the older posts can get                              completed first).<br/>
    __Edit Request:__ Users are allowed to edit thier own requests by clicking on the pencil on their post in the timeline.<br/>
    __Accept Request:__ You can press the green accept reqeust button to do a favour for someone. After confirming that you want to do the favour, it will direct you                        to another view where you will see more details about the post and wont be able to view any other requests until you complete the request.<br/>
