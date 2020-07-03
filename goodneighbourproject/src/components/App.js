@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { ToastContainer } from 'react-toastify';
-
+import { ToastContainer } from "react-toastify";
+import { notifyWarn } from "../Utils/notificationUtils";
 
 import Home from "./Home/Home";
 import Feed from "./Feed/Feed";
@@ -69,11 +69,20 @@ class App extends React.Component {
 
   componentDidMount() {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(this.getUserLocation);
+      navigator.geolocation.getCurrentPosition(
+        this.getUserLocation,
+        this.displayLocationWarning
+      );
     } else {
       alert("Geolocation is not supported on this browser");
     }
   }
+
+  displayLocationWarning = () => {
+    notifyWarn(
+      "We cannot retrieve your location. This app requires location to be enabled in your browser to function correctly."
+    );
+  };
 
   getUserLocation = (position) => {
     this.setState({ currentUserLocation: position.coords });
@@ -139,7 +148,10 @@ class App extends React.Component {
               exact
               path="/admin"
               component={() => (
-                <SettingsAdmin users_state={this.state} updateUser={updateUser} />
+                <SettingsAdmin
+                  users_state={this.state}
+                  updateUser={updateUser}
+                />
               )}
             />
           </Switch>
