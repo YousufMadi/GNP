@@ -163,7 +163,7 @@ class Feed extends React.Component {
       );
     }
     return (
-      <div className="feedContainer">
+      <div className="feedContainer slide">
         <Timeline
           changeFilterState={this.handleFilterChange}
           users_state={this.props.users_state}

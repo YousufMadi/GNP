@@ -42,7 +42,7 @@ const SettingsAdmin = (props) => {
   }
 
   return (
-    <div className="settings-container">
+    <div className="settings-container slide">
       <UserInfo currentUser={currentUser} />
       <div className="admin-dashboard">
         <div className="admin-dashboard-header">

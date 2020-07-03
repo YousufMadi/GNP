@@ -115,7 +115,7 @@ class Signup extends React.Component {
     return (
       <>
         <Navbar />
-        <div className="contentContainer">
+        <div className="contentContainer slide">
           <div className="form-container">
             <h3>Signup</h3>
             <img src={signupPic} alt="signup"></img>

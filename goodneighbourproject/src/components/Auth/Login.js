@@ -69,7 +69,7 @@ class Login extends React.Component {
     return (
       <>
         <Navbar />
-        <div className="contentContainer">
+        <div className="contentContainer slide">
           <div className="form-container">
             <h3>Login</h3>
             <img src={loginPic} alt="login"></img>

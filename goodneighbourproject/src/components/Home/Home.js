@@ -1,13 +1,15 @@
 import React from "react";
 import Navbar from "../Navigation/Navbar";
 import "../../stylesheets/home.css";
+import "../../stylesheets/shared.css";
+
 
 class Home extends React.Component {
   render() {
     return (
       <div className="home-container">
         <Navbar currentUser={this.props.currentUser} />
-        <div>
+        <div className="slide">
           <section className="hero"></section>
           <section className="mission">
             <h3>Our Mission</h3>
