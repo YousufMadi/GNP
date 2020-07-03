@@ -23,7 +23,7 @@
   height: 100%;
   width: 75%;
   display: block;
-  margin-left: auto;
+  margin: auto;
   /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); */
 }
 
