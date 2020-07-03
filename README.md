@@ -19,6 +19,9 @@ Yousuf Madi <br/>
 
 
 ## Admin Functionality ##
+   __Timeline Deleting:__: Admins are able to delete any posts, regardless if they are not the author. __(This is a unique feature that Admins have)__
+   __Timeline Viewing:__: Admins are able to see all the items of a specific request prior to accepting it. __(This is a unique feature that Admins have)__
+
   ### Admin Dashboard ###
   After logging in, clicking on settings as an admin will redirect you to the Admin Dashboard. __(This is a unique feature that Admins have)__ <br/>
     __Create Admin:__ This is where you can insert a users email and promote them to an Admin.<br/>
@@ -26,6 +29,7 @@ Yousuf Madi <br/>
     __View Stats:__ This is where you can view some stats about the application.<br/>
     __Personal Settings:__ This where you can update your personal information.<br/>
     __View Posts:__ This where you can see the all the current posts and ability to delete them. Will be implemented in phase 2, due to the current hard-coded location for posts.<br/>
+    <br/>
     
   ## User Functionality ##
    __Request a favour:__ On the feed page, you can request a favour by filling out the description, address, adding items and choosing a reimbursement type. This                            will then put your post at the last page of the paginated requests (We put the newest posts at the end so that the older posts can get                              completed first).<br/>
