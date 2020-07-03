@@ -1,4 +1,10 @@
-export const addUser = (users_state, first_name, last_name, email, password) => {
+export const addUser = (
+  users_state,
+  first_name,
+  last_name,
+  email,
+  password
+) => {
   const newUser = {
     id: users_state.users.length,
     first_name,
@@ -17,15 +23,19 @@ export const addUser = (users_state, first_name, last_name, email, password) => 
 };
 
 export const updateUser = (users_state, user, changeCurrentUser = true) => {
-  let id = user.id;
   let users = [...users_state.users];
-  users[id] = user;
+  for (let i = 0; i < users.length; i++) {
+    if (users[i].id === user.id) {
+      users[i] = user;
+      break;
+    }
+  }
 
   users_state.setState({
     currentUser: changeCurrentUser ? user : users_state.currentUser,
-    users
+    users,
   });
-}
+};
 
 export const handleUserLogin = (users_state, user) => {
   users_state.setState({ currentUser: user });
@@ -36,10 +46,8 @@ export const handleUserLogout = (users_state) => {
 };
 
 export const deleteUser = (users_state, email) => {
-  let users = [...users_state.users];
-  let newUsers = users.filter(users => users.email !== email);
-
+  let newUsers = users_state.users.filter((user) => user.email !== email);
   users_state.setState({
-    users: newUsers
-  })
-}
+    users: newUsers,
+  });
+};

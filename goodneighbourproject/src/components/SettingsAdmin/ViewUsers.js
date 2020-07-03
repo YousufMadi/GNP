@@ -13,9 +13,13 @@ class ViewUsers extends React.Component {
           <td>{user.email}</td>
           <td>{user.rating}</td>
           <td>
-            <button className="remove-user">
-              <i className="fas fa-trash" onClick={(e) => this.props.deleteUser(this.props.users_state, user.email)}></i>
-              {console.log(this.props.users_state)}
+            <button
+              className="remove-user"
+              onClick={(e) =>
+                this.props.deleteUser(this.props.users_state, user.email)
+              }
+            >
+              <i className="fas fa-trash"></i>
             </button>
           </td>
         </tr>
