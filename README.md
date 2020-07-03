@@ -5,20 +5,20 @@ Ayub Hassan <br/>
 Anirudha Kanodia <br/>
 Yousuf Madi <br/>
 
-#### Credentials:
-__User__:<br/>
-email: user@user.com <br/>
-password: user <br/>
+## Credentials: ##
+### User <br/>
+__email:__ user@user.com <br/>
+__password:__ user <br/>
 
-__Admin__:<br/>
-__email__: admin@admin.com <br/>
-password: admin <br/>
+### Admin <br/>
+__email:__ admin@admin.com <br/>
+__password:__ admin <br/>
 
 
-### The Concept:
+## The Concept:
 The pandemic has impacted communities throughout the world. But what it hasn't changed is the good hearts of the people who are willing to help those in need, especially those worst affected. This includes the elderly population and those with special needs since these groups are the ones who have the highest risk of contracting with the virus. That's where "The Good Neighbour" comes in! We can make a huge difference in people's lives with small acts of kindness such as picking up groceries, food items, essentials or even mowing the lawn!
 
-### User Interactions:
+## User Interactions:
 A user can be either a Requestor or Volunteer or or Admin or all three.
 
 ##### Requestor:
