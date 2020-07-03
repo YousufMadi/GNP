@@ -1,15 +1,17 @@
 import React from "react";
 import "../../stylesheets/settings.css";
 import { Redirect } from "react-router-dom";
-import Navbar from "../Navigation/Navbar";
 import UserInfo from "../UserInfo/UserInfo";
 import UserUpdateForm from "../UserUpdateForm/UserUpdateForm";
 
 class Settings extends React.Component {
   render() {
     const currentUser = this.props.users_state.currentUser;
+    console.log(currentUser)
     if (currentUser === null) {
       return <Redirect to="/login" />;
+    } else if (currentUser.admin === true) {
+      return <Redirect to="/admin" />;
     }
     return (
       <div className="settings-container settings">

@@ -150,6 +150,7 @@
 
 /* Google Maps */
 .google-maps-section{
+  background-image: url('../images/google-map-placeholder.png');
   margin: 1em auto;
   height: 20em;
   width: 95%;

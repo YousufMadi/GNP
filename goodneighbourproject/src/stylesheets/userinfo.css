@@ -3,18 +3,26 @@
 }
 
 .user-curr-info{
-  margin-right:0em;
+  position: fixed;
+  display: inline-block;
   border-radius: 0px;
   height: 100vh;
   padding-top: 0.5em;
   width: 25%;
   background-color: #152238;
   color: white;
-  float: left;
   box-shadow:1px 10px 20px 0px black;
 }
 
+.user-curr-info a{
+  width: fit-content;
+  display: block;
+  height: 13%;
+}
+
 .back-button{
+  cursor: pointer;
+  margin: 0.5em;
   border: none;
   background-color: #152338;
   color: white;
@@ -23,7 +31,7 @@
 }
 
 .back-button:hover {
-  font-size: 32px;
+  font-size: 26px;
 }
 
 .profile-img{

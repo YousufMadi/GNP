@@ -1,5 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import { notifyWarn } from "../Utils/notificationUtils";
 
 import Home from "./Home/Home";
 import Feed from "./Feed/Feed";
@@ -16,6 +18,7 @@ import {
   updateUser,
   handleUserLogin,
   handleUserLogout,
+  deleteUser,
 } from "../actions/user";
 
 class App extends React.Component {
@@ -90,11 +93,20 @@ class App extends React.Component {
 
   componentDidMount() {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(this.getUserLocation);
+      navigator.geolocation.getCurrentPosition(
+        this.getUserLocation,
+        this.displayLocationWarning
+      );
     } else {
       alert("Geolocation is not supported on this browser");
     }
   }
+
+  displayLocationWarning = () => {
+    notifyWarn(
+      "We cannot retrieve your location. This app requires location to be enabled in your browser to function correctly."
+    );
+  };
 
   getUserLocation = (position) => {
     this.setState({ currentUserLocation: position.coords });
@@ -102,68 +114,75 @@ class App extends React.Component {
 
   render() {
     return (
-      <BrowserRouter>
-        <Switch>
-          <Route
-            path="/"
-            exact
-            component={() => <Home currentUser={this.state.currentUser} />}
-          />
-          <Route
-            path="/feed"
-            component={() => (
-              <Feed
-                updateUser={updateUser}
-                handleUserLogout={handleUserLogout}
-                users_state={this.state}
-              />
-            )}
-          />
+      <>
+        <BrowserRouter>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              component={() => <Home currentUser={this.state.currentUser} />}
+            />
+            <Route
+              path="/feed"
+              component={() => (
+                <Feed
+                  updateUser={updateUser}
+                  handleUserLogout={handleUserLogout}
+                  users_state={this.state}
+                />
+              )}
+            />
 
-          <Route
-            exact
-            path="/signup"
-            component={() => (
-              <Signup users_state={this.state} addUser={addUser} />
-            )}
-          />
+            <Route
+              exact
+              path="/signup"
+              component={() => (
+                <Signup users_state={this.state} addUser={addUser} />
+              )}
+            />
 
-          <Route
-            exact
-            path="/login"
-            component={() => (
-              <Login
-                handleUserLogin={handleUserLogin}
-                users_state={this.state}
-              />
-            )}
-          />
+            <Route
+              exact
+              path="/login"
+              component={() => (
+                <Login
+                  handleUserLogin={handleUserLogin}
+                  users_state={this.state}
+                />
+              )}
+            />
 
-          <Route
-            exact
-            path="/logout"
-            component={() => (
-              <Logout logout={handleUserLogout} users_state={this.state} />
-            )}
-          />
+            <Route
+              exact
+              path="/logout"
+              component={() => (
+                <Logout logout={handleUserLogout} users_state={this.state} />
+              )}
+            />
 
-          <Route
-            exact
-            path="/settings"
-            component={() => (
-              <Settings users_state={this.state} updateUser={updateUser} />
-            )}
-          />
+            <Route
+              exact
+              path="/settings"
+              component={() => (
+                <Settings users_state={this.state} updateUser={updateUser} />
+              )}
+            />
 
-          <Route
-            exact
-            path="/admin"
-            component={() => (
-              <SettingsAdmin users_state={this.state} updateUser={updateUser} />
-            )}
-          />
-        </Switch>
-      </BrowserRouter>
+            <Route
+              exact
+              path="/admin"
+              component={() => (
+                <SettingsAdmin
+                  users_state={this.state}
+                  updateUser={updateUser}
+                  deleteUser={deleteUser}
+                />
+              )}
+            />
+          </Switch>
+        </BrowserRouter>
+        <ToastContainer />
+      </>
     );
   }
 }

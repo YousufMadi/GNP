@@ -21,7 +21,7 @@ class UserInfo extends React.Component {
           </button>
         </Link>
         <div className="profile-img">
-          <img src={currentUser.profile_picture} />
+          <img src={currentUser.profile_picture} alt="profile" />
         </div>
         <h3>
           {currentUser.first_name} {currentUser.last_name}{" "}

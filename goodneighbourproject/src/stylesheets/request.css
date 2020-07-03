@@ -1,16 +1,16 @@
 .posted-request{
   font-family: 'Montserrat', sans-serif;
-  width: 95%;
+  width: 80%;
   height: auto;
   padding-bottom: 1em;
   padding-left: 1em;
   padding-right: 1em;
-  margin: 1em auto;
+  margin: 0.5em auto;
   background-color: #fff;
   display: flex;
   flex-direction: column;
-  border-radius: 3px;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  border: 2px solid rgba(72, 72, 72, 0.2);
+  transition: all 0.2s ease-in-out;
 }
 
 .posted-request.posted-request.other-author{
@@ -18,8 +18,9 @@
 }
 
 .posted-request.other-author:hover{
+  background-color: rgba(75, 75, 75, 0.04);
+  border: 2px solid rgba(0, 0, 0, 0.1);
   border-color: #80bdff;
-  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
 }
 
 .users-pic-name{

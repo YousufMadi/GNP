@@ -11,13 +11,12 @@ import { Redirect } from "react-router-dom";
 const SettingsAdmin = (props) => {
   console.log(props);
   const adminOptions = {
-    CREATE_ADMIN: "Create Admin",
     VIEW_USERS: "View Users",
     APP_STATS: "App Stats",
     UPDATE_INFO: "Update Info",
   };
 
-  const [adminOption, setAdminOption] = useState(null);
+  const [adminOption, setAdminOption] = useState(adminOptions.VIEW_USERS);
   let SelectedOption = null;
 
   switch (adminOption) {
@@ -44,51 +43,47 @@ const SettingsAdmin = (props) => {
 
   return (
     <div className="settings-container">
-      <div>
-        <UserInfo currentUser={currentUser} />
-      </div>
-
-      <div className="user-update-info">
-        <h2>Admin Dashboard</h2>
-        <div>
-          <div className="options">
-            <ul className="flex-container">
-              <button
-                className="flex-options"
-                onClick={(e) => setAdminOption(adminOptions.CREATE_ADMIN)}
-              >
-                Create Admin
-              </button>
-              <button
-                className="flex-options"
-                onClick={(e) => setAdminOption(adminOptions.VIEW_USERS)}
-              >
-                View Users
-              </button>
-              <button
-                className="flex-options"
-                onClick={(e) => setAdminOption(adminOptions.APP_STATS)}
-              >
-                View App Stats
-              </button>
-              <button
-                className="flex-options"
-                onClick={(e) => setAdminOption(adminOptions.UPDATE_INFO)}
-              >
-                Update Info
-              </button>
-            </ul>
-          </div>
-          <div className="content">
-            {adminOption && (
-              <SelectedOption
-                users={props.users_state}
-                users_state={props.users_state}
-                updateUser={props.updateUser}
-                adminClass="admin-class"
-              />
-            )}
-          </div>
+      <UserInfo currentUser={currentUser} />
+      <div className="admin-dashboard">
+        <div className="admin-dashboard-header">
+          <h3>Admin Dashboard</h3>
+        </div>
+        <div className="tab-container">
+          <button
+            className={`admin-tab ${
+              adminOption === adminOptions.VIEW_USERS ? "active" : ""
+              }`}
+            onClick={() => setAdminOption(adminOptions.VIEW_USERS)}
+          >
+            View Users
+          </button>
+          <button
+            className={`admin-tab  ${
+              adminOption === adminOptions.APP_STATS ? "active" : ""
+              }`}
+            onClick={() => setAdminOption(adminOptions.APP_STATS)}
+          >
+            App Stats
+          </button>
+          <button
+            className={`admin-tab ${
+              adminOption === adminOptions.UPDATE_INFO ? "active" : ""
+              }`}
+            onClick={() => setAdminOption(adminOptions.UPDATE_INFO)}
+          >
+            Personal Settings
+          </button>
+        </div>
+        <div className="content">
+          {adminOption && (
+            <SelectedOption
+              users={props.users_state}
+              users_state={props.users_state}
+              updateUser={props.updateUser}
+              deleteUser={props.deleteUser}
+              adminClass="admin-class"
+            />
+          )}
         </div>
       </div>
     </div>

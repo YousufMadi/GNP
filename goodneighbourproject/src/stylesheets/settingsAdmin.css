@@ -1,62 +1,108 @@
-#id{
-  background-color: #5e5e5e;
-}
-.flex-container {
-  display: flex;
-  flex-direction: column;
-  flex-flow: column-wrap;
-  justify-content: space-around;  
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  margin-left: 1em;
-}
-
-.flex-options{
-  background: grey;
-  border-radius: 5px;
-  padding: 5px;
-  width: 150px;
-  height: 50px;
-  margin-top: 10px;
-  color: white;
-  font-size: 1em;
-  text-align: center;
-  border: none;
-}
-.page-title{
-  text-align: center;
-  width: 75%;
-  float:right;
-  background-color: #a7b9d4;
-}
-.dashboard-title {
-  background-color: #a7b9d4;
-}
-
-.flex-options:hover{
-    background: #527794;
-  }
-
-.options {
-      float: left;
-      width: 15%;
-}
-
 .content {
-  float: right;
+  border: 2px solid rgba(0,0,0,.12);
+  background-color: #fafafa;
+  padding: 2em;
+  width: 90%;
+  margin: auto;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  overflow: auto;
+}
+
+.admin-dashboard{
+  padding-top: 2em;
+  vertical-align: top;
+  height: auto;
+  display: inline-block;
+  margin-left: 25%;
   width: 75%;
-  border-color: grey;
-  border-radius: 3px; 
-  background-color: #bdc8d4;
-  padding: 20px;
-  margin-right: 2.5em;
-  margin-top: 0.5em;
+}
+
+.admin-dashboard-header{
+  padding-left: 2em;
+  padding-right: 2em;
+  text-align: center;
+}
+
+.tab-container{
+  text-align: center;
+  background-color: transparent;
+  height: 50px;
+  max-height: 50px;
+  border-bottom: 1.1px solid rgba(0,0,0,.12);
+}
+
+.admin-tab{
+  cursor: pointer;
+  width:10em;
+  min-width: 10em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  font-size: small;
+  font-weight: 600;
+  background-color: transparent;
+  color:rgba(75, 75, 75, 0.8);
+  border:none;
+  height: 100%;
+  transition: all 0.1s ease-in;
+}
+
+.admin-tab:hover{
+  color: #1a73e8;
+}
+
+.admin-tab:focus{
+  outline: 0;
+}
+
+.admin-tab.active{
+  font-weight: 800;
+  border-bottom: 3px solid #1a73e8;
+  color: #1a73e8 !important;
+  background-color: transparent;
+}
+
+/* CREATE ADMIN */
+
+.make-admin-label{
+  display: block;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: small;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 0.5em;
+}
+
+.make-admin-form{
+  margin: auto;
   width: 50%;
 }
 
+.make-admin-form input {
+  width: 98%;
+  font-family: 'Montserrat', sans-serif;
+  box-shadow: none;
+  border-radius: 0;
+  height: 28px;
+  display: inline-block;
+  width: 92%;
+  padding: 0.25em 1em;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: transparent;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+.make-admin-form input:focus{
+  border-color: #66afe9;
+  outline: 0;
+}
+
+
 .promoteButton {
-  width: 90px;
+  width: 100%;
   height: 40px;
   background-color: #008CBA;
   font-size: 16px;
@@ -72,40 +118,87 @@
 .promoteButton:hover {
   background-color: #14b1e4;
 }
- 
 
-table {
-  border-collapse: collapse;
+
+.user-list-table{
+  margin-top: 1em;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  overflow: scroll;
+  height: 100%;
   width: 100%;
+  color: #212529;
+  border-collapse: collapse;
 }
 
-th, td {
-  text-align: left;
-  padding: 8px;
+.user-list-table thead{
+  display: table-header-group;
+  vertical-align: middle;
+  border-color: inherit;
 }
 
-tr:nth-child(odd){background-color: white}
-tr:nth-child(even){background-color: #fcd5a0}
-
-th {
-  background-color: #527794;
-  color: white;
+#users-list-header{
+  font-size: small;
+  font-weight: 600;
+  text-align: center;
+  background-color: rgba(75, 75, 75, 0.09);
+  height: 2em;
 }
 
-.deleteButton {
-  background-color: red;
-  color: white;
+#users-list-header th{
+  vertical-align: middle;
+}
+
+.user-list-table .promote-col{
+  width: 10%;
+}
+.user-list-table .name-col{
+  width: 30%;
+}
+.user-list-table .email-col{
+  width: 30%;
+}
+.user-list-table .rating-col{
+  width: 10%;
+}
+.user-list-table .remove-col{
+  width: 40%;
+}
+
+.user-row{
+  border-top: 1px solid rgba(75, 75, 75, 0.2);
+  border-bottom: 1px solid rgba(75, 75, 75, 0.2);
+  font-weight: 500;
+  font-size: 12px;
+  text-align: center;
+  height: 3em;
+  vertical-align: middle;
+}
+
+.user-row td{
+  vertical-align: middle;
+}
+
+.remove-user{
   cursor: pointer;
-  font-size: 16px;
+  border-radius:5px;
   border: none;
-  width: 25px;
-  height: 25px;
-  border-radius: 5px;
+  padding: 0.5em 0.75em;
+  background-color: transparent;
+  color: rgba(75,75,75,0.8);
+  transition: all 0.2s ease-out;
 }
 
-.deleteButton:hover {
-  background-color: #ea6464;
+.remove-user:hover{
+    color: rgba(240, 33, 33, 0.85);
+    background-color: rgba(75,75,75,0.1);
 }
+
+.remove-user:focus{
+  outline:0;
+}
+
+
+/* APP STATS */
 
 .flexStats {
   display: flex;
@@ -128,5 +221,3 @@ th {
   text-align: center;
   border: none;
 }
-
-
