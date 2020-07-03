@@ -3,6 +3,7 @@ import React from "react";
 
 import "../../stylesheets/newrequest.css";
 import ItemsList from "../ItemsList/ItemsList";
+import { notifySuccess } from "../../Utils/notificationUtils";
 
 import { addPostToState } from "../../actions/timeline";
 
