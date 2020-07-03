@@ -18,6 +18,7 @@ import {
   updateUser,
   handleUserLogin,
   handleUserLogout,
+  deleteUser,
 } from "../actions/user";
 
 class App extends React.Component {
@@ -151,6 +152,7 @@ class App extends React.Component {
                 <SettingsAdmin
                   users_state={this.state}
                   updateUser={updateUser}
+                  deleteUser={deleteUser}
                 />
               )}
             />

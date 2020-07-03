@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { notifyWarn, notifySuccess } from "../../Utils/notificationUtils";
+import { notifyError, notifySuccess, notifyWarn } from "../../Utils/notificationUtils";
 
 import "react-toastify/dist/ReactToastify.css";
 import "../../stylesheets/settingsAdmin.css";
@@ -28,7 +28,7 @@ const CreateAdmin = (props) => {
       }
     }
     if (check === false) {
-      notifyWarn("Error! Email address is not registered");
+      notifyError("Error! Email address is not registered");
     }
   };
 
