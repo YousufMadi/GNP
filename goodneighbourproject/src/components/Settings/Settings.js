@@ -14,7 +14,7 @@ class Settings extends React.Component {
       return <Redirect to="/admin" />;
     }
     return (
-      <div className="settings-container settings slide">
+      <div className="settings-container settings">
         <div className="user-container">
           <UserInfo currentUser={currentUser} />
 
