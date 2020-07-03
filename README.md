@@ -28,7 +28,7 @@ Yousuf Madi <br/>
     __View Users:__ This where you can see the accounts of all the users. By clicking on the trash can under delete user, you will delete them.<br/>
     __View Stats:__ This is where you can view some stats about the application.<br/>
     __Personal Settings:__ This where you can update your personal information.<br/>
-    __View Posts:__ This where you can see the all the current posts and ability to delete them. Will be implemented in phase 2, due to the current hard-coded location for posts.<br/>
+
     <br/>
     
   ## User Functionality ##
