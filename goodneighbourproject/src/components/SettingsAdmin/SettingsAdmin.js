@@ -9,7 +9,6 @@ import UserUpdateForm from "../UserUpdateForm/UserUpdateForm";
 import { Redirect } from "react-router-dom";
 
 const SettingsAdmin = (props) => {
-  console.log(props);
   const adminOptions = {
     VIEW_USERS: "View Users",
     APP_STATS: "App Stats",
@@ -52,7 +51,7 @@ const SettingsAdmin = (props) => {
           <button
             className={`admin-tab ${
               adminOption === adminOptions.VIEW_USERS ? "active" : ""
-              }`}
+            }`}
             onClick={() => setAdminOption(adminOptions.VIEW_USERS)}
           >
             View Users
@@ -60,7 +59,7 @@ const SettingsAdmin = (props) => {
           <button
             className={`admin-tab  ${
               adminOption === adminOptions.APP_STATS ? "active" : ""
-              }`}
+            }`}
             onClick={() => setAdminOption(adminOptions.APP_STATS)}
           >
             App Stats
@@ -68,7 +67,7 @@ const SettingsAdmin = (props) => {
           <button
             className={`admin-tab ${
               adminOption === adminOptions.UPDATE_INFO ? "active" : ""
-              }`}
+            }`}
             onClick={() => setAdminOption(adminOptions.UPDATE_INFO)}
           >
             Personal Settings

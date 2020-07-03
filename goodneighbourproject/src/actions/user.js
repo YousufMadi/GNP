@@ -7,7 +7,6 @@ FOR NOW, THEY SIMPLY MODIFY THE USERS STATE IN APP.
 
 */
 
-
 /*
 
 Add a user to the "database" (currently just state)
@@ -22,8 +21,13 @@ Arguments:
   This will be replaced by a call to the database to add the user
 
 */
-export const addUser = (users_state, first_name, last_name, email, password) => {
-
+export const addUser = (
+  users_state,
+  first_name,
+  last_name,
+  email,
+  password
+) => {
   const newUser = {
     id: users_state.users.length,
     first_name,
@@ -40,7 +44,6 @@ export const addUser = (users_state, first_name, last_name, email, password) => 
     users: [...users_state.users, newUser],
   });
 };
-
 
 /*
 
@@ -120,19 +123,22 @@ Arguments:
 export const deleteUser = (users_state, email) => {
   if (users_state.currentUser.email !== email) {
     let users = [...users_state.users];
-    let deletedUser = users.filter(users => users.email === email);
-    console.log(deletedUser)
-    let newUsers = users.filter(users => users.email !== email);
-    notifySuccess(deletedUser[0].first_name + " " + deletedUser[0].last_name + " has been deleted");
+    let deletedUser = users.filter((users) => users.email === email);
+    let newUsers = users.filter((users) => users.email !== email);
+    notifySuccess(
+      deletedUser[0].first_name +
+        " " +
+        deletedUser[0].last_name +
+        " has been deleted"
+    );
 
     users_state.setState({
-      users: newUsers
-    })
+      users: newUsers,
+    });
   } else {
     notifyError("You cannot delete your self");
   }
-}
-
+};
 
 /*
 
@@ -150,7 +156,7 @@ Arguments:
 export const promoteUser = (users_state, user_to_promote_email) => {
   let check = false;
   let newUser;
-  
+
   for (let i = 0; i < users_state.users.length; i++) {
     if (users_state.users[i].email === user_to_promote_email) {
       if (users_state.users[i].admin === true) {
@@ -159,8 +165,6 @@ export const promoteUser = (users_state, user_to_promote_email) => {
         break;
       }
       newUser = { ...users_state.users[i], admin: true };
-      console.log('new')
-      console.log(newUser)
       updateUser(users_state, newUser, false);
       notifySuccess("User has been promoted!");
       check = true;

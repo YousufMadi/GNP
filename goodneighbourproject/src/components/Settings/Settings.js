@@ -7,7 +7,6 @@ import UserUpdateForm from "../UserUpdateForm/UserUpdateForm";
 class Settings extends React.Component {
   render() {
     const currentUser = this.props.users_state.currentUser;
-    console.log(currentUser)
     if (currentUser === null) {
       return <Redirect to="/login" />;
     } else if (currentUser.admin === true) {

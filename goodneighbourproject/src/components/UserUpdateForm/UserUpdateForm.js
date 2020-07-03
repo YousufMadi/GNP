@@ -88,8 +88,6 @@ class UserUpdateForm extends React.Component {
         [name]: value,
       },
     });
-
-    console.log(this.state);
   };
 
   render() {
