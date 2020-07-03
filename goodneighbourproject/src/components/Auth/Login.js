@@ -3,7 +3,7 @@ import Navbar from "../Navigation/Navbar";
 import { Redirect } from "react-router-dom";
 import "../../stylesheets/shared.css";
 import "../../stylesheets/auth-forms.css";
-import loginPic from "./login.svg";
+import loginPic from "../../images/login.svg";
 
 import {
   handleUserLogin,
