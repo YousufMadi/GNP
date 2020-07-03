@@ -1,46 +1,58 @@
 import React from "react";
+import CreateAdmin from "./CreateAdmin";
 
-const ViewUsers = () => {
-  return (
-    <div>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Rating</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Yousuf Madi</td>
-            <td>yousuf.madi@mail.utoronto.ca</td>
-            <td>5</td>
-            <td>
-              <button className="deleteButton">x</button>
-            </td>
-          </tr>
-          <tr>
-            <td>Ayub Hassan</td>
-            <td>ayub.hassan@mail.utoronto.ca</td>
-            <td>5</td>
-            <td>
-              <button className="deleteButton">x</button>
-            </td>
-          </tr>
-          <tr>
-            <td>Anirudha Kanodia</td>
-            <td>anirudha.kanodia@mail.utoronto.ca</td>
-            <td>5</td>
-            <td>
-              <button className="deleteButton">x</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  );
-};
+class ViewUsers extends React.Component {
+  renderUsers() {
+    return this.props.users.users.map((user) => {
+      return (
+        <tr className="user-row">
+          <td>{user.admin ? "Yes" : "No"}</td>
+          <td>
+            {user.first_name} {user.last_name}
+          </td>
+          <td>{user.email}</td>
+          <td>{user.rating}</td>
+          <td>
+            <button className="remove-user">
+              <i className="fas fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+      );
+    });
+  }
+  render() {
+    return (
+      <>
+        <CreateAdmin
+          updateUser={this.props.updateUser}
+          users={this.props.users}
+        />
+        <table className="user-list-table">
+          <thead>
+            <tr id="users-list-header">
+              <th className="promote-col" scole="col">
+                Admin
+              </th>
+              <th className="name-col" scope="col">
+                Name
+              </th>
+              <th className="email-col" scope="col">
+                Email
+              </th>
+              <th className="rating-col" scope="col">
+                Rating
+              </th>
+              <th className="remove-col" scope="col">
+                Delete User
+              </th>
+            </tr>
+          </thead>
+          <tbody>{this.renderUsers()}</tbody>
+        </table>
+      </>
+    );
+  }
+}
 
 export default ViewUsers;
