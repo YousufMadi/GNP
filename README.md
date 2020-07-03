@@ -5,16 +5,14 @@ Ayub Hassan <br/>
 Anirudha Kanodia <br/>
 Yousuf Madi <br/>
 
-# The Good Neighbour project!
-
 #### Credentials:
-__Non-admin__:
-email: user@user.com
-password: user
+__User__:
+email: user@user.com <br/>
+password: user <br/>
 
 __Admin__:
-__email__: admin@admin.com
-password: admin
+__email__: admin@admin.com <br/>
+password: admin <br/>
 
 
 ### The Concept:
