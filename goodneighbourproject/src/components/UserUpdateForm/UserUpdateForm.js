@@ -1,5 +1,5 @@
 import React from "react";
-import "./userupdateform.css";
+import "../../stylesheets/userupdateform.css";
 
 import { updateUser } from "../../actions/user";
 
