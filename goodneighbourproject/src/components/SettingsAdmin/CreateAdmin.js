@@ -1,5 +1,9 @@
 import React, { useState } from "react";
-import { notifyError, notifySuccess, notifyWarn } from "../../Utils/notificationUtils";
+import {
+  notifyError,
+  notifySuccess,
+  notifyWarn,
+} from "../../Utils/notificationUtils";
 
 import "react-toastify/dist/ReactToastify.css";
 import "../../stylesheets/settingsAdmin.css";
