@@ -18,7 +18,10 @@ class ViewRequest extends React.Component {
   /* Depending on if the current user is the author of this post, it shows the items list or just the estimate
      If the current user is the author, it shows the items list. Otherwise shows the estimate. */
   renderItemSizeOrList() {
-    if (this.props.postUser.id === this.props.currentUser.id) {
+    if (
+      this.props.postUser.id === this.props.currentUser.id ||
+      this.props.currentUser.admin
+    ) {
       return <ul className="request-items-list">{this.props.renderItems()}</ul>;
     } else {
       return (
@@ -91,12 +94,26 @@ class ViewRequest extends React.Component {
               </button>
             </>
           ) : (
-            <button
-              className="accept-request"
-              onClick={() => this.props.showConfirmation(this.props.post)}
-            >
-              Accept Request
-            </button>
+            <>
+              <button
+                className="accept-request"
+                onClick={() => this.props.showConfirmation(this.props.post)}
+              >
+                Accept Request
+              </button>
+              {this.props.currentUser.admin ? (
+                <button
+                  className="delete-post admin-delete-post"
+                  onClick={() =>
+                    deletePost(this.props.posts_state, this.props.post.id)
+                  }
+                >
+                  <i className="fas fa-trash"></i>
+                </button>
+              ) : (
+                <></>
+              )}
+            </>
           )}
         </div>
         <div className="post-description">
