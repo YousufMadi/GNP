@@ -6,11 +6,11 @@ Anirudha Kanodia <br/>
 Yousuf Madi <br/>
 
 #### Credentials:
-__User__:
+__User__:<br/>
 email: user@user.com <br/>
 password: user <br/>
 
-__Admin__:
+__Admin__:<br/>
 __email__: admin@admin.com <br/>
 password: admin <br/>
 
@@ -52,9 +52,9 @@ Like all other users, John can create a request or volunteer and accept one.
 ## Sidebar
 The sidebar serves as the main navigational tool once inside the website. It links to:
 
-- __Home__: The landing page of the website.
-- __Settings__: A user can edit their information by navigating to the settings page.
-- __Logout__: A user can log out of the website by clicking here.
+- __Home__: The landing page of the website.<br/>
+- __Settings__: A user can edit their information by navigating to the settings page.<br/>
+- __Logout__: A user can log out of the website by clicking here.<br/>
 
 Users can also filter requests using the sidebar by:
 - __Distance__:
