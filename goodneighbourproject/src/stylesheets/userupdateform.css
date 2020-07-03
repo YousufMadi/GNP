@@ -24,7 +24,10 @@
   width: 75%;
   display: block;
   margin-left: auto;
-  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); */
+}
+
+.user-update-info.admin-class{
+  margin: auto;
 }
 
 .user-update-info h3{
