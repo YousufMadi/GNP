@@ -43,7 +43,7 @@ John is an administrator of the website. He can perform the following actions:
 
 - __View all users__: Inside the "Settings" page of the website (once logged in), John can view all the users registered with the website.
 - __Delete users__: He can delete any user from the website from the settings page. 
-- Make others admin: He can make other users an admin.
+- __Make others admin__: He can make other users an admin.
 - __View app stats__: He can view statistics regarding the website by navigating to the "App Stats" tab inside Settings.
 - __Delete posts__: John has the power to delete posts in the timeline by clicking on the delete button in the post.
 
