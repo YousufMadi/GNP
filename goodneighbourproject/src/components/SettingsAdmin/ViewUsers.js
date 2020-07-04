@@ -10,9 +10,9 @@ class ViewUsers extends React.Component {
   };
 
   renderUsers() {
-    return this.props.users_state.users.map((user) => {
+    return this.props.users_state.users.map((user, i) => {
       return (
-        <tr className="user-row">
+        <tr className="user-row" key={i}>
           <td>{user.admin ? "Yes" : "No"}</td>
           <td>
             {user.first_name} {user.last_name}
