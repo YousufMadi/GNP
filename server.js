@@ -42,3 +42,10 @@ app.get("*", (req, res) => {
   // send index.html
   res.sendFile(__dirname + "/client/build/index.html");
 });
+
+/*************************************************/
+// Express server listening...
+const port = process.env.PORT || 5000;
+app.listen(port, () => {
+  console.log(`Listening on port ${port}...`);
+});
