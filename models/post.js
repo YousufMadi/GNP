@@ -16,7 +16,12 @@ const PostSchema = new mongoose.Schema({
     minlength: 1,
   },
   items: {
-    type: Array,
+    type: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Item",
+      },
+    ],
     default: [],
     required: true,
   },
