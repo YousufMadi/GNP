@@ -6,6 +6,7 @@ const app = express();
 const { mongoose } = require("./db/mongoose");
 const { Post } = require("./models/post");
 const { User } = require("./models/user");
+const { Item } = require("./models/item");
 
 // body-parser: middleware for parsing HTTP JSON body into a usable object
 const bodyParser = require("body-parser");
