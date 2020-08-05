@@ -5,9 +5,7 @@ import "../../stylesheets/shared.css";
 import "../../stylesheets/auth-forms.css";
 import signupPic from "../../images/signup.svg";
 
-import {
-  addUser,
-} from "../../actions/user";
+import { addUser } from "../../actions/user";
 
 const default_state = {
   // Fields
@@ -75,7 +73,7 @@ class Signup extends React.Component {
     if (!(this.state.password === this.state.password_confirmation)) {
       password_confirmation_error = "Passwords do not match";
       is_valid = false;
-    }    
+    }
 
     if (!is_valid) {
       this.setState({
@@ -83,7 +81,7 @@ class Signup extends React.Component {
         last_name_error,
         email_error,
         password_error,
-        password_confirmation_error
+        password_confirmation_error,
       });
     }
 
@@ -94,10 +92,8 @@ class Signup extends React.Component {
     e.preventDefault();
     const form_valid = this.validateForm();
 
-
     if (form_valid) {
       addUser(
-        this.props.users_state,
         this.state.first_name,
         this.state.last_name,
         this.state.email,
@@ -166,10 +162,16 @@ class Signup extends React.Component {
                   onChange={this.handleChange}
                 ></input>
 
-                <p className="error_msg">{this.state.password_confirmation_error}</p>
+                <p className="error_msg">
+                  {this.state.password_confirmation_error}
+                </p>
               </div>
               <div className="form-input">
-                <button className="form-submit" type="buton" onSubmit={this.formSubmit}>
+                <button
+                  className="form-submit"
+                  type="buton"
+                  onSubmit={this.formSubmit}
+                >
                   Submit
                 </button>
               </div>

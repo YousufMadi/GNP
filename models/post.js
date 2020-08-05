@@ -8,13 +8,12 @@ const ItemSchema = new mongoose.Schema({
   },
   amount: {
     type: Number,
-    required: true,
     default: 1,
   },
 });
 
 const PostSchema = new mongoose.Schema({
-  user: {
+  author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
@@ -26,6 +25,7 @@ const PostSchema = new mongoose.Schema({
   description: {
     type: String,
     minlength: 1,
+    default: "",
   },
   time: {
     type: String,
@@ -34,7 +34,6 @@ const PostSchema = new mongoose.Schema({
   },
   items: {
     type: [ItemSchema],
-    default: [],
     required: true,
   },
 });
