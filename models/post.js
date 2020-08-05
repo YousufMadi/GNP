@@ -15,16 +15,12 @@ const PostSchema = new mongoose.Schema({
     required: true,
     minlength: 1,
   },
-  items: {
-    type: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Item",
-      },
-    ],
-    default: [],
-    required: true,
-  },
+  items: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Item",
+    },
+  ],
 });
 
 const Post = mongoose.model("Post", PostSchema);

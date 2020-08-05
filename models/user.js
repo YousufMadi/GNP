@@ -18,6 +18,28 @@ const UserSchema = new mongoose.Schema({
     required: true,
     minlength: 4,
   },
+  admin: {
+    type: Boolean,
+    default: false,
+  },
+  name: {
+    type: String,
+    required: true,
+    minlength: 1,
+  },
+  active_post: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Post",
+    default: null,
+  },
+  profile_picture: {
+    type: String,
+    default: null,
+  },
+  rating: {
+    type: Number,
+    default: 5,
+  },
 });
 
 const User = mongoose.model("User", UserSchema);
