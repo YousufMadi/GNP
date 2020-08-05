@@ -17,9 +17,6 @@ app.use(bodyParser.json());
 
 // express-session for managing user sessions
 const session = require("express-session");
-const {
-  default: ViewUsers,
-} = require("./client/src/components/SettingsAdmin/ViewUsers");
 app.use(bodyParser.urlencoded({ extended: true }));
 
 /****************** API ROUTES ************************/
@@ -67,6 +64,9 @@ app.post("/users", (req, res) => {
     });
 });
 
+/* Route to edit user information
+   Returns the updated user model
+*/
 app.patch("/users/:id", (req, res) => {});
 
 // POST ROUTES
@@ -88,6 +88,17 @@ app.get("/posts", (req, res) => {
     });
 });
 
+/* Route to create a new post
+  BODY FORMAT: 
+  {
+    email,
+    password,
+    profile_picture,
+    admin,
+    name
+  }
+  Returns the new user created
+*/
 app.post("/posts", (req, res) => {
   Post.create({})
     .then((post) => {
