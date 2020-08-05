@@ -2,8 +2,8 @@
 const express = require("express");
 const app = express();
 
-// moment module for post creation date
-//const moment = require("moment");
+// Moment module for post creation
+//const moment = require("moment")
 
 // mongoose and mongo models
 const { mongoose } = require("./db/mongoose");
@@ -23,6 +23,80 @@ const {
 app.use(bodyParser.urlencoded({ extended: true }));
 
 /****************** API ROUTES ************************/
+// USER ROUTES
+
+/* Route to retrieve all users 
+   Returns the list of users in the database.
+
+   TODO: Decide if we want to send encrypted passwords to client
+*/
+app.get("/users", (req, res) => {
+  User.find()
+    .then((users) => {
+      res.json(users);
+    })
+    .catch((e) => {
+      res.sendStatus(500);
+    });
+});
+
+/* Route to create a new user
+  BODY FORMAT: 
+  {
+    email,
+    password,
+    profile_picture,
+    admin,
+    name
+  }
+  Returns the new user created
+*/
+app.post("/users", (req, res) => {
+  User.create({
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password,
+    profile_picture: req.body.profile_picture,
+    admin: req.body.admin,
+  })
+    .then((user) => {
+      res.json(user);
+    })
+    .catch((e) => {
+      res.sendStatus(500);
+    });
+});
+
+app.patch("/users/:id", (req, res) => {});
+
+// POST ROUTES
+
+/* Route to retrieve all users 
+   Returns the list of users in the database.
+
+   TODO: For scalability maybe only send those in same country
+*/
+app.get("/posts", (req, res) => {
+  Post.find()
+    .populate("user")
+    .exec((err, transaction) => {
+      if (err) {
+        res.sendStatus(500);
+      } else {
+        res.json(transaction);
+      }
+    });
+});
+
+app.post("/posts", (req, res) => {
+  Post.create({})
+    .then((post) => {
+      res.json(post);
+    })
+    .catch((e) => {
+      res.sendStatus(500);
+    });
+});
 
 /****************** WEBPAGE ROUTES ************************/
 
