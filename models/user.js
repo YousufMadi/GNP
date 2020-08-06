@@ -22,7 +22,12 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  name: {
+  first_name: {
+    type: String,
+    required: true,
+    minlength: 1,
+  },
+  last_name: {
     type: String,
     required: true,
     minlength: 1,

@@ -39,11 +39,11 @@ app.get("/users", (req, res) => {
 /* Route to create a new user
   BODY FORMAT: 
   {
+    name,
     email,
     password,
-    profile_picture,
-    admin,
-    name
+    profile_picture, -> TO BE ADDED
+    admin -> MAYBE SHOULDN'T BE HERE
   }
   Returns the new user created
 
@@ -51,11 +51,13 @@ app.get("/users", (req, res) => {
 */
 app.post("/users", (req, res) => {
   const newUser = new User({
-    name: req.body.name,
+    // name: req.body.name,
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
     email: req.body.email,
     password: req.body.password,
-    profile_picture: req.body.profile_picture,
-    admin: req.body.admin,
+    // profile_picture: req.body.profile_picture,
+    // admin: req.body.admin,
   });
 
   newUser.save().then(

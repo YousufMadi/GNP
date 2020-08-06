@@ -22,27 +22,59 @@ Arguments:
   This will be replaced by a call to the database to add the user
 
 */
-export const addUser = async (first_name, last_name, email, password) => {
-  const fullname = first_name + " " + last_name;
-  const newUser = {
-    name: fullname,
-    email,
-    password,
-    profile_picture:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSf_Bf0-x44hsGqqcQwrTcNeLUSnYjlDuoql-hQHydDdBwxeCT2&usqp=CAU",
-  };
-  const response = await ServerAPI({
-    method: "post",
-    url: "/users",
-    data: newUser,
-  });
-  if (response.status === 200) {
-    // SET THE CURRENT USER STATE
-  } else {
-    // DISPLAY ERROR MESSAGE
-  }
-};
+// export const addUser = async (first_name, last_name, email, password) => {
+//   const fullname = first_name + " " + last_name;
+//   const newUser = {
+//     name: fullname,
+//     email,
+//     password,
+//     profile_picture:
+//       "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSf_Bf0-x44hsGqqcQwrTcNeLUSnYjlDuoql-hQHydDdBwxeCT2&usqp=CAU",
+//   };
+//   const response = await ServerAPI({
+//     method: "post",
+//     url: "/users",
+//     data: newUser,
+//   });
+//   if (response.status === 200) {
+//     // SET THE CURRENT USER STATE
+//   } else {
+//     // DISPLAY ERROR MESSAGE
+//   }
+// };
 
+export const addUser = (loginComp, app) => {
+
+  const request = new Request("/users", {
+    method: "post",
+    body: JSON.stringify(loginComp.state),
+    headers: {
+      Accept: "application/json, text/plain, */*",
+      "Content-Type": "application/json"
+    }
+  });
+
+  // Send the request with fetch()
+  fetch(request)
+    .then(res => {
+      if (res.status === 200) {
+        return res.json();
+      }
+    })
+    .then(json => {
+      console.log('in add user')
+      // Set the current user here
+      // if (json.currentUser !== undefined) {
+      //   // Do something here
+      //   app.setState({ currentUser: json.currentUser });
+      //   console.log(json)
+      // }
+    })
+    .catch(error => {
+      notifyError("Please check the info provided");
+    });
+
+}
 /*
 
 Update a user from the "database" (Currently just state)
@@ -85,17 +117,60 @@ Arguments:
 
 */
 
-export const handleUserLogin = async (email, password) => {
-  const response = await ServerAPI({
+// export const handleUserLogin = async (email, password) => {
+//   const response = await ServerAPI({
+//     method: "post",
+//     url: "/users/login",
+//     data: { email, password },
+//   });
+//   if (response.status === 200) {
+//     // SET THE CURRENT USER STATE
+//   } else {
+//     // DISPLAY ERROR MESSAGE
+//   }
+// };
+
+// export const login = async (loginComp, app) => {
+//   const response = await ServerAPI({
+//     method: "post",
+//     url: "/users/login",
+//     data: { email: loginComp.state.email, password: loginComp.state.password },
+//   });
+//   if (response.status === 200) {
+//     // SET THE CURRENT USER STATE
+//     console.log('success')
+//   } else {
+//     // DISPLAY ERROR MESSAGE
+//   }
+// };
+export const login = (loginComp, app) => {
+  // Create our request constructor with all the parameters we need
+  const request = new Request("/users/login", {
     method: "post",
-    url: "/users/login",
-    data: { email, password },
+    body: JSON.stringify(loginComp.state),
+    headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json"
+    }
   });
-  if (response.status === 200) {
-    // SET THE CURRENT USER STATE
-  } else {
-    // DISPLAY ERROR MESSAGE
-  }
+
+  // Send the request with fetch()
+  fetch(request)
+    .then(res => {
+      if (res.status === 200) {
+        return res.json();
+      }
+    })
+    .then(json => {
+      // Set the current user here
+      if (json.currentUser !== undefined) {
+        app.setState({ currentUser: json.currentUser });
+        console.log(json)
+      }
+    })
+    .catch(error => {
+      notifyError("Email and password confirmation not found");
+    });
 };
 
 /*

@@ -36,9 +36,13 @@ class App extends React.Component {
       - admin: Whether the user is an admin
 
   */
+
+  constructor(props){
+    super(props)
+  }
   state = {
-    currentUserLocation: null,
     currentUser: null,
+    currentUserLocation: null,
     setState: this.setState.bind(this),
   };
 
@@ -87,7 +91,7 @@ class App extends React.Component {
             <Route
               exact
               path="/login"
-              component={() => <Login users_state={this.state} />}
+              component={() => <Login app={this} />}
             />
 
             <Route

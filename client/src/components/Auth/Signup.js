@@ -13,14 +13,14 @@ const default_state = {
   last_name: "",
   email: "",
   password: "",
-  password_confirmation: "",
+  // password_confirmation: "",
 
-  // Errors
-  first_name_error: "",
-  last_name_error: "",
-  email_error: "",
-  password_error: "",
-  password_confirmation_error: "",
+  // // Errors
+  // first_name_error: "",
+  // last_name_error: "",
+  // email_error: "",
+  // password_error: "",
+  // password_confirmation_error: "",
 };
 
 class Signup extends React.Component {
@@ -36,78 +36,84 @@ class Signup extends React.Component {
     });
   };
 
-  validateForm = () => {
-    let first_name_error = "";
-    let last_name_error = "";
-    let email_error = "";
-    let valid_email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    let password_error = "";
-    let password_confirmation_error = "";
-    let is_valid = true;
+  // validateForm = () => {
+  //   let first_name_error = "";
+  //   let last_name_error = "";
+  //   let email_error = "";
+  //   let valid_email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  //   let password_error = "";
+  //   let password_confirmation_error = "";
+  //   let is_valid = true;
 
-    // Validate first name
-    if (this.state.first_name === "") {
-      first_name_error = "Please enter your first name";
-      is_valid = false;
-    }
+  //   // Validate first name
+  //   if (this.state.first_name === "") {
+  //     first_name_error = "Please enter your first name";
+  //     is_valid = false;
+  //   }
 
-    // Validate last name
-    if (this.state.last_name === "") {
-      last_name_error = "Please enter your last name";
-      is_valid = false;
-    }
+  //   // Validate last name
+  //   if (this.state.last_name === "") {
+  //     last_name_error = "Please enter your last name";
+  //     is_valid = false;
+  //   }
 
-    // Validate email
-    const email_valid = valid_email_regex.test(this.state.email);
-    if (!email_valid) {
-      email_error = "Email entered is not valid";
-      is_valid = false;
-    }
+  //   // Validate email
+  //   const email_valid = valid_email_regex.test(this.state.email);
+  //   if (!email_valid) {
+  //     email_error = "Email entered is not valid";
+  //     is_valid = false;
+  //   }
 
-    // Validate password
-    if (this.state.password === "") {
-      password_error = "Password is invalid";
-      is_valid = false;
-    }
+  //   // Validate password
+  //   if (this.state.password === "") {
+  //     password_error = "Password is invalid";
+  //     is_valid = false;
+  //   }
 
-    if (!(this.state.password === this.state.password_confirmation)) {
-      password_confirmation_error = "Passwords do not match";
-      is_valid = false;
-    }
+  //   if (!(this.state.password === this.state.password_confirmation)) {
+  //     password_confirmation_error = "Passwords do not match";
+  //     is_valid = false;
+  //   }
 
-    if (!is_valid) {
-      this.setState({
-        first_name_error,
-        last_name_error,
-        email_error,
-        password_error,
-        password_confirmation_error,
-      });
-    }
+  //   if (!is_valid) {
+  //     this.setState({
+  //       first_name_error,
+  //       last_name_error,
+  //       email_error,
+  //       password_error,
+  //       password_confirmation_error,
+  //     });
+  //   }
 
-    return is_valid;
-  };
+  //   return is_valid;
+  // };
 
-  formSubmit = (e) => {
+  // formSubmit = (e) => {
+  //   e.preventDefault();
+  //   const form_valid = this.validateForm();
+
+  //   if (form_valid) {
+  //     addUser(
+  //       this.state.first_name,
+  //       this.state.last_name,
+  //       this.state.email,
+  //       this.state.password
+  //     );
+
+  //     this.setState(default_state);
+  //   }
+  // };
+
+  formSubmit = (e, app) => {
     e.preventDefault();
-    const form_valid = this.validateForm();
-
-    if (form_valid) {
-      addUser(
-        this.state.first_name,
-        this.state.last_name,
-        this.state.email,
-        this.state.password
-      );
-
-      this.setState(default_state);
-    }
-  };
+    addUser(this, app);
+  }
 
   render() {
-    if (this.props.users_state.currentUser) {
-      return <Redirect to="/feed" />;
-    }
+    const {app} = this.props;
+    // if (this.props.users_state.currentUser) {
+    //   return <Redirect to="/feed" />;
+    // }
     return (
       <>
         <Navbar />
@@ -115,7 +121,7 @@ class Signup extends React.Component {
           <div className="form-container">
             <h3>Signup</h3>
             <img src={signupPic} alt="signup"></img>
-            <form onSubmit={this.formSubmit}>
+            <form onSubmit={e => this.formSubmit(e, app)}>
               <div className="form-input">
                 <input
                   name="first_name"
@@ -123,7 +129,7 @@ class Signup extends React.Component {
                   placeholder="First Name"
                   onChange={this.handleChange}
                 ></input>
-                <p className="error_msg">{this.state.first_name_error}</p>
+                {/*<p className="error_msg">{this.state.first_name_error}</p>*/}
               </div>
               <div className="form-input">
                 <input
@@ -132,7 +138,7 @@ class Signup extends React.Component {
                   placeholder="Last Name"
                   onChange={this.handleChange}
                 ></input>
-                <p className="error_msg">{this.state.last_name_error}</p>
+                {/*<p className="error_msg">{this.state.last_name_error}</p>*/}
               </div>
               <div className="form-input">
                 <input
@@ -142,7 +148,7 @@ class Signup extends React.Component {
                   onChange={this.handleChange}
                 ></input>
 
-                <p className="error_msg">{this.state.email_error}</p>
+                {/*<p className="error_msg">{this.state.email_error}</p>*/}
               </div>
               <div className="form-input">
                 <input
@@ -152,9 +158,9 @@ class Signup extends React.Component {
                   onChange={this.handleChange}
                 ></input>
 
-                <p className="error_msg">{this.state.password_error}</p>
+                {/*<p className="error_msg">{this.state.password_error}</p>*/}
               </div>
-              <div className="form-input">
+              {/*<div className="form-input">
                 <input
                   name="password_confirmation"
                   type="password"
@@ -165,12 +171,12 @@ class Signup extends React.Component {
                 <p className="error_msg">
                   {this.state.password_confirmation_error}
                 </p>
-              </div>
+              </div>*/}
               <div className="form-input">
                 <button
                   className="form-submit"
                   type="buton"
-                  onSubmit={this.formSubmit}
+                  onSubmit={e => this.formSubmit(e, app)}
                 >
                   Submit
                 </button>
