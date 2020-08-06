@@ -65,10 +65,11 @@ app.post("/users", (req, res) => {
       /* THIS IS CAUSING ERROR. WHY?
       req.session.user = user._id;
       req.session.email = user.email; */
-      res.json({ currentUser: user.email });
+      res.json({ currentUser: user.id });
     },
     (e) => {
       res.sendStatus(400);
+
     }
   );
 });
@@ -87,7 +88,7 @@ app.post("/users/login", (req, res) => {
       /* This will create an error?
       req.session.user = user._id;
       req.session.email = user.email;*/
-      res.json({ currentUser: user.email });
+      res.json({ currentUser: user.id });
     })
     .catch((e) => {
       res.sendStatus(400);

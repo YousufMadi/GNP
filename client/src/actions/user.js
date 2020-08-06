@@ -59,19 +59,20 @@ export const addUser = (loginComp, app) => {
     .then(res => {
       if (res.status === 200) {
         return res.json();
+      }else{
+        notifyError("Please check the info provided");
       }
     })
     .then(json => {
-      console.log('in add user')
       // Set the current user here
-      // if (json.currentUser !== undefined) {
-      //   // Do something here
-      //   app.setState({ currentUser: json.currentUser });
-      //   console.log(json)
-      // }
+      if (json.currentUser !== undefined) {
+        console.log('setting current user on signup')
+        app.setState({ currentUser: json.currentUser });
+      }
     })
     .catch(error => {
-      notifyError("Please check the info provided");
+      // notifyError("Please check the info provided");
+      console.log('bad request in add user')
     });
 
 }
@@ -159,6 +160,9 @@ export const login = (loginComp, app) => {
     .then(res => {
       if (res.status === 200) {
         return res.json();
+      }else{
+        notifyError("Email and password confirmation not found");
+
       }
     })
     .then(json => {
@@ -169,7 +173,7 @@ export const login = (loginComp, app) => {
       }
     })
     .catch(error => {
-      notifyError("Email and password confirmation not found");
+      console.log('bad request in login')
     });
 };
 
