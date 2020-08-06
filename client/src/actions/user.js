@@ -43,11 +43,11 @@ Arguments:
 //   }
 // };
 
-export const addUser = (loginComp, app) => {
+export const addUser = (signupComp, app) => {
 
   const request = new Request("/users", {
     method: "post",
-    body: JSON.stringify(loginComp.state),
+    body: JSON.stringify(signupComp.state),
     headers: {
       Accept: "application/json, text/plain, */*",
       "Content-Type": "application/json"
@@ -133,17 +133,12 @@ export const getUserById = async (id) => {
   return result; 
 }
 
-export const getActiveRequest = (id) => {
+export const getActiveRequest = async (id) => {
 
-  const result = getUserById(id).then((user) => {
-    if(user){
-      return user.active_post;
-    }else{
-      return null;
-    }
-  });
+  const result = await getUserById(id);
+  console.log(result.active_post);
 
-  return result;
+  return result.active_post;
 
 }
 /*

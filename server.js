@@ -83,6 +83,7 @@ app.post("/users", (req, res) => {
       res.json({ currentUser: user.id });
     },
     (e) => {
+      
       res.sendStatus(400);
 
     }

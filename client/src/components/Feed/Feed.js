@@ -24,6 +24,7 @@ class Feed extends React.Component {
     filterDistance: null,
     filterSize: null,
     filterPayment: null,
+    active_req: null,
 
     posts: [
       {
@@ -135,6 +136,17 @@ class Feed extends React.Component {
     this.setState({ ...newFilter });
   };
 
+  componentDidMount() {
+    getActiveRequest(this.props.app.state.currentUser)
+      .then((req) => {
+        if(req !== null){
+          this.setState({
+            active_req: req
+          })
+        }
+      })
+  }
+
   /* 
   
   ------- Render function ----------
@@ -150,10 +162,10 @@ class Feed extends React.Component {
   */
   render() {
 
-    const currentUser = this.props.app.state.currentUser;
-    if (currentUser === null) {
-      return <Redirect to="/login" />;
-    }
+    // const currentUser = this.props.app.state.currentUser;
+    // if (currentUser === null) {
+    //   return <Redirect to="/login" />;
+    // }
     // }else if(hasActivePost(currentUser)){
     //   return (
     //     <div className="feedContainer">
@@ -167,21 +179,33 @@ class Feed extends React.Component {
 
     // }
 
-    const active_req = getActiveRequest(currentUser);
+    const active_req = this.state.active_req;
     if(active_req !== null){
       return (
         <div className="feedContainer">
-          <ActiveRequest
-            post={active_req}
-            app={this.props}
-          />
+          Active request
         </div>
       );
     }else{
       return (<div>Timeline</div>)
     }
-    
-    return (<div>in feed</div>)
+      
+    // getActiveRequest(currentUser)
+    //   .then((req) => {
+    //     if(req !== null){
+    //       return (
+    //         <div className="feedContainer">
+    //          <ActiveRequest
+    //             post={active_req}
+    //             app={this.props}
+    //             />
+    //           </div>
+    //       )
+    //     }else{
+    //       return (<div>Timeline</div>)
+    //     }
+    //   })
+
   }
 }
 
