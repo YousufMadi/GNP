@@ -38,9 +38,9 @@ class Login extends React.Component {
 
   render() {
     const {app} = this.props;
-    // if (this.props.users_state.currentUser) {
-    //   return <Redirect to="/feed" />;
-    // }
+    if (app.state.currentUser) {
+      return <Redirect to="/feed" />;
+    }
     return (
       <>
         <Navbar />

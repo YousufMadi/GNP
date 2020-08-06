@@ -106,6 +106,46 @@ export const updateUser = (users_state, user, changeCurrentUser = true) => {
   });
 };
 
+export const getUserById = async (id) => {
+  const url = "/users/" + id;
+  const request = new Request(url, {
+    method: "get",
+    headers: {
+      Accept: "application/json, text/plain, */*",
+      "Content-Type": "application/json"
+    }
+  });
+
+  // Send the request with fetch()
+  const user = await fetch(request)
+    .then(res => {
+      if (res.status === 200) {
+        return res.json();
+      }else{
+        notifyError("Something went wrong while getting user data");
+      }
+    })
+    .catch(error => {
+      notifyError("Internal server error - couldn't find user");
+    });
+
+  const result = await user;
+  return result; 
+}
+
+export const getActiveRequest = (id) => {
+
+  const result = getUserById(id).then((user) => {
+    if(user){
+      return user.active_post;
+    }else{
+      return null;
+    }
+  });
+
+  return result;
+
+}
 /*
 
 Log in given user

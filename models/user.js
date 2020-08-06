@@ -91,5 +91,6 @@ UserSchema.statics.findByEmailPassword = function (email, password) {
   });
 };
 
+
 const User = mongoose.model("User", UserSchema);
 module.exports = { User };

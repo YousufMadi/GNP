@@ -79,13 +79,13 @@ class App extends React.Component {
             />
             <Route
               path="/feed"
-              component={() => <Feed users_state={this.state} />}
+              component={() => <Feed app={this} />}
             />
 
             <Route
               exact
               path="/signup"
-              component={() => <Signup users_state={this.state} />}
+              component={() => <Signup app={this} />}
             />
 
             <Route

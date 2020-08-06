@@ -36,6 +36,21 @@ app.get("/users", (req, res) => {
     });
 });
 
+app.get("/users/:id", (req, res) => {
+  const id = req.params.id;
+
+  User.findById(id).then((user) => {
+    if (!user) {
+      res.status(404).send('Resource not found') 
+    } else { 
+      res.send(user)
+    }
+  })
+  .catch((error) => {
+    res.status(500).send('Internal Server Error')  // server error
+  })
+});
+
 /* Route to create a new user
   BODY FORMAT: 
   {

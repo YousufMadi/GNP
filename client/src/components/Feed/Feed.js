@@ -5,6 +5,8 @@ import ActiveRequest from "../ActiveRequest/ActiveRequest";
 
 import "../../stylesheets/feed.css";
 
+import { getActiveRequest } from "../../actions/user";
+
 class Feed extends React.Component {
   /*
 
@@ -147,31 +149,64 @@ class Feed extends React.Component {
 
   */
   render() {
-    const currentUser = this.props.users_state.currentUser;
+
+    const currentUser = this.props.app.state.currentUser;
     if (currentUser === null) {
       return <Redirect to="/login" />;
-    } else if (currentUser.active_post) {
+    }
+    // }else if(hasActivePost(currentUser)){
+    //   return (
+    //     <div className="feedContainer">
+    //       <ActiveRequest
+    //         {posts={[currentUser.active_post]}
+    //         changeFilterState={this.handleFilterChange}}
+    //         app={this.props}
+    //       />
+    //     </div>
+    //   );
+
+    // }
+
+    const active_req = getActiveRequest(currentUser);
+    if(active_req !== null){
       return (
         <div className="feedContainer">
           <ActiveRequest
-            posts={[currentUser.active_post]}
-            changeFilterState={this.handleFilterChange}
-            users_state={this.props.users_state}
-            currentUser={currentUser}
+            post={active_req}
+            app={this.props}
           />
         </div>
       );
+    }else{
+      return (<div>Timeline</div>)
     }
-    return (
-      <div className="feedContainer slide">
-        <Timeline
-          changeFilterState={this.handleFilterChange}
-          users_state={this.props.users_state}
-          posts_state={this.state}
-        />
-      </div>
-    );
+    
+    return (<div>in feed</div>)
   }
 }
+
+// if (currentUser === null) {
+//       return <Redirect to="/login" />;
+//     } else if (currentUser.active_post) {
+//       return (
+//         <div className="feedContainer">
+//           <ActiveRequest
+//             posts={[currentUser.active_post]}
+//             changeFilterState={this.handleFilterChange}
+//             users_state={this.props.users_state}
+//             currentUser={currentUser}
+//           />
+//         </div>
+//       );
+//     }
+//     return (
+//       <div className="feedContainer slide">
+//         <Timeline
+//           changeFilterState={this.handleFilterChange}
+//           users_state={this.props.users_state}
+//           posts_state={this.state}
+//         />
+//       </div>
+//     );
 
 export default Feed;
