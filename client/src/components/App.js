@@ -8,6 +8,7 @@ import Feed from "./Feed/Feed";
 import Signup from "./Auth/Signup";
 import Login from "./Auth/Login";
 import Logout from "./Auth/Logout";
+import AuthBox from "./Auth/AuthBox";
 import Settings from "./Settings/Settings";
 import SettingsAdmin from "./SettingsAdmin/SettingsAdmin";
 
@@ -116,6 +117,11 @@ class App extends React.Component {
               component={() => <Home users_state={this.state} />}
             />
             <Route
+              path="/login"
+              exact
+              component={() => <AuthBox users_state={this.state} />}
+            />
+            <Route
               path="/feed"
               component={() => (
                 <Feed
@@ -124,15 +130,15 @@ class App extends React.Component {
               )}
             />
 
-            <Route
+            {/* <Route
               exact
               path="/signup"
               component={() => (
                 <Signup users_state={this.state} />
               )}
-            />
+            /> */}
 
-            <Route
+            {/* <Route
               exact
               path="/login"
               component={() => (
@@ -140,7 +146,7 @@ class App extends React.Component {
                   users_state={this.state}
                 />
               )}
-            />
+            /> */}
 
             <Route
               exact

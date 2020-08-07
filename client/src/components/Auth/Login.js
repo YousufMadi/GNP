@@ -68,37 +68,37 @@ class Login extends React.Component {
     }
     return (
       <>
-        <Navbar />
-        <div className="contentContainer slide">
-          <div className="form-container">
-            <h3>Login</h3>
-            <img src={loginPic} alt="login"></img>
-            <form onSubmit={this.formSubmit}>
-              <p className="error_msg">{this.state.error_msg}</p>
-              <div className="form-input">
-                <input
-                  name="email"
-                  type="email"
-                  placeholder="Email"
-                  onChange={this.handleChange}
-                ></input>
-              </div>
-              <div className="form-input">
-                <input
-                  name="password"
-                  type="password"
-                  placeholder="Password"
-                  onChange={this.handleChange}
-                ></input>
-              </div>
-              <div className="form-input">
-                <button className="form-submit" type="buton" onSubmit={this.formSubmit}>
-                  Submit
-                </button>
-              </div>
-            </form>
+        {/* <Navbar /> */}
+        {/* <div className="contentContainer slide"> */}
+        {/* <div className="form-container"> */}
+        <h3>Login</h3>
+        <img src={loginPic} alt="login"></img>
+        <form onSubmit={this.formSubmit}>
+          <p className="error_msg">{this.state.error_msg}</p>
+          <div className="form-input">
+            <input
+              name="email"
+              type="email"
+              placeholder="Email"
+              onChange={this.handleChange}
+            ></input>
           </div>
-        </div>
+          <div className="form-input">
+            <input
+              name="password"
+              type="password"
+              placeholder="Password"
+              onChange={this.handleChange}
+            ></input>
+          </div>
+          <div className="form-input">
+            <button className="form-submit" type="buton" onSubmit={this.formSubmit}>
+              Submit
+                </button>
+          </div>
+        </form>
+        {/* </div> */}
+        {/* </div> */}
       </>
     );
   }
