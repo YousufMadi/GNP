@@ -125,7 +125,6 @@ app.post("/users/login", async (req, res) => {
 */
 app.patch("/users/:id", (req, res) => {
 
-  console.log('start')
   const id = req.params.id;
 
   if (mongoose.connection.readyState != 1) {
@@ -133,27 +132,23 @@ app.patch("/users/:id", (req, res) => {
     return;
   }
 
-  // console.log('before reqbody')
-
   fieldsToUpdate = {};
   for(let key in req.body){
     if(req.body[key] !== ""){
       fieldsToUpdate[key] = req.body[key];
     }
   }
-  console.log(fieldsToUpdate)
 
   User.findOneAndUpdate({_id: id}, {$set: fieldsToUpdate}, {new: true, useFindAndModify: false, runValidators: true})
     .then((user) => {
       if (!user) {
         res.status(404).send('Resource not found')
       } else {   
-        res.send(user)
+        res.json({ currentUser: user });
       }
     })
     .catch((error) => {
       res.status(400).send('Bad Request')
-      
     })
 })
 

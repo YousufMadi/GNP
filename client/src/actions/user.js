@@ -84,17 +84,10 @@ export const login = (loginComp) => {
   };
 };
 /*
-
-Update a user from the "database" (Currently just state)
-
 Arguments:
-  - users_state: The current state of users in the application
-  - user: The user being updated
-  - changeCurrentUser: Whether the currently logged in user is being
-                      modified
+  - id: The id of the user to be updated
+  - updateComp: The state of the updated user
   
-
-  This will be replaced by a call to the database to add the user
 
 */
 
@@ -104,7 +97,6 @@ export const updateUser = (id, updateComp) => {
     const request = new Request(url, {
       method: "PATCH",
       body: JSON.stringify(updateComp),
-      completed:true,
       headers: {
         Accept: "application/json, text/plain, */*",
         "Content-Type": "application/json",
@@ -119,7 +111,7 @@ export const updateUser = (id, updateComp) => {
     } else if (response.status === 200) {
       const data = await response.json();
       dispatch({ type: PAYLOAD_TYPES.UPDATE_USER, payload: data });
-      // notifySuccess("Profile succesfully updated")
+      notifySuccess("Profile succesfully updated")
     }
   }
 }
