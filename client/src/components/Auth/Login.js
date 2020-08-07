@@ -31,7 +31,6 @@ class Login extends React.Component {
   formSubmit = (e) => {
     e.preventDefault();
     this.props.login(this.state);
-    this.setState(defaultState);
   };
 
   render() {

@@ -79,6 +79,7 @@ export const login = (loginComp) => {
     } else if (response.status === 200) {
       const data = await response.json();
       dispatch({ type: PAYLOAD_TYPES.LOGIN, payload: data });
+      notifySuccess("Login succesfully")
     }
   };
 };
@@ -97,27 +98,13 @@ Arguments:
 
 */
 
-// export const updateUser = (users_state, user, changeCurrentUser = true) => {
-//   let users = [...users_state.users];
-//   for (let i = 0; i < users.length; i++) {
-//     if (users[i].id === user.id) {
-//       users[i] = user;
-//       break;
-//     }
-//   }
-
-//   users_state.setState({
-//     currentUser: changeCurrentUser ? user : users_state.currentUser,
-//     users,
-//   });
-// };
-
-export const updateUser = (updateComp, id) => {
+export const updateUser = (id, updateComp) => {
   return async (dispatch) => {
     const url = "/users/" + id;
     const request = new Request(url, {
-      method: "patch",
+      method: "PATCH",
       body: JSON.stringify(updateComp),
+      completed:true,
       headers: {
         Accept: "application/json, text/plain, */*",
         "Content-Type": "application/json",
@@ -126,12 +113,13 @@ export const updateUser = (updateComp, id) => {
 
     const response = await fetch(request);
     if (response.status === 400) {
-      notifyError("Invalid login credentials");
+      notifyError("Profile not updated due to invalid information");
     } else if (response.status === 500 || response.status === 404) {
       notifyError("Something went wrong");
     } else if (response.status === 200) {
       const data = await response.json();
       dispatch({ type: PAYLOAD_TYPES.UPDATE_USER, payload: data });
+      // notifySuccess("Profile succesfully updated")
     }
   }
 }

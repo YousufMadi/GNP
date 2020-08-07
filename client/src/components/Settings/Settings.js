@@ -20,10 +20,7 @@ class Settings extends React.Component {
     return (
       <div className="settings-container settings">
         <div className="user-container">
-          {/*<UserInfo currentUser={currentUser} />*/}
           <UserInfo />
-
-          {/*<UserUpdateForm users_state={this.props.users_state} />*/}
           <UserUpdateForm />
         </div>
       </div>

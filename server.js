@@ -125,21 +125,25 @@ app.post("/users/login", async (req, res) => {
 */
 app.patch("/users/:id", (req, res) => {
 
+  console.log('start')
   const id = req.params.id;
-
-  if (!ObjectID.isValid(id)) {
-    res.status(404).send()
-    return;
-  }
 
   if (mongoose.connection.readyState != 1) {
     res.status(500).send('Internal server error')
     return;
   }
 
-  fieldsToUpdate = req.body;
+  // console.log('before reqbody')
 
-  User.findByIdAndUpdate(id, {$set: fieldsToUpdate}, {new: true, useFindAndModify: false})
+  fieldsToUpdate = {};
+  for(let key in req.body){
+    if(req.body[key] !== ""){
+      fieldsToUpdate[key] = req.body[key];
+    }
+  }
+  console.log(fieldsToUpdate)
+
+  User.findOneAndUpdate({_id: id}, {$set: fieldsToUpdate}, {new: true, useFindAndModify: false, runValidators: true})
     .then((user) => {
       if (!user) {
         res.status(404).send('Resource not found')
@@ -148,11 +152,8 @@ app.patch("/users/:id", (req, res) => {
       }
     })
     .catch((error) => {
-      if (isMongoError(error)) { 
-        res.status(500).send('Internal server error')
-      } else {
-        res.status(400).send('Bad Request')
-      }
+      res.status(400).send('Bad Request')
+      
     })
 })
 
