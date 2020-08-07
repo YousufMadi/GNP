@@ -18,7 +18,73 @@ const UserSchema = new mongoose.Schema({
     required: true,
     minlength: 4,
   },
+  admin: {
+    type: Boolean,
+    default: false,
+  },
+  name: {
+    type: String,
+    required: true,
+    minlength: 1,
+  },
+  active_post: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Post",
+    default: null,
+  },
+  profile_picture: {
+    type: String,
+    default: null,
+  },
+  rating: {
+    type: Number,
+    default: 5,
+  },
+  address: {
+    type: Object,
+    default: null,
+  },
 });
+
+// Middleware to hash password on the create.
+UserSchema.pre("save", function (next) {
+  const user = this;
+  if (user.isModified("password")) {
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(user.password, salt, (err, hash) => {
+        user.password = hash;
+        next();
+      });
+    });
+  } else {
+    next();
+  }
+});
+
+// Static method for finding a user by their credentials,
+// rejects if no user found by that email or password does not match
+UserSchema.statics.findByEmailPassword = function (email, password) {
+  const User = this;
+  return User.findOne({ email: email }).then((user) => {
+    if (!user) {
+      return Promise.reject();
+    }
+    return new Promise((resolve, reject) => {
+      bcrypt.compare(
+        password.replace("2a", "2y"),
+        user.password.toString(),
+        (err, result) => {
+          console.log(result);
+          if (result) {
+            resolve(user);
+          } else {
+            reject();
+          }
+        }
+      );
+    });
+  });
+};
 
 const User = mongoose.model("User", UserSchema);
 module.exports = { User };

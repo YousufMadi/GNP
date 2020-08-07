@@ -1,13 +1,12 @@
 import React from "react";
+import bcrypt from "bcryptjs";
 import Navbar from "../Navigation/Navbar";
 import { Redirect } from "react-router-dom";
 import "../../stylesheets/shared.css";
 import "../../stylesheets/auth-forms.css";
 import loginPic from "../../images/login.svg";
 
-import {
-  handleUserLogin,
-} from "../../actions/user";
+import { handleUserLogin } from "../../actions/user";
 
 const defaultState = {
   // Fields
@@ -31,35 +30,9 @@ class Login extends React.Component {
     });
   };
 
-  validateForm = () => {
-    let valid_user = null;
-    let error_msg = "";
-
-    // Get the user object.
-    let user = this.props.users_state.users.filter((u) => {
-      return u.email === this.state.email && u.password === this.state.password;
-    });
-
-    // If the user was not found.
-    if (user.length !== 1) {
-      error_msg = "Email and password combination not found";
-      this.setState({ error_msg });
-    } else {
-      valid_user = user[0];
-    }
-
-    return valid_user;
-  };
-
   formSubmit = (e) => {
     e.preventDefault();
-
-    const valid_user = this.validateForm();
-
-    if (valid_user !== null) {
-      this.setState(defaultState);
-      handleUserLogin(this.props.users_state, valid_user);
-    }
+    handleUserLogin(this.state.email, this.state.password);
   };
 
   render() {
@@ -68,6 +41,7 @@ class Login extends React.Component {
     }
     return (
       <>
+
         {/* <Navbar /> */}
         {/* <div className="contentContainer slide"> */}
         {/* <div className="form-container"> */}

@@ -1,3 +1,4 @@
+import ServerAPI from "../api/ServerAPI";
 import { notifySuccess, notifyError } from "../Utils/notificationUtils";
 
 /* 
@@ -21,28 +22,25 @@ Arguments:
   This will be replaced by a call to the database to add the user
 
 */
-export const addUser = (
-  users_state,
-  first_name,
-  last_name,
-  email,
-  password
-) => {
+export const addUser = async (first_name, last_name, email, password) => {
+  const fullname = first_name + " " + last_name;
   const newUser = {
-    id: users_state.users.length,
-    first_name,
-    last_name,
+    name: fullname,
     email,
     password,
-    rating: 5,
     profile_picture:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSf_Bf0-x44hsGqqcQwrTcNeLUSnYjlDuoql-hQHydDdBwxeCT2&usqp=CAU",
   };
-
-  users_state.setState({
-    currentUser: newUser,
-    users: [...users_state.users, newUser],
+  const response = await ServerAPI({
+    method: "post",
+    url: "/users",
+    data: newUser,
   });
+  if (response.status === 200) {
+    // SET THE CURRENT USER STATE
+  } else {
+    // DISPLAY ERROR MESSAGE
+  }
 };
 
 /*
@@ -87,8 +85,17 @@ Arguments:
 
 */
 
-export const handleUserLogin = (users_state, user) => {
-  users_state.setState({ currentUser: user });
+export const handleUserLogin = async (email, password) => {
+  const response = await ServerAPI({
+    method: "post",
+    url: "/users/login",
+    data: { email, password },
+  });
+  if (response.status === 200) {
+    // SET THE CURRENT USER STATE
+  } else {
+    // DISPLAY ERROR MESSAGE
+  }
 };
 
 /*

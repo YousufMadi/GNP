@@ -1,14 +1,31 @@
 const mongoose = require("mongoose");
 
+const ItemSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    minlength: 1,
+  },
+  amount: {
+    type: Number,
+    default: 1,
+  },
+});
+
 const PostSchema = new mongoose.Schema({
-  user: {
+  author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
+    required: true,
+  },
+  reimbursement: {
+    type: String,
     required: true,
   },
   description: {
     type: String,
     minlength: 1,
+    default: "",
   },
   time: {
     type: String,
@@ -16,13 +33,7 @@ const PostSchema = new mongoose.Schema({
     minlength: 1,
   },
   items: {
-    type: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Item",
-      },
-    ],
-    default: [],
+    type: [ItemSchema],
     required: true,
   },
 });
