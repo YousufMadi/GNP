@@ -1,5 +1,5 @@
 import React from "react";
-
+import { connect } from "react-redux";
 import "../../stylesheets/timeline.css";
 import Request from "../Request/Request";
 import NewRequest from "../NewRequest/NewRequest";
@@ -27,7 +27,6 @@ class Timeline extends React.Component {
     */
     this.state = {
       highlightedPost: null,
-      posts: this.props.posts_state.posts,
       confirmationModal: {
         display: false,
         selectedPost: null,
@@ -40,11 +39,7 @@ class Timeline extends React.Component {
 
   /* Function responsible for returning the filtered posts */
   filterPosts() {
-    return filterPosts(
-      this.props.posts_state.posts,
-      this.props.posts_state,
-      this.props.users_state.currentUserLocation
-    );
+    return filterPosts(this.props.posts, this.props.posts);
   }
 
   /* This function manages the changes regarding the highlighted post within the map. 
@@ -76,7 +71,7 @@ class Timeline extends React.Component {
   handleAcceptPost = (post) => {
     this.handleCloseModal();
     const updated_user = {
-      ...this.props.users_state.currentUser,
+      ...this.props.app.state.currentUser,
       active_post: post,
     };
 
@@ -115,8 +110,9 @@ class Timeline extends React.Component {
 
   */
   render() {
-    if (this.state.posts != null) {
-      let { posts, currentPage, postsPerPage } = this.state;
+    if (this.props.posts != null) {
+      let posts = this.props.posts;
+      let { currentPage, postsPerPage } = this.state;
       const filteredPosts = this.filterPosts(posts);
       let indexOfLastPost = currentPage * postsPerPage;
       let indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -134,11 +130,8 @@ class Timeline extends React.Component {
           <Request
             highlightPost={this.handleHighlightedPostChange}
             showConfirmation={this.handleConfirmationModal}
-            currentUser={this.props.users_state.currentUser}
-            users_state={this.props.users_state}
             key={index}
             post={post}
-            posts_state={this.props.posts_state}
           />
         );
       });
@@ -179,14 +172,10 @@ class Timeline extends React.Component {
             highlightedPost={this.state.highlightedPost}
             active_post={false}
             posts={filteredPosts}
-            users_state={this.props.users_state}
             changeFilterState={this.props.changeFilterState}
           />
           <div className="timeline">
-            <NewRequest
-              currentUser={this.props.users_state.currentUser}
-              posts_state={this.props.posts_state}
-            />
+            <NewRequest currentUser={this.props.currentUser} />
             {currentPosts.length === 0 ? (
               this.renderEmptyMessage()
             ) : (
@@ -197,7 +186,6 @@ class Timeline extends React.Component {
             )}
           </div>
           <ConfirmationModal
-            users={this.props.users_state.users}
             acceptPost={this.handleAcceptPost}
             confirmation={this.state.confirmationModal}
             closeModal={this.handleCloseModal}
@@ -210,4 +198,11 @@ class Timeline extends React.Component {
   }
 }
 
-export default Timeline;
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.auth.currentUser,
+    posts: state.posts.posts,
+  };
+};
+
+export default connect(mapStateToProps)(Timeline);

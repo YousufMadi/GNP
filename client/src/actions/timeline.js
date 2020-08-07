@@ -1,4 +1,10 @@
 import { getDistance, convertDistance } from "geolib";
+import { PAYLOAD_TYPES } from "./user";
+import { notifySuccess, notifyError } from "../Utils/notificationUtils";
+
+export const TL_PAYLOAD_TYPES = {
+  GET_POSTS: "GET_POSTS",
+};
 
 /* 
 
@@ -6,6 +12,25 @@ ALL THE FUNCTIONS BEING EXPORTED IN THIS FILE REQUIRE SERVER CALLS.
 FOR NOW, THEY SIMPLY MODIFY THE FEED STATE IN THE FEED COMPONENT.
 
 */
+
+export const getPosts = () => {
+  return async (dispatch) => {
+    const request = new Request("/posts", {
+      method: "get",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+    });
+    const response = await fetch(request);
+    if (response.status === 200) {
+      const data = await response.json();
+      dispatch({ type: TL_PAYLOAD_TYPES.GET_POSTS, payload: data });
+    } else {
+      notifyError("Something went wrong, couldn't load posts");
+    }
+  };
+};
 
 /*
 
@@ -24,7 +49,6 @@ export const addPostToState = (posts_state, new_post) => {
     posts: [...posts_state.posts, new_post],
   });
 };
-
 
 /*
 
@@ -139,7 +163,6 @@ export const filterPosts = (posts, posts_state, currentUserLocation) => {
   return newFilteredPosts;
 };
 
-
 /*
 
 Get the author of a post
@@ -160,7 +183,6 @@ export const fetchPostAuthor = (post, users) => {
   return null;
 };
 
-
 /*
 
 Get the size estimate of a favor
@@ -178,8 +200,6 @@ Arguments:
 export const getSizeEstimate = (post) => {
   return sizeEstimate(post);
 };
-
-
 
 /*
 

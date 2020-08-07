@@ -5,8 +5,11 @@ import ViewUsers from "./ViewUsers";
 import AppStats from "./AppStats";
 import UserInfo from "../UserInfo/UserInfo";
 import UserUpdateForm from "../UserUpdateForm/UserUpdateForm";
+import { connect } from "react-redux";
 
 import { Redirect } from "react-router-dom";
+
+import { getUserById, getAllUsers } from "../../actions/user";
 
 const SettingsAdmin = (props) => {
   const adminOptions = {
@@ -35,14 +38,16 @@ const SettingsAdmin = (props) => {
       break;
   }
 
-  const currentUser = props.users_state.currentUser;
+  const currentUser = props.currentUser;
   if (currentUser === null) {
     return <Redirect to="/login" />;
+  }else if(!currentUser.admin){
+    return <Redirect to="/settings" />;
   }
 
   return (
     <div className="settings-container slide">
-      <UserInfo currentUser={currentUser} />
+      <UserInfo />
       <div className="admin-dashboard">
         <div className="admin-dashboard-header">
           <h3>Admin Dashboard</h3>
@@ -73,13 +78,14 @@ const SettingsAdmin = (props) => {
             Personal Settings
           </button>
         </div>
-        <div className="content">
+       <div className="content">
           {adminOption && (
             <SelectedOption
-              users_state={props.users_state}
-              users={props.users_state}
-              adminClass="admin-class"
-              posts_state={props.posts_state}
+              // users_state={props.users_state}
+              // users={getAllUsers().then((users)=> {return users})}
+              // adminClass="admin-class"
+              // posts_state={props.posts_state}
+
             />
           )}
         </div>
@@ -88,4 +94,10 @@ const SettingsAdmin = (props) => {
   );
 };
 
-export default SettingsAdmin;
+
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.auth.currentUser,
+  };
+};
+export default connect(mapStateToProps, { getUserById })(SettingsAdmin);

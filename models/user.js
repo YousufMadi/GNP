@@ -22,7 +22,12 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  name: {
+  first_name: {
+    type: String,
+    required: true,
+    minlength: 1,
+  },
+  last_name: {
     type: String,
     required: true,
     minlength: 1,
@@ -70,18 +75,13 @@ UserSchema.statics.findByEmailPassword = function (email, password) {
       return Promise.reject();
     }
     return new Promise((resolve, reject) => {
-      bcrypt.compare(
-        password.replace("2a", "2y"),
-        user.password.toString(),
-        (err, result) => {
-          console.log(result);
-          if (result) {
-            resolve(user);
-          } else {
-            reject();
-          }
+      bcrypt.compare(password, user.password, (err, result) => {
+        if (result) {
+          resolve(user);
+        } else {
+          reject();
         }
-      );
+      });
     });
   });
 };

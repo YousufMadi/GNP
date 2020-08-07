@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import { connect } from "react-redux";
 //import Map from "./Map";
 import "../../stylesheets/sidebar.css";
 
-import { handleUserLogout } from "../../actions/user";
+import { logout } from "../../actions/user";
 
 /*const keys = {
   key1: "AIzaSyCx3EBDjdwQ4Gb6698FPEWsTB7bNL_o7Ow",
@@ -18,7 +18,7 @@ class Sidebar extends React.Component {
 
   /* This function handles the situation where the user clicks log out */
   handleUserLogout = () => {
-    handleUserLogout(this.props.users_state);
+    this.props.logout();
   };
 
   /* The functions that will handle a change in it's respective select html element */
@@ -48,7 +48,7 @@ class Sidebar extends React.Component {
   /* This functions is responsible for retrieving the rating, in terms of stars, associated with the author's account */
   renderRating() {
     let renderStarsReturn = [];
-    for (let i = 0; i < this.props.users_state.currentUser.rating; i++) {
+    for (let i = 0; i < this.props.currentUser.rating; i++) {
       renderStarsReturn.push(<i key={i} className="fas fa-star"></i>);
     }
     return renderStarsReturn;
@@ -56,7 +56,7 @@ class Sidebar extends React.Component {
 
   /* Render Functions */
   renderProfile() {
-    const currentUser = this.props.users_state.currentUser;
+    const currentUser = this.props.currentUser;
     return (
       <>
         <div className="profile-header">
@@ -150,4 +150,10 @@ class Sidebar extends React.Component {
     );
   }
 }
-export default Sidebar;
+
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.auth.currentUser,
+  };
+};
+export default connect(mapStateToProps, { logout })(Sidebar);

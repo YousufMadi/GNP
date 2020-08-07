@@ -36,14 +36,30 @@ app.get("/users", (req, res) => {
     });
 });
 
+app.get("/users/:id", (req, res) => {
+  const id = req.params.id;
+
+  User.findById(id)
+    .then((user) => {
+      if (!user) {
+        res.status(404).send("Resource not found");
+      } else {
+        res.send(user);
+      }
+    })
+    .catch((error) => {
+      res.status(500).send("Internal Server Error"); // server error
+    });
+});
+
 /* Route to create a new user
   BODY FORMAT: 
   {
+    name,
     email,
     password,
-    profile_picture,
-    admin,
-    name
+    profile_picture, -> TO BE ADDED
+    admin -> MAYBE SHOULDN'T BE HERE
   }
   Returns the new user created
 
@@ -51,11 +67,13 @@ app.get("/users", (req, res) => {
 */
 app.post("/users", (req, res) => {
   const newUser = new User({
-    name: req.body.name,
+    // name: req.body.name,
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
     email: req.body.email,
     password: req.body.password,
-    profile_picture: req.body.profile_picture,
-    admin: req.body.admin,
+    // profile_picture: req.body.profile_picture,
+    // admin: req.body.admin,
   });
 
   newUser.save().then(
@@ -63,7 +81,7 @@ app.post("/users", (req, res) => {
       /* THIS IS CAUSING ERROR. WHY?
       req.session.user = user._id;
       req.session.email = user.email; */
-      res.json({ currentUser: user.email });
+      res.json({ currentUser: user });
     },
     (e) => {
       res.sendStatus(400);
@@ -79,13 +97,22 @@ app.post("/users", (req, res) => {
    }
    Returns the user if credentials are correct
 */
-app.post("/users/login", (req, res) => {
+app.post("/users/login", async (req, res) => {
   User.findByEmailPassword(req.body.email, req.body.password)
     .then((user) => {
       /* This will create an error?
       req.session.user = user._id;
       req.session.email = user.email;*/
-      res.json({ currentUser: user.email });
+      user
+        .populate({
+          path: "active_post",
+          model: "Post",
+          populate: { path: "author", model: "User" },
+        })
+        .execPopulate()
+        .then((populatedUser) => {
+          res.json({ currentUser: populatedUser });
+        });
     })
     .catch((e) => {
       res.sendStatus(400);
@@ -95,16 +122,46 @@ app.post("/users/login", (req, res) => {
 /* Route to edit user information
    Returns the updated user model
 
-   TODO: Everything
 */
-app.patch("/users/:id", (req, res) => {});
+app.patch("/users/:id", (req, res) => {
+
+  const id = req.params.id;
+
+  if (mongoose.connection.readyState != 1) {
+    res.status(500).send('Internal server error')
+    return;
+  }
+
+  fieldsToUpdate = {};
+  for(let key in req.body){
+    if(req.body[key] !== ""){
+      fieldsToUpdate[key] = req.body[key];
+    }
+  }
+
+  User.findOneAndUpdate({_id: id}, {$set: fieldsToUpdate}, {new: true, useFindAndModify: false, runValidators: true})
+    .then((user) => {
+      if (!user) {
+        res.status(404).send('Resource not found')
+      } else {   
+        res.json({ currentUser: user });
+      }
+    })
+    .catch((error) => {
+      res.status(400).send('Bad Request')
+    })
+})
 
 /* Route to delete a user
    Returns the deleted user
 
    TODO: Everything
 */
-app.delete("/users/:id", (req, res) => {});
+app.delete("/users/:id", (req, res) => {
+
+  const id = req.params.id;
+
+});
 
 // POST ROUTES
 

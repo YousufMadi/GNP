@@ -1,6 +1,12 @@
-import ServerAPI from "../api/ServerAPI";
 import { notifySuccess, notifyError } from "../Utils/notificationUtils";
 
+export const PAYLOAD_TYPES = {
+  REGISTER: "REGISTER",
+  LOGIN: "LOGIN",
+  LOGOUT: "LOGOUT",
+  UPDATE_USER: "UPDATE_USER",
+  DELETE_USER: "DELETE_USER",
+};
 /* 
 
 ALL THE FUNCTIONS BEING EXPORTED IN THIS FILE REQUIRE SERVER CALLS.
@@ -18,61 +24,29 @@ Arguments:
   - last_name: The last name of the user being added
   - email: The email of the user being added
   - password: The password of the user being added
-
-  This will be replaced by a call to the database to add the user
-
-*/
-export const addUser = async (first_name, last_name, email, password) => {
-  const fullname = first_name + " " + last_name;
-  const newUser = {
-    name: fullname,
-    email,
-    password,
-    profile_picture:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSf_Bf0-x44hsGqqcQwrTcNeLUSnYjlDuoql-hQHydDdBwxeCT2&usqp=CAU",
-  };
-  const response = await ServerAPI({
-    method: "post",
-    url: "/users",
-    data: newUser,
-  });
-  if (response.status === 200) {
-    // SET THE CURRENT USER STATE
-  } else {
-    // DISPLAY ERROR MESSAGE
-  }
-};
-
-/*
-
-Update a user from the "database" (Currently just state)
-
-Arguments:
-  - users_state: The current state of users in the application
-  - user: The user being updated
-  - changeCurrentUser: Whether the currently logged in user is being
-                      modified
-  
-
-  This will be replaced by a call to the database to add the user
-
 */
 
-export const updateUser = (users_state, user, changeCurrentUser = true) => {
-  let users = [...users_state.users];
-  for (let i = 0; i < users.length; i++) {
-    if (users[i].id === user.id) {
-      users[i] = user;
-      break;
+export const register = (signupComp) => {
+  return async (dispatch) => {
+    const request = new Request("/users", {
+      method: "post",
+      body: JSON.stringify(signupComp),
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+    });
+    const response = await fetch(request);
+    if (response.status === 400) {
+      notifyError("Invalid login credentials");
+    } else if (response.status === 500 || response.status === 404) {
+      notifyError("Something went wrong");
+    } else if (response.status === 200) {
+      const data = await response.json();
+      dispatch({ type: PAYLOAD_TYPES.LOGIN, payload: data });
     }
-  }
-
-  users_state.setState({
-    currentUser: changeCurrentUser ? user : users_state.currentUser,
-    users,
-  });
+  };
 };
-
 /*
 
 Log in given user
@@ -85,17 +59,116 @@ Arguments:
 
 */
 
-export const handleUserLogin = async (email, password) => {
-  const response = await ServerAPI({
-    method: "post",
-    url: "/users/login",
-    data: { email, password },
-  });
-  if (response.status === 200) {
-    // SET THE CURRENT USER STATE
-  } else {
-    // DISPLAY ERROR MESSAGE
+export const login = (loginComp) => {
+  return async (dispatch) => {
+    // Create our request constructor with all the parameters we need
+    const request = new Request("/users/login", {
+      method: "post",
+      body: JSON.stringify(loginComp),
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+    });
+    // Send the request with fetch()
+    const response = await fetch(request);
+    if (response.status === 400) {
+      notifyError("Invalid login credentials");
+    } else if (response.status === 500 || response.status === 404) {
+      notifyError("Something went wrong");
+    } else if (response.status === 200) {
+      const data = await response.json();
+      dispatch({ type: PAYLOAD_TYPES.LOGIN, payload: data });
+      notifySuccess("Login succesfully")
+    }
+  };
+};
+/*
+Arguments:
+  - id: The id of the user to be updated
+  - updateComp: The state of the updated user
+  
+
+*/
+
+export const updateUser = (id, updateComp) => {
+  return async (dispatch) => {
+    const url = "/users/" + id;
+    const request = new Request(url, {
+      method: "PATCH",
+      body: JSON.stringify(updateComp),
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+    });
+
+    const response = await fetch(request);
+    if (response.status === 400) {
+      notifyError("Profile not updated due to invalid information");
+    } else if (response.status === 500 || response.status === 404) {
+      notifyError("Something went wrong");
+    } else if (response.status === 200) {
+      const data = await response.json();
+      dispatch({ type: PAYLOAD_TYPES.UPDATE_USER, payload: data });
+      notifySuccess("Profile succesfully updated")
+    }
   }
+}
+
+export const getUserById = async (id) => {
+  const url = "/users/" + id;
+  const request = new Request(url, {
+    method: "get",
+    headers: {
+      Accept: "application/json, text/plain, */*",
+      "Content-Type": "application/json",
+    },
+  });
+
+  // Send the request with fetch()
+  const user = await fetch(request)
+    .then((res) => {
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        notifyError("Something went wrong while getting user data");
+      }
+    })
+    .catch((error) => {
+      notifyError("Internal server error - couldn't find user");
+    });
+
+  const result = await user;
+  return result;
+};
+
+export const getAllUsers = async () => {
+  const url = "/users";
+  const request = new Request(url, {
+    method: "get",
+    headers: {
+      Accept: "application/json, text/plain, */*",
+      "Content-Type": "application/json",
+    },
+  });
+
+  // Send the request with fetch()
+  const users = await fetch(request)
+    .then((res) => {
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        notifyError("Something went wrong while getting users data");
+      }
+    })
+    .catch((error) => {
+      notifyError("Internal server error - couldn't find user");
+    });
+
+  const result = await users;
+  // console.log(result)
+  return result;
 };
 
 /*
@@ -110,8 +183,10 @@ Arguments:
 
 */
 
-export const handleUserLogout = (users_state) => {
-  users_state.setState({ currentUser: null });
+export const logout = () => {
+  return {
+    type: PAYLOAD_TYPES.LOGOUT,
+  };
 };
 
 /*

@@ -1,20 +1,18 @@
 import React from "react";
-import bcrypt from "bcryptjs";
+import { connect } from "react-redux";
+
 import Navbar from "../Navigation/Navbar";
 import { Redirect } from "react-router-dom";
 import "../../stylesheets/shared.css";
 import "../../stylesheets/auth-forms.css";
 import loginPic from "../../images/login.svg";
 
-import { handleUserLogin } from "../../actions/user";
+import { login } from "../../actions/user";
 
 const defaultState = {
   // Fields
   email: "",
   password: "",
-
-  // Error message
-  error_msg: "",
 };
 
 class Login extends React.Component {
@@ -32,15 +30,16 @@ class Login extends React.Component {
 
   formSubmit = (e) => {
     e.preventDefault();
-    handleUserLogin(this.state.email, this.state.password);
+    this.props.login(this.state);
   };
 
   render() {
-    if (this.props.users_state.currentUser) {
+    if (this.props.currentUser) {
       return <Redirect to="/feed" />;
     }
     return (
       <>
+
 
         {/* <Navbar /> */}
         {/* <div className="contentContainer slide"> */}
@@ -68,6 +67,7 @@ class Login extends React.Component {
           <div className="form-input">
             <button className="form-submit" type="buton" onSubmit={this.formSubmit}>
               Submit
+
                 </button>
           </div>
         </form>
@@ -78,4 +78,9 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.auth.currentUser,
+  };
+};
+export default connect(mapStateToProps, { login })(Login);
