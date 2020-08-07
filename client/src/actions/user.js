@@ -44,38 +44,36 @@ Arguments:
 // };
 
 export const addUser = (signupComp, app) => {
-
   const request = new Request("/users", {
     method: "post",
     body: JSON.stringify(signupComp.state),
     headers: {
       Accept: "application/json, text/plain, */*",
-      "Content-Type": "application/json"
-    }
+      "Content-Type": "application/json",
+    },
   });
 
   // Send the request with fetch()
   fetch(request)
-    .then(res => {
+    .then((res) => {
       if (res.status === 200) {
         return res.json();
-      }else{
+      } else {
         notifyError("Please check the info provided");
       }
     })
-    .then(json => {
+    .then((json) => {
       // Set the current user here
       if (json.currentUser !== undefined) {
-        console.log('setting current user on signup')
+        console.log("setting current user on signup");
         app.setState({ currentUser: json.currentUser });
       }
     })
-    .catch(error => {
+    .catch((error) => {
       // notifyError("Please check the info provided");
-      console.log('bad request in add user')
+      console.log("bad request in add user");
     });
-
-}
+};
 /*
 
 Update a user from the "database" (Currently just state)
@@ -112,35 +110,31 @@ export const getUserById = async (id) => {
     method: "get",
     headers: {
       Accept: "application/json, text/plain, */*",
-      "Content-Type": "application/json"
-    }
+      "Content-Type": "application/json",
+    },
   });
 
   // Send the request with fetch()
   const user = await fetch(request)
-    .then(res => {
+    .then((res) => {
       if (res.status === 200) {
         return res.json();
-      }else{
+      } else {
         notifyError("Something went wrong while getting user data");
       }
     })
-    .catch(error => {
+    .catch((error) => {
       notifyError("Internal server error - couldn't find user");
     });
 
   const result = await user;
-  return result; 
-}
+  return result;
+};
 
 export const getActiveRequest = async (id) => {
-
   const result = await getUserById(id);
-  console.log(result.active_post);
-
   return result.active_post;
-
-}
+};
 /*
 
 Log in given user
@@ -153,65 +147,20 @@ Arguments:
 
 */
 
-// export const handleUserLogin = async (email, password) => {
-//   const response = await ServerAPI({
-//     method: "post",
-//     url: "/users/login",
-//     data: { email, password },
-//   });
-//   if (response.status === 200) {
-//     // SET THE CURRENT USER STATE
-//   } else {
-//     // DISPLAY ERROR MESSAGE
-//   }
-// };
-
-// export const login = async (loginComp, app) => {
-//   const response = await ServerAPI({
-//     method: "post",
-//     url: "/users/login",
-//     data: { email: loginComp.state.email, password: loginComp.state.password },
-//   });
-//   if (response.status === 200) {
-//     // SET THE CURRENT USER STATE
-//     console.log('success')
-//   } else {
-//     // DISPLAY ERROR MESSAGE
-//   }
-// };
-export const login = (loginComp, app) => {
+export const login = async (loginComp, app) => {
   // Create our request constructor with all the parameters we need
   const request = new Request("/users/login", {
     method: "post",
     body: JSON.stringify(loginComp.state),
     headers: {
-        Accept: "application/json, text/plain, */*",
-        "Content-Type": "application/json"
-    }
+      Accept: "application/json, text/plain, */*",
+      "Content-Type": "application/json",
+    },
   });
-
   // Send the request with fetch()
-  fetch(request)
-    .then(res => {
-      if (res.status === 200) {
-        return res.json();
-      }else{
-        notifyError("Email and password confirmation not found");
-
-      }
-    })
-    .then(json => {
-      // Set the current user here
-      if (json.currentUser !== undefined) {
-        app.setState({ currentUser: json.currentUser });
-        console.log(json)
-      }
-    })
-    .catch(error => {
-      console.log('bad request in login')
-    });
+  const response = await (await fetch(request)).json();
+  app.setState({ currentUser: response.currentUser });
 };
-
 /*
 
 Log out the currently logged in user

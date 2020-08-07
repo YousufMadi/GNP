@@ -27,7 +27,6 @@ class Timeline extends React.Component {
     */
     this.state = {
       highlightedPost: null,
-      posts: this.props.posts_state.posts,
       confirmationModal: {
         display: false,
         selectedPost: null,
@@ -42,8 +41,8 @@ class Timeline extends React.Component {
   filterPosts() {
     return filterPosts(
       this.props.posts_state.posts,
-      this.props.posts_state,
-      this.props.users_state.currentUserLocation
+      this.props.posts_state
+      //this.props.users_state.currentUserLocation
     );
   }
 
@@ -76,7 +75,7 @@ class Timeline extends React.Component {
   handleAcceptPost = (post) => {
     this.handleCloseModal();
     const updated_user = {
-      ...this.props.users_state.currentUser,
+      ...this.props.app.state.currentUser,
       active_post: post,
     };
 
@@ -115,8 +114,10 @@ class Timeline extends React.Component {
 
   */
   render() {
-    if (this.state.posts != null) {
-      let { posts, currentPage, postsPerPage } = this.state;
+    console.log(this.props.posts_state.posts);
+    if (this.props.posts_state.posts != null) {
+      let posts = this.props.posts_state.posts;
+      let { currentPage, postsPerPage } = this.state;
       const filteredPosts = this.filterPosts(posts);
       let indexOfLastPost = currentPage * postsPerPage;
       let indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -134,8 +135,7 @@ class Timeline extends React.Component {
           <Request
             highlightPost={this.handleHighlightedPostChange}
             showConfirmation={this.handleConfirmationModal}
-            currentUser={this.props.users_state.currentUser}
-            users_state={this.props.users_state}
+            app={this.props.app}
             key={index}
             post={post}
             posts_state={this.props.posts_state}
@@ -179,12 +179,11 @@ class Timeline extends React.Component {
             highlightedPost={this.state.highlightedPost}
             active_post={false}
             posts={filteredPosts}
-            users_state={this.props.users_state}
             changeFilterState={this.props.changeFilterState}
           />
           <div className="timeline">
             <NewRequest
-              currentUser={this.props.users_state.currentUser}
+              currentUser={this.props.app.state.currentUser}
               posts_state={this.props.posts_state}
             />
             {currentPosts.length === 0 ? (
@@ -197,7 +196,6 @@ class Timeline extends React.Component {
             )}
           </div>
           <ConfirmationModal
-            users={this.props.users_state.users}
             acceptPost={this.handleAcceptPost}
             confirmation={this.state.confirmationModal}
             closeModal={this.handleCloseModal}

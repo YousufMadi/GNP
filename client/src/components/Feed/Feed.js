@@ -6,6 +6,7 @@ import ActiveRequest from "../ActiveRequest/ActiveRequest";
 import "../../stylesheets/feed.css";
 
 import { getActiveRequest } from "../../actions/user";
+import { getPosts } from "../../actions/timeline";
 
 class Feed extends React.Component {
   /*
@@ -25,108 +26,7 @@ class Feed extends React.Component {
     filterSize: null,
     filterPayment: null,
     active_req: null,
-
-    posts: [
-      {
-        id: 0,
-        reimbursement: "Cash",
-        items: ["Face mask", "Toilet paper", "batteries", "A dozen eggs"],
-        author: 1,
-        location: { lat: 43.680978, lng: -79.337887 },
-        description:
-          "I require a few items picked up from Shoppers." +
-          " Some of these products are essentials so I would appreciate" +
-          " urgent attention",
-      },
-      {
-        id: 1,
-        reimbursement: "Cheque",
-        items: [
-          "Honey Nut Cheerios",
-          "Doritos",
-          "4 Chicken breasts",
-          "Milk",
-          "1 pound of Shrimp",
-          "Vitamin pills",
-          "Gum",
-          "2 cans of Red bull",
-          "Flour",
-        ],
-        author: 2,
-        location: { lat: 43.64422, lng: -79.473842 },
-        description:
-          "Hello! I am in need of some groceries. There is a Walmart very close " +
-          "to my house. Thanks for your help!",
-      },
-      {
-        id: 2,
-        reimbursement: "E-transfer",
-        items: ["Pipe burst"],
-        author: 0,
-        location: { lat: 43.756411, lng: -79.458736 },
-        description:
-          "Hi everyone! A pipe has recently burst in my house and needs fixing." +
-          " Would really appreciate it if someone could come fix it for me." +
-          " Thank you very much!",
-      },
-      {
-        id: 3,
-        reimbursement: "Cash",
-        items: ["Hammer", "Clamp", "Drill", "Chair", "Screw driver"],
-        author: 2,
-        location: { lat: 43.635275, lng: -79.526027 },
-        description:
-          "Hey guys! I'm in need of some tools and furniture from Canadian tire." +
-          " Thanks for the help!",
-      },
-      {
-        id: 4,
-        reimbursement: "E-transfer",
-        items: [
-          "Face Cream",
-          "Thermometer",
-          "Shoes",
-          "Pillow",
-          "Milk",
-          "Radio",
-          "Towel",
-          "Blanket",
-          "Clock",
-          "Apples",
-          "Frozen pizza",
-          "Batteries",
-          "All purpose cleaner",
-          "Dish soap",
-          "Toilet brush",
-        ],
-        author: 0,
-        location: { lat: 43.656101, lng: -79.659355 },
-        description:
-          "Hey everyone... I would really appreicate if someone could pick" +
-          " up some items for me from Metro/Shoppers near my house. Please complete this" +
-          " request only between 1pm and 6pm. Thank you",
-      },
-      {
-        id: 5,
-        reimbursement: "Cheque",
-        items: ["Mow lawn"],
-        author: 1,
-        location: { lat: 43.775169, lng: -79.54424 },
-        description:
-          "The grass in my lawn needs mowing. The lawn mower will be provided." +
-          " Need this request to be completed between 11am and 7pm. Thanks!",
-      },
-      {
-        id: 6,
-        reimbursement: "Cheque",
-        items: ["24 pc Water", "Crackers", "Apple pie", "Cake"],
-        author: 1,
-        location: { lat: 43.756325, lng: -79.43987 },
-        description:
-          "Hi I need some items picked up for me. This request is not urgent. Thanks!",
-      },
-    ],
-
+    posts: null,
     setState: this.setState.bind(this),
   };
 
@@ -137,14 +37,18 @@ class Feed extends React.Component {
   };
 
   componentDidMount() {
-    getActiveRequest(this.props.app.state.currentUser)
-      .then((req) => {
-        if(req !== null){
-          this.setState({
-            active_req: req
-          })
-        }
-      })
+    getActiveRequest(this.props.app.state.currentUser).then((res) => {
+      if (res !== null) {
+        this.setState({
+          active_req: res,
+        });
+      }
+    });
+    getPosts().then((res) => {
+      this.setState({
+        posts: res,
+      });
+    });
   }
 
   /* 
@@ -161,51 +65,29 @@ class Feed extends React.Component {
 
   */
   render() {
-
-    // const currentUser = this.props.app.state.currentUser;
-    // if (currentUser === null) {
-    //   return <Redirect to="/login" />;
-    // }
-    // }else if(hasActivePost(currentUser)){
-    //   return (
-    //     <div className="feedContainer">
-    //       <ActiveRequest
-    //         {posts={[currentUser.active_post]}
-    //         changeFilterState={this.handleFilterChange}}
-    //         app={this.props}
-    //       />
-    //     </div>
-    //   );
-
-    // }
-
-    const active_req = this.state.active_req;
-    if(active_req !== null){
+    if (this.props.app.state.currentUser === null) {
+      return <Redirect to="/login" />;
+    } else if (this.state.active_req !== null) {
       return (
         <div className="feedContainer">
-          Active request
+          <ActiveRequest
+            posts={[this.props.app.state.currentUser.active_post]}
+            changeFilterState={this.handleFilterChange}
+            app={this.props}
+          />
         </div>
       );
-    }else{
-      return (<div>Timeline</div>)
+    } else {
+      return (
+        <div className="feedContainer slide">
+          <Timeline
+            changeFilterState={this.handleFilterChange}
+            app={this.props.app}
+            posts_state={this.state}
+          />
+        </div>
+      );
     }
-      
-    // getActiveRequest(currentUser)
-    //   .then((req) => {
-    //     if(req !== null){
-    //       return (
-    //         <div className="feedContainer">
-    //          <ActiveRequest
-    //             post={active_req}
-    //             app={this.props}
-    //             />
-    //           </div>
-    //       )
-    //     }else{
-    //       return (<div>Timeline</div>)
-    //     }
-    //   })
-
   }
 }
 

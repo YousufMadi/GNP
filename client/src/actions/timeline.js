@@ -7,6 +7,18 @@ FOR NOW, THEY SIMPLY MODIFY THE FEED STATE IN THE FEED COMPONENT.
 
 */
 
+export const getPosts = async () => {
+  const request = new Request("/posts", {
+    method: "get",
+    headers: {
+      Accept: "application/json, text/plain, */*",
+      "Content-Type": "application/json",
+    },
+  });
+  const posts = await (await fetch(request)).json();
+  return posts;
+};
+
 /*
 
 Add a post to the timeline's list of state (currently just state)
@@ -24,7 +36,6 @@ export const addPostToState = (posts_state, new_post) => {
     posts: [...posts_state.posts, new_post],
   });
 };
-
 
 /*
 
@@ -139,7 +150,6 @@ export const filterPosts = (posts, posts_state, currentUserLocation) => {
   return newFilteredPosts;
 };
 
-
 /*
 
 Get the author of a post
@@ -160,7 +170,6 @@ export const fetchPostAuthor = (post, users) => {
   return null;
 };
 
-
 /*
 
 Get the size estimate of a favor
@@ -178,8 +187,6 @@ Arguments:
 export const getSizeEstimate = (post) => {
   return sizeEstimate(post);
 };
-
-
 
 /*
 

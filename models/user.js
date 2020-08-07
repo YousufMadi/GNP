@@ -75,22 +75,16 @@ UserSchema.statics.findByEmailPassword = function (email, password) {
       return Promise.reject();
     }
     return new Promise((resolve, reject) => {
-      bcrypt.compare(
-        password.replace("2a", "2y"),
-        user.password.toString(),
-        (err, result) => {
-          console.log(result);
-          if (result) {
-            resolve(user);
-          } else {
-            reject();
-          }
+      bcrypt.compare(password, user.password, (err, result) => {
+        if (result) {
+          resolve(user);
+        } else {
+          reject();
         }
-      );
+      });
     });
   });
 };
-
 
 const User = mongoose.model("User", UserSchema);
 module.exports = { User };
