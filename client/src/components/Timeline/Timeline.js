@@ -116,7 +116,9 @@ class Timeline extends React.Component {
       const filteredPosts = this.filterPosts(posts);
       let indexOfLastPost = currentPage * postsPerPage;
       let indexOfFirstPost = indexOfLastPost - postsPerPage;
-      let currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
+
+      let currentPosts = posts;
+      //let currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
 
       if (currentPage !== 1 && currentPosts.length === 0) {
         currentPage = 1;

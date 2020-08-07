@@ -52,7 +52,7 @@ class ItemsList extends React.Component {
           onClick={() => this.deleteItem(item)}
           className="request-item"
         >
-          {item} <i className="fas fa-times"></i>
+          {item.name} <i className="fas fa-times"></i>
         </li>
       );
     });
