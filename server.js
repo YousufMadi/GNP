@@ -122,9 +122,39 @@ app.post("/users/login", async (req, res) => {
 /* Route to edit user information
    Returns the updated user model
 
-   TODO: Everything
 */
-app.patch("/users/:id", (req, res) => {});
+app.patch("/users/:id", (req, res) => {
+
+  const id = req.params.id;
+
+  if (!ObjectID.isValid(id)) {
+    res.status(404).send()
+    return;
+  }
+
+  if (mongoose.connection.readyState != 1) {
+    res.status(500).send('Internal server error')
+    return;
+  }
+
+  fieldsToUpdate = req.body;
+
+  User.findByIdAndUpdate(id, {$set: fieldsToUpdate}, {new: true, useFindAndModify: false})
+    .then((user) => {
+      if (!user) {
+        res.status(404).send('Resource not found')
+      } else {   
+        res.send(user)
+      }
+    })
+    .catch((error) => {
+      if (isMongoError(error)) { 
+        res.status(500).send('Internal server error')
+      } else {
+        res.status(400).send('Bad Request')
+      }
+    })
+})
 
 /* Route to delete a user
    Returns the deleted user

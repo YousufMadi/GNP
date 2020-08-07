@@ -21,6 +21,11 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         currentUser: null,
       };
+    case PAYLOAD_TYPES.UPDATE_USER:
+      return {
+        ...state,
+        currentUser: action.payload.currentUser,
+      };
     default:
       return state;
   }

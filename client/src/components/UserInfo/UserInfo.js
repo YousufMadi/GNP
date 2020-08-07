@@ -1,7 +1,12 @@
 import React from "react";
 import "../../stylesheets/userinfo.css";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { getUserById } from "../../actions/user";
+
 class UserInfo extends React.Component {
+
+  // TODO: CHANGE THIS. For now, it simply gives everyone 5 stars
   renderRating() {
     let renderStarsReturn = [];
     for (let i = 0; i < this.props.currentUser.rating; i++) {
@@ -41,4 +46,9 @@ class UserInfo extends React.Component {
   }
 }
 
-export default UserInfo;
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.auth.currentUser,
+  };
+};
+export default connect(mapStateToProps, { getUserById })(UserInfo);

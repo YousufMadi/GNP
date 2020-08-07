@@ -97,20 +97,44 @@ Arguments:
 
 */
 
-export const updateUser = (users_state, user, changeCurrentUser = true) => {
-  let users = [...users_state.users];
-  for (let i = 0; i < users.length; i++) {
-    if (users[i].id === user.id) {
-      users[i] = user;
-      break;
+// export const updateUser = (users_state, user, changeCurrentUser = true) => {
+//   let users = [...users_state.users];
+//   for (let i = 0; i < users.length; i++) {
+//     if (users[i].id === user.id) {
+//       users[i] = user;
+//       break;
+//     }
+//   }
+
+//   users_state.setState({
+//     currentUser: changeCurrentUser ? user : users_state.currentUser,
+//     users,
+//   });
+// };
+
+export const updateUser = (updateComp, id) => {
+  return async (dispatch) => {
+    const url = "/users/" + id;
+    const request = new Request(url, {
+      method: "patch",
+      body: JSON.stringify(updateComp),
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+    });
+
+    const response = await fetch(request);
+    if (response.status === 400) {
+      notifyError("Invalid login credentials");
+    } else if (response.status === 500 || response.status === 404) {
+      notifyError("Something went wrong");
+    } else if (response.status === 200) {
+      const data = await response.json();
+      dispatch({ type: PAYLOAD_TYPES.UPDATE_USER, payload: data });
     }
   }
-
-  users_state.setState({
-    currentUser: changeCurrentUser ? user : users_state.currentUser,
-    users,
-  });
-};
+}
 
 export const getUserById = async (id) => {
   const url = "/users/" + id;
