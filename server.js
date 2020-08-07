@@ -39,16 +39,17 @@ app.get("/users", (req, res) => {
 app.get("/users/:id", (req, res) => {
   const id = req.params.id;
 
-  User.findById(id).then((user) => {
-    if (!user) {
-      res.status(404).send('Resource not found') 
-    } else { 
-      res.send(user)
-    }
-  })
-  .catch((error) => {
-    res.status(500).send('Internal Server Error')  // server error
-  })
+  User.findById(id)
+    .then((user) => {
+      if (!user) {
+        res.status(404).send("Resource not found");
+      } else {
+        res.send(user);
+      }
+    })
+    .catch((error) => {
+      res.status(500).send("Internal Server Error"); // server error
+    });
 });
 
 /* Route to create a new user
@@ -80,12 +81,10 @@ app.post("/users", (req, res) => {
       /* THIS IS CAUSING ERROR. WHY?
       req.session.user = user._id;
       req.session.email = user.email; */
-      res.json({ currentUser: user.id });
+      res.json({ currentUser: user });
     },
     (e) => {
-      
       res.sendStatus(400);
-
     }
   );
 });
@@ -98,13 +97,22 @@ app.post("/users", (req, res) => {
    }
    Returns the user if credentials are correct
 */
-app.post("/users/login", (req, res) => {
+app.post("/users/login", async (req, res) => {
   User.findByEmailPassword(req.body.email, req.body.password)
     .then((user) => {
       /* This will create an error?
       req.session.user = user._id;
       req.session.email = user.email;*/
-      res.json({ currentUser: user.id });
+      user
+        .populate({
+          path: "active_post",
+          model: "Post",
+          populate: { path: "author", model: "User" },
+        })
+        .execPopulate()
+        .then((populatedUser) => {
+          res.json({ currentUser: populatedUser });
+        });
     })
     .catch((e) => {
       res.sendStatus(400);

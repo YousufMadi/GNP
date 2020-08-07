@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { notifyWarn } from "../Utils/notificationUtils";
 
 import Home from "./Home/Home";
 import Feed from "./Feed/Feed";
@@ -37,62 +36,17 @@ class App extends React.Component {
 
   */
 
-  constructor(props){
-    super(props)
-  }
-  state = {
-    currentUser: null,
-    currentUserLocation: null,
-    setState: this.setState.bind(this),
-  };
-
-  componentDidMount() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        this.getUserLocation,
-        this.displayLocationWarning
-      );
-    } else {
-      alert("Geolocation is not supported on this browser");
-    }
-  }
-
-  displayLocationWarning = () => {
-    notifyWarn(
-      "We cannot retrieve your location. This app requires location to be enabled in your browser to function correctly."
-    );
-  };
-
-  getUserLocation = (position) => {
-    this.setState({ currentUserLocation: position.coords });
-  };
+  componentDidMount() {}
 
   render() {
     return (
       <>
         <BrowserRouter>
           <Switch>
-            <Route
-              path="/"
-              exact
-              component={() => <Home users_state={this.state} />}
-            />
-            <Route
-              path="/feed"
-              component={() => <Feed app={this} />}
-            />
-
-            <Route
-              exact
-              path="/signup"
-              component={() => <Signup app={this} />}
-            />
-
-            <Route
-              exact
-              path="/login"
-              component={() => <Login app={this} />}
-            />
+            <Route path="/" exact component={() => <Home />} />
+            <Route path="/feed" component={() => <Feed />} />
+            <Route exact path="/signup" component={() => <Signup />} />
+            <Route exact path="/login" component={() => <Login />} />
 
             <Route
               exact

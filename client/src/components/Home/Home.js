@@ -3,12 +3,11 @@ import Navbar from "../Navigation/Navbar";
 import "../../stylesheets/home.css";
 import "../../stylesheets/shared.css";
 
-
 class Home extends React.Component {
   render() {
     return (
       <div className="home-container">
-        <Navbar currentUser={this.props.users_state.currentUser} />
+        <Navbar />
         <div className="slide">
           <section className="hero"></section>
           <section className="mission">

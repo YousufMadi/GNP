@@ -1,6 +1,12 @@
-import ServerAPI from "../api/ServerAPI";
 import { notifySuccess, notifyError } from "../Utils/notificationUtils";
 
+export const PAYLOAD_TYPES = {
+  REGISTER: "REGISTER",
+  LOGIN: "LOGIN",
+  LOGOUT: "LOGOUT",
+  UPDATE_USER: "UPDATE_USER",
+  DELETE_USER: "DELETE_USER",
+};
 /* 
 
 ALL THE FUNCTIONS BEING EXPORTED IN THIS FILE REQUIRE SERVER CALLS.
@@ -18,61 +24,63 @@ Arguments:
   - last_name: The last name of the user being added
   - email: The email of the user being added
   - password: The password of the user being added
+*/
+
+export const register = (signupComp) => {
+  return async (dispatch) => {
+    const request = new Request("/users", {
+      method: "post",
+      body: JSON.stringify(signupComp),
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+    });
+    const response = await fetch(request);
+    if (response.status === 400) {
+      notifyError("Invalid login credentials");
+    } else if (response.status === 500 || response.status === 404) {
+      notifyError("Something went wrong");
+    } else if (response.status === 200) {
+      const data = await response.json();
+      dispatch({ type: PAYLOAD_TYPES.LOGIN, payload: data });
+    }
+  };
+};
+/*
+
+Log in given user
+
+Arguments:
+  - users_state: The current state of users in the application
+  - user: The user to be logged in
 
   This will be replaced by a call to the database to add the user
 
 */
-// export const addUser = async (first_name, last_name, email, password) => {
-//   const fullname = first_name + " " + last_name;
-//   const newUser = {
-//     name: fullname,
-//     email,
-//     password,
-//     profile_picture:
-//       "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSf_Bf0-x44hsGqqcQwrTcNeLUSnYjlDuoql-hQHydDdBwxeCT2&usqp=CAU",
-//   };
-//   const response = await ServerAPI({
-//     method: "post",
-//     url: "/users",
-//     data: newUser,
-//   });
-//   if (response.status === 200) {
-//     // SET THE CURRENT USER STATE
-//   } else {
-//     // DISPLAY ERROR MESSAGE
-//   }
-// };
 
-export const addUser = (signupComp, app) => {
-  const request = new Request("/users", {
-    method: "post",
-    body: JSON.stringify(signupComp.state),
-    headers: {
-      Accept: "application/json, text/plain, */*",
-      "Content-Type": "application/json",
-    },
-  });
-
-  // Send the request with fetch()
-  fetch(request)
-    .then((res) => {
-      if (res.status === 200) {
-        return res.json();
-      } else {
-        notifyError("Please check the info provided");
-      }
-    })
-    .then((json) => {
-      // Set the current user here
-      if (json.currentUser !== undefined) {
-        console.log("setting current user on signup");
-        app.setState({ currentUser: json.currentUser });
-      }
-    })
-    .catch((error) => {
-      // notifyError("Please check the info provided");
-      console.log("bad request in add user");
+export const login = (loginComp) => {
+  return async (dispatch) => {
+    // Create our request constructor with all the parameters we need
+    const request = new Request("/users/login", {
+      method: "post",
+      body: JSON.stringify(loginComp),
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
     });
+    // Send the request with fetch()
+    const response = await fetch(request);
+    if (response.status === 400) {
+      notifyError("Invalid login credentials");
+    } else if (response.status === 500 || response.status === 404) {
+      notifyError("Something went wrong");
+    } else if (response.status === 200) {
+      const data = await response.json();
+      dispatch({ type: PAYLOAD_TYPES.LOGIN, payload: data });
+    }
+  };
 };
 /*
 
@@ -131,36 +139,6 @@ export const getUserById = async (id) => {
   return result;
 };
 
-export const getActiveRequest = async (id) => {
-  const result = await getUserById(id);
-  return result.active_post;
-};
-/*
-
-Log in given user
-
-Arguments:
-  - users_state: The current state of users in the application
-  - user: The user to be logged in
-
-  This will be replaced by a call to the database to add the user
-
-*/
-
-export const login = async (loginComp, app) => {
-  // Create our request constructor with all the parameters we need
-  const request = new Request("/users/login", {
-    method: "post",
-    body: JSON.stringify(loginComp.state),
-    headers: {
-      Accept: "application/json, text/plain, */*",
-      "Content-Type": "application/json",
-    },
-  });
-  // Send the request with fetch()
-  const response = await (await fetch(request)).json();
-  app.setState({ currentUser: response.currentUser });
-};
 /*
 
 Log out the currently logged in user
@@ -173,8 +151,10 @@ Arguments:
 
 */
 
-export const handleUserLogout = (users_state) => {
-  users_state.setState({ currentUser: null });
+export const logout = () => {
+  return {
+    type: PAYLOAD_TYPES.LOGOUT,
+  };
 };
 
 /*

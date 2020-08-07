@@ -1,11 +1,13 @@
 import React from "react";
 import Navbar from "../Navigation/Navbar";
+import { connect } from "react-redux";
+
 import { Redirect } from "react-router-dom";
 import "../../stylesheets/shared.css";
 import "../../stylesheets/auth-forms.css";
 import signupPic from "../../images/signup.svg";
 
-import { addUser } from "../../actions/user";
+import { register } from "../../actions/user";
 
 const default_state = {
   // Fields
@@ -14,7 +16,6 @@ const default_state = {
   email: "",
   password: "",
   // password_confirmation: "",
-
 };
 
 class Signup extends React.Component {
@@ -30,17 +31,15 @@ class Signup extends React.Component {
     });
   };
 
-
-  formSubmit = (e, app) => {
+  formSubmit = (e) => {
     e.preventDefault();
-    addUser(this, app);
-  }
+    this.props.register(this.state);
+  };
 
   render() {
-    const {app} = this.props;
-    // if (this.props.users_state.currentUser) {
-    //   return <Redirect to="/feed" />;
-    // }
+    if (this.props.currentUser) {
+      return <Redirect to="/feed" />;
+    }
     return (
       <>
         <Navbar />
@@ -48,7 +47,7 @@ class Signup extends React.Component {
           <div className="form-container">
             <h3>Signup</h3>
             <img src={signupPic} alt="signup"></img>
-            <form onSubmit={e => this.formSubmit(e, app)}>
+            <form onSubmit={(e) => this.formSubmit(e)}>
               <div className="form-input">
                 <input
                   name="first_name"
@@ -103,7 +102,7 @@ class Signup extends React.Component {
                 <button
                   className="form-submit"
                   type="buton"
-                  onSubmit={e => this.formSubmit(e, app)}
+                  onSubmit={(e) => this.formSubmit(e)}
                 >
                   Submit
                 </button>
@@ -116,4 +115,10 @@ class Signup extends React.Component {
   }
 }
 
-export default Signup;
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.auth.currentUser,
+  };
+};
+
+export default connect(mapStateToProps, { register })(Signup);

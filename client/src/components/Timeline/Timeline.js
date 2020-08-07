@@ -1,5 +1,5 @@
 import React from "react";
-
+import { connect } from "react-redux";
 import "../../stylesheets/timeline.css";
 import Request from "../Request/Request";
 import NewRequest from "../NewRequest/NewRequest";
@@ -39,11 +39,7 @@ class Timeline extends React.Component {
 
   /* Function responsible for returning the filtered posts */
   filterPosts() {
-    return filterPosts(
-      this.props.posts_state.posts,
-      this.props.posts_state
-      //this.props.users_state.currentUserLocation
-    );
+    return filterPosts(this.props.posts, this.props.posts);
   }
 
   /* This function manages the changes regarding the highlighted post within the map. 
@@ -114,9 +110,8 @@ class Timeline extends React.Component {
 
   */
   render() {
-    console.log(this.props.posts_state.posts);
-    if (this.props.posts_state.posts != null) {
-      let posts = this.props.posts_state.posts;
+    if (this.props.posts != null) {
+      let posts = this.props.posts;
       let { currentPage, postsPerPage } = this.state;
       const filteredPosts = this.filterPosts(posts);
       let indexOfLastPost = currentPage * postsPerPage;
@@ -135,10 +130,8 @@ class Timeline extends React.Component {
           <Request
             highlightPost={this.handleHighlightedPostChange}
             showConfirmation={this.handleConfirmationModal}
-            app={this.props.app}
             key={index}
             post={post}
-            posts_state={this.props.posts_state}
           />
         );
       });
@@ -182,10 +175,7 @@ class Timeline extends React.Component {
             changeFilterState={this.props.changeFilterState}
           />
           <div className="timeline">
-            <NewRequest
-              currentUser={this.props.app.state.currentUser}
-              posts_state={this.props.posts_state}
-            />
+            <NewRequest currentUser={this.props.currentUser} />
             {currentPosts.length === 0 ? (
               this.renderEmptyMessage()
             ) : (
@@ -208,4 +198,11 @@ class Timeline extends React.Component {
   }
 }
 
-export default Timeline;
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.auth.currentUser,
+    posts: state.posts.posts,
+  };
+};
+
+export default connect(mapStateToProps)(Timeline);
