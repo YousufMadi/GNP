@@ -157,7 +157,11 @@ app.patch("/users/:id", (req, res) => {
 
    TODO: Everything
 */
-app.delete("/users/:id", (req, res) => {});
+app.delete("/users/:id", (req, res) => {
+
+  const id = req.params.id;
+
+});
 
 // POST ROUTES
 

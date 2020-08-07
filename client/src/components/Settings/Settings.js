@@ -9,7 +9,6 @@ import { connect } from "react-redux";
 class Settings extends React.Component {
   render() {
     const currentUser = this.props.currentUser;
-    console.log(currentUser)
     if (currentUser === null) {
       return <Redirect to="/login" />;
   

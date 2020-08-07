@@ -1,18 +1,35 @@
 import React from "react";
 import CreateAdmin from "./CreateAdmin";
 
-import { deleteUser } from "../../actions/user";
+import { getAllUsers, deleteUser } from "../../actions/user";
+import { connect } from "react-redux";
 
 class ViewUsers extends React.Component {
 
-  deleteUserAndPosts = (user) => {
-    deleteUser(this.props.users_state, user.email);
-  };
+  state = {
+    users: []
+  }
+
+  componentDidMount() {
+    getAllUsers()
+      .then((users) => {
+        console.log(users)
+        this.setState({
+          users: users,
+        });
+      })
+  }
+
+  // deleteUserAndPosts = (user) => {
+  //   deleteUser(this.props.users_state, user.email);
+  // };
 
   renderUsers() {
-    return this.props.users_state.users.map((user, i) => {
+   
+    return this.state.users.map((user) => {
+      console.log(user)
       return (
-        <tr className="user-row" key={i}>
+        <tr className="user-row" key={user._id}>
           <td>{user.admin ? "Yes" : "No"}</td>
           <td>
             {user.first_name} {user.last_name}
@@ -21,7 +38,7 @@ class ViewUsers extends React.Component {
           <td>{user.rating}</td>
           <td>
             <button className="remove-user">
-              <i className="fas fa-trash" onClick={() => this.deleteUserAndPosts(user)}></i>
+              <i className="fas fa-trash" ></i>
 
             </button>
           </td>
@@ -32,9 +49,9 @@ class ViewUsers extends React.Component {
   render() {
     return (
       <>
-        <CreateAdmin
+        {/*<CreateAdmin
           users={this.props.users}
-        />
+        />*/}
         <table className="user-list-table">
           <thead>
             <tr id="users-list-header">

@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 
 import { Redirect } from "react-router-dom";
 
-import { getUserById } from "../../actions/user";
+import { getUserById, getAllUsers } from "../../actions/user";
 
 const SettingsAdmin = (props) => {
   const adminOptions = {
@@ -78,16 +78,17 @@ const SettingsAdmin = (props) => {
             Personal Settings
           </button>
         </div>
-       {/* <div className="content">
+       <div className="content">
           {adminOption && (
             <SelectedOption
-              users_state={props.users_state}
-              users={props.users_state}
-              adminClass="admin-class"
-              posts_state={props.posts_state}
+              // users_state={props.users_state}
+              // users={getAllUsers().then((users)=> {return users})}
+              // adminClass="admin-class"
+              // posts_state={props.posts_state}
+
             />
           )}
-        </div>*/}
+        </div>
       </div>
     </div>
   );

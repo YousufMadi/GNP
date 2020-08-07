@@ -143,6 +143,34 @@ export const getUserById = async (id) => {
   return result;
 };
 
+export const getAllUsers = async () => {
+  const url = "/users";
+  const request = new Request(url, {
+    method: "get",
+    headers: {
+      Accept: "application/json, text/plain, */*",
+      "Content-Type": "application/json",
+    },
+  });
+
+  // Send the request with fetch()
+  const users = await fetch(request)
+    .then((res) => {
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        notifyError("Something went wrong while getting users data");
+      }
+    })
+    .catch((error) => {
+      notifyError("Internal server error - couldn't find user");
+    });
+
+  const result = await users;
+  // console.log(result)
+  return result;
+};
+
 /*
 
 Log out the currently logged in user
