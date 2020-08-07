@@ -24,7 +24,7 @@ class Settings extends React.Component {
           <UserInfo />
 
           {/*<UserUpdateForm users_state={this.props.users_state} />*/}
-          {/*<UserUpdateForm />*/}
+          <UserUpdateForm />
         </div>
       </div>
     );
