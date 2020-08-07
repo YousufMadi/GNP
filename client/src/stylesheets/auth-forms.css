@@ -63,3 +63,26 @@
   font-size: 1.2em;
   text-align: center;
 }
+
+/*Login Types */
+.login-types {
+  list-style: none;
+  text-align: center;
+}
+
+.login-types button {
+  display: inline;
+  border: none;
+  margin: 0.5em 0.5em;
+  width: 25%;
+  height: 1.75em;
+  background-color: #384f6f;
+  color:white;
+  border-radius: 3px;
+  border: 0.5px solid #384f6f;
+}
+
+.login-types button:hover {
+  background-color: #526a8c;
+  transition: 0.4s;
+}

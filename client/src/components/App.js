@@ -7,6 +7,7 @@ import Feed from "./Feed/Feed";
 import Signup from "./Auth/Signup";
 import Login from "./Auth/Login";
 import Logout from "./Auth/Logout";
+import AuthBox from "./Auth/AuthBox";
 import Settings from "./Settings/Settings";
 import SettingsAdmin from "./SettingsAdmin/SettingsAdmin";
 
@@ -43,12 +44,44 @@ class App extends React.Component {
       <>
         <BrowserRouter>
           <Switch>
-            <Route path="/" exact component={() => <Home />} />
-            <Route path="/feed" component={() => <Feed />} />
-            <Route exact path="/signup" component={() => <Signup />} />
-            <Route exact path="/login" component={() => <Login />} />
-            <Route exact path="/settings" component={() => <Settings />} />
-            <Route exact path="/admin" component={() => <SettingsAdmin />} />
+
+            <Route
+              path="/"
+              exact
+              component={() => <Home users_state={this.state} />}
+            />
+            <Route
+              path="/login"
+              exact
+              component={() => <AuthBox users_state={this.state} />}
+            />
+            <Route
+              path="/feed"
+              component={() => <Feed users_state={this.state} />}
+            />
+
+            {/* <Route
+              exact
+              path="/signup"
+
+              component={() => (
+                <Signup users_state={this.state} />
+              )}
+            /> */}
+
+
+            {/* <Route
+              exact
+              path="/login"
+
+              component={() => (
+                <Login
+                  users_state={this.state}
+                />
+              )}
+            /> */}
+
+
 
             <Route
               exact
