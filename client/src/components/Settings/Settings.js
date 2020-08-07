@@ -12,19 +12,22 @@ class Settings extends React.Component {
     console.log(currentUser)
     if (currentUser === null) {
       return <Redirect to="/login" />;
-    }
-    // TODO: Admin view
-    // } else if (currentUser.admin === true) {
-    //   return <Redirect to="/admin" />;
-    // }
-    return (
-      <div className="settings-container settings">
-        <div className="user-container">
-          <UserInfo />
-          <UserUpdateForm />
+  
+    } else if (currentUser.admin === true) {
+      return <Redirect to="/admin" />;
+      
+    }else{
+
+      return (
+        <div className="settings-container settings">
+          <div className="user-container">
+            <UserInfo />
+            <UserUpdateForm />
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
+
   }
 }
 

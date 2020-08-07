@@ -48,6 +48,7 @@ class App extends React.Component {
             <Route exact path="/signup" component={() => <Signup />} />
             <Route exact path="/login" component={() => <Login />} />
             <Route exact path="/settings" component={() => <Settings />} />
+            <Route exact path="/admin" component={() => <SettingsAdmin />} />
 
             <Route
               exact
@@ -55,10 +56,6 @@ class App extends React.Component {
               component={() => <Logout users_state={this.state} />}
             />
 
-            <Route
-              exact
-              path="/admin"
-              component={() => <SettingsAdmin users_state={this.state} />}
             />
           </Switch>
         </BrowserRouter>
