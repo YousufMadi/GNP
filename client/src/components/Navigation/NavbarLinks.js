@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 class NavbarLinks extends React.Component {
 
-  render(){
+  render() {
     return (
       <ul className="navbar-links">
         <li>
@@ -11,16 +11,16 @@ class NavbarLinks extends React.Component {
         </li>
 
         {!this.props.currentUser &&
-        <li>
-          <Link to="/login">Login</Link>
-        </li>        
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
         }
 
-        {!this.props.currentUser &&
+        {/* {!this.props.currentUser &&
           <li>
             <Link to="/signup">Signup</Link>
           </li>
-        }
+        } */}
 
         {this.props.currentUser &&
           <li>
@@ -36,7 +36,7 @@ class NavbarLinks extends React.Component {
 
 
       </ul>
-    );    
+    );
   }
 
 
