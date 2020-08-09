@@ -26,6 +26,11 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         currentUser: action.payload.currentUser,
       };
+    case PAYLOAD_TYPES.SET_COOKIE:
+      return {
+        ...state,
+        currentUser: action.payload.currentUser,
+      };
     default:
       return state;
   }

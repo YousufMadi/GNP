@@ -18,6 +18,92 @@ app.use(bodyParser.json());
 const session = require("express-session");
 app.use(bodyParser.urlencoded({ extended: true }));
 
+/*** Session handling ***/
+
+app.use(
+    session({
+        secret: "oursecret",
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            expires: 60000,
+            httpOnly: true
+        }
+    })
+);
+
+
+/* Route to login, creates a session
+   BODY FORMAT:
+   {
+     email,
+     password
+   }
+   Returns the user if credentials are correct
+*/
+app.post("/users/login", async (req, res) => {
+  User.findByEmailPassword(req.body.email, req.body.password)
+    .then((user) => {
+
+      req.session.user = user._id;
+      // req.session.email = user.email;
+
+      user
+        .populate({
+          path: "active_post",
+          model: "Post",
+          populate: { path: "author", model: "User" },
+        })
+        .execPopulate()
+        .then((populatedUser) => {
+          res.json({ currentUser: populatedUser });
+        });
+    })
+    .catch((e) => {
+      res.sendStatus(400);
+    });
+});
+
+app.get("/users/logout", (req, res) => {
+  // Remove the session
+  req.session.destroy(error => {
+      if (error) {
+          res.status(500).send(error);
+      } else {
+          res.send()
+      }
+  });
+});
+
+// A route to check if a use is logged in on the session cookie
+app.get("/users/check-session", (req, res) => {
+  if (req.session.user) {
+      User.findById(req.session.user)
+        .then((user) => {
+          if (!user) {
+            res.status(404).send("Resource not found");
+          } else {
+            user
+              .populate({
+                path: "active_post",
+                model: "Post",
+                populate: { path: "author", model: "User" },
+              })
+              .execPopulate()
+              .then((populatedUser) => {
+                res.json({ currentUser: populatedUser });
+              });
+          }
+        })
+        .catch((error) => {
+          res.status(500).send("Internal Server Error"); // server error
+        });
+
+  } else {
+      res.status(401).send();
+  }
+});
+
 /****************** API ROUTES ************************/
 // USER ROUTES
 
@@ -26,6 +112,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
    TODO: Decide if we want to send encrypted passwords to client
 */
+
 app.get("/users", (req, res) => {
   User.find()
     .then((users) => {
@@ -89,35 +176,6 @@ app.post("/users", (req, res) => {
   );
 });
 
-/* Route to login, creates a session
-   BODY FORMAT:
-   {
-     email,
-     password
-   }
-   Returns the user if credentials are correct
-*/
-app.post("/users/login", async (req, res) => {
-  User.findByEmailPassword(req.body.email, req.body.password)
-    .then((user) => {
-      /* This will create an error?
-      req.session.user = user._id;
-      req.session.email = user.email;*/
-      user
-        .populate({
-          path: "active_post",
-          model: "Post",
-          populate: { path: "author", model: "User" },
-        })
-        .execPopulate()
-        .then((populatedUser) => {
-          res.json({ currentUser: populatedUser });
-        });
-    })
-    .catch((e) => {
-      res.sendStatus(400);
-    });
-});
 
 /* Route to edit user information
    Returns the updated user model

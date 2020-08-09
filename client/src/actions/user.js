@@ -6,7 +6,29 @@ export const PAYLOAD_TYPES = {
   LOGOUT: "LOGOUT",
   UPDATE_USER: "UPDATE_USER",
   DELETE_USER: "DELETE_USER",
+  SET_COOKIE: "SET_COOKIE",
 };
+
+export const readCookie = () => {
+
+  console.log('here')
+  return async (dispatch) => {
+    const url = "/users/check-session";
+
+    const response = await fetch(url);
+    if (response.status === 400) {
+      notifyError("Something went wrong");
+    } else if (response.status === 500 || response.status === 404) {
+      notifyError("Something went wrong");
+    } else if (response.status === 200) {
+      const data = await response.json();
+      dispatch({ type: PAYLOAD_TYPES.SET_COOKIE, payload: data });
+    }
+  }
+
+};
+
+
 /* 
 
 ALL THE FUNCTIONS BEING EXPORTED IN THIS FILE REQUIRE SERVER CALLS.
@@ -83,12 +105,12 @@ export const login = (loginComp) => {
     }
   };
 };
+
+
 /*
 Arguments:
   - id: The id of the user to be updated
   - updateComp: The state of the updated user
-  
-
 */
 
 export const updateUser = (id, updateComp) => {
@@ -182,16 +204,32 @@ Arguments:
 
 */
 
+// export const logout = () => {
+//   return {
+//     type: PAYLOAD_TYPES.LOGOUT,
+//   };
+// };
+
 export const logout = () => {
-  return {
-    type: PAYLOAD_TYPES.LOGOUT,
-  };
+  return async (dispatch) => {
+    // Create our request constructor with all the parameters we need
+    const url = "/users/logout";
+
+    fetch(url)
+      .then((res) => {
+        dispatch({ type: PAYLOAD_TYPES.LOGOUT });
+        notifySuccess('Logout succesful');
+      })
+      .catch(error => {
+        notifyError("Could not log out")
+      })
+    }
+
 };
 
 /*
 
-Delete the user corresponding to the given email. If email
-does not exist in the state, notify the user and do nothing
+Delete the user corresponding to the given id.
 
 Arguments:
   - users_state: The current state of users in the application
@@ -200,26 +238,6 @@ Arguments:
   This will be replaced by a call to the database to add the user
 
 */
-
-// export const deleteUser = (users_state, email) => {
-//   if (users_state.currentUser.email !== email) {
-//     let users = [...users_state.users];
-//     let deletedUser = users.filter((users) => users.email === email);
-//     let newUsers = users.filter((users) => users.email !== email);
-//     notifySuccess(
-//       deletedUser[0].first_name +
-//         " " +
-//         deletedUser[0].last_name +
-//         " has been deleted"
-//     );
-
-//     users_state.setState({
-//       users: newUsers,
-//     });
-//   } else {
-//     notifyError("You cannot delete your self");
-//   }
-// };
 
 export const deleteUser = (id) => {
   const url = "/users/" + id;

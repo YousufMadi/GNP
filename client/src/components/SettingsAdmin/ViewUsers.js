@@ -26,7 +26,9 @@ class ViewUsers extends React.Component {
     if(user.admin){
       notifyError("Cannot delete admin");
     }else{
-      deleteUser(user._id);    
+      this.setState({
+        users: deleteUser(user._id)
+      })   
     }
   }
 
@@ -85,9 +87,3 @@ class ViewUsers extends React.Component {
 }
 
 export default ViewUsers;
-// const mapStateToProps = (state) => {
-//   return {
-//     currentUser: state.auth.currentUser,
-//   };
-// };
-// export default connect(mapStateToProps, { deleteUser })(ViewUsers);
