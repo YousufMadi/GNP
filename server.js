@@ -155,11 +155,21 @@ app.patch("/users/:id", (req, res) => {
 /* Route to delete a user
    Returns the deleted user
 
-   TODO: Everything
 */
 app.delete("/users/:id", (req, res) => {
-
   const id = req.params.id;
+
+  // Delete a student by their id
+  User.findByIdAndRemove(id).then((user) => {
+    if (!user) {
+      res.status(404).send()
+    } else {   
+      res.send(user)
+    }
+  })
+  .catch((error) => {
+    res.status(500).send()
+  })
 
 });
 

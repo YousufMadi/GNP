@@ -4,6 +4,8 @@ import CreateAdmin from "./CreateAdmin";
 import { getAllUsers, deleteUser } from "../../actions/user";
 import { connect } from "react-redux";
 
+import { notifySuccess, notifyError } from "../../Utils/notificationUtils";
+
 class ViewUsers extends React.Component {
 
   state = {
@@ -20,9 +22,13 @@ class ViewUsers extends React.Component {
       })
   }
 
-  // deleteUserAndPosts = (user) => {
-  //   deleteUser(this.props.users_state, user.email);
-  // };
+  deleteUserAndPosts = (user) => {
+    if(user.admin){
+      notifyError("Cannot delete admin");
+    }else{
+      deleteUser(user._id);    
+    }
+  }
 
   renderUsers() {
    
@@ -38,8 +44,7 @@ class ViewUsers extends React.Component {
           <td>{user.rating}</td>
           <td>
             <button className="remove-user">
-              <i className="fas fa-trash" ></i>
-
+              <i className="fas fa-trash" onClick={() => this.deleteUserAndPosts(user)}></i>
             </button>
           </td>
         </tr>
@@ -80,3 +85,9 @@ class ViewUsers extends React.Component {
 }
 
 export default ViewUsers;
+// const mapStateToProps = (state) => {
+//   return {
+//     currentUser: state.auth.currentUser,
+//   };
+// };
+// export default connect(mapStateToProps, { deleteUser })(ViewUsers);

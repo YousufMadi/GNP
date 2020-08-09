@@ -167,7 +167,6 @@ export const getAllUsers = async () => {
     });
 
   const result = await users;
-  // console.log(result)
   return result;
 };
 
@@ -202,25 +201,52 @@ Arguments:
 
 */
 
-export const deleteUser = (users_state, email) => {
-  if (users_state.currentUser.email !== email) {
-    let users = [...users_state.users];
-    let deletedUser = users.filter((users) => users.email === email);
-    let newUsers = users.filter((users) => users.email !== email);
-    notifySuccess(
-      deletedUser[0].first_name +
-        " " +
-        deletedUser[0].last_name +
-        " has been deleted"
-    );
+// export const deleteUser = (users_state, email) => {
+//   if (users_state.currentUser.email !== email) {
+//     let users = [...users_state.users];
+//     let deletedUser = users.filter((users) => users.email === email);
+//     let newUsers = users.filter((users) => users.email !== email);
+//     notifySuccess(
+//       deletedUser[0].first_name +
+//         " " +
+//         deletedUser[0].last_name +
+//         " has been deleted"
+//     );
 
-    users_state.setState({
-      users: newUsers,
+//     users_state.setState({
+//       users: newUsers,
+//     });
+//   } else {
+//     notifyError("You cannot delete your self");
+//   }
+// };
+
+export const deleteUser = (id) => {
+  const url = "/users/" + id;
+  const request = new Request(url, {
+    method: "delete",
+    headers: {
+      Accept: "application/json, text/plain, */*",
+      "Content-Type": "application/json",
+    },
+  });
+
+  // Send the request with fetch()
+  fetch(request)
+    .then((res) => {
+      if (res.status === 200) {
+        notifySuccess("User has been deleted");
+        return res.json();
+      } else {
+        notifyError("Something went wrong deleting the user");
+      }
+    })
+    .catch((error) => {
+      notifyError("Could not find user");
     });
-  } else {
-    notifyError("You cannot delete your self");
-  }
+
 };
+
 
 /*
 
