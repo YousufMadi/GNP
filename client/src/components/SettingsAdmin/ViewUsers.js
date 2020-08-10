@@ -11,7 +11,6 @@ class ViewUsers extends React.Component {
 
   componentDidMount() {
     getAllUsers().then((users) => {
-      console.log(users);
       this.setState({
         users: users,
       });

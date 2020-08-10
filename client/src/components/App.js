@@ -40,7 +40,7 @@ class App extends React.Component {
 
   */
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.props.readCookie();
   }
@@ -58,13 +58,10 @@ class App extends React.Component {
             <Route exact path="/login" component={() => <Login />} />
             <Route exact path="/settings" component={() => <Settings />} />
             <Route exact path="/admin" component={() => <SettingsAdmin />} />
-
             <Route
               exact
               path="/logout"
               component={() => <Logout users_state={this.state} />}
-            />
-
             />
           </Switch>
         </BrowserRouter>
