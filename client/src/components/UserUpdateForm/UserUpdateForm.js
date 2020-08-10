@@ -4,8 +4,9 @@ import "../../stylesheets/userupdateform.css";
 
 import { connect } from "react-redux";
 import { getUserById } from "../../actions/user";
-
 import { updateUser } from "../../actions/user";
+
+import Upload from "../Upload/Upload";
 
 class UserUpdateForm extends React.Component {
   constructor(props) {
@@ -27,8 +28,8 @@ class UserUpdateForm extends React.Component {
 
   handleChange = (e) => {
     const target = e.target;
-    const value = target.value;
     const name = target.name;
+    const value = target.value;
 
     this.setState({
       [name]: value,
@@ -38,7 +39,6 @@ class UserUpdateForm extends React.Component {
 
   render() {
     const currentUser = this.props.currentUser;
-    console.log(currentUser)
     return (
       <div className={`user-update-info ${this.props.adminClass}`}>
         {this.props.adminClass ? <></> : <h3>Update Information</h3>}
@@ -84,10 +84,13 @@ class UserUpdateForm extends React.Component {
               name="password"
               type="password"
               placeholder="Password"
-              // defaultValue={currentUser.password}
               onChange={this.handleChange}
             ></input>
             {/*<p className="error_msg">{this.state.password_error}</p>*/}
+          </div>
+
+          <div className="update-input-container">
+            <Upload />
           </div>
 
           <div className="update-input-container">

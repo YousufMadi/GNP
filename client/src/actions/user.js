@@ -7,6 +7,7 @@ export const PAYLOAD_TYPES = {
   UPDATE_USER: "UPDATE_USER",
   DELETE_USER: "DELETE_USER",
   SET_COOKIE: "SET_COOKIE",
+  SET_PROFILE_PIC: "SET_PROFILE_PIC"
 };
 
 export const readCookie = () => {
@@ -24,12 +25,6 @@ export const readCookie = () => {
   };
 };
 
-/* 
-
-ALL THE FUNCTIONS BEING EXPORTED IN THIS FILE REQUIRE SERVER CALLS.
-FOR NOW, THEY SIMPLY MODIFY THE USERS STATE IN APP.
-
-*/
 
 /*
 

@@ -9,6 +9,7 @@ const moment = require("moment");
 const { mongoose } = require("./db/mongoose");
 const { Post } = require("./models/post");
 const { User } = require("./models/user");
+const { Image } = require("./models/image");
 
 // body-parser: middleware for parsing HTTP JSON body into a usable object
 const bodyParser = require("body-parser");
@@ -16,6 +17,20 @@ app.use(bodyParser.json());
 
 // express-session for managing user sessions
 const session = require("express-session");
+
+// multipart middleware: allows you to access uploaded file from req.file
+const multipart = require('connect-multiparty');
+const multipartMiddleware = multipart();
+
+// cloudinary: configure using credentials found on your Cloudinary Dashboard
+// sign up for a free account here: https://cloudinary.com/users/register/free
+const cloudinary = require('cloudinary').v2;
+cloudinary.config({
+  cloud_name: 'good-neighbour',
+  api_key: '246527538834138',
+  api_secret: 'dIApzPK2RndvFgqHMFXYht4y7A8'
+});
+
 app.use(bodyParser.urlencoded({ extended: true }));
 
 /*** Session handling ***/
@@ -26,11 +41,42 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      expires: 60000,
+      expires: 600000,
       httpOnly: true,
     },
   })
 );
+
+app.post("/image/:id", async (req, res) => {
+
+  const file = req.body.data;
+  const id = req.params.id;
+
+  User.findById(id)
+    .then((user) => {
+      if (!user) {
+        res.status(404).send("Resource not found");
+      } else {
+        cloudinary.uploader.upload(file, {
+          upload_preset: 'ml_default'
+        }).then((uploadedResponse) => {
+          console.log(uploadedResponse)
+          user.profile_picture = uploadedResponse.secure_url;
+          user.save();
+          res.sendStatus(200)  
+        }).catch((error) => {
+          res.status(500).send("Internal Server Error"); // server error
+        })
+
+        
+      }
+    })
+    .catch((error) => {
+      res.status(500).send("Internal Server Error"); // server error
+    });
+
+})
+
 
 /* Route to login, creates a session
    BODY FORMAT:
@@ -100,6 +146,8 @@ app.get("/users/check-session", (req, res) => {
     res.status(401).send();
   }
 });
+
+
 
 /****************** API ROUTES ************************/
 // USER ROUTES
@@ -205,7 +253,7 @@ app.put("/users", (req, res) => {
    Returns the updated user model
 
 */
-app.patch("/users/:id", (req, res) => {
+app.patch("/users/:id", multipartMiddleware, (req, res) => {
   const id = req.params.id;
   if (mongoose.connection.readyState != 1) {
     res.status(500).send("Internal server error");
@@ -228,7 +276,7 @@ app.patch("/users/:id", (req, res) => {
       if (!user) {
         res.status(404).send("Resource not found");
       } else {
-        res.json({ currentUser: user });
+        res.json({ currentUser: user });    
       }
     })
     .catch((error) => {
