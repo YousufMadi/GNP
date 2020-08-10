@@ -21,17 +21,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 /*** Session handling ***/
 
 app.use(
-    session({
-        secret: "oursecret",
-        resave: false,
-        saveUninitialized: false,
-        cookie: {
-            expires: 60000,
-            httpOnly: true
-        }
-    })
+  session({
+    secret: "oursecret",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      expires: 60000,
+      httpOnly: true,
+    },
+  })
 );
-
 
 /* Route to login, creates a session
    BODY FORMAT:
@@ -44,7 +43,6 @@ app.use(
 app.post("/users/login", async (req, res) => {
   User.findByEmailPassword(req.body.email, req.body.password)
     .then((user) => {
-
       req.session.user = user._id;
       // req.session.email = user.email;
 
@@ -66,41 +64,40 @@ app.post("/users/login", async (req, res) => {
 
 app.get("/users/logout", (req, res) => {
   // Remove the session
-  req.session.destroy(error => {
-      if (error) {
-          res.status(500).send(error);
-      } else {
-          res.send()
-      }
+  req.session.destroy((error) => {
+    if (error) {
+      res.status(500).send(error);
+    } else {
+      res.send();
+    }
   });
 });
 
 // A route to check if a use is logged in on the session cookie
 app.get("/users/check-session", (req, res) => {
   if (req.session.user) {
-      User.findById(req.session.user)
-        .then((user) => {
-          if (!user) {
-            res.status(404).send("Resource not found");
-          } else {
-            user
-              .populate({
-                path: "active_post",
-                model: "Post",
-                populate: { path: "author", model: "User" },
-              })
-              .execPopulate()
-              .then((populatedUser) => {
-                res.json({ currentUser: populatedUser });
-              });
-          }
-        })
-        .catch((error) => {
-          res.status(500).send("Internal Server Error"); // server error
-        });
-
+    User.findById(req.session.user)
+      .then((user) => {
+        if (!user) {
+          res.status(404).send("Resource not found");
+        } else {
+          user
+            .populate({
+              path: "active_post",
+              model: "Post",
+              populate: { path: "author", model: "User" },
+            })
+            .execPopulate()
+            .then((populatedUser) => {
+              res.json({ currentUser: populatedUser });
+            });
+        }
+      })
+      .catch((error) => {
+        res.status(500).send("Internal Server Error"); // server error
+      });
   } else {
-      res.status(401).send();
+    res.status(401).send();
   }
 });
 
@@ -176,39 +173,68 @@ app.post("/users", (req, res) => {
   );
 });
 
+/* Route to make a user an admin using email passed
+   in the body of the request
 
-/* Route to edit user information
+   Returns the new list of users
+*/
+app.put("/users", (req, res) => {
+  User.findOne({ email: req.body.email })
+    .then((user) => {
+      if (!user) {
+        res.sendStatus(404);
+      } else {
+        if (user.admin) {
+          res.status(400).send("Bad Request");
+        } else {
+          user.admin = true;
+          user.save().then((u) => {
+            User.find().then((users) => {
+              res.json(users);
+            });
+          });
+        }
+      }
+    })
+    .catch((e) => {
+      res.sendStatus(500);
+    });
+});
+
+/* Route to edit user information 
    Returns the updated user model
 
 */
 app.patch("/users/:id", (req, res) => {
-
   const id = req.params.id;
-
   if (mongoose.connection.readyState != 1) {
-    res.status(500).send('Internal server error')
+    res.status(500).send("Internal server error");
     return;
   }
 
   fieldsToUpdate = {};
-  for(let key in req.body){
-    if(req.body[key] !== ""){
+  for (let key in req.body) {
+    if (req.body[key] !== "") {
       fieldsToUpdate[key] = req.body[key];
     }
   }
 
-  User.findOneAndUpdate({_id: id}, {$set: fieldsToUpdate}, {new: true, useFindAndModify: false, runValidators: true})
+  User.findOneAndUpdate(
+    { _id: id },
+    { $set: fieldsToUpdate },
+    { new: true, useFindAndModify: false, runValidators: true }
+  )
     .then((user) => {
       if (!user) {
-        res.status(404).send('Resource not found')
-      } else {   
+        res.status(404).send("Resource not found");
+      } else {
         res.json({ currentUser: user });
       }
     })
     .catch((error) => {
-      res.status(400).send('Bad Request')
-    })
-})
+      res.status(400).send("Bad Request");
+    });
+});
 
 /* Route to delete a user
    Returns the deleted user
@@ -218,17 +244,19 @@ app.delete("/users/:id", (req, res) => {
   const id = req.params.id;
 
   // Delete a student by their id
-  User.findByIdAndRemove(id).then((user) => {
-    if (!user) {
-      res.status(404).send()
-    } else {   
-      res.send(user)
-    }
-  })
-  .catch((error) => {
-    res.status(500).send()
-  })
-
+  User.findByIdAndRemove(id)
+    .then((user) => {
+      if (!user) {
+        res.status(404).send();
+      } else {
+        User.find().then((users) => {
+          res.json(users);
+        });
+      }
+    })
+    .catch((error) => {
+      res.status(500).send();
+    });
 });
 
 // POST ROUTES

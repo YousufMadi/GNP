@@ -1,41 +1,46 @@
-import React, { useState } from "react";
-
-import { promoteUser } from "../../actions/user";
-
-
+import React from "react";
 import "react-toastify/dist/ReactToastify.css";
 import "../../stylesheets/settingsAdmin.css";
 
-const CreateAdmin = (props) => {
-  const [userToPromote, setUserToPromote] = useState("");
+class CreateAdmin extends React.Component {
+  state = { userToPromote: "" };
 
-  const promoteUserObject = (e) => {
-    e.preventDefault();
-    promoteUser(props.users, userToPromote);
+  handleInputChange = (e) => {
+    this.setState({
+      userToPromote: e.target.value,
+    });
   };
 
-  return (
-    <div className="make-user-admin">
-      <form className="make-admin-form">
-        <label className="make-admin-label">Make A User An Admin</label>
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.promoteUser(this.state.userToPromote);
+    this.setState({ userToPromote: "" });
+  };
 
-        <input
-          type="text"
-          name="name"
-          value={userToPromote}
-          placeholder="Email"
-          onChange={(e) => setUserToPromote(e.target.value)}
-        />
-        <button
-          className="promoteButton"
-          type="submit"
-          onClick={(e) => promoteUserObject(e)}
-        >
-          Promote
-        </button>
-      </form>
-    </div>
-  );
-};
+  render() {
+    return (
+      <div className="make-user-admin">
+        <form className="make-admin-form">
+          <label className="make-admin-label">Make A User An Admin</label>
+
+          <input
+            type="text"
+            name="name"
+            value={this.state.userToPromote}
+            placeholder="Email of user to promote"
+            onChange={(e) => this.handleInputChange(e)}
+          />
+          <button
+            className="promoteButton"
+            type="submit"
+            onClick={(e) => this.handleSubmit(e)}
+          >
+            Promote
+          </button>
+        </form>
+      </div>
+    );
+  }
+}
 
 export default CreateAdmin;

@@ -1,41 +1,45 @@
 import React from "react";
 import CreateAdmin from "./CreateAdmin";
-
-import { getAllUsers, deleteUser } from "../../actions/user";
-import { connect } from "react-redux";
+import { getAllUsers, deleteUser, promoteUser } from "../../actions/user";
 
 import { notifySuccess, notifyError } from "../../Utils/notificationUtils";
 
 class ViewUsers extends React.Component {
-
   state = {
-    users: []
-  }
+    users: [],
+  };
 
   componentDidMount() {
-    getAllUsers()
-      .then((users) => {
-        console.log(users)
+    getAllUsers().then((users) => {
+      console.log(users);
+      this.setState({
+        users: users,
+      });
+    });
+  }
+
+  deleteUserAndPosts = async (user) => {
+    if (user.admin) {
+      notifyError("Cannot delete admin");
+    } else {
+      const users = await deleteUser(user._id);
+      if (users) {
         this.setState({
           users: users,
         });
-      })
-  }
-
-  deleteUserAndPosts = (user) => {
-    if(user.admin){
-      notifyError("Cannot delete admin");
-    }else{
-      this.setState({
-        users: deleteUser(user._id)
-      })   
+      }
     }
-  }
+  };
+
+  promoteUser = async (userToPromote) => {
+    const users = await promoteUser(userToPromote);
+    if (users) {
+      this.setState({ users: users });
+    }
+  };
 
   renderUsers() {
-   
     return this.state.users.map((user) => {
-      console.log(user)
       return (
         <tr className="user-row" key={user._id}>
           <td>{user.admin ? "Yes" : "No"}</td>
@@ -46,7 +50,10 @@ class ViewUsers extends React.Component {
           <td>{user.rating}</td>
           <td>
             <button className="remove-user">
-              <i className="fas fa-trash" onClick={() => this.deleteUserAndPosts(user)}></i>
+              <i
+                className="fas fa-trash"
+                onClick={() => this.deleteUserAndPosts(user)}
+              ></i>
             </button>
           </td>
         </tr>
@@ -56,9 +63,7 @@ class ViewUsers extends React.Component {
   render() {
     return (
       <>
-        {/*<CreateAdmin
-          users={this.props.users}
-        />*/}
+        <CreateAdmin promoteUser={this.promoteUser} />
         <table className="user-list-table">
           <thead>
             <tr id="users-list-header">

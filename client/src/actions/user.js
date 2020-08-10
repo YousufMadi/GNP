@@ -10,11 +10,8 @@ export const PAYLOAD_TYPES = {
 };
 
 export const readCookie = () => {
-
-  console.log('here')
   return async (dispatch) => {
     const url = "/users/check-session";
-
     const response = await fetch(url);
     if (response.status === 400) {
       notifyError("Something went wrong");
@@ -24,10 +21,8 @@ export const readCookie = () => {
       const data = await response.json();
       dispatch({ type: PAYLOAD_TYPES.SET_COOKIE, payload: data });
     }
-  }
-
+  };
 };
-
 
 /* 
 
@@ -101,11 +96,10 @@ export const login = (loginComp) => {
     } else if (response.status === 200) {
       const data = await response.json();
       dispatch({ type: PAYLOAD_TYPES.LOGIN, payload: data });
-      notifySuccess("Login succesfully")
+      notifySuccess("Login succesfully");
     }
   };
 };
-
 
 /*
 Arguments:
@@ -124,7 +118,6 @@ export const updateUser = (id, updateComp) => {
         "Content-Type": "application/json",
       },
     });
-
     const response = await fetch(request);
     if (response.status === 400) {
       notifyError("Profile not updated due to invalid information");
@@ -133,10 +126,10 @@ export const updateUser = (id, updateComp) => {
     } else if (response.status === 200) {
       const data = await response.json();
       dispatch({ type: PAYLOAD_TYPES.UPDATE_USER, payload: data });
-      notifySuccess("Profile succesfully updated")
+      notifySuccess("Profile succesfully updated");
     }
-  }
-}
+  };
+};
 
 export const getUserById = async (id) => {
   const url = "/users/" + id;
@@ -149,20 +142,13 @@ export const getUserById = async (id) => {
   });
 
   // Send the request with fetch()
-  const user = await fetch(request)
-    .then((res) => {
-      if (res.status === 200) {
-        return res.json();
-      } else {
-        notifyError("Something went wrong while getting user data");
-      }
-    })
-    .catch((error) => {
-      notifyError("Internal server error - couldn't find user");
-    });
-
-  const result = await user;
-  return result;
+  const response = await fetch(request);
+  if (response.status !== 200) {
+    notifyError("Internal server error - couldn't find user");
+  } else {
+    const data = await response.json();
+    return data;
+  }
 };
 
 export const getAllUsers = async () => {
@@ -174,22 +160,13 @@ export const getAllUsers = async () => {
       "Content-Type": "application/json",
     },
   });
-
-  // Send the request with fetch()
-  const users = await fetch(request)
-    .then((res) => {
-      if (res.status === 200) {
-        return res.json();
-      } else {
-        notifyError("Something went wrong while getting users data");
-      }
-    })
-    .catch((error) => {
-      notifyError("Internal server error - couldn't find user");
-    });
-
-  const result = await users;
-  return result;
+  const response = await fetch(request);
+  if (response.status === 200) {
+    const data = await response.json();
+    return data;
+  } else {
+    notifyError("Something went wrong while getting users data");
+  }
 };
 
 /*
@@ -214,17 +191,15 @@ export const logout = () => {
   return async (dispatch) => {
     // Create our request constructor with all the parameters we need
     const url = "/users/logout";
-
     fetch(url)
       .then((res) => {
         dispatch({ type: PAYLOAD_TYPES.LOGOUT });
-        notifySuccess('Logout succesful');
+        notifySuccess("Logout successful");
       })
-      .catch(error => {
-        notifyError("Could not log out")
-      })
-    }
-
+      .catch((error) => {
+        notifyError("Could not log out");
+      });
+  };
 };
 
 /*
@@ -239,7 +214,7 @@ Arguments:
 
 */
 
-export const deleteUser = (id) => {
+export const deleteUser = async (id) => {
   const url = "/users/" + id;
   const request = new Request(url, {
     method: "delete",
@@ -250,21 +225,15 @@ export const deleteUser = (id) => {
   });
 
   // Send the request with fetch()
-  fetch(request)
-    .then((res) => {
-      if (res.status === 200) {
-        notifySuccess("User has been deleted");
-        return res.json();
-      } else {
-        notifyError("Something went wrong deleting the user");
-      }
-    })
-    .catch((error) => {
-      notifyError("Could not find user");
-    });
-
+  const response = await fetch(request);
+  if (response.status === 200) {
+    notifySuccess("User has been deleted");
+    const data = await response.json();
+    return data;
+  } else {
+    notifyError("Something went wrong deleting the user");
+  }
 };
-
 
 /*
 
@@ -279,25 +248,25 @@ Arguments:
 
 */
 
-export const promoteUser = (users_state, user_to_promote_email) => {
-  let check = false;
-  let newUser;
-
-  for (let i = 0; i < users_state.users.length; i++) {
-    if (users_state.users[i].email === user_to_promote_email) {
-      if (users_state.users[i].admin === true) {
-        notifyError("Error! User is already an admin");
-        check = true;
-        break;
-      }
-      newUser = { ...users_state.users[i], admin: true };
-      updateUser(users_state, newUser, false);
-      notifySuccess("User has been promoted!");
-      check = true;
-      break;
-    }
-  }
-  if (check === false) {
-    notifyError("Error! Email address is not registered");
+export const promoteUser = async (email) => {
+  const url = "/users";
+  const request = new Request(url, {
+    method: "put",
+    body: JSON.stringify({ email: email }),
+    headers: {
+      Accept: "application/json, text/plain, */*",
+      "Content-Type": "application/json",
+    },
+  });
+  const response = await fetch(request);
+  if (response.status === 200) {
+    const data = await response.json();
+    return data;
+  } else if (response.status === 404) {
+    notifyError("Email was not found");
+  } else if (response.status === 400) {
+    notifySuccess("User is already an admin!");
+  } else {
+    notifyError("Internal Error");
   }
 };
