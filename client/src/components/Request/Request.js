@@ -41,7 +41,7 @@ class Request extends React.Component {
      This will require a database call in later phases. */
   handleEditPost = (id, post) => {
     this.handleExitEdit();
-    editPost(this.props.posts_state, id, post);
+    this.props.editPost(id, post, this.props.currentUser._id);
   };
 
   /* This function is responsible for rendering the items as an li in the items
@@ -99,4 +99,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Request);
+export default connect(mapStateToProps, { editPost })(Request);

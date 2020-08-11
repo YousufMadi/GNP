@@ -54,10 +54,6 @@ const UserSchema = new mongoose.Schema({
     type: Number,
     default: 5,
   },
-  address: {
-    type: Object,
-    default: null,
-  },
 });
 
 // Middleware to hash password on the create.

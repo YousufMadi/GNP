@@ -19,16 +19,16 @@ app.use(bodyParser.json());
 const session = require("express-session");
 
 // multipart middleware: allows you to access uploaded file from req.file
-const multipart = require('connect-multiparty');
+const multipart = require("connect-multiparty");
 const multipartMiddleware = multipart();
 
 // cloudinary: configure using credentials found on your Cloudinary Dashboard
 // sign up for a free account here: https://cloudinary.com/users/register/free
-const cloudinary = require('cloudinary').v2;
+const cloudinary = require("cloudinary").v2;
 cloudinary.config({
-  cloud_name: 'good-neighbour',
-  api_key: '246527538834138',
-  api_secret: 'dIApzPK2RndvFgqHMFXYht4y7A8'
+  cloud_name: "good-neighbour",
+  api_key: "246527538834138",
+  api_secret: "dIApzPK2RndvFgqHMFXYht4y7A8",
 });
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -48,7 +48,6 @@ app.use(
 );
 
 app.post("/image/:id", async (req, res) => {
-
   const file = req.body.data;
   const id = req.params.id;
 
@@ -57,26 +56,25 @@ app.post("/image/:id", async (req, res) => {
       if (!user) {
         res.status(404).send("Resource not found");
       } else {
-        cloudinary.uploader.upload(file, {
-          upload_preset: 'ml_default'
-        }).then((uploadedResponse) => {
-          console.log(uploadedResponse)
-          user.profile_picture = uploadedResponse.secure_url;
-          user.save();
-          res.sendStatus(200)  
-        }).catch((error) => {
-          res.status(500).send("Internal Server Error"); // server error
-        })
-
-        
+        cloudinary.uploader
+          .upload(file, {
+            upload_preset: "ml_default",
+          })
+          .then((uploadedResponse) => {
+            console.log(uploadedResponse);
+            user.profile_picture = uploadedResponse.secure_url;
+            user.save();
+            res.sendStatus(200);
+          })
+          .catch((error) => {
+            res.status(500).send("Internal Server Error"); // server error
+          });
       }
     })
     .catch((error) => {
       res.status(500).send("Internal Server Error"); // server error
     });
-
-})
-
+});
 
 /* Route to login, creates a session
    BODY FORMAT:
@@ -146,8 +144,6 @@ app.get("/users/check-session", (req, res) => {
     res.status(401).send();
   }
 });
-
-
 
 /****************** API ROUTES ************************/
 // USER ROUTES
@@ -276,7 +272,7 @@ app.patch("/users/:id", multipartMiddleware, (req, res) => {
       if (!user) {
         res.status(404).send("Resource not found");
       } else {
-        res.json({ currentUser: user });    
+        res.json({ currentUser: user });
       }
     })
     .catch((error) => {
@@ -341,14 +337,23 @@ app.get("/posts", (req, res) => {
 */
 app.post("/posts", (req, res) => {
   Post.create({
-    author: req.body.author,
-    reimbursement: req.body.reimbursement,
-    description: req.body.description,
+    author: req.body.user,
+    reimbursement: req.body.post.reimbursement,
+    description: req.body.post.description,
     time: moment(),
-    items: req.body.items,
+    items: req.body.post.items,
+    location: req.body.post.location,
   })
     .then((post) => {
-      res.json(post);
+      Post.find()
+        .populate("author")
+        .exec((err, transaction) => {
+          if (err) {
+            res.sendStatus(500);
+          } else {
+            res.json(transaction);
+          }
+        });
     })
     .catch((e) => {
       res.sendStatus(500);
@@ -360,14 +365,65 @@ app.post("/posts", (req, res) => {
 
    TODO: Everything
 */
-app.patch("/posts/:id", (req, res) => {});
+app.put("/posts/:id", (req, res) => {
+  User.findById(req.body.user)
+    .then((user) => {
+      Post.findById(req.params.id).then((post) => {
+        if (post.author.toString() === req.body.user) {
+          post.description = req.body.post.description;
+          post.items = req.body.post.items;
+          post.reimbursement = req.body.post.reimbursement;
+          post.save().then((p) => {
+            Post.find()
+              .populate("author")
+              .exec((err, transaction) => {
+                if (err) {
+                  res.sendStatus(500);
+                } else {
+                  res.json(transaction);
+                }
+              });
+          });
+        } else {
+          res.sendStatus(400);
+        }
+      });
+    })
+    .catch((e) => {
+      res.sendStatus(500);
+    });
+});
 
 /* Route to delete a post
    Returns the deleted post
 
    TODO: Everything
 */
-app.delete("/posts/:id", (req, res) => {});
+app.delete("/posts", (req, res) => {
+  User.findById(req.body.user)
+    .then((user) => {
+      Post.findById(req.body.post).then((post) => {
+        if (user.admin || post.author.toString() === req.body.user) {
+          Post.findByIdAndDelete(req.body.post).then((post) => {
+            Post.find()
+              .populate("author")
+              .exec((err, transaction) => {
+                if (err) {
+                  res.sendStatus(500);
+                } else {
+                  res.json(transaction);
+                }
+              });
+          });
+        } else {
+          res.sendStatus(400);
+        }
+      });
+    })
+    .catch((e) => {
+      res.sendStatus(500);
+    });
+});
 /****************** WEBPAGE ROUTES ************************/
 
 // Serve the build

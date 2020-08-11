@@ -4,6 +4,10 @@ import { notifySuccess, notifyError } from "../Utils/notificationUtils";
 
 export const TL_PAYLOAD_TYPES = {
   GET_POSTS: "GET_POSTS",
+  EDIT_POST: "EDIT_POST",
+  ACCEPT_POST: "ACCEPT_POST",
+  DELETE_POST: "DELETE_POST",
+  CREATE_POST: "CREATE_POST",
 };
 
 /* 
@@ -44,10 +48,25 @@ Arguments:
 
 */
 
-export const addPostToState = (posts_state, new_post) => {
-  posts_state.setState({
-    posts: [...posts_state.posts, new_post],
-  });
+export const createPost = (new_post, currentUserID) => {
+  return async (dispatch) => {
+    const request = new Request("/posts", {
+      method: "post",
+      body: JSON.stringify({ post: new_post, user: currentUserID }),
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+    });
+    const response = await fetch(request);
+    if (response.status === 200) {
+      const data = await response.json();
+      dispatch({ type: TL_PAYLOAD_TYPES.CREATE_POST, payload: data });
+      notifySuccess("Your request has been created.");
+    } else {
+      notifyError("Something went wrong creating your request.");
+    }
+  };
 };
 
 /*
@@ -61,11 +80,27 @@ Arguments:
   This will be replaced by a call to the database to add the user
 
 */
-export const deletePost = (posts_state, id) => {
-  const newPosts = posts_state.posts.filter((post) => {
-    return post.id !== id;
-  });
-  posts_state.setState({ posts: newPosts });
+export const deletePost = (id, currentUserID) => {
+  return async (dispatch) => {
+    const request = new Request(`/posts`, {
+      method: "delete",
+      body: JSON.stringify({ post: id, user: currentUserID }),
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+    });
+    const response = await fetch(request);
+    if (response.status === 200) {
+      const data = await response.json();
+      dispatch({ type: TL_PAYLOAD_TYPES.DELETE_POST, payload: data });
+      notifySuccess("Request successfully deleted");
+    } else if (response.status === 400) {
+      notifyError("You cannot delete that request");
+    } else {
+      notifyError("Something went wrong deleting the request");
+    }
+  };
 };
 
 /*
@@ -81,20 +116,27 @@ Arguments:
 
 */
 
-export const editPost = (posts_state, id, post) => {
-  let newPosts = posts_state.posts;
-  for (let i = 0; i < newPosts.length; i++) {
-    if (newPosts[i].id === id) {
-      newPosts[i].description = post.description;
-      newPosts[i].items = post.items;
-      newPosts[i].reimbursement = post.reimbursement;
-      break;
+export const editPost = (postID, editedPost, currentUserID) => {
+  return async (dispatch) => {
+    const request = new Request(`/posts/${postID}`, {
+      method: "put",
+      body: JSON.stringify({ post: editedPost, user: currentUserID }),
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+    });
+    const response = await fetch(request);
+    if (response.status === 200) {
+      const data = await response.json();
+      dispatch({ type: TL_PAYLOAD_TYPES.EDIT_POST, payload: data });
+      notifySuccess("Request successfully edited");
+    } else if (response.status === 400) {
+      notifyError("You are not allowed to do that");
+    } else {
+      notifyError("Something went wrong editing the request");
     }
-  }
-
-  posts_state.setState({
-    posts: newPosts,
-  });
+  };
 };
 
 /*

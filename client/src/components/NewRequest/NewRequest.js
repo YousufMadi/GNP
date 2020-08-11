@@ -1,11 +1,12 @@
 import React from "react";
-//import AutoComplete from "react-google-autocomplete";
+import { connect } from "react-redux";
+import AutoComplete from "react-google-autocomplete";
 
 import "../../stylesheets/newrequest.css";
 import ItemsList from "../ItemsList/ItemsList";
 import { notifySuccess, notifyInfo } from "../../Utils/notificationUtils";
 
-import { addPostToState } from "../../actions/timeline";
+import { createPost } from "../../actions/timeline";
 
 class NewRequest extends React.Component {
   /*
@@ -25,7 +26,7 @@ class NewRequest extends React.Component {
     formReimbursement: null,
     formDescription: null,
     autocompleteValue: "",
-    location: { lat: 43.65107, lng: -79.347015 },
+    location: null,
   };
 
   /* This function handles changes to the item list */
@@ -67,9 +68,6 @@ class NewRequest extends React.Component {
       // id of all the posts, and adding 1 to it. This will be handled automatically by
       // the database we later implement.
       const newPost = {
-        id:
-          this.props.posts_state.posts[this.props.posts_state.posts.length - 1]
-            .id + 1,
         author: this.props.currentUser.id,
         location: this.state.location,
         reimbursement: this.state.formReimbursement,
@@ -84,9 +82,7 @@ class NewRequest extends React.Component {
         items: [],
         location: { lat: null, lng: null },
       });
-
-      notifySuccess("Successfully created a new request.");
-      addPostToState(this.props.posts_state, newPost);
+      this.props.createPost(newPost, this.props.currentUser._id);
     } else if (this.state.autocompleteValue === "") {
       notifyInfo("Please make sure your address is entered.");
     } else if (this.state.formReimbursement === null) {
@@ -128,13 +124,7 @@ class NewRequest extends React.Component {
           />
         </div>
         <div className="new-post-address">
-          <input
-            id="address-input"
-            placeholder="Enter your delivery address here"
-            onChange={this.handleAutocompleteChange}
-            value={this.state.autocompleteValue}
-          />
-          {/*<AutoComplete
+          <AutoComplete
             onChange={this.handleAutocompleteChange}
             value={this.state.autocompleteValue}
             id="address-input"
@@ -150,7 +140,7 @@ class NewRequest extends React.Component {
                 autocompleteValue: place.formatted_address,
               });
             }}
-          />*/}
+          />
           <div className="pay-selector">
             <select
               className="form-new-post pay-select"
@@ -187,4 +177,4 @@ class NewRequest extends React.Component {
   }
 }
 
-export default NewRequest;
+export default connect(null, { createPost })(NewRequest);

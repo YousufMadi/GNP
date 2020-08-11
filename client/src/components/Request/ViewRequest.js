@@ -88,7 +88,10 @@ class ViewRequest extends React.Component {
               <button
                 className="delete-post"
                 onClick={() =>
-                  deletePost(this.props.posts_state, this.props.post._id)
+                  this.props.deletePost(
+                    this.props.post._id,
+                    this.props.currentUser._id
+                  )
                 }
               >
                 <i className="fas fa-trash"></i>
@@ -106,7 +109,10 @@ class ViewRequest extends React.Component {
                 <button
                   className="delete-post admin-delete-post"
                   onClick={() =>
-                    deletePost(this.props.posts_state, this.props.post.id)
+                    this.props.deletePost(
+                      this.props.post._id,
+                      this.props.currentUser._id
+                    )
                   }
                 >
                   <i className="fas fa-trash"></i>
@@ -135,4 +141,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(ViewRequest);
+export default connect(mapStateToProps, { deletePost })(ViewRequest);

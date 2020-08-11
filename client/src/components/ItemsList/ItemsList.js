@@ -27,8 +27,13 @@ class ItemsList extends React.Component {
       this._inputElement.value !== "" &&
       this._inputElement.value[0] !== " "
     ) {
-      this.setState({ items: [...this.state.items, this._inputElement.value] });
-      this.props.changeItems([...this.state.items, this._inputElement.value]);
+      this.setState({
+        items: [...this.state.items, { name: this._inputElement.value }],
+      });
+      this.props.changeItems([
+        ...this.state.items,
+        { name: this._inputElement.value },
+      ]);
       this._inputElement.value = "";
     }
   };
@@ -36,7 +41,7 @@ class ItemsList extends React.Component {
   /* This function deletes an item from the state, and updates the parent's list of items */
   deleteItem = (removeItem) => {
     const filteredItems = this.state.items.filter((item) => {
-      return item !== removeItem;
+      return item.name !== removeItem.name;
     });
     this.setState({ items: filteredItems });
     this.props.changeItems(filteredItems);

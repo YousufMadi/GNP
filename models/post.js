@@ -6,10 +6,6 @@ const ItemSchema = new mongoose.Schema({
     required: true,
     minlength: 1,
   },
-  amount: {
-    type: Number,
-    default: 1,
-  },
 });
 
 const PostSchema = new mongoose.Schema({
@@ -34,6 +30,10 @@ const PostSchema = new mongoose.Schema({
   },
   items: {
     type: [ItemSchema],
+    required: true,
+  },
+  location: {
+    type: Object,
     required: true,
   },
 });
