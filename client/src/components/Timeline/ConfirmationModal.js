@@ -2,7 +2,7 @@ import React from "react";
 import Modal from "react-modal";
 import "../../stylesheets/confirmationmodal.css";
 
-import { fetchPostAuthor, getSizeEstimate } from "../../actions/timeline";
+import { getSizeEstimate } from "../../actions/timeline";
 
 Modal.setAppElement("#root");
 class ConfirmationModal extends React.Component {
@@ -28,10 +28,6 @@ class ConfirmationModal extends React.Component {
   */
   render() {
     if (this.props.confirmation.display) {
-      const request_author = fetchPostAuthor(
-        this.props.confirmation.selectedPost,
-        this.props.users
-      );
       return (
         <Modal
           isOpen={this.props.confirmation.display ? true : false}
@@ -68,13 +64,17 @@ class ConfirmationModal extends React.Component {
             <div className="confirmation-author">
               <label>Request made by</label>
               <img
-                src={request_author.profile_picture}
+                src={
+                  this.props.confirmation.selectedPost.author.profile_picture
+                }
                 alt="requester-profile"
               ></img>
               <div className="profile-info">
-                <p>{request_author.first_name}</p>
+                <p>{this.props.confirmation.selectedPost.author.first_name}</p>
                 <div id="profile-rating">
-                  {this.renderRating(request_author)}
+                  {this.renderRating(
+                    this.props.confirmation.selectedPost.author
+                  )}
                 </div>
               </div>
             </div>

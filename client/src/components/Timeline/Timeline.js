@@ -6,7 +6,7 @@ import NewRequest from "../NewRequest/NewRequest";
 import ConfirmationModal from "./ConfirmationModal";
 import Sidebar from "../Sidebar/Sidebar";
 
-import { updateUser } from "../../actions/user";
+import { acceptPost } from "../../actions/user";
 
 import { filterPosts, deletePost } from "../../actions/timeline";
 
@@ -70,13 +70,7 @@ class Timeline extends React.Component {
      This function will require database calls in later phases which will fix our current deleting issue. */
   handleAcceptPost = (post) => {
     this.handleCloseModal();
-    const updated_user = {
-      ...this.props.app.state.currentUser,
-      active_post: post,
-    };
-
-    deletePost(this.props.posts_state, post.id);
-    updateUser(this.props.users_state, updated_user);
+    this.props.acceptPost(post._id, currentUser._id);
   };
 
   /* This function handles the changing of the page */
@@ -207,4 +201,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Timeline);
+export default connect(mapStateToProps, { acceptPost })(Timeline);

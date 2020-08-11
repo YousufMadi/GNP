@@ -38,13 +38,13 @@ export const getPosts = () => {
 
 /*
 
-Add a post to the timeline's list of state (currently just state)
+Action creator to send a request to create a post to the server
 
 Arguments:
   - posts_state: The current state of the timeline in the application
   - new_post: The post being added
 
-  This will be replaced by a call to the database to add the user
+  Response is the new list of posts that are not completed
 
 */
 
@@ -71,13 +71,13 @@ export const createPost = (new_post, currentUserID) => {
 
 /*
 
-Delete a user post (currently just state)
+Action creator to send a request to delete a post to the server
 
 Arguments:
-  - posts_state: The current state of the timeline in the application
+  - currentUserID: The current user's id
   - id: The id of the post to be deleted
 
-  This will be replaced by a call to the database to add the user
+  Response is the new list of posts that are not completed
 
 */
 export const deletePost = (id, currentUserID) => {
@@ -105,14 +105,14 @@ export const deletePost = (id, currentUserID) => {
 
 /*
 
-Edit a post in the timeline (currently just state)
+Action creator to send a request to the server to edit a post
 
 Arguments:
-  - posts_state: The current state of the timeline in the application
-  - id: The id of the post being modified
-  - post: The updated post
+  - currentUserID: The current user's id
+  - postID: The id of the post being modified
+  - editedPost: The updated post
 
-  This will be replaced by a call to the database to add the user
+  Response is the new list of posts that are not completed
 
 */
 
@@ -141,14 +141,12 @@ export const editPost = (postID, editedPost, currentUserID) => {
 
 /*
 
-Filter posts in the timeline (currently just state)
+Filter posts in the timeline
 
 Arguments:
   - posts: The filtered posts
   - posts_state: The current state of the timeline in the application
   - currentUserLocation: The current location of the user
-
-  This will be replaced by a call to the database to add the user
 
 */
 
@@ -203,26 +201,6 @@ export const filterPosts = (posts, posts_state, currentUserLocation) => {
     });
   }
   return newFilteredPosts;
-};
-
-/*
-
-Get the author of a post
-
-Arguments:
-  - post: The post who's author is being fetched
-  - users: The user state in the application
-
-  This will be replaced by a call to the database to add the user
-
-*/
-export const fetchPostAuthor = (post, users) => {
-  for (let i = 0; i < users.length; i++) {
-    if (users[i].id === post.author) {
-      return users[i];
-    }
-  }
-  return null;
 };
 
 /*

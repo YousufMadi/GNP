@@ -7,7 +7,8 @@ export const PAYLOAD_TYPES = {
   UPDATE_USER: "UPDATE_USER",
   DELETE_USER: "DELETE_USER",
   SET_COOKIE: "SET_COOKIE",
-  SET_PROFILE_PIC: "SET_PROFILE_PIC"
+  SET_PROFILE_PIC: "SET_PROFILE_PIC",
+  ACCEPT_POST: "ACCEPT_POST",
 };
 
 export const readCookie = () => {
@@ -25,17 +26,14 @@ export const readCookie = () => {
   };
 };
 
-
 /*
 
-Add a user to the "database" (currently just state)
+Add a user to the database
 
 Arguments:
-  - users_state: The current state of users in the application
-  - first_name: The first name of the user being added
-  - last_name: The last name of the user being added
-  - email: The email of the user being added
-  - password: The password of the user being added
+  - signupComp: The object containing the user's sign up information
+
+Response is the new user object created
 */
 
 export const register = (signupComp) => {
@@ -61,13 +59,12 @@ export const register = (signupComp) => {
 };
 /*
 
-Log in given user
+Log in a given user
 
 Arguments:
-  - users_state: The current state of users in the application
-  - user: The user to be logged in
+  - loginComp: The login credentials provided by the user
 
-  This will be replaced by a call to the database to add the user
+Response is the user object if successfully logged in
 
 */
 
@@ -97,9 +94,14 @@ export const login = (loginComp) => {
 };
 
 /*
+
+Action creator to update the user. 
+
 Arguments:
   - id: The id of the user to be updated
   - updateComp: The state of the updated user
+
+Response is the updated user object
 */
 
 export const updateUser = (id, updateComp) => {
@@ -126,6 +128,14 @@ export const updateUser = (id, updateComp) => {
   };
 };
 
+/*
+
+Get a the user in the database.
+
+Arguments:
+    - id: The id of the user to fetch
+*/
+
 export const getUserById = async (id) => {
   const url = "/users/" + id;
   const request = new Request(url, {
@@ -135,7 +145,6 @@ export const getUserById = async (id) => {
       "Content-Type": "application/json",
     },
   });
-
   // Send the request with fetch()
   const response = await fetch(request);
   if (response.status !== 200) {
@@ -145,6 +154,12 @@ export const getUserById = async (id) => {
     return data;
   }
 };
+
+/*
+
+Get all the users in the database. Used in admin view.
+
+*/
 
 export const getAllUsers = async () => {
   const url = "/users";
@@ -168,23 +183,10 @@ export const getAllUsers = async () => {
 
 Log out the currently logged in user
 
-Arguments:
-  - users_state: The current state of users in the application
-  - user: The user to be logged out
-
-  This will be replaced by a call to the database to add the user
-
 */
-
-// export const logout = () => {
-//   return {
-//     type: PAYLOAD_TYPES.LOGOUT,
-//   };
-// };
 
 export const logout = () => {
   return async (dispatch) => {
-    // Create our request constructor with all the parameters we need
     const url = "/users/logout";
     fetch(url)
       .then((res) => {
@@ -202,10 +204,10 @@ export const logout = () => {
 Delete the user corresponding to the given id.
 
 Arguments:
-  - users_state: The current state of users in the application
-  - email: The email of the user to delete
+  - id: The id of the user to delete
 
-  This will be replaced by a call to the database to add the user
+  Response is the new list of users to update the state of the component
+
 
 */
 
@@ -236,10 +238,9 @@ Promote the user corresponding to the given email to admin role. If email
 does not exist in the state, notify the user and do nothing
 
 Arguments:
-  - users_state: The current state of users in the application
-  - user_to_promote_email: The email of the user to make admin
+  - email: The email of the user to make admin
 
-  This will be replaced by a call to the database to add the user
+  Response is the new list of users to update the state of the component
 
 */
 
@@ -264,4 +265,36 @@ export const promoteUser = async (email) => {
   } else {
     notifyError("Internal Error");
   }
+};
+
+/*
+
+Accept a request action creator
+
+Arguments:
+  - post: The id of the post to request
+  - user: The current user's id
+
+  Response is the updated current user with an active post
+
+*/
+export const acceptPost = (post, user) => {
+  return async (dispatch) => {
+    const request = new Request(`/post/accept/${post}`, {
+      method: "patch",
+      body: JSON.stringify({ user }),
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+    });
+    const response = await fetch(request);
+    if (response.status === 200) {
+      const data = await response.json();
+      dispatch({ type: PAYLOAD_TYPES.ACCEPT_POST, payload: data });
+      notifySuccess("Request accepted");
+    } else {
+      notifyError("Something went wrong accepting this request");
+    }
+  };
 };

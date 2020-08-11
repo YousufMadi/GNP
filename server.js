@@ -312,7 +312,7 @@ app.delete("/users/:id", (req, res) => {
    TODO: DO NOT SEND PASSWORD TO CLIENT WHEN POPULATING AUTHOR
 */
 app.get("/posts", (req, res) => {
-  Post.find()
+  Post.find({ completed: false })
     .populate("author")
     .exec((err, transaction) => {
       if (err) {
@@ -343,9 +343,10 @@ app.post("/posts", (req, res) => {
     time: moment(),
     items: req.body.post.items,
     location: req.body.post.location,
+    completed: false,
   })
     .then((post) => {
-      Post.find()
+      Post.find({ completed: false })
         .populate("author")
         .exec((err, transaction) => {
           if (err) {
@@ -374,7 +375,7 @@ app.put("/posts/:id", (req, res) => {
           post.items = req.body.post.items;
           post.reimbursement = req.body.post.reimbursement;
           post.save().then((p) => {
-            Post.find()
+            Post.find({ completed: false })
               .populate("author")
               .exec((err, transaction) => {
                 if (err) {
@@ -405,7 +406,7 @@ app.delete("/posts", (req, res) => {
       Post.findById(req.body.post).then((post) => {
         if (user.admin || post.author.toString() === req.body.user) {
           Post.findByIdAndDelete(req.body.post).then((post) => {
-            Post.find()
+            Post.find({ completed: false })
               .populate("author")
               .exec((err, transaction) => {
                 if (err) {

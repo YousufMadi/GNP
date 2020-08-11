@@ -36,6 +36,10 @@ const PostSchema = new mongoose.Schema({
     type: Object,
     required: true,
   },
+  completed: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Post = mongoose.model("Post", PostSchema);
