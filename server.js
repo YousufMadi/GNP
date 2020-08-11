@@ -25,7 +25,7 @@ const multipart = require("connect-multiparty");
 const multipartMiddleware = multipart();
 
 // yup validation
-const { registrationSchema } = require("./client/src/components/Auth/Auth");
+const { registrationSchema } = require("./Auth");
 
 // cloudinary: configure using credentials found on your Cloudinary Dashboard
 // sign up for a free account here: https://cloudinary.com/users/register/free
@@ -205,38 +205,34 @@ app.post("/users", (req, res) => {
     email: req.body.email,
     password: req.body.password,
   });
-  registrationSchema
-    .isValid(yupRegister)
-    .then((isValid) => {
-      if (isValid) {
-        const newUser = new User({
-          // name: req.body.name,
-          first_name: req.body.first_name,
-          last_name: req.body.last_name,
-          email: req.body.email,
-          password: req.body.password,
-          // profile_picture: req.body.profile_picture,
-          // admin: req.body.admin,
-        });
 
-        newUser.save().then(
-          (user) => {
-            /* THIS IS CAUSING ERROR. WHY?
-          req.session.user = user._id;
-          req.session.email = user.email; */
-            res.json({ currentUser: user });
-          },
-          (e) => {
-            res.sendStatus(401);
-          }
-        );
-      } else {
-        res.status(400).send("Invalid Form");
-      }
-    })
-    .catch((e) => {
-      res.sendStatus(500);
+  registrationSchema.validate(yupRegister).then((good) => {
+    console.log(good);
+
+    const newUser = new User({
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      email: req.body.email,
+      password: req.body.password,
+      // profile_picture: req.body.profile_picture,
+      // admin: req.body.admin,
     });
+
+    newUser.save().then(
+      (user) => {
+        /* THIS IS CAUSING ERROR. WHY?
+      req.session.user = user._id;
+      req.session.email = user.email; */
+        res.json({ currentUser: user });
+      },
+      (e) => {
+        res.sendStatus(400);
+      }
+    );
+  }).catch((bad) => {
+    console.log(bad.errors);
+    res.status(400).send("Invalid Form");
+  });
 });
 
 /* Route to make a user an admin using email passed
