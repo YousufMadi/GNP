@@ -15,6 +15,7 @@ import SettingsAdmin from "./SettingsAdmin/SettingsAdmin";
 import { readCookie } from "../actions/user";
 
 import "../stylesheets/shared.css";
+import AuthBox from "./Auth/AuthBox";
 
 class App extends React.Component {
   /*
@@ -45,7 +46,7 @@ class App extends React.Component {
     this.props.readCookie();
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   render() {
     return (
@@ -54,8 +55,8 @@ class App extends React.Component {
           <Switch>
             <Route path="/" exact component={() => <Home />} />
             <Route path="/feed" component={() => <Feed />} />
-            <Route exact path="/signup" component={() => <Signup />} />
-            <Route exact path="/login" component={() => <Login />} />
+            {/* <Route exact path="/signup" component={() => <Signup />} /> */}
+            <Route exact path="/login" component={() => <AuthBox />} />
             <Route exact path="/settings" component={() => <Settings />} />
             <Route exact path="/admin" component={() => <SettingsAdmin />} />
             <Route
