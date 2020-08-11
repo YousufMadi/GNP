@@ -117,7 +117,7 @@ class Timeline extends React.Component {
   }
   renderGoogleMap(filteredPosts) {
     return (
-      <>
+      <div className="google-maps-container">
         <div
           className={`google-maps-section ${this.state.showMap ? "" : "hide"}`}
         >
@@ -138,7 +138,7 @@ class Timeline extends React.Component {
             {this.state.showMap ? "Hide Map" : "Show Map"}
           </button>
         </div>
-      </>
+      </div>
     );
   }
 
