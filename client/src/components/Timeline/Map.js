@@ -77,7 +77,7 @@ class Map extends React.Component {
       return this.props.posts.map((post) => (
         <>
           <Circle
-            key={post.id}
+            key={post._id}
             radius={2000}
             center={{ lat: post.location.lat, lng: post.location.lng }}
             onClick={() => {

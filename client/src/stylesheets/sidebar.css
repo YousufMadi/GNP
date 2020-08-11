@@ -1,17 +1,17 @@
-.sidebar{
+.sidebar {
   position: fixed;
-  width:25%;
+  width: 25%;
   background-color: #152238;
   height: 100%;
   color: #fff;
   box-shadow: 0 0px 10px 2px rgba(0, 0, 0, 0.2);
   z-index: 10;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 /* Profile header */
 
-.profile-header{
+.profile-header {
   display: inline-block;
   text-align: center;
   width: 30%;
@@ -19,34 +19,34 @@
   font-size: xx-small;
 }
 
-.profile-header img{
+.profile-header img {
   display: inline-block;
   height: 80px;
   width: 80px;
   border-radius: 10%;
 }
 
-.profile-info{
+.profile-info {
   margin-top: 0.3em;
   text-align: center;
 }
 
-#profile-rating{
+#profile-rating {
   margin-top: 0.3em;
 }
 
-#profile-rating i{
+#profile-rating i {
   color: rgba(156, 156, 43, 1);
   margin: 0.15em;
 }
 /* Sidebar tabs */
-#sidebar-tabs{
+#sidebar-tabs {
   display: inline-block;
   width: 50%;
   vertical-align: top;
   margin-top: 1em;
 }
-#sidebar-tabs a{
+#sidebar-tabs a {
   background: transparent;
   text-align: center;
   font-size: 11px;
@@ -54,16 +54,16 @@
   display: block;
   color: white;
   text-decoration: none;
-  padding: .575rem 0rem;
+  padding: 0.575rem 0rem;
   transition: background-color 0.2s ease-out;
 }
 
-#sidebar-tabs a:hover{
+#sidebar-tabs a:hover {
   font-size: small;
   background-color: rgba(8, 39, 75, 0.7);
 }
 
-#sidebar-tabs button{
+#sidebar-tabs button {
   font-size: 11px;
   cursor: pointer;
   text-align: center;
@@ -73,31 +73,31 @@
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   background-color: transparent;
-  padding: .575rem 0rem;
+  padding: 0.575rem 0rem;
   transition: background-color 0.2s ease-out;
 }
-#sidebar-tabs button:hover{
+#sidebar-tabs button:hover {
   font-size: small;
   background-color: rgba(8, 39, 75, 0.7);
 }
 
 /* Filter section */
-.filter-section{
+.filter-section {
   width: 95%;
   margin: auto;
 }
 
-.dropdown-filters{
+.dropdown-filters {
   margin-top: 1em;
   display: block;
   width: 100%;
   color: #fff;
 }
 
-.dropdown-filters select{
+.dropdown-filters select {
   display: inline-block;
   width: 32.5%;
-  padding: .5rem .5rem;
+  padding: 0.5rem 0.5rem;
   font-size: 10px;
   line-height: 1;
   color: rgba(255, 255, 255, 0.7);
@@ -110,17 +110,17 @@
   margin-right: 0.075em;
   font-family: inherit;
   box-sizing: border-box;
-  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.dropdown-filters select:focus{
+.dropdown-filters select:focus {
   border-color: #80bdff;
   background-color: rgba(0, 0, 0, 0.05);
   outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25)
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
-.filter-button{
+.filter-button {
   cursor: pointer;
   display: block;
   width: 95%;
@@ -130,46 +130,38 @@
   vertical-align: middle;
   user-select: none;
   border: 1px solid transparent;
-  padding: .375rem .75rem;
+  padding: 0.375rem 0.75rem;
   font-size: small;
   line-height: 1.5;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
   text-transform: none;
   margin: auto;
   margin-top: 0.5em;
   font-family: Arial, Helvetica, sans-serif;
   color: rgba(255, 255, 255, 0.7);
   background-color: rgba(255, 255, 255, 0.1);
-  transition: color .15s ease-in-out, background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.filter-button:hover{
+.filter-button:hover {
   color: rgba(255, 255, 255, 0.9);
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-/* Google Maps */
-.google-maps-section{
-  background-image: url('../images/google-map-placeholder.png');
-  margin: 1em auto;
-  height: 20em;
-  width: 95%;
-}
-
-.marker-description{
-  color: black;
-}
-
 /* Placeholder Configuration */
-.sidebar ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+.sidebar ::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: rgba(255, 255, 255, 0.2);
   opacity: 1; /* Firefox */
 }
 
-.sidebar :-ms-input-placeholder { /* Internet Explorer 10-11 */
+.sidebar :-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
   color: rgba(255, 255, 255, 0.2);
 }
 
-.sidebar ::-ms-input-placeholder { /* Microsoft Edge */
+.sidebar ::-ms-input-placeholder {
+  /* Microsoft Edge */
   color: rgba(255, 255, 255, 0.2);
 }

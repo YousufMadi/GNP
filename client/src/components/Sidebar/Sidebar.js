@@ -1,15 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-//import Map from "./Map";
 import "../../stylesheets/sidebar.css";
 
 import { logout } from "../../actions/user";
-
-/*const keys = {
-  key1: "AIzaSyCx3EBDjdwQ4Gb6698FPEWsTB7bNL_o7Ow",
-  key2: "AIzaSyARRBVg-xS1QeLJMfoCSeQm5At4Q-E7luU",
-};*/
 
 class Sidebar extends React.Component {
   /* Initializing this component's state with 
@@ -122,30 +116,12 @@ class Sidebar extends React.Component {
       </div>
     );
   }
-  renderGoogleMap() {
-    return (
-      <div className="google-maps-section">
-        {/*<Map
-          currentUserLocation={this.props.users_state.currentUserLocation}
-          resetFeedSelectedPost={this.props.resetFeedSelectedPost}
-          highlightedPost={this.props.highlightedPost}
-          active_post={this.props.active_post}
-          posts={this.props.posts}
-          googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${keys.key2}`}
-          loadingElement={<div style={{ height: "100%" }} />}
-          containerElement={<div style={{ height: "100%" }} />}
-          mapElement={<div style={{ height: "100%" }} />}
-        />*/}
-      </div>
-    );
-  }
 
   render() {
     return (
       <div className="sidebar">
         {this.renderProfile()}
         {this.renderFilter()}
-        {this.renderGoogleMap()}
       </div>
     );
   }

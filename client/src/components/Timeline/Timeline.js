@@ -5,10 +5,16 @@ import Request from "../Request/Request";
 import NewRequest from "../NewRequest/NewRequest";
 import ConfirmationModal from "./ConfirmationModal";
 import Sidebar from "../Sidebar/Sidebar";
-
+import Map from "./Map";
 import { acceptPost } from "../../actions/user";
 
 import { filterPosts } from "../../actions/timeline";
+import { notifyError } from "../../Utils/notificationUtils";
+
+const keys = {
+  key1: "AIzaSyCx3EBDjdwQ4Gb6698FPEWsTB7bNL_o7Ow",
+  key2: "AIzaSyARRBVg-xS1QeLJMfoCSeQm5At4Q-E7luU",
+};
 
 class Timeline extends React.Component {
   constructor(props) {
@@ -26,6 +32,8 @@ class Timeline extends React.Component {
     
     */
     this.state = {
+      showMap: true,
+      currentUserLocation: null,
       highlightedPost: null,
       confirmationModal: {
         display: false,
@@ -36,6 +44,18 @@ class Timeline extends React.Component {
     };
     this.handlePageClick = this.handlePageClick.bind(this);
   }
+
+  componentDidMount() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.getUserLocation);
+    } else {
+      notifyError("Geolocation is not supported on this browser");
+    }
+  }
+
+  getUserLocation = (position) => {
+    this.setState({ currentUserLocation: position.coords });
+  };
 
   /* Function responsible for returning the filtered posts */
   filterPosts() {
@@ -80,6 +100,12 @@ class Timeline extends React.Component {
     });
   }
 
+  toggleMap = () => {
+    this.setState({
+      showMap: !this.state.showMap,
+    });
+  };
+
   /* If the request list empty due to no requests or filter being to strict,
      this function is responsible for rendering an empty message instead. */
   renderEmptyMessage() {
@@ -87,6 +113,32 @@ class Timeline extends React.Component {
       <div className="empty-message">
         No requests exist or match your filter.
       </div>
+    );
+  }
+  renderGoogleMap(filteredPosts) {
+    return (
+      <>
+        <div
+          className={`google-maps-section ${this.state.showMap ? "" : "hide"}`}
+        >
+          <Map
+            currentUserLocation={this.state.currentUserLocation}
+            resetFeedSelectedPost={this.handleHighlightedPostChange}
+            highlightedPost={this.state.highlightedPost}
+            active_post={false}
+            posts={filteredPosts}
+            googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${keys.key2}`}
+            loadingElement={<div style={{ height: "100%" }} />}
+            containerElement={<div style={{ height: "100%" }} />}
+            mapElement={<div style={{ height: "100%" }} />}
+          />
+        </div>
+        <div>
+          <button className="toggle-map" onClick={this.toggleMap}>
+            {this.state.showMap ? "Hide Map" : "Show Map"}
+          </button>
+        </div>
+      </>
     );
   }
 
@@ -163,14 +215,9 @@ class Timeline extends React.Component {
       });
       return (
         <>
-          <Sidebar
-            resetFeedSelectedPost={this.handleHighlightedPostChange}
-            highlightedPost={this.state.highlightedPost}
-            active_post={false}
-            posts={filteredPosts}
-            changeFilterState={this.props.changeFilterState}
-          />
+          <Sidebar changeFilterState={this.props.changeFilterState} />
           <div className="timeline">
+            {this.renderGoogleMap(currentPosts)}
             <NewRequest currentUser={this.props.currentUser} />
             {currentPosts.length === 0 ? (
               this.renderEmptyMessage()
