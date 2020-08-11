@@ -1,3 +1,5 @@
+//import { registrationSchema } from './client/src/components/Auth/Auth';
+
 // express server
 const express = require("express");
 const app = express();
@@ -21,6 +23,9 @@ const session = require("express-session");
 // multipart middleware: allows you to access uploaded file from req.file
 const multipart = require("connect-multiparty");
 const multipartMiddleware = multipart();
+
+// yup validation
+const { registrationSchema } = require("./client/src/components/Auth/Auth");
 
 // cloudinary: configure using credentials found on your Cloudinary Dashboard
 // sign up for a free account here: https://cloudinary.com/users/register/free
@@ -67,12 +72,12 @@ app.post("/image/:id", async (req, res) => {
             res.sendStatus(200);
           })
           .catch((error) => {
-            res.status(500).send("Internal Server Error"); // server error
+            res.status(500).send("Internal Server Error!"); // server error
           });
       }
     })
     .catch((error) => {
-      res.status(500).send("Internal Server Error"); // server error
+      res.status(500).send("Internal Server Error!"); // server error
     });
 });
 
@@ -194,27 +199,40 @@ app.get("/users/:id", (req, res) => {
   TODO: POST VALIDATION
 */
 app.post("/users", (req, res) => {
-  const newUser = new User({
-    // name: req.body.name,
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
+  const yupRegister = registrationSchema.cast({
+    firstName: req.body.first_name,
+    lastName: req.body.last_name,
     email: req.body.email,
-    password: req.body.password,
-    // profile_picture: req.body.profile_picture,
-    // admin: req.body.admin,
-  });
+    password: req.body.password
+  })
+  const isValid = egistrationSchema.isValid(yupRegister).then();
+  console.log(isValid);
 
-  newUser.save().then(
-    (user) => {
-      /* THIS IS CAUSING ERROR. WHY?
-      req.session.user = user._id;
-      req.session.email = user.email; */
-      res.json({ currentUser: user });
-    },
-    (e) => {
-      res.sendStatus(400);
-    }
-  );
+  if (isValid) {
+    const newUser = new User({
+      // name: req.body.name,
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      email: req.body.email,
+      password: req.body.password,
+      // profile_picture: req.body.profile_picture,
+      // admin: req.body.admin,
+    });
+
+    newUser.save().then(
+      (user) => {
+        /* THIS IS CAUSING ERROR. WHY?
+        req.session.user = user._id;
+        req.session.email = user.email; */
+        res.json({ currentUser: user });
+      },
+      (e) => {
+        res.sendStatus(401);
+      }
+    );
+  } else {
+    res.status(401).send("Invalid Form");
+  }
 });
 
 /* Route to make a user an admin using email passed

@@ -30,6 +30,7 @@ class Login extends React.Component {
 
   formSubmit = (e) => {
     e.preventDefault();
+    console.log(this.state);
     this.props.login(this.state);
   };
 
