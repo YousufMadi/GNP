@@ -1,4 +1,5 @@
 import { notifySuccess, notifyError } from "../Utils/notificationUtils";
+import { TL_PAYLOAD_TYPES } from "./timeline";
 
 export const PAYLOAD_TYPES = {
   REGISTER: "REGISTER",
@@ -9,6 +10,7 @@ export const PAYLOAD_TYPES = {
   SET_COOKIE: "SET_COOKIE",
   SET_PROFILE_PIC: "SET_PROFILE_PIC",
   ACCEPT_POST: "ACCEPT_POST",
+  COMPLETE_POST: "COMPLETE_POST",
 };
 
 export const readCookie = () => {
@@ -280,9 +282,9 @@ Arguments:
 */
 export const acceptPost = (post, user) => {
   return async (dispatch) => {
-    const request = new Request(`/post/accept/${post}`, {
-      method: "patch",
-      body: JSON.stringify({ user }),
+    const request = new Request(`/posts/accept/${post}`, {
+      method: "put",
+      body: JSON.stringify({ user: user }),
       headers: {
         Accept: "application/json, text/plain, */*",
         "Content-Type": "application/json",
@@ -295,6 +297,28 @@ export const acceptPost = (post, user) => {
       notifySuccess("Request accepted");
     } else {
       notifyError("Something went wrong accepting this request");
+    }
+  };
+};
+
+export const completePost = (post, user) => {
+  return async (dispatch) => {
+    const request = new Request(`/posts/complete/${post}`, {
+      method: "put",
+      body: JSON.stringify({ user: user }),
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+    });
+    const response = await fetch(request);
+    if (response.status === 200) {
+      const data = await response.json();
+      dispatch({ type: PAYLOAD_TYPES.COMPLETE_POST, payload: data });
+      dispatch({ type: TL_PAYLOAD_TYPES.GET_POSTS, payload: data.posts });
+      notifySuccess("Request completed.");
+    } else {
+      notifyError("Something went wrong completing this request");
     }
   };
 };

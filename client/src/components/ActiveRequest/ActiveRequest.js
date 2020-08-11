@@ -5,8 +5,7 @@ import { connect } from "react-redux";
 
 import "../../stylesheets/activerequest.css";
 
-import { updateUser } from "../../actions/user";
-import { fetchPostAuthor } from "../../actions/timeline";
+import { completePost } from "../../actions/user";
 
 class ActiveRequest extends React.Component {
   state = {
@@ -14,18 +13,17 @@ class ActiveRequest extends React.Component {
   };
 
   completeRequest = () => {
-    const updated_user = {
-      ...this.props.currentUser,
-      active_post: null,
-    };
-    updateUser(this.props.users_state, updated_user);
+    this.props.completePost(
+      this.props.currentUser.active_post._id,
+      this.props.currentUser._id
+    );
   };
 
   renderItems = () => {
     return this.props.currentUser.active_post.items.map((item) => {
       return (
         <li key={uuidv4()} className="request-item">
-          {item}
+          {item.name}
         </li>
       );
     });
@@ -38,7 +36,6 @@ class ActiveRequest extends React.Component {
           <Sidebar
             active_post={true}
             posts={[this.props.currentUser.active_post]}
-            users_state={this.props.users_state}
             changeFilterState={this.props.changeFilterState}
           />
           <div className="timeline">
@@ -82,4 +79,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(ActiveRequest);
+export default connect(mapStateToProps, { completePost })(ActiveRequest);

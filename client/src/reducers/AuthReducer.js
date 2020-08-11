@@ -36,6 +36,16 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         currentUser: action.payload.currentUser,
       };
+    case PAYLOAD_TYPES.ACCEPT_POST:
+      return {
+        ...state,
+        currentUser: action.payload.currentUser,
+      };
+    case PAYLOAD_TYPES.COMPLETE_POST:
+      return {
+        ...state,
+        currentUser: action.payload.currentUser,
+      };
     default:
       return state;
   }

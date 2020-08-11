@@ -370,23 +370,27 @@ app.put("/posts/:id", (req, res) => {
   User.findById(req.body.user)
     .then((user) => {
       Post.findById(req.params.id).then((post) => {
-        if (post.author.toString() === req.body.user) {
-          post.description = req.body.post.description;
-          post.items = req.body.post.items;
-          post.reimbursement = req.body.post.reimbursement;
-          post.save().then((p) => {
-            Post.find({ completed: false })
-              .populate("author")
-              .exec((err, transaction) => {
-                if (err) {
-                  res.sendStatus(500);
-                } else {
-                  res.json(transaction);
-                }
-              });
-          });
+        if (!post) {
+          res.sendStatus(404);
         } else {
-          res.sendStatus(400);
+          if (post.author.toString() === req.body.user) {
+            post.description = req.body.post.description;
+            post.items = req.body.post.items;
+            post.reimbursement = req.body.post.reimbursement;
+            post.save().then((p) => {
+              Post.find({ completed: false })
+                .populate("author")
+                .exec((err, transaction) => {
+                  if (err) {
+                    res.sendStatus(500);
+                  } else {
+                    res.json(transaction);
+                  }
+                });
+            });
+          } else {
+            res.sendStatus(400);
+          }
         }
       });
     })
@@ -403,28 +407,98 @@ app.put("/posts/:id", (req, res) => {
 app.delete("/posts", (req, res) => {
   User.findById(req.body.user)
     .then((user) => {
-      Post.findById(req.body.post).then((post) => {
-        if (user.admin || post.author.toString() === req.body.user) {
-          Post.findByIdAndDelete(req.body.post).then((post) => {
-            Post.find({ completed: false })
-              .populate("author")
-              .exec((err, transaction) => {
-                if (err) {
-                  res.sendStatus(500);
-                } else {
-                  res.json(transaction);
-                }
+      if (!user) {
+        res.sendStatus(404);
+      } else {
+        Post.findById(req.body.post).then((post) => {
+          if (!post) {
+            res.sendStatus(404);
+          } else {
+            if (user.admin || post.author.toString() === req.body.user) {
+              Post.findByIdAndDelete(req.body.post).then((post) => {
+                Post.find({ completed: false })
+                  .populate("author")
+                  .exec((err, transaction) => {
+                    if (err) {
+                      res.sendStatus(500);
+                    } else {
+                      res.json(transaction);
+                    }
+                  });
               });
-          });
-        } else {
-          res.sendStatus(400);
-        }
-      });
+            } else {
+              res.sendStatus(400);
+            }
+          }
+        });
+      }
     })
     .catch((e) => {
       res.sendStatus(500);
     });
 });
+
+app.put("/posts/accept/:id", (req, res) => {
+  Post.findById(req.params.id).then((post) => {
+    if (post) {
+      User.findById(req.body.user).then((user) => {
+        if (user) {
+          user.active_post = post._id;
+          user.save().then((savedUser) => {
+            User.findById(savedUser._id)
+              .populate({
+                path: "active_post",
+                model: "Post",
+                populate: { path: "author", model: "User" },
+              })
+              .exec((err, transaction) => {
+                if (err) {
+                  res.sendStatus(500);
+                } else {
+                  res.json({ currentUser: transaction });
+                }
+              });
+          });
+        } else {
+          res.sendStatus(404);
+        }
+      });
+    } else {
+      res.sendStatus(404);
+    }
+  });
+});
+
+app.put("/posts/complete/:id", (req, res) => {
+  Post.findById(req.params.id).then((post) => {
+    if (post) {
+      post.completed = true;
+      post.save().then((savedPost) => {
+        User.findById(req.body.user).then((user) => {
+          if (user) {
+            user.active_post = null;
+            user.save().then((savedUser) => {
+              Post.find({ completed: false })
+                .populate("author")
+                .exec((err, transaction) => {
+                  if (err) {
+                    res.sendStatus(500);
+                  } else {
+                    res.json({ currentUser: savedUser, posts: transaction });
+                  }
+                });
+            });
+          } else {
+            res.sendStatus(404);
+          }
+        });
+      });
+    } else {
+      res.sendStatus(404);
+    }
+  });
+});
+
 /****************** WEBPAGE ROUTES ************************/
 
 // Serve the build

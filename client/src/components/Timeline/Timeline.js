@@ -8,7 +8,7 @@ import Sidebar from "../Sidebar/Sidebar";
 
 import { acceptPost } from "../../actions/user";
 
-import { filterPosts, deletePost } from "../../actions/timeline";
+import { filterPosts } from "../../actions/timeline";
 
 class Timeline extends React.Component {
   constructor(props) {
@@ -70,7 +70,7 @@ class Timeline extends React.Component {
      This function will require database calls in later phases which will fix our current deleting issue. */
   handleAcceptPost = (post) => {
     this.handleCloseModal();
-    this.props.acceptPost(post._id, currentUser._id);
+    this.props.acceptPost(post._id, this.props.currentUser._id);
   };
 
   /* This function handles the changing of the page */
