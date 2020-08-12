@@ -1,100 +1,183 @@
-import ServerAPI from "../api/ServerAPI";
 import { notifySuccess, notifyError } from "../Utils/notificationUtils";
+import { TL_PAYLOAD_TYPES } from "./timeline";
 
-/* 
-
-ALL THE FUNCTIONS BEING EXPORTED IN THIS FILE REQUIRE SERVER CALLS.
-FOR NOW, THEY SIMPLY MODIFY THE USERS STATE IN APP.
-
-*/
-
-/*
-
-Add a user to the "database" (currently just state)
-
-Arguments:
-  - users_state: The current state of users in the application
-  - first_name: The first name of the user being added
-  - last_name: The last name of the user being added
-  - email: The email of the user being added
-  - password: The password of the user being added
-
-  This will be replaced by a call to the database to add the user
-
-*/
-export const addUser = async (first_name, last_name, email, password) => {
-  const fullname = first_name + " " + last_name;
-  const newUser = {
-    name: fullname,
-    email,
-    password,
-    profile_picture:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSf_Bf0-x44hsGqqcQwrTcNeLUSnYjlDuoql-hQHydDdBwxeCT2&usqp=CAU",
-  };
-  const response = await ServerAPI({
-    method: "post",
-    url: "/users",
-    data: newUser,
-  });
-  if (response.status === 200) {
-    // SET THE CURRENT USER STATE
-  } else {
-    // DISPLAY ERROR MESSAGE
-  }
+export const PAYLOAD_TYPES = {
+  REGISTER: "REGISTER",
+  LOGIN: "LOGIN",
+  LOGOUT: "LOGOUT",
+  UPDATE_USER: "UPDATE_USER",
+  DELETE_USER: "DELETE_USER",
+  SET_COOKIE: "SET_COOKIE",
+  SET_PROFILE_PIC: "SET_PROFILE_PIC",
+  ACCEPT_POST: "ACCEPT_POST",
+  COMPLETE_POST: "COMPLETE_POST",
 };
 
-/*
-
-Update a user from the "database" (Currently just state)
-
-Arguments:
-  - users_state: The current state of users in the application
-  - user: The user being updated
-  - changeCurrentUser: Whether the currently logged in user is being
-                      modified
-  
-
-  This will be replaced by a call to the database to add the user
-
-*/
-
-export const updateUser = (users_state, user, changeCurrentUser = true) => {
-  let users = [...users_state.users];
-  for (let i = 0; i < users.length; i++) {
-    if (users[i].id === user.id) {
-      users[i] = user;
-      break;
+export const readCookie = () => {
+  return async (dispatch) => {
+    const url = "/users/check-session";
+    const response = await fetch(url);
+    if (response.status === 400) {
+      notifyError("Something went wrong");
+    } else if (response.status === 500 || response.status === 404) {
+      notifyError("Something went wrong");
+    } else if (response.status === 200) {
+      const data = await response.json();
+      dispatch({ type: PAYLOAD_TYPES.SET_COOKIE, payload: data });
     }
-  }
-
-  users_state.setState({
-    currentUser: changeCurrentUser ? user : users_state.currentUser,
-    users,
-  });
+  };
 };
 
 /*
 
-Log in given user
+Add a user to the database
 
 Arguments:
-  - users_state: The current state of users in the application
-  - user: The user to be logged in
+  - signupComp: The object containing the user's sign up information
 
-  This will be replaced by a call to the database to add the user
+Response is the new user object created
+*/
+
+export const register = (signupComp) => {
+  return async (dispatch) => {
+    const request = new Request("/users", {
+      method: "post",
+      body: JSON.stringify(signupComp),
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+    });
+    const response = await fetch(request);
+    if (response.status === 400) {
+      notifyError("Invalid login credentials");
+    } else if (response.status === 500 || response.status === 404) {
+      notifyError("Something went wrong");
+    } else if (response.status === 200) {
+      const data = await response.json();
+      dispatch({ type: PAYLOAD_TYPES.LOGIN, payload: data });
+    }
+  };
+};
+/*
+
+Log in a given user
+
+Arguments:
+  - loginComp: The login credentials provided by the user
+
+Response is the user object if successfully logged in
 
 */
 
-export const handleUserLogin = async (email, password) => {
-  const response = await ServerAPI({
-    method: "post",
-    url: "/users/login",
-    data: { email, password },
+export const login = (loginComp) => {
+  return async (dispatch) => {
+    // Create our request constructor with all the parameters we need
+    const request = new Request("/users/login", {
+      method: "post",
+      body: JSON.stringify(loginComp),
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+    });
+    // Send the request with fetch()
+    const response = await fetch(request);
+    if (response.status === 400) {
+      notifyError("Invalid login credentials");
+    } else if (response.status === 500 || response.status === 404) {
+      notifyError("Something went wrong");
+    } else if (response.status === 200) {
+      const data = await response.json();
+      dispatch({ type: PAYLOAD_TYPES.LOGIN, payload: data });
+      notifySuccess("Login succesfully");
+    }
+  };
+};
+
+/*
+
+Action creator to update the user. 
+
+Arguments:
+  - id: The id of the user to be updated
+  - updateComp: The state of the updated user
+
+Response is the updated user object
+*/
+
+export const updateUser = (id, updateComp) => {
+  return async (dispatch) => {
+    const url = "/users/" + id;
+    const request = new Request(url, {
+      method: "PATCH",
+      body: JSON.stringify(updateComp),
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+    });
+    const response = await fetch(request);
+    if (response.status === 400) {
+      notifyError("Profile not updated due to invalid information");
+    } else if (response.status === 500 || response.status === 404) {
+      notifyError("Something went wrong");
+    } else if (response.status === 200) {
+      const data = await response.json();
+      dispatch({ type: PAYLOAD_TYPES.UPDATE_USER, payload: data });
+      notifySuccess("Profile succesfully updated");
+    }
+  };
+};
+
+/*
+
+Get a the user in the database.
+
+Arguments:
+    - id: The id of the user to fetch
+*/
+
+export const getUserById = async (id) => {
+  const url = "/users/" + id;
+  const request = new Request(url, {
+    method: "get",
+    headers: {
+      Accept: "application/json, text/plain, */*",
+      "Content-Type": "application/json",
+    },
   });
-  if (response.status === 200) {
-    // SET THE CURRENT USER STATE
+  // Send the request with fetch()
+  const response = await fetch(request);
+  if (response.status !== 200) {
+    notifyError("Internal server error - couldn't find user");
   } else {
-    // DISPLAY ERROR MESSAGE
+    const data = await response.json();
+    return data;
+  }
+};
+
+/*
+
+Get all the users in the database. Used in admin view.
+
+*/
+
+export const getAllUsers = async () => {
+  const url = "/users";
+  const request = new Request(url, {
+    method: "get",
+    headers: {
+      Accept: "application/json, text/plain, */*",
+      "Content-Type": "application/json",
+    },
+  });
+  const response = await fetch(request);
+  if (response.status === 200) {
+    const data = await response.json();
+    return data;
+  } else {
+    notifyError("Something went wrong while getting users data");
   }
 };
 
@@ -102,48 +185,52 @@ export const handleUserLogin = async (email, password) => {
 
 Log out the currently logged in user
 
-Arguments:
-  - users_state: The current state of users in the application
-  - user: The user to be logged out
-
-  This will be replaced by a call to the database to add the user
-
 */
 
-export const handleUserLogout = (users_state) => {
-  users_state.setState({ currentUser: null });
+export const logout = () => {
+  return async (dispatch) => {
+    const url = "/users/logout";
+    fetch(url)
+      .then((res) => {
+        dispatch({ type: PAYLOAD_TYPES.LOGOUT });
+        notifySuccess("Logout successful");
+      })
+      .catch((error) => {
+        notifyError("Could not log out");
+      });
+  };
 };
 
 /*
 
-Delete the user corresponding to the given email. If email
-does not exist in the state, notify the user and do nothing
+Delete the user corresponding to the given id.
 
 Arguments:
-  - users_state: The current state of users in the application
-  - email: The email of the user to delete
+  - id: The id of the user to delete
 
-  This will be replaced by a call to the database to add the user
+  Response is the new list of users to update the state of the component
+
 
 */
 
-export const deleteUser = (users_state, email) => {
-  if (users_state.currentUser.email !== email) {
-    let users = [...users_state.users];
-    let deletedUser = users.filter((users) => users.email === email);
-    let newUsers = users.filter((users) => users.email !== email);
-    notifySuccess(
-      deletedUser[0].first_name +
-        " " +
-        deletedUser[0].last_name +
-        " has been deleted"
-    );
+export const deleteUser = async (id) => {
+  const url = "/users/" + id;
+  const request = new Request(url, {
+    method: "delete",
+    headers: {
+      Accept: "application/json, text/plain, */*",
+      "Content-Type": "application/json",
+    },
+  });
 
-    users_state.setState({
-      users: newUsers,
-    });
+  // Send the request with fetch()
+  const response = await fetch(request);
+  if (response.status === 200) {
+    notifySuccess("User has been deleted");
+    const data = await response.json();
+    return data;
   } else {
-    notifyError("You cannot delete your self");
+    notifyError("Something went wrong deleting the user");
   }
 };
 
@@ -153,32 +240,85 @@ Promote the user corresponding to the given email to admin role. If email
 does not exist in the state, notify the user and do nothing
 
 Arguments:
-  - users_state: The current state of users in the application
-  - user_to_promote_email: The email of the user to make admin
+  - email: The email of the user to make admin
 
-  This will be replaced by a call to the database to add the user
+  Response is the new list of users to update the state of the component
 
 */
 
-export const promoteUser = (users_state, user_to_promote_email) => {
-  let check = false;
-  let newUser;
+export const promoteUser = async (email) => {
+  const url = "/users";
+  const request = new Request(url, {
+    method: "put",
+    body: JSON.stringify({ email: email }),
+    headers: {
+      Accept: "application/json, text/plain, */*",
+      "Content-Type": "application/json",
+    },
+  });
+  const response = await fetch(request);
+  if (response.status === 200) {
+    const data = await response.json();
+    return data;
+  } else if (response.status === 404) {
+    notifyError("Email was not found");
+  } else if (response.status === 400) {
+    notifySuccess("User is already an admin!");
+  } else {
+    notifyError("Internal Error");
+  }
+};
 
-  for (let i = 0; i < users_state.users.length; i++) {
-    if (users_state.users[i].email === user_to_promote_email) {
-      if (users_state.users[i].admin === true) {
-        notifyError("Error! User is already an admin");
-        check = true;
-        break;
-      }
-      newUser = { ...users_state.users[i], admin: true };
-      updateUser(users_state, newUser, false);
-      notifySuccess("User has been promoted!");
-      check = true;
-      break;
+/*
+
+Accept a request action creator
+
+Arguments:
+  - post: The id of the post to request
+  - user: The current user's id
+
+  Response is the updated current user with an active post
+
+*/
+export const acceptPost = (post, user) => {
+  return async (dispatch) => {
+    const request = new Request(`/posts/accept/${post}`, {
+      method: "put",
+      body: JSON.stringify({ user: user }),
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+    });
+    const response = await fetch(request);
+    if (response.status === 200) {
+      const data = await response.json();
+      dispatch({ type: PAYLOAD_TYPES.ACCEPT_POST, payload: data });
+      notifySuccess("Request accepted");
+    } else {
+      notifyError("Something went wrong accepting this request");
     }
-  }
-  if (check === false) {
-    notifyError("Error! Email address is not registered");
-  }
+  };
+};
+
+export const completePost = (post, user) => {
+  return async (dispatch) => {
+    const request = new Request(`/posts/complete/${post}`, {
+      method: "put",
+      body: JSON.stringify({ user: user }),
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+    });
+    const response = await fetch(request);
+    if (response.status === 200) {
+      const data = await response.json();
+      dispatch({ type: PAYLOAD_TYPES.COMPLETE_POST, payload: data });
+      dispatch({ type: TL_PAYLOAD_TYPES.GET_POSTS, payload: data.posts });
+      notifySuccess("Request completed.");
+    } else {
+      notifyError("Something went wrong completing this request");
+    }
+  };
 };

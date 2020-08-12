@@ -2,6 +2,15 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 
+// // create an image schema
+// const imageSchema = mongoose.Schema({
+//   image_url: {
+//     type: String,
+//     required: true
+//   },
+//   created_at: String
+// });
+
 const UserSchema = new mongoose.Schema({
   email: {
     type: String,
@@ -22,7 +31,12 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  name: {
+  first_name: {
+    type: String,
+    required: true,
+    minlength: 1,
+  },
+  last_name: {
     type: String,
     required: true,
     minlength: 1,
@@ -39,10 +53,6 @@ const UserSchema = new mongoose.Schema({
   rating: {
     type: Number,
     default: 5,
-  },
-  address: {
-    type: Object,
-    default: null,
   },
 });
 
@@ -70,18 +80,13 @@ UserSchema.statics.findByEmailPassword = function (email, password) {
       return Promise.reject();
     }
     return new Promise((resolve, reject) => {
-      bcrypt.compare(
-        password.replace("2a", "2y"),
-        user.password.toString(),
-        (err, result) => {
-          console.log(result);
-          if (result) {
-            resolve(user);
-          } else {
-            reject();
-          }
+      bcrypt.compare(password, user.password, (err, result) => {
+        if (result) {
+          resolve(user);
+        } else {
+          reject();
         }
-      );
+      });
     });
   });
 };

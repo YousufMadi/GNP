@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import { deletePost } from "../../actions/timeline";
 
 class ViewRequest extends React.Component {
@@ -19,7 +20,7 @@ class ViewRequest extends React.Component {
      If the current user is the author, it shows the items list. Otherwise shows the estimate. */
   renderItemSizeOrList() {
     if (
-      this.props.postUser.id === this.props.currentUser.id ||
+      this.props.postUser._id === this.props.currentUser._id ||
       this.props.currentUser.admin
     ) {
       return <ul className="request-items-list">{this.props.renderItems()}</ul>;
@@ -36,7 +37,7 @@ class ViewRequest extends React.Component {
   /* This function handles the clicking of a post to highlight it in the google maps area with in the sidebar.
      Can only be highlighted if the post does not belong to the current user.  */
   handlePostClick = () => {
-    if (this.props.postUser.id !== this.props.currentUser.id) {
+    if (this.props.postUser._id !== this.props.currentUser._id) {
       this.props.highlightPost(this.props.post);
     }
   };
@@ -56,7 +57,7 @@ class ViewRequest extends React.Component {
     return (
       <div
         className={`posted-request  ${
-          this.props.postUser.id === this.props.currentUser.id
+          this.props.postUser === this.props.currentUser._id
             ? ""
             : "other-author"
         }`}
@@ -79,7 +80,7 @@ class ViewRequest extends React.Component {
               </span>
             </span>
           </label>
-          {this.props.postUser.id === this.props.currentUser.id ? (
+          {this.props.postUser._id === this.props.currentUser._id ? (
             <>
               <button className="edit-post" onClick={this.props.editClick}>
                 <i className="fas fa-pencil-alt"></i>
@@ -87,7 +88,10 @@ class ViewRequest extends React.Component {
               <button
                 className="delete-post"
                 onClick={() =>
-                  deletePost(this.props.posts_state, this.props.post.id)
+                  this.props.deletePost(
+                    this.props.post._id,
+                    this.props.currentUser._id
+                  )
                 }
               >
                 <i className="fas fa-trash"></i>
@@ -105,7 +109,10 @@ class ViewRequest extends React.Component {
                 <button
                   className="delete-post admin-delete-post"
                   onClick={() =>
-                    deletePost(this.props.posts_state, this.props.post.id)
+                    this.props.deletePost(
+                      this.props.post._id,
+                      this.props.currentUser._id
+                    )
                   }
                 >
                   <i className="fas fa-trash"></i>
@@ -128,4 +135,10 @@ class ViewRequest extends React.Component {
   }
 }
 
-export default ViewRequest;
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.auth.currentUser,
+  };
+};
+
+export default connect(mapStateToProps, { deletePost })(ViewRequest);

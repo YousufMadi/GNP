@@ -43,7 +43,7 @@ class EditRequest extends React.Component {
       items: this.state.items,
       description: this.state.formDescription,
     };
-    this.props.editPost(this.props.post.id, newPost);
+    this.props.editPost(this.props.post._id, newPost);
   };
 
   /* This function renders the other options for the payment select to avoid duplicates */

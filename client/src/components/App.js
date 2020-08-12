@@ -1,7 +1,8 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { notifyWarn } from "../Utils/notificationUtils";
+
+import { connect } from "react-redux";
 
 import Home from "./Home/Home";
 import Feed from "./Feed/Feed";
@@ -11,7 +12,10 @@ import Logout from "./Auth/Logout";
 import Settings from "./Settings/Settings";
 import SettingsAdmin from "./SettingsAdmin/SettingsAdmin";
 
+import { readCookie } from "../actions/user";
+
 import "../stylesheets/shared.css";
+import AuthBox from "./Auth/AuthBox";
 
 class App extends React.Component {
   /*
@@ -36,76 +40,29 @@ class App extends React.Component {
       - admin: Whether the user is an admin
 
   */
-  state = {
-    currentUserLocation: null,
-    currentUser: null,
-    setState: this.setState.bind(this),
-  };
 
-  componentDidMount() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        this.getUserLocation,
-        this.displayLocationWarning
-      );
-    } else {
-      alert("Geolocation is not supported on this browser");
-    }
+  constructor(props) {
+    super(props);
+    this.props.readCookie();
   }
 
-  displayLocationWarning = () => {
-    notifyWarn(
-      "We cannot retrieve your location. This app requires location to be enabled in your browser to function correctly."
-    );
-  };
-
-  getUserLocation = (position) => {
-    this.setState({ currentUserLocation: position.coords });
-  };
+  componentDidMount() { }
 
   render() {
     return (
       <>
         <BrowserRouter>
           <Switch>
-            <Route
-              path="/"
-              exact
-              component={() => <Home users_state={this.state} />}
-            />
-            <Route
-              path="/feed"
-              component={() => <Feed users_state={this.state} />}
-            />
-
-            <Route
-              exact
-              path="/signup"
-              component={() => <Signup users_state={this.state} />}
-            />
-
-            <Route
-              exact
-              path="/login"
-              component={() => <Login users_state={this.state} />}
-            />
-
+            <Route path="/" exact component={() => <Home />} />
+            <Route path="/feed" component={() => <Feed />} />
+            {/* <Route exact path="/signup" component={() => <Signup />} /> */}
+            <Route exact path="/login" component={() => <AuthBox />} />
+            <Route exact path="/settings" component={() => <Settings />} />
+            <Route exact path="/admin" component={() => <SettingsAdmin />} />
             <Route
               exact
               path="/logout"
               component={() => <Logout users_state={this.state} />}
-            />
-
-            <Route
-              exact
-              path="/settings"
-              component={() => <Settings users_state={this.state} />}
-            />
-
-            <Route
-              exact
-              path="/admin"
-              component={() => <SettingsAdmin users_state={this.state} />}
             />
           </Switch>
         </BrowserRouter>
@@ -115,4 +72,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default connect(null, { readCookie })(App);

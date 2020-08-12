@@ -1,15 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
-//import Map from "./Map";
+import { connect } from "react-redux";
 import "../../stylesheets/sidebar.css";
 
-import { handleUserLogout } from "../../actions/user";
-
-/*const keys = {
-  key1: "AIzaSyCx3EBDjdwQ4Gb6698FPEWsTB7bNL_o7Ow",
-  key2: "AIzaSyARRBVg-xS1QeLJMfoCSeQm5At4Q-E7luU",
-};*/
+import { logout } from "../../actions/user";
 
 class Sidebar extends React.Component {
   /* Initializing this component's state with 
@@ -18,7 +12,7 @@ class Sidebar extends React.Component {
 
   /* This function handles the situation where the user clicks log out */
   handleUserLogout = () => {
-    handleUserLogout(this.props.users_state);
+    this.props.logout();
   };
 
   /* The functions that will handle a change in it's respective select html element */
@@ -48,7 +42,7 @@ class Sidebar extends React.Component {
   /* This functions is responsible for retrieving the rating, in terms of stars, associated with the author's account */
   renderRating() {
     let renderStarsReturn = [];
-    for (let i = 0; i < this.props.users_state.currentUser.rating; i++) {
+    for (let i = 0; i < this.props.currentUser.rating; i++) {
       renderStarsReturn.push(<i key={i} className="fas fa-star"></i>);
     }
     return renderStarsReturn;
@@ -56,7 +50,7 @@ class Sidebar extends React.Component {
 
   /* Render Functions */
   renderProfile() {
-    const currentUser = this.props.users_state.currentUser;
+    const currentUser = this.props.currentUser;
     return (
       <>
         <div className="profile-header">
@@ -122,32 +116,20 @@ class Sidebar extends React.Component {
       </div>
     );
   }
-  renderGoogleMap() {
-    return (
-      <div className="google-maps-section">
-        {/*<Map
-          currentUserLocation={this.props.users_state.currentUserLocation}
-          resetFeedSelectedPost={this.props.resetFeedSelectedPost}
-          highlightedPost={this.props.highlightedPost}
-          active_post={this.props.active_post}
-          posts={this.props.posts}
-          googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${keys.key2}`}
-          loadingElement={<div style={{ height: "100%" }} />}
-          containerElement={<div style={{ height: "100%" }} />}
-          mapElement={<div style={{ height: "100%" }} />}
-        />*/}
-      </div>
-    );
-  }
 
   render() {
     return (
       <div className="sidebar">
         {this.renderProfile()}
         {this.renderFilter()}
-        {this.renderGoogleMap()}
       </div>
     );
   }
 }
-export default Sidebar;
+
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.auth.currentUser,
+  };
+};
+export default connect(mapStateToProps, { logout })(Sidebar);

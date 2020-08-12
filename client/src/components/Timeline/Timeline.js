@@ -1,14 +1,20 @@
 import React from "react";
-
+import { connect } from "react-redux";
 import "../../stylesheets/timeline.css";
 import Request from "../Request/Request";
 import NewRequest from "../NewRequest/NewRequest";
 import ConfirmationModal from "./ConfirmationModal";
 import Sidebar from "../Sidebar/Sidebar";
+import Map from "./Map";
+import { acceptPost } from "../../actions/user";
 
-import { updateUser } from "../../actions/user";
+import { filterPosts } from "../../actions/timeline";
+import { notifyError } from "../../Utils/notificationUtils";
 
-import { filterPosts, deletePost } from "../../actions/timeline";
+const keys = {
+  key1: "AIzaSyCx3EBDjdwQ4Gb6698FPEWsTB7bNL_o7Ow",
+  key2: "AIzaSyARRBVg-xS1QeLJMfoCSeQm5At4Q-E7luU",
+};
 
 class Timeline extends React.Component {
   constructor(props) {
@@ -26,8 +32,9 @@ class Timeline extends React.Component {
     
     */
     this.state = {
+      showMap: true,
+      currentUserLocation: null,
       highlightedPost: null,
-      posts: this.props.posts_state.posts,
       confirmationModal: {
         display: false,
         selectedPost: null,
@@ -38,13 +45,21 @@ class Timeline extends React.Component {
     this.handlePageClick = this.handlePageClick.bind(this);
   }
 
+  componentDidMount() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.getUserLocation);
+    } else {
+      notifyError("Geolocation is not supported on this browser");
+    }
+  }
+
+  getUserLocation = (position) => {
+    this.setState({ currentUserLocation: position.coords });
+  };
+
   /* Function responsible for returning the filtered posts */
   filterPosts() {
-    return filterPosts(
-      this.props.posts_state.posts,
-      this.props.posts_state,
-      this.props.users_state.currentUserLocation
-    );
+    return filterPosts(this.props.posts, this.props.posts);
   }
 
   /* This function manages the changes regarding the highlighted post within the map. 
@@ -75,13 +90,7 @@ class Timeline extends React.Component {
      This function will require database calls in later phases which will fix our current deleting issue. */
   handleAcceptPost = (post) => {
     this.handleCloseModal();
-    const updated_user = {
-      ...this.props.users_state.currentUser,
-      active_post: post,
-    };
-
-    deletePost(this.props.posts_state, post.id);
-    updateUser(this.props.users_state, updated_user);
+    this.props.acceptPost(post._id, this.props.currentUser._id);
   };
 
   /* This function handles the changing of the page */
@@ -91,12 +100,44 @@ class Timeline extends React.Component {
     });
   }
 
+  toggleMap = () => {
+    this.setState({
+      showMap: !this.state.showMap,
+    });
+  };
+
   /* If the request list empty due to no requests or filter being to strict,
      this function is responsible for rendering an empty message instead. */
   renderEmptyMessage() {
     return (
       <div className="empty-message">
         No requests exist or match your filter.
+      </div>
+    );
+  }
+  renderGoogleMap(filteredPosts) {
+    return (
+      <div className="google-maps-container">
+        <div
+          className={`google-maps-section ${this.state.showMap ? "" : "hide"}`}
+        >
+          <Map
+            currentUserLocation={this.state.currentUserLocation}
+            resetFeedSelectedPost={this.handleHighlightedPostChange}
+            highlightedPost={this.state.highlightedPost}
+            active_post={false}
+            posts={filteredPosts}
+            googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${keys.key2}`}
+            loadingElement={<div style={{ height: "100%" }} />}
+            containerElement={<div style={{ height: "100%" }} />}
+            mapElement={<div style={{ height: "100%" }} />}
+          />
+        </div>
+        <div>
+          <button className="toggle-map" onClick={this.toggleMap}>
+            {this.state.showMap ? "Hide Map" : "Show Map"}
+          </button>
+        </div>
       </div>
     );
   }
@@ -115,12 +156,15 @@ class Timeline extends React.Component {
 
   */
   render() {
-    if (this.state.posts != null) {
-      let { posts, currentPage, postsPerPage } = this.state;
+    if (this.props.posts != null) {
+      let posts = this.props.posts;
+      let { currentPage, postsPerPage } = this.state;
       const filteredPosts = this.filterPosts(posts);
       let indexOfLastPost = currentPage * postsPerPage;
       let indexOfFirstPost = indexOfLastPost - postsPerPage;
-      let currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
+
+      let currentPosts = posts;
+      //let currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
 
       if (currentPage !== 1 && currentPosts.length === 0) {
         currentPage = 1;
@@ -134,11 +178,8 @@ class Timeline extends React.Component {
           <Request
             highlightPost={this.handleHighlightedPostChange}
             showConfirmation={this.handleConfirmationModal}
-            currentUser={this.props.users_state.currentUser}
-            users_state={this.props.users_state}
             key={index}
             post={post}
-            posts_state={this.props.posts_state}
           />
         );
       });
@@ -174,19 +215,10 @@ class Timeline extends React.Component {
       });
       return (
         <>
-          <Sidebar
-            resetFeedSelectedPost={this.handleHighlightedPostChange}
-            highlightedPost={this.state.highlightedPost}
-            active_post={false}
-            posts={filteredPosts}
-            users_state={this.props.users_state}
-            changeFilterState={this.props.changeFilterState}
-          />
+          <Sidebar changeFilterState={this.props.changeFilterState} />
           <div className="timeline">
-            <NewRequest
-              currentUser={this.props.users_state.currentUser}
-              posts_state={this.props.posts_state}
-            />
+            {this.renderGoogleMap(currentPosts)}
+            <NewRequest currentUser={this.props.currentUser} />
             {currentPosts.length === 0 ? (
               this.renderEmptyMessage()
             ) : (
@@ -197,7 +229,6 @@ class Timeline extends React.Component {
             )}
           </div>
           <ConfirmationModal
-            users={this.props.users_state.users}
             acceptPost={this.handleAcceptPost}
             confirmation={this.state.confirmationModal}
             closeModal={this.handleCloseModal}
@@ -210,4 +241,11 @@ class Timeline extends React.Component {
   }
 }
 
-export default Timeline;
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.auth.currentUser,
+    posts: state.posts.posts,
+  };
+};
+
+export default connect(mapStateToProps, { acceptPost })(Timeline);

@@ -1,18 +1,46 @@
 import React from "react";
 import CreateAdmin from "./CreateAdmin";
+import { getAllUsers, deleteUser, promoteUser } from "../../actions/user";
 
-import { deleteUser } from "../../actions/user";
+import { notifySuccess, notifyError } from "../../Utils/notificationUtils";
 
 class ViewUsers extends React.Component {
+  state = {
+    users: [],
+  };
 
-  deleteUserAndPosts = (user) => {
-    deleteUser(this.props.users_state, user.email);
+  componentDidMount() {
+    getAllUsers().then((users) => {
+      this.setState({
+        users: users,
+      });
+    });
+  }
+
+  deleteUserAndPosts = async (user) => {
+    if (user.admin) {
+      notifyError("Cannot delete admin");
+    } else {
+      const users = await deleteUser(user._id);
+      if (users) {
+        this.setState({
+          users: users,
+        });
+      }
+    }
+  };
+
+  promoteUser = async (userToPromote) => {
+    const users = await promoteUser(userToPromote);
+    if (users) {
+      this.setState({ users: users });
+    }
   };
 
   renderUsers() {
-    return this.props.users_state.users.map((user, i) => {
+    return this.state.users.map((user) => {
       return (
-        <tr className="user-row" key={i}>
+        <tr className="user-row" key={user._id}>
           <td>{user.admin ? "Yes" : "No"}</td>
           <td>
             {user.first_name} {user.last_name}
@@ -21,8 +49,10 @@ class ViewUsers extends React.Component {
           <td>{user.rating}</td>
           <td>
             <button className="remove-user">
-              <i className="fas fa-trash" onClick={() => this.deleteUserAndPosts(user)}></i>
-
+              <i
+                className="fas fa-trash"
+                onClick={() => this.deleteUserAndPosts(user)}
+              ></i>
             </button>
           </td>
         </tr>
@@ -32,9 +62,7 @@ class ViewUsers extends React.Component {
   render() {
     return (
       <>
-        <CreateAdmin
-          users={this.props.users}
-        />
+        <CreateAdmin promoteUser={this.promoteUser} />
         <table className="user-list-table">
           <thead>
             <tr id="users-list-header">

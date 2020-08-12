@@ -83,7 +83,7 @@ h4{
 }
 
 p{
-  font-size: 1.4em;
+  font-size: 1.2em;
   opacity: 0.9;
   line-height: 1.2em;
   font-family: 'Montserrat', sans-serif;
@@ -110,8 +110,8 @@ p{
 
 .contentContainer{
   background-color: white;
-  padding-top: 4em;
-  min-height: 85vh;
+  padding-top: 2em;
+  min-height: 95vh;
 }
 
 /* NAVBAR */
@@ -120,6 +120,7 @@ p{
   background-color: ‎rgb(248,248,255);
   width: 100%;
   text-align: center;
+  background-color: #babad4;
 }
 
 .navbar h2{

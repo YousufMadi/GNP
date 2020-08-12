@@ -1,4 +1,14 @@
 import { getDistance, convertDistance } from "geolib";
+import { PAYLOAD_TYPES } from "./user";
+import { notifySuccess, notifyError } from "../Utils/notificationUtils";
+
+export const TL_PAYLOAD_TYPES = {
+  GET_POSTS: "GET_POSTS",
+  EDIT_POST: "EDIT_POST",
+  ACCEPT_POST: "ACCEPT_POST",
+  DELETE_POST: "DELETE_POST",
+  CREATE_POST: "CREATE_POST",
+};
 
 /* 
 
@@ -7,82 +17,136 @@ FOR NOW, THEY SIMPLY MODIFY THE FEED STATE IN THE FEED COMPONENT.
 
 */
 
+export const getPosts = () => {
+  return async (dispatch) => {
+    const request = new Request("/posts", {
+      method: "get",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+    });
+    const response = await fetch(request);
+    if (response.status === 200) {
+      const data = await response.json();
+      dispatch({ type: TL_PAYLOAD_TYPES.GET_POSTS, payload: data });
+    } else {
+      notifyError("Something went wrong, couldn't load posts");
+    }
+  };
+};
+
 /*
 
-Add a post to the timeline's list of state (currently just state)
+Action creator to send a request to create a post to the server
 
 Arguments:
   - posts_state: The current state of the timeline in the application
   - new_post: The post being added
 
-  This will be replaced by a call to the database to add the user
+  Response is the new list of posts that are not completed
 
 */
 
-export const addPostToState = (posts_state, new_post) => {
-  posts_state.setState({
-    posts: [...posts_state.posts, new_post],
-  });
+export const createPost = (new_post, currentUserID) => {
+  return async (dispatch) => {
+    const request = new Request("/posts", {
+      method: "post",
+      body: JSON.stringify({ post: new_post, user: currentUserID }),
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+    });
+    const response = await fetch(request);
+    if (response.status === 200) {
+      const data = await response.json();
+      dispatch({ type: TL_PAYLOAD_TYPES.CREATE_POST, payload: data });
+      notifySuccess("Your request has been created.");
+    } else {
+      notifyError("Something went wrong creating your request.");
+    }
+  };
 };
-
 
 /*
 
-Delete a user post (currently just state)
+Action creator to send a request to delete a post to the server
 
 Arguments:
-  - posts_state: The current state of the timeline in the application
+  - currentUserID: The current user's id
   - id: The id of the post to be deleted
 
-  This will be replaced by a call to the database to add the user
+  Response is the new list of posts that are not completed
 
 */
-export const deletePost = (posts_state, id) => {
-  const newPosts = posts_state.posts.filter((post) => {
-    return post.id !== id;
-  });
-  posts_state.setState({ posts: newPosts });
+export const deletePost = (id, currentUserID) => {
+  return async (dispatch) => {
+    const request = new Request(`/posts`, {
+      method: "delete",
+      body: JSON.stringify({ post: id, user: currentUserID }),
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+    });
+    const response = await fetch(request);
+    if (response.status === 200) {
+      const data = await response.json();
+      dispatch({ type: TL_PAYLOAD_TYPES.DELETE_POST, payload: data });
+      notifySuccess("Request successfully deleted");
+    } else if (response.status === 400) {
+      notifyError("You cannot delete that request");
+    } else {
+      notifyError("Something went wrong deleting the request");
+    }
+  };
 };
 
 /*
 
-Edit a post in the timeline (currently just state)
+Action creator to send a request to the server to edit a post
 
 Arguments:
-  - posts_state: The current state of the timeline in the application
-  - id: The id of the post being modified
-  - post: The updated post
+  - currentUserID: The current user's id
+  - postID: The id of the post being modified
+  - editedPost: The updated post
 
-  This will be replaced by a call to the database to add the user
+  Response is the new list of posts that are not completed
 
 */
 
-export const editPost = (posts_state, id, post) => {
-  let newPosts = posts_state.posts;
-  for (let i = 0; i < newPosts.length; i++) {
-    if (newPosts[i].id === id) {
-      newPosts[i].description = post.description;
-      newPosts[i].items = post.items;
-      newPosts[i].reimbursement = post.reimbursement;
-      break;
+export const editPost = (postID, editedPost, currentUserID) => {
+  return async (dispatch) => {
+    const request = new Request(`/posts/${postID}`, {
+      method: "put",
+      body: JSON.stringify({ post: editedPost, user: currentUserID }),
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+    });
+    const response = await fetch(request);
+    if (response.status === 200) {
+      const data = await response.json();
+      dispatch({ type: TL_PAYLOAD_TYPES.EDIT_POST, payload: data });
+      notifySuccess("Request successfully edited");
+    } else if (response.status === 400) {
+      notifyError("You are not allowed to do that");
+    } else {
+      notifyError("Something went wrong editing the request");
     }
-  }
-
-  posts_state.setState({
-    posts: newPosts,
-  });
+  };
 };
 
 /*
 
-Filter posts in the timeline (currently just state)
+Filter posts in the timeline
 
 Arguments:
   - posts: The filtered posts
   - posts_state: The current state of the timeline in the application
   - currentUserLocation: The current location of the user
-
-  This will be replaced by a call to the database to add the user
 
 */
 
@@ -139,28 +203,6 @@ export const filterPosts = (posts, posts_state, currentUserLocation) => {
   return newFilteredPosts;
 };
 
-
-/*
-
-Get the author of a post
-
-Arguments:
-  - post: The post who's author is being fetched
-  - users: The user state in the application
-
-  This will be replaced by a call to the database to add the user
-
-*/
-export const fetchPostAuthor = (post, users) => {
-  for (let i = 0; i < users.length; i++) {
-    if (users[i].id === post.author) {
-      return users[i];
-    }
-  }
-  return null;
-};
-
-
 /*
 
 Get the size estimate of a favor
@@ -178,8 +220,6 @@ Arguments:
 export const getSizeEstimate = (post) => {
   return sizeEstimate(post);
 };
-
-
 
 /*
 
