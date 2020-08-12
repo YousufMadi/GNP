@@ -8,12 +8,7 @@ const registrationSchema = object({
     password: string().required()
 })
 
-const loginSchema = object({
-    login: string().required().email(),
-    password: string().required()
-})
-
-module.exports = { registrationSchema, loginSchema };
+module.exports = { registrationSchema };
 
 
 
