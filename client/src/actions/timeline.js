@@ -3,6 +3,7 @@ import { PAYLOAD_TYPES } from "./user";
 import { notifySuccess, notifyError } from "../Utils/notificationUtils";
 
 export const TL_PAYLOAD_TYPES = {
+  FILTER_POSTS: "FILTER_POSTS",
   GET_POSTS: "GET_POSTS",
   EDIT_POST: "EDIT_POST",
   ACCEPT_POST: "ACCEPT_POST",
@@ -144,63 +145,33 @@ export const editPost = (postID, editedPost, currentUserID) => {
 Filter posts in the timeline
 
 Arguments:
-  - posts: The filtered posts
-  - posts_state: The current state of the timeline in the application
+  - filter: Filter attributes
+  - currentUserId: the users currentId
   - currentUserLocation: The current location of the user
-
 */
 
-export const filterPosts = (posts, posts_state, currentUserLocation) => {
-  let newFilteredPosts = posts;
-  if (
-    posts_state.filterPayment !== null &&
-    posts_state.filterPayment !== "any"
-  ) {
-    // Filter by payment
-    newFilteredPosts = posts.filter((post) => {
-      return posts_state.filterPayment === post.reimbursement.toLowerCase();
+export const filterPosts = (filter, currentUserId, currentUserLocation) => {
+  return async (dispatch) => {
+    const request = new Request(`/posts/${currentUserId}`, {
+      method: "get",
+      body: JSON.stringify({
+        distance: filter.distance,
+        size: filter.size,
+        reimbursement: filter.reimbursement,
+        currLocation: currentUserLocation
+      }),
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
     });
-  }
-  if (posts_state.filterSize !== null && posts_state.filterSize !== "any") {
-    // Filter by request size
-    newFilteredPosts = newFilteredPosts.filter((post) => {
-      return (
-        !posts_state.filterSize || posts_state.filterSize === sizeEstimate(post)
-      );
-    });
-  }
-  if (
-    posts_state.filterDistance !== null &&
-    posts_state.filterDistance !== "any" &&
-    currentUserLocation !== null
-  ) {
-    let filterValue = null;
-    if (posts_state.filterDistance === "1") {
-      filterValue = 1;
-    } else if (posts_state.filterDistance === "5") {
-      filterValue = 5;
-    } else if (posts_state.filterDistance === "20") {
-      filterValue = 20;
-    } else if (posts_state.filterDistance === "21") {
-      filterValue = 40075;
+    const response = await fetch(request);
+    if (response.status === 200) {
+      const data = await response.json();
+      dispatch({ type: TL_PAYLOAD_TYPES.FILTER_POSTS, payload: data });
     }
-    // Filter by distance
-    newFilteredPosts = newFilteredPosts.filter((post) => {
-      return (
-        convertDistance(
-          getDistance(
-            {
-              latitude: currentUserLocation.latitude,
-              longitude: currentUserLocation.longitude,
-            },
-            { latitude: post.location.lat, longitude: post.location.lng }
-          ),
-          "km"
-        ) < filterValue
-      );
-    });
+
   }
-  return newFilteredPosts;
 };
 
 /*

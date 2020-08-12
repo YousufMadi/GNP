@@ -27,6 +27,9 @@ const multipartMiddleware = multipart();
 // yup validation
 const { registrationSchema } = require("./Auth");
 
+// get distance function
+const { getDistance, convertDistance } = require("geolib");
+
 // cloudinary: configure using credentials found on your Cloudinary Dashboard
 // sign up for a free account here: https://cloudinary.com/users/register/free
 const cloudinary = require("cloudinary").v2;
@@ -191,6 +194,7 @@ app.get("/users/:id", (req, res) => {
     name,
     email,
     password,
+    confirmPassword,
     profile_picture, -> TO BE ADDED
     admin -> MAYBE SHOULDN'T BE HERE
   }
@@ -206,33 +210,37 @@ app.post("/users", (req, res) => {
     password: req.body.password,
   });
 
-  registrationSchema.validate(yupRegister).then((good) => {
-    console.log(good);
+  if (req.body.password === req.body.confirmPassword) {
+    registrationSchema.validate(yupRegister).then((good) => {
+      console.log(good);
 
-    const newUser = new User({
-      first_name: req.body.first_name,
-      last_name: req.body.last_name,
-      email: req.body.email,
-      password: req.body.password,
-      // profile_picture: req.body.profile_picture,
-      // admin: req.body.admin,
+      const newUser = new User({
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        email: req.body.email,
+        password: req.body.password,
+        // profile_picture: req.body.profile_picture,
+        // admin: req.body.admin,
+      });
+
+      newUser.save().then(
+        (user) => {
+          /* THIS IS CAUSING ERROR. WHY?
+        req.session.user = user._id;
+        req.session.email = user.email; */
+          res.json({ currentUser: user });
+        },
+        (e) => {
+          res.sendStatus(400);
+        }
+      );
+    }).catch((bad) => {
+      console.log(bad.errors);
+      res.status(400).send("Invalid Form");
     });
-
-    newUser.save().then(
-      (user) => {
-        /* THIS IS CAUSING ERROR. WHY?
-      req.session.user = user._id;
-      req.session.email = user.email; */
-        res.json({ currentUser: user });
-      },
-      (e) => {
-        res.sendStatus(400);
-      }
-    );
-  }).catch((bad) => {
-    console.log(bad.errors);
-    res.status(400).send("Invalid Form");
-  });
+  } else {
+    res.status(400).send("Passwords do not match")
+  }
 });
 
 /* Route to make a user an admin using email passed
@@ -340,6 +348,61 @@ app.get("/posts", (req, res) => {
       }
     });
 });
+
+/*Route to retrieve posts with certain criteria
+  Returns the list of posts that satisfy filter critera.
+*/
+app.get("/posts/:id", (req, res) => {
+  const currentUser = req.params._id;
+  const userLocation = req.body.currLocation;
+  const distance = req.body.distance;
+  const reimbursement = req.body.reimbursement;
+  const size = req.body.size;
+
+  Post.find({ completed: false })
+    .populate("author")
+    .exec((err, transaction) => {
+      if (err) {
+        res.sendStatus(500);
+      } else {
+        const paymentFilter = transaction.filter((post) => post.reimbursement === reimbursement);
+        // console.log(paymentFilter);
+        const sizeFilter = paymentFilter.filter((post) => sizeEstimate(post) === size);
+        // console.log(sizeFilter);
+        // sizeFilter.forEach((post) => console.log(userLocation.location.lat));
+        const distFilter = sizeFilter.filter((post) => {
+          return (
+            convertDistance(
+              getDistance(
+                {
+                  latitude: userLocation.lat,
+                  longitude: userLocation.lng
+                },
+                {
+                  latitude: post.location.lat,
+                  longitude: post.location.lng
+                }
+              ), "km"
+            ) < Number(distance)
+          );
+        });
+        res.json(distFilter)
+      }
+    });
+
+});
+
+const sizeEstimate = (post) => {
+  let size = null;
+  if (post.items.length <= 3) {
+    size = "Small";
+  } else if (post.items.length <= 8) {
+    size = "Medium";
+  } else {
+    size = "Large";
+  }
+  return size;
+};
 
 /* Route to create a new post
   BODY FORMAT: 
