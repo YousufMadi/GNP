@@ -17,7 +17,7 @@ class UserInfo extends React.Component {
   }
 
   findNumRequestsMade(){
-    return;
+    
   }
 
   findNumRequestsAccepted(){

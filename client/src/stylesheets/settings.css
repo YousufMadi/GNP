@@ -6,8 +6,14 @@
   height: 7em;
 }
 
-.user-container{
+.user-update-container{
   height: 100vh;
+  margin: auto;
+  display: flex;
+  margin-top: -5em;
+}
+
+.user-container{
   margin: auto;
   display: flex;
   margin-top: -5em;

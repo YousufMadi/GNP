@@ -17,10 +17,10 @@ export const addImage = (id, img) => {
     fetch(request)
       .then((res) => {
         dispatch({ type: "SET_PROFILE_PIC" });
-        notifySuccess("Logout successful");
+        notifySuccess("Profile picture updated");
       })
       .catch((error) => {
-        notifyError("Could not log out");
+        notifyError("Could not update profile picture");
       });
   };
 

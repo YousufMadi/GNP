@@ -9,6 +9,10 @@
   overflow: auto;
 }
 
+.content > .user-update-info{
+  width: 100%;
+}
+
 .admin-dashboard{
   padding-top: 2em;
   vertical-align: top;
