@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getUserById } from "../../actions/user";
 
+
 class UserInfo extends React.Component {
 
   // TODO: CHANGE THIS. For now, it simply gives everyone 5 stars
@@ -13,6 +14,14 @@ class UserInfo extends React.Component {
       renderStarsReturn.push(<i key={i} className="fas fa-star"></i>);
     }
     return renderStarsReturn;
+  }
+
+  findNumRequestsMade(){
+    return;
+  }
+
+  findNumRequestsAccepted(){
+    return;
   }
 
   render() {
