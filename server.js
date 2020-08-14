@@ -196,7 +196,6 @@ app.get("/users/:id", (req, res) => {
     password,
     confirmPassword,
     profile_picture, -> TO BE ADDED
-    admin -> MAYBE SHOULDN'T BE HERE
   }
   Returns the new user created
 
@@ -219,6 +218,7 @@ app.post("/users", (req, res) => {
         last_name: req.body.last_name,
         email: req.body.email,
         password: req.body.password,
+        profile_picture: "https://res.cloudinary.com/good-neighbour/image/upload/v1597314358/no-profile-pic_edm3bf.jpg",
         // profile_picture: req.body.profile_picture,
         // admin: req.body.admin,
       });

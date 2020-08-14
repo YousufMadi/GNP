@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import Timeline from "../Timeline/Timeline";
-import ActiveRequest from "../ActiveRequest/ActiveRequest";
 
 import "../../stylesheets/feed.css";
 
@@ -54,12 +53,6 @@ class Feed extends React.Component {
   render() {
     if (this.props.currentUser === null) {
       return <Redirect to="/login" />;
-    } else if (this.props.currentUser.active_post !== null) {
-      return (
-        <div className="feedContainer">
-          <ActiveRequest changeFilterState={this.handleFilterChange} />
-        </div>
-      );
     } else {
       return (
         <div className="feedContainer slide">

@@ -36,7 +36,7 @@
 }
 
 .update-form{
-  height: 50%;
+  height: auto;
   display: flex;
   flex-direction: column;
 }

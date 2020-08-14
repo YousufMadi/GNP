@@ -7,6 +7,7 @@ import {
   Marker,
   InfoWindow,
   Circle,
+  DirectionsRenderer,
 } from "react-google-maps";
 
 class Map extends React.Component {
@@ -21,10 +22,54 @@ class Map extends React.Component {
     
   */
   state = {
+    directions: null,
     previousLocation: null,
     mapSelectedPost: null,
     activeRequest: this.props.active_post ? this.props.posts[0] : null,
   };
+  componentDidMount() {
+    if (this.state.activeRequest && this.props.currentUserLocation) {
+      this.setDirections();
+    }
+  }
+
+  componentDidUpdate(prevState) {
+    console.log(prevState);
+    if (
+      this.state.activeRequest &&
+      this.props.currentUserLocation &&
+      prevState.currentUserLocation === null
+    ) {
+      this.setDirections();
+    }
+  }
+
+  setDirections() {
+    const directionsService = new window.google.maps.DirectionsService();
+
+    const origin = {
+      lat: this.props.currentUserLocation.latitude,
+      lng: this.props.currentUserLocation.longitude,
+    };
+    const destination = this.state.activeRequest.location;
+
+    directionsService.route(
+      {
+        origin: origin,
+        destination: destination,
+        travelMode: window.google.maps.TravelMode.DRIVING,
+      },
+      (result, status) => {
+        if (status === window.google.maps.DirectionsStatus.OK) {
+          this.setState({
+            directions: result,
+          });
+        } else {
+          console.error(`error fetching directions ${result}`);
+        }
+      }
+    );
+  }
 
   /* This function is responsible for changing the mapSelectedPost state when the user clicks on a circle within the Map */
   setSelectedRequest(post) {
@@ -120,15 +165,27 @@ class Map extends React.Component {
   render() {
     // Force re-render, otherwise, markers are not changed.
     const newKey = uuidv4();
-    return (
-      <GoogleMap
-        key={newKey}
-        defaultZoom={10}
-        defaultCenter={this.setDefaultCenter()}
-      >
-        {this.renderLocations()}
-      </GoogleMap>
-    );
+    if (this.state.activeRequest && this.state.directions) {
+      return (
+        <GoogleMap
+          key={newKey}
+          defaultCenter={this.setDefaultCenter()}
+          defaultZoom={10}
+        >
+          <DirectionsRenderer directions={this.state.directions} />
+        </GoogleMap>
+      );
+    } else {
+      return (
+        <GoogleMap
+          key={newKey}
+          defaultZoom={10}
+          defaultCenter={this.setDefaultCenter()}
+        >
+          {this.renderLocations()}
+        </GoogleMap>
+      );
+    }
   }
 }
 

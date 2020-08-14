@@ -1,15 +1,17 @@
 import React from "react";
 import { connect } from "react-redux";
-import "../../stylesheets/timeline.css";
 import Request from "../Request/Request";
 import NewRequest from "../NewRequest/NewRequest";
 import ConfirmationModal from "./ConfirmationModal";
+import ActiveRequest from "../ActiveRequest/ActiveRequest";
 import Sidebar from "../Sidebar/Sidebar";
 import Map from "./Map";
-import { acceptPost } from "../../actions/user";
 
+import { acceptPost } from "../../actions/user";
 import { filterPosts } from "../../actions/timeline";
 import { notifyError } from "../../Utils/notificationUtils";
+
+import "../../stylesheets/timeline.css";
 
 const keys = {
   key1: "AIzaSyCx3EBDjdwQ4Gb6698FPEWsTB7bNL_o7Ow",
@@ -156,87 +158,96 @@ class Timeline extends React.Component {
 
   */
   render() {
-    if (this.props.posts != null) {
-      let posts = this.props.posts;
-      let { currentPage, postsPerPage } = this.state;
-      const filteredPosts = this.filterPosts(posts);
-      let indexOfLastPost = currentPage * postsPerPage;
-      let indexOfFirstPost = indexOfLastPost - postsPerPage;
-
-      let currentPosts = posts;
-      //let currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
-
-      if (currentPage !== 1 && currentPosts.length === 0) {
-        currentPage = 1;
-        indexOfLastPost = currentPage * postsPerPage;
-        indexOfFirstPost = indexOfLastPost - postsPerPage;
-        currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
-      }
-
-      const renderPosts = currentPosts.map((post, index) => {
-        return (
-          <Request
-            highlightPost={this.handleHighlightedPostChange}
-            showConfirmation={this.handleConfirmationModal}
-            key={index}
-            post={post}
-          />
-        );
-      });
-
-      const pageNumbers = [];
-      for (
-        let i = 1;
-        i <= Math.ceil(filteredPosts.length / postsPerPage);
-        i++
-      ) {
-        pageNumbers.push(i);
-      }
-
-      const renderPageNumbers = pageNumbers.map((number) => {
-        if (number === currentPage) {
-          return (
-            <li
-              className="current-page"
-              key={number}
-              id={number}
-              onClick={this.handlePageClick}
-            >
-              {number}
-            </li>
-          );
-        } else {
-          return (
-            <li key={number} id={number} onClick={this.handlePageClick}>
-              {number}
-            </li>
-          );
-        }
-      });
+    if (this.props.currentUser.active_post !== null) {
       return (
-        <>
-          <Sidebar changeFilterState={this.props.changeFilterState} />
-          <div className="timeline">
-            {this.renderGoogleMap(currentPosts)}
-            <NewRequest currentUser={this.props.currentUser} />
-            {currentPosts.length === 0 ? (
-              this.renderEmptyMessage()
-            ) : (
-              <>
-                <ul className="posts">{renderPosts}</ul>
-                <ul id="page-numbers">{renderPageNumbers}</ul>
-              </>
-            )}
-          </div>
-          <ConfirmationModal
-            acceptPost={this.handleAcceptPost}
-            confirmation={this.state.confirmationModal}
-            closeModal={this.handleCloseModal}
-          />
-        </>
+        <ActiveRequest
+          currentUserLocation={this.state.currentUserLocation}
+          changeFilterState={this.handleFilterChange}
+        />
       );
     } else {
-      return <></>;
+      if (this.props.posts != null) {
+        let posts = this.props.posts;
+        let { currentPage, postsPerPage } = this.state;
+        const filteredPosts = this.filterPosts(posts);
+        let indexOfLastPost = currentPage * postsPerPage;
+        let indexOfFirstPost = indexOfLastPost - postsPerPage;
+
+        let currentPosts = posts;
+        //let currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
+
+        if (currentPage !== 1 && currentPosts.length === 0) {
+          currentPage = 1;
+          indexOfLastPost = currentPage * postsPerPage;
+          indexOfFirstPost = indexOfLastPost - postsPerPage;
+          currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
+        }
+
+        const renderPosts = currentPosts.map((post, index) => {
+          return (
+            <Request
+              highlightPost={this.handleHighlightedPostChange}
+              showConfirmation={this.handleConfirmationModal}
+              key={index}
+              post={post}
+            />
+          );
+        });
+
+        const pageNumbers = [];
+        for (
+          let i = 1;
+          i <= Math.ceil(filteredPosts.length / postsPerPage);
+          i++
+        ) {
+          pageNumbers.push(i);
+        }
+
+        const renderPageNumbers = pageNumbers.map((number) => {
+          if (number === currentPage) {
+            return (
+              <li
+                className="current-page"
+                key={number}
+                id={number}
+                onClick={this.handlePageClick}
+              >
+                {number}
+              </li>
+            );
+          } else {
+            return (
+              <li key={number} id={number} onClick={this.handlePageClick}>
+                {number}
+              </li>
+            );
+          }
+        });
+        return (
+          <>
+            <Sidebar changeFilterState={this.props.changeFilterState} />
+            <div className="timeline">
+              {this.renderGoogleMap(currentPosts)}
+              <NewRequest currentUser={this.props.currentUser} />
+              {currentPosts.length === 0 ? (
+                this.renderEmptyMessage()
+              ) : (
+                <>
+                  <ul className="posts">{renderPosts}</ul>
+                  <ul id="page-numbers">{renderPageNumbers}</ul>
+                </>
+              )}
+            </div>
+            <ConfirmationModal
+              acceptPost={this.handleAcceptPost}
+              confirmation={this.state.confirmationModal}
+              closeModal={this.handleCloseModal}
+            />
+          </>
+        );
+      } else {
+        return <></>;
+      }
     }
   }
 }
