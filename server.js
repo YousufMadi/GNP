@@ -210,9 +210,10 @@ app.post("/users", (req, res) => {
     password: req.body.password,
   });
 
-  if (req.body.password === req.body.confirmPassword) {
+  if (req.body.password === req.body.password_confirmation) {
     registrationSchema.validate(yupRegister).then((good) => {
       console.log(good);
+      console.log(req.body);
 
       const newUser = new User({
         first_name: req.body.first_name,
@@ -229,19 +230,18 @@ app.post("/users", (req, res) => {
         req.session.user = user._id;
         req.session.email = user.email; */
           res.json({ currentUser: user });
-        },
-        (e) => {
-          res.sendStatus(400);
         }
       );
     }).catch((bad) => {
       console.log(bad.errors);
+      console.log("Invalid Forms")
       res.status(400).send("Invalid Form");
     });
   } else {
-    res.status(400).send("Passwords do not match")
+    res.status(417).send("Bad Password")
   }
-});
+}
+);
 
 /* Route to make a user an admin using email passed
    in the body of the request

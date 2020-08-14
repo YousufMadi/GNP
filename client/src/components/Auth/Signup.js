@@ -43,70 +43,70 @@ class Signup extends React.Component {
     return (
       <>
 
-        {/* <Navbar /> */}
-        {/* <div className="contentContainer slide"> */}
-        {/* <div className="form-container"> */}
-        <h3>Signup</h3>
-        <img src={signupPic} alt="signup"></img>
-        <form onSubmit={this.formSubmit}>
-          <div className="form-input">
-            <input
-              name="first_name"
-              type="text"
-              placeholder="First Name"
-              onChange={this.handleChange}
-            ></input>
-            <p className="error_msg">{this.state.first_name_error}</p>
-          </div>
-          <div className="form-input">
-            <input
-              name="last_name"
-              type="text"
-              placeholder="Last Name"
-              onChange={this.handleChange}
-            ></input>
-            <p className="error_msg">{this.state.last_name_error}</p>
-          </div>
-          <div className="form-input">
-            <input
-              name="email"
-              type="email"
-              placeholder="Email"
-              onChange={this.handleChange}
-            ></input>
+        <Navbar />
+        <div className="contentContainer slide">
+          <div className="form-container">
+            <h3>Signup</h3>
+            <img src={signupPic} alt="signup"></img>
+            <form onSubmit={this.formSubmit}>
+              <div className="form-input">
+                <input
+                  name="first_name"
+                  type="text"
+                  placeholder="First Name"
+                  onChange={this.handleChange}
+                ></input>
+                <p className="error_msg">{this.state.first_name_error}</p>
+              </div>
+              <div className="form-input">
+                <input
+                  name="last_name"
+                  type="text"
+                  placeholder="Last Name"
+                  onChange={this.handleChange}
+                ></input>
+                <p className="error_msg">{this.state.last_name_error}</p>
+              </div>
+              <div className="form-input">
+                <input
+                  name="email"
+                  type="email"
+                  placeholder="Email"
+                  onChange={this.handleChange}
+                ></input>
 
-            <p className="error_msg">{this.state.email_error}</p>
-          </div>
-          <div className="form-input">
-            <input
-              name="password"
-              type="password"
-              placeholder="Password"
-              onChange={this.handleChange}
-            ></input>
+                <p className="error_msg">{this.state.email_error}</p>
+              </div>
+              <div className="form-input">
+                <input
+                  name="password"
+                  type="password"
+                  placeholder="Password"
+                  onChange={this.handleChange}
+                ></input>
 
-            <p className="error_msg">{this.state.password_error}</p>
-          </div>
-          <div className="form-input">
-            <input
-              name="password_confirmation"
-              type="password"
-              placeholder="Confirm Password"
-              onChange={this.handleChange}
-            ></input>
+                <p className="error_msg">{this.state.password_error}</p>
+              </div>
+              <div className="form-input">
+                <input
+                  name="password_confirmation"
+                  type="password"
+                  placeholder="Confirm Password"
+                  onChange={this.handleChange}
+                ></input>
 
-            <p className="error_msg">{this.state.password_confirmation_error}</p>
-          </div>
-          <div className="form-input">
-            <button className="form-submit" type="buton" onSubmit={this.formSubmit}>
-              Submit
+                <p className="error_msg">{this.state.password_confirmation_error}</p>
+              </div>
+              <div className="form-input">
+                <button className="form-submit" type="buton" onSubmit={this.formSubmit}>
+                  Submit
 
 
                 </button>
+              </div>
+            </form>
           </div>
-        </form>
-        {/* </div> */}
-        {/* </div> */}
+        </div>
       </>
     );
   }
