@@ -1,5 +1,5 @@
-.active-request-container{
-  font-family: 'Montserrat', sans-serif;
+.active-request-container {
+  font-family: "Montserrat", sans-serif;
   padding-top: 1em;
   padding-left: 1em;
   padding-right: 1em;
@@ -9,7 +9,7 @@
   border-radius: 3px;
 }
 
-.active-request-header h5{
+.active-request-header h5 {
   display: inline-block;
 }
 
@@ -18,8 +18,8 @@
   display: block;
   width: fit-content;
   margin-left: auto;
-  background-color: rgba(72,72,72,0.05);
-  border: 2px solid rgba(72,72,72,0.2);
+  background-color: rgba(72, 72, 72, 0.05);
+  border: 2px solid rgba(72, 72, 72, 0.2);
   padding: 1em 1.5em;
   border-radius: 3px;
   color: rgb(6, 143, 6);
@@ -27,66 +27,65 @@
   transition: all 0.2s ease-in-out;
 }
 
-.active-request-header button:hover{
-  background-color: rgba(72,72,72,0.1);
+.active-request-header button:hover {
+  background-color: rgba(72, 72, 72, 0.1);
 }
 
-.active-request-author{
+.active-request-author {
   text-align: center;
   margin-top: 1.5em;
   font-weight: 600;
 }
 
-.map-route{
-  background-image: url("https://i.stack.imgur.com/1XPRz.png");
+.map-route {
   display: block;
   margin: auto;
   margin-top: 1em;
-  width: 90%;
-  height: 50vh;
-  box-shadow: inset 0 0 10px rgba(72,72,72,0.2);
+  width: 100%;
+  height: 60vh;
+  box-shadow: inset 0 0 10px rgba(72, 72, 72, 0.2);
 }
 
-.active-items-requested{
+.active-items-requested {
   margin-top: 1em;
 }
 
-.active-items-requested label{
+.active-items-requested label {
   margin-left: 1em;
   font-size: x-small;
   color: grey;
   font-weight: 600;
 }
 
-.active-description{
+.active-description {
   margin-top: 0.5em;
 }
 
-.active-description label{
+.active-description label {
   margin-left: 1em;
   font-size: x-small;
   color: grey;
   font-weight: 600;
 }
 
-.active-description p{
+.active-description p {
   margin-top: 0.5em;
   margin-left: 0.5em;
   font-size: medium;
 }
 
-.end-active-request{
+.end-active-request {
   margin-top: 2em;
   margin-bottom: 2em;
 }
 
-.end-active-request button{
+.end-active-request button {
   cursor: pointer;
   display: block;
   width: 90%;
   margin: auto;
   background-color: rgba(219, 12, 12, 0.8);
-  border: 2px solid rgba(72,72,72,0.2);
+  border: 2px solid rgba(72, 72, 72, 0.2);
   padding: 1em 1.5em;
   border-radius: 3px;
   color: white;
@@ -94,6 +93,6 @@
   transition: all 0.2s ease-in-out;
 }
 
-.end-active-request button:hover{
+.end-active-request button:hover {
   background-color: rgba(219, 12, 12, 0.9);
 }

@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const mongoURI =
   process.env.MONGODB_URI ||
   "mongodb+srv://admin:admin@gnpcluster.akjrk.mongodb.net/GNP?retryWrites=true&w=majority";
-  // "mongodb://localhost:27017/GN"
+//"mongodb://localhost:27017/GN"
 
 mongoose.connect(mongoURI, {
   useNewUrlParser: true,

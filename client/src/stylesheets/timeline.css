@@ -58,12 +58,13 @@
 /* Google Maps */
 .google-maps-container {
   box-shadow: 0 2px 5px rgba(71, 71, 71, 0.2);
-  width: 100%;
+  width: 90%;
+  margin: auto;
 }
 
 .google-maps-section {
   margin: 0em auto;
-  height: 18em;
+  height: 20em;
   width: 100%;
   transition: all 0.2s ease-in-out;
 }

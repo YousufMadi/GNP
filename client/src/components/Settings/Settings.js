@@ -19,8 +19,8 @@ class Settings extends React.Component {
 
       return (
         <div className="settings-container settings">
-          <div className="user-container">
-            <UserInfo />
+          <UserInfo />
+          <div className="user-update-container">
             <UserUpdateForm />
           </div>
         </div>
