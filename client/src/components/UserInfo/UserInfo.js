@@ -3,11 +3,15 @@ import "../../stylesheets/userinfo.css";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getUserById } from "../../actions/user";
+import { getNumPostsByUserId } from "../../actions/timeline";
 
 
 class UserInfo extends React.Component {
 
-  // TODO: CHANGE THIS. For now, it simply gives everyone 5 stars
+  state = {
+    num_posts: -1,
+  }
+
   renderRating() {
     let renderStarsReturn = [];
     for (let i = 0; i < this.props.currentUser.rating; i++) {
@@ -16,8 +20,18 @@ class UserInfo extends React.Component {
     return renderStarsReturn;
   }
 
-  findNumRequestsMade(){
-    
+  componentDidMount(prev_state){
+    this.findNumRequestsMade();
+  }
+
+  async findNumRequestsMade(){
+    const num_posts = await getNumPostsByUserId(this.props.currentUser._id)
+
+    console.log(num_posts)
+    this.setState({
+      num_posts: num_posts,
+    })
+
   }
 
   findNumRequestsAccepted(){
@@ -44,7 +58,7 @@ class UserInfo extends React.Component {
         <h4>{currentUser.email}</h4>
         <div className="requests-info">
           <p>Number of requests made: </p>
-          <p>4</p>
+          <p>{this.state.num_posts}</p>
         </div>
         <div className="requests-info">
           <p>Number of requests accepted: </p>

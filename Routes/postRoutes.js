@@ -241,4 +241,17 @@ router.put("/complete/:id", (req, res) => {
   });
 });
 
+router.get("/users/:id", (req, res) => {
+  const id = req.params.id;
+
+  Post.find({ author: id })
+  .then((posts) => {
+    console.log(posts.length)
+    res.json(posts.length);
+  })
+  .catch((error) => {
+    res.sendStatus(404);
+  })
+})
+
 module.exports = router;

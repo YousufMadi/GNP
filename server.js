@@ -63,7 +63,16 @@ app.post("/image/:id", async (req, res) => {
             console.log(uploadedResponse);
             user.profile_picture = uploadedResponse.secure_url;
             user.save();
-            res.sendStatus(200);
+            user
+              .populate({
+                path: "active_post",
+                model: "Post",
+                populate: { path: "author", model: "User" },
+              })
+              .execPopulate()
+              .then((populatedUser) => {
+                res.json({ currentUser: populatedUser });
+              });
           })
           .catch((error) => {
             res.status(500).send("Internal Server Error!"); // server error
