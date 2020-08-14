@@ -81,11 +81,6 @@ const SettingsAdmin = (props) => {
        <div className="content">
           {adminOption && (
             <SelectedOption
-              // users_state={props.users_state}
-              // users={getAllUsers().then((users)=> {return users})}
-              // adminClass="admin-class"
-              // posts_state={props.posts_state}
-
             />
           )}
         </div>
