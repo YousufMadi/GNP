@@ -212,8 +212,6 @@ app.post("/users", (req, res) => {
 
   if (req.body.password === req.body.password_confirmation) {
     registrationSchema.validate(yupRegister).then((good) => {
-      console.log(good);
-      console.log(req.body);
 
       const newUser = new User({
         first_name: req.body.first_name,
