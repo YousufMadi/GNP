@@ -21,11 +21,11 @@ class NavbarLinks extends React.Component {
           </li>
         )}
 
-        {/* {!this.props.currentUser && (
+        {!this.props.currentUser && (
           <li>
             <Link to="/signup">Signup</Link>
           </li>
-        )} */}
+        )}
 
         {this.props.currentUser && (
           <li>

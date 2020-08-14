@@ -6,7 +6,7 @@ const router = express.Router();
 const { mongoose } = require("../db/mongoose");
 const { User } = require("../models/user");
 const { Post } = require("../models/post");
-
+const { registrationSchema } = require("../Auth.js");
 const multipart = require("connect-multiparty");
 const multipartMiddleware = multipart();
 
@@ -68,15 +68,15 @@ router.get("/check-session", (req, res) => {
           res.status(404).send("Resource not found");
         } else {
           user
-          .populate({
-            path: "active_post",
-            model: "Post",
-            populate: { path: "author", model: "User" },
-          })
-          .execPopulate()
-          .then((populatedUser) => {
-            res.json({ currentUser: populatedUser });
-          });
+            .populate({
+              path: "active_post",
+              model: "Post",
+              populate: { path: "author", model: "User" },
+            })
+            .execPopulate()
+            .then((populatedUser) => {
+              res.json({ currentUser: populatedUser });
+            });
         }
       })
       .catch((error) => {
@@ -121,9 +121,8 @@ router.post("/", (req, res) => {
     password: req.body.password,
   });
 
-  if (req.body.password === req.body.confirmPassword) {
+  if (req.body.password === req.body.password_confirmation) {
     registrationSchema.validate(yupRegister).then((good) => {
-      console.log(good);
 
       const newUser = new User({
         first_name: req.body.first_name,
@@ -133,22 +132,23 @@ router.post("/", (req, res) => {
         profile_picture: "https://res.cloudinary.com/good-neighbour/image/upload/v1597314358/no-profile-pic_edm3bf.jpg",
       });
 
+      console.log()
+
       newUser.save().then(
         (user) => {
           res.json({ currentUser: user });
-        },
-        (e) => {
-          res.sendStatus(400);
         }
       );
     }).catch((bad) => {
       console.log(bad.errors);
+      console.log("Invalid Forms")
       res.status(400).send("Invalid Form");
     });
   } else {
-    res.status(400).send("Passwords do not match")
+    res.status(417).send("Bad Password")
   }
-});
+}
+);
 
 router.put("/", (req, res) => {
   User.findOne({ email: req.body.email })
