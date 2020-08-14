@@ -96,9 +96,9 @@ class Timeline extends React.Component {
   };
 
   /* This function handles the changing of the page */
-  handlePageClick(event) {
+  handlePageClick(num) {
     this.setState({
-      currentPage: Number(event.target.id),
+      currentPage: this.state.currentPage + num,
     });
   }
 
@@ -107,7 +107,43 @@ class Timeline extends React.Component {
       showMap: !this.state.showMap,
     });
   };
+  renderPagination() {
+    return (
+      <>
+        {this.state.currentPage === 1 ? (
+          <div className="navigate-page disabled">
+            <i className="fas fa-angle-double-left"></i>
+            Previous Page
+          </div>
+        ) : (
+          <div
+            className="navigate-page"
+            onClick={() => this.handlePageClick(-1)}
+          >
+            <i className="fas fa-angle-double-left"></i>
+            Previos Page
+          </div>
+        )}
 
+        <div className="current-page">Page {this.state.currentPage}</div>
+        {this.state.currentPage * this.state.postsPerPage >
+        this.props.posts.length ? (
+          <div className="navigate-page disabled">
+            Next Page
+            <i className="fas fa-angle-double-right"></i>
+          </div>
+        ) : (
+          <div
+            className="navigate-page"
+            onClick={() => this.handlePageClick(1)}
+          >
+            Next Page
+            <i className="fas fa-angle-double-right"></i>
+          </div>
+        )}
+      </>
+    );
+  }
   /* If the request list empty due to no requests or filter being to strict,
      this function is responsible for rendering an empty message instead. */
   renderEmptyMessage() {
@@ -169,18 +205,15 @@ class Timeline extends React.Component {
       if (this.props.posts != null) {
         let posts = this.props.posts;
         let { currentPage, postsPerPage } = this.state;
-        const filteredPosts = this.filterPosts(posts);
         let indexOfLastPost = currentPage * postsPerPage;
         let indexOfFirstPost = indexOfLastPost - postsPerPage;
-
-        let currentPosts = posts;
-        //let currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
+        let currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
         if (currentPage !== 1 && currentPosts.length === 0) {
           currentPage = 1;
           indexOfLastPost = currentPage * postsPerPage;
           indexOfFirstPost = indexOfLastPost - postsPerPage;
-          currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
+          currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
         }
 
         const renderPosts = currentPosts.map((post, index) => {
@@ -194,35 +227,6 @@ class Timeline extends React.Component {
           );
         });
 
-        const pageNumbers = [];
-        for (
-          let i = 1;
-          i <= Math.ceil(filteredPosts.length / postsPerPage);
-          i++
-        ) {
-          pageNumbers.push(i);
-        }
-
-        const renderPageNumbers = pageNumbers.map((number) => {
-          if (number === currentPage) {
-            return (
-              <li
-                className="current-page"
-                key={number}
-                id={number}
-                onClick={this.handlePageClick}
-              >
-                {number}
-              </li>
-            );
-          } else {
-            return (
-              <li key={number} id={number} onClick={this.handlePageClick}>
-                {number}
-              </li>
-            );
-          }
-        });
         return (
           <>
             <Sidebar changeFilterState={this.props.changeFilterState} />
@@ -234,7 +238,7 @@ class Timeline extends React.Component {
               ) : (
                 <>
                   <ul className="posts">{renderPosts}</ul>
-                  <ul id="page-numbers">{renderPageNumbers}</ul>
+                  <div id="pagination">{this.renderPagination()}</div>
                 </>
               )}
             </div>

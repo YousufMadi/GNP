@@ -23,36 +23,29 @@
   margin-right: 1em;
 }
 
-#page-numbers {
-  text-align: center;
-  font-family: "Montserrat", sans-serif;
-  width: 100%;
+#pagination {
+  width: 80%;
   margin: 1em auto;
-  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  font-family: "Montserrat", sans-serif;
 }
 
-#page-numbers > li {
-  color: black;
-  padding: 5px 10px;
+.navigate-page {
+  vertical-align: middle;
   cursor: pointer;
-  display: inline-block;
-  text-decoration: none;
-  margin: 0 0.1em;
+  color: rgba(71, 71, 71, 0.8);
+  font-size: small;
 }
 
-#page-numbers > li.current-page {
-  background-color: #152338;
-  color: white;
+.navigate-page i {
+  font-size: medium;
+  margin: 0 0.5em;
 }
 
-#page-numbers > li:hover {
-  background-color: rgba(58, 82, 119, 0.5);
-  color: white;
-}
-
-#page-numbers > li.current-page:hover {
-  background-color: #152338;
-  color: white;
+.navigate-page.disabled {
+  color: rgba(71, 71, 71, 0.4);
+  cursor: default;
 }
 
 /* Google Maps */
