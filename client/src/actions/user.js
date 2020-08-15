@@ -53,6 +53,8 @@ export const register = (signupComp) => {
       notifyError("Invalid login credentials");
     } else if (response.status === 500 || response.status === 404) {
       notifyError("Something went wrong");
+    } else if (response.status === 417) {
+      notifyError("Passwords do not match");
     } else if (response.status === 200) {
       const data = await response.json();
       dispatch({ type: PAYLOAD_TYPES.LOGIN, payload: data });

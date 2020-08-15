@@ -55,8 +55,8 @@ class App extends React.Component {
           <Switch>
             <Route path="/" exact component={() => <Home />} />
             <Route path="/feed" component={() => <Feed />} />
-            {/* <Route exact path="/signup" component={() => <Signup />} /> */}
-            <Route exact path="/login" component={() => <AuthBox />} />
+            <Route exact path="/signup" component={() => <Signup />} />
+            <Route exact path="/login" component={() => <Login />} />
             <Route exact path="/settings" component={() => <Settings />} />
             <Route exact path="/admin" component={() => <SettingsAdmin />} />
             <Route

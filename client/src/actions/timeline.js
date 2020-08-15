@@ -7,6 +7,7 @@ export const TL_PAYLOAD_TYPES = {
   ACCEPT_POST: "ACCEPT_POST",
   DELETE_POST: "DELETE_POST",
   CREATE_POST: "CREATE_POST",
+  GET_USER_POSTS: "GET_USER_POSTS",
 };
 
 /* 
@@ -211,3 +212,21 @@ const sizeEstimate = (post) => {
   }
   return size;
 };
+
+export const getNumPostsByUserId = async (id) => {
+  const url = `/posts/users/${id}`
+  const request = new Request(url, {
+    method: "get",
+    headers: {
+      Accept: "application/json, text/plain, */*",
+      "Content-Type": "application/json",
+    },
+  });
+  const response = await fetch(request);
+  if (response.status === 200) {
+    const data = await response.json();
+    return data;
+  } else {
+    notifyError("Something went wrong, couldn't user posts");
+  }
+}

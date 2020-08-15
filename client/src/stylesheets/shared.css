@@ -117,10 +117,9 @@ p{
 /* NAVBAR */
 .navbar{
   height: 3em;
-  background-color: ‎rgb(248,248,255);
   width: 100%;
   text-align: center;
-  background-color: #babad4;
+  background-color: #152238;
 }
 
 .navbar h2{
@@ -138,7 +137,7 @@ p{
 
 .navbar-links li a{
   text-decoration: none;
-  color: #000;
+  color: #fff;
   opacity: 0.7;
   font-size: 1.2em;
   font-family: 'Montserrat', sans-serif;

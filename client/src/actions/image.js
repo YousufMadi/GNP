@@ -14,14 +14,24 @@ export const addImage = (id, img) => {
         },
     });
 
-    fetch(request)
-      .then((res) => {
-        dispatch({ type: "SET_PROFILE_PIC" });
-        notifySuccess("Profile picture updated");
-      })
-      .catch((error) => {
-        notifyError("Could not update profile picture");
-      });
+    const response = await fetch(request);
+    if(response.status === 200){
+      const data = await response.json();
+      // dispatch({ type: "SET_PROFILE_PIC" }, payload: data);
+      dispatch({ type: "SET_PROFILE_PIC", payload: data });
+      notifySuccess("Profile picture updated");
+    }else{
+      notifyError("Could not update profile picture")
+    }
+
+    // fetch(request)
+    //   .then((res) => {
+    //     dispatch({ type: "SET_PROFILE_PIC" });
+    //     notifySuccess("Profile picture updated");
+    //   })
+    //   .catch((error) => {
+    //     notifyError("Could not update profile");
+    //   });
   };
 
 
