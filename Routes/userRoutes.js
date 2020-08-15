@@ -136,8 +136,15 @@ router.post("/", (req, res) => {
           res.json({ currentUser: user });
         });
       })
-      .catch((e) => {
-        res.status(400).send("Invalid Form");
+      .catch(function (err) {
+        console.log(err.errors)
+        if (err.errors[0] === 'lastName is a required field') {
+          res.sendStatus(418)
+        } else if (err.errors[0] === 'firstName is a required field') {
+          res.sendStatus(419)
+        } else {
+          res.status(400).send("Something went wrong");
+        }
       });
   } else {
     res.status(417).send("Bad Password");
