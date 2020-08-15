@@ -17,14 +17,18 @@ export const readCookie = () => {
   return async (dispatch) => {
     const url = "/users/check-session";
     const response = await fetch(url);
-    if (response.status === 400) {
-      notifyError("Something went wrong");
-    } else if (response.status === 500 || response.status === 404) {
-      notifyError("Something went wrong");
-    } else if (response.status === 200) {
+    if (response.status === 200) {
       const data = await response.json();
       dispatch({ type: PAYLOAD_TYPES.SET_COOKIE, payload: data });
     }
+    // if (response.status === 400) {
+    //   notifyError("Something went wrong");
+    // } else if (response.status === 500 || response.status === 404) {
+    //   notifyError("Something went wrong");
+    // } else if (response.status === 200) {
+    //   const data = await response.json();
+    //   dispatch({ type: PAYLOAD_TYPES.SET_COOKIE, payload: data });
+    // }
   };
 };
 
@@ -322,3 +326,9 @@ export const completePost = (post, user) => {
     }
   };
 };
+
+export const getNumUsers = async () => {
+  const users = await getAllUsers();
+  return users.length
+
+}

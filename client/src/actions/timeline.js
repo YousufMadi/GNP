@@ -230,3 +230,53 @@ export const getNumPostsByUserId = async (id) => {
     notifyError("Something went wrong, couldn't user posts");
   }
 }
+
+export const getCompletedPosts = async () => {
+  const request = new Request("/posts/completed", {
+    method: "get",
+    headers: {
+      Accept: "application/json, text/plain, */*",
+      "Content-Type": "application/json",
+    },
+  });
+
+  const response = await fetch(request);
+  if(response.status === 200){
+    const posts = await response.json();
+    console.log(posts)
+    return posts;
+  }else{
+    notifyError("Unable to get completed posts")
+  }
+}
+
+export const getPendingPosts = async () => {
+  const request = new Request("/posts/pending", {
+    method: "get",
+    headers: {
+      Accept: "application/json, text/plain, */*",
+      "Content-Type": "application/json",
+    },
+  });
+
+  const response = await fetch(request);
+  if(response.status === 200){
+    const posts = await response.json();
+    return posts;  
+  }else{
+    notifyError("Unable to get pending posts")
+  }
+  
+}
+
+export const getNumCompletedPosts = async () => {
+  const completedPosts = await getCompletedPosts();
+  console.log(completedPosts)
+  return completedPosts.length
+}
+
+export const getNumPendingPosts = async () => {
+  const pendingPosts = await getPendingPosts();
+  console.log(pendingPosts)
+  return pendingPosts.length
+}

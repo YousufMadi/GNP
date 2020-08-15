@@ -20,14 +20,13 @@ class UserInfo extends React.Component {
     return renderStarsReturn;
   }
 
-  componentDidMount(prev_state){
+  componentDidMount(){
     this.findNumRequestsMade();
   }
 
   async findNumRequestsMade(){
     const num_posts = await getNumPostsByUserId(this.props.currentUser._id)
 
-    console.log(num_posts)
     this.setState({
       num_posts: num_posts,
     })

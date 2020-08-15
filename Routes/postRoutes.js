@@ -64,7 +64,6 @@ router.get("/:id", (req, res) => {
         res.sendStatus(500);
       } else {
         const paymentFilter = transaction.filter((post) => post.reimbursement === reimbursement);
-        // console.log(paymentFilter);
         const sizeFilter = paymentFilter.filter((post) => sizeEstimate(post) === size);
         // console.log(sizeFilter);
         // sizeFilter.forEach((post) => console.log(userLocation.location.lat));
@@ -253,5 +252,32 @@ router.get("/users/:id", (req, res) => {
     res.sendStatus(404);
   })
 })
+
+router.get('/completed', (req, res) => {
+  Post.find({ completed: true })
+    .populate("author")
+    .exec((err, transaction) => {
+      if (err) {
+        res.sendStatus(500);
+      } else {
+        res.json(transaction);
+      }
+    });
+})
+
+router.get('/pending', (req, res) => {
+  Post.find({ completed: false })
+    .populate("author")
+    .exec((err, transaction) => {
+      if (err) {
+        res.sendStatus(500);
+      } else {
+        console.log(transaction)
+        res.json(transaction);
+      }
+    });
+})
+
+
 
 module.exports = router;

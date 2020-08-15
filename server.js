@@ -1,5 +1,3 @@
-//import { registrationSchema } from './client/src/components/Auth/Auth';
-
 // express server
 const express = require("express");
 const app = express();
@@ -60,7 +58,6 @@ app.post("/image/:id", async (req, res) => {
             upload_preset: "ml_default",
           })
           .then((uploadedResponse) => {
-            console.log(uploadedResponse);
             user.profile_picture = uploadedResponse.secure_url;
             user.save();
             user
