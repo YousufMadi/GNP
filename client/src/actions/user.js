@@ -50,11 +50,15 @@ export const register = (signupComp) => {
     });
     const response = await fetch(request);
     if (response.status === 400) {
-      notifyError("Invalid login credentials");
+      notifyError("Something went wrong");
     } else if (response.status === 500 || response.status === 404) {
       notifyError("Something went wrong");
     } else if (response.status === 417) {
       notifyError("Passwords do not match");
+    } else if (response.status === 418) {
+      notifyError("Last name is required");
+    } else if (response.status === 419) {
+      notifyError("First name is required");
     } else if (response.status === 200) {
       const data = await response.json();
       dispatch({ type: PAYLOAD_TYPES.LOGIN, payload: data });
@@ -92,7 +96,6 @@ export const login = (loginComp) => {
     } else if (response.status === 200) {
       const data = await response.json();
       dispatch({ type: PAYLOAD_TYPES.LOGIN, payload: data });
-      notifySuccess("Login succesfully");
     }
   };
 };
@@ -195,7 +198,6 @@ export const logout = () => {
     fetch(url)
       .then((res) => {
         dispatch({ type: PAYLOAD_TYPES.LOGOUT });
-        notifySuccess("Logout successful");
       })
       .catch((error) => {
         notifyError("Could not log out");

@@ -190,8 +190,14 @@ router.post("/", (req, res) => {
           res.json({ currentUser: user });
         });
       })
-      .catch((e) => {
-        res.status(400).send("Invalid Form");
+      .catch(function (err) {
+        if (err.errors[0] === 'lastName is a required field') {
+          res.sendStatus(418)
+        } else if (err.errors[0] === 'firstName is a required field') {
+          res.sendStatus(419)
+        } else {
+          res.status(400).send("Something went wrong");
+        }
       });
   } else {
     res.status(417).send("Bad Password");
@@ -253,31 +259,22 @@ router.patch("/:id", multipartMiddleware, (req, res) => {
   const id = req.params.id;
   if (mongoose.connection.readyState != 1) {
     res.status(500).send("Internal server error");
-    return;
+  } else {
+    User.findById(id)
+      .then((user) => {
+        for (let key in req.body) {
+          if (req.body[key] !== "") {
+            user[key] = req.body[key];
+          }
+        }
+        user.save().then((user) => {
+          res.json({ currentUser: user });
+        });
+      })
+      .catch((e) => {
+        res.status(400).send("Bad Request");
+      });
   }
-
-  fieldsToUpdate = {};
-  for (let key in req.body) {
-    if (req.body[key] !== "") {
-      fieldsToUpdate[key] = req.body[key];
-    }
-  }
-
-  User.findOneAndUpdate(
-    { _id: id },
-    { $set: fieldsToUpdate },
-    { new: true, useFindAndModify: false, runValidators: true }
-  )
-    .then((user) => {
-      if (!user) {
-        res.status(404).send("Resource not found");
-      } else {
-        res.json({ currentUser: user });
-      }
-    })
-    .catch((error) => {
-      res.status(400).send("Bad Request");
-    });
 });
 
 /* 
@@ -362,3 +359,4 @@ router.post("/image/:id", async (req, res) => {
 
 
 module.exports = router;
+
