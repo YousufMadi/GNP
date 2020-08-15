@@ -11,15 +11,9 @@ const { Post } = require("./models/post");
 const { User } = require("./models/user");
 const { Image } = require("./models/image");
 
-app.use("/users", require("./Routes/userRoutes"));
-app.use("/posts", require("./Routes/postRoutes"));
-
 // body-parser: middleware for parsing HTTP JSON body into a usable object
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
-
-// express-session for managing user sessions
-const session = require("express-session");
 
 // multipart middleware: allows you to access uploaded file from req.file
 const multipart = require("connect-multiparty");
@@ -38,6 +32,21 @@ cloudinary.config({
 });
 
 app.use(bodyParser.urlencoded({ extended: true }));
+
+const session = require("express-session");
+
+app.use(
+  session({
+    secret: "oursecret",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      expires: 600000,
+      httpOnly: true,
+    },
+  })
+);
+
 
 /*** Session handling ***/
 
@@ -77,6 +86,9 @@ app.post("/image/:id", async (req, res) => {
       res.status(500).send("Internal Server Error!"); // server error
     });
 });
+
+app.use("/users", require("./Routes/userRoutes"));
+app.use("/posts", require("./Routes/postRoutes"));
 
 /****************** WEBPAGE ROUTES ************************/
 

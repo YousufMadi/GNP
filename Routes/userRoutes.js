@@ -9,22 +9,6 @@ const { registrationSchema } = require("../Auth.js");
 const multipart = require("connect-multiparty");
 const multipartMiddleware = multipart();
 
-const session = require("express-session");
-
-const bodyParser = require("body-parser");
-router.use(bodyParser.json());
-
-router.use(
-  session({
-    secret: "oursecret",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      expires: 600000,
-      httpOnly: true,
-    },
-  })
-);
 
 
 /*
