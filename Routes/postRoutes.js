@@ -24,78 +24,136 @@ router.get("/", (req, res) => {
     });
 });
 
-/*
-  POST request to create a new post. Only logged in users can
-  create a new post.
-
-  BODY:
-  {
-    "author": <id of the user creating the post>,
-    "reimbursement": <reimburesement type> ("Cash", "E-transfer" or "Cheque"),
-    "description": <description of post>,
-    "items": [<Item Objects>],
-    "location": <Location object from Google API>
-
-  }
-*/
 router.post("/", (req, res) => {
-  const curr_user = req.session.user;
-  if (!curr_user) {
-    res.sendStatus(401);
-  } else {
-    User.findById(curr_user)
-      .then((user) => {
-        if (curr_user !== req.body.user) {
-          res.sendStatus(401);
-        } else {
-          Post.create({
-            author: req.body.user,
-            reimbursement: req.body.post.reimbursement,
-            description: req.body.post.description,
-            time: moment(),
-            items: req.body.post.items,
-            location: req.body.post.location,
-            completed: false,
-            active: false,
-          })
-            .then((post) => {
-              Post.find({ completed: false, active: false })
-                .populate("author")
-                .exec((err, transaction) => {
-                  if (err) {
-                    res.sendStatus(500);
-                  } else {
-                    res.json(transaction);
-                  }
-                });
-            })
-            .catch((e) => {
-              res.sendStatus(500);
-            });
-        }
-      })
-      .catch((error) => {
-        res.sendStatus(401);
-      });
-  }
+  Post.create({
+    author: req.body.user,
+    reimbursement: req.body.post.reimbursement,
+    description: req.body.post.description,
+    time: moment(),
+    items: req.body.post.items,
+    location: req.body.post.location,
+    completed: false,
+    active: false,
+  })
+    .then((post) => {
+      Post.find({ completed: false, active: false })
+        .populate("author")
+        .exec((err, transaction) => {
+          if (err) {
+            res.sendStatus(500);
+          } else {
+            res.json(transaction);
+          }
+        });
+    })
+    .catch((e) => {
+      res.sendStatus(500);
+    });
 });
 
-/* 
-    
-  PUT route to make edits to existing posts. Only allow authors
-  of posts to make edits. 
+router.put("/filter", (req, res) => {
+  const userLocation = req.body.currLocation;
+  const distance = req.body.distance;
+  const reimbursement = req.body.reimbursement;
+  const size = req.body.size;
 
-  BODY:
-  {
-    "reimbursement": <Cash, E-transfer or Cheque>,
-    "description": <Description of the post>,
-    "items": <[Item objects]>,
-    "user": "The current users's id"
+  Post.find({ completed: false, active: false })
+    .populate("author")
+    .exec((err, transaction) => {
+      if (err) {
+        res.sendStatus(500);
+      } else {
+        const paymentFilter = transaction.filter((post) => post.reimbursement === reimbursement);
+        const sizeFilter = paymentFilter.filter((post) => sizeEstimate(post) === size);
+        // console.log(sizeFilter);
+        // sizeFilter.forEach((post) => console.log(userLocation.location.lat));
+        const distFilter = sizeFilter.filter((post) => {
+          return (
+            convertDistance(
+              getDistance(
+                {
+                  latitude: userLocation.lat,
+                  longitude: userLocation.lng
+                },
+                {
+                  latitude: post.location.lat,
+                  longitude: post.location.lng
+                }
+              ), "km"
+            ) < Number(distance)
+          );
+        });
+        res.json(distFilter)
+        let filteredPosts = transaction;
+        // Filter by payment
+        if (reimbursement !== null && reimbursement !== "any") {
+          filteredPosts = filteredPosts.filter((post) => {
+            return reimbursement === post.reimbursement.toLowerCase();
+          });
+        }
+        // Filter by size
+        if (size !== null && size !== "any") {
+          filteredPosts = filteredPosts.filter((post) => {
+            return sizeEstimate(post) === size;
+          });
+        }
+        // Filter by distance
+        if (
+          distance !== null &&
+          distance !== "any" &&
+          userLocation &&
+          userLocation.latitude &&
+          userLocation.longitude
+        ) {
+          let filterValue = null;
+          if (distance === "1") {
+            filterValue = 1;
+          } else if (distance === "5") {
+            filterValue = 5;
+          } else if (distance === "20") {
+            filterValue = 20;
+          } else if (distance === "21") {
+            filterValue = 40075;
+          }
+          filteredPosts = filteredPosts.filter((post) => {
+            return (
+              convertDistance(
+                getDistance(
+                  {
+                    latitude: userLocation.latitude,
+                    longitude: userLocation.longitude,
+                  },
+                  {
+                    latitude: post.location.lat,
+                    longitude: post.location.lng,
+                  }
+                ),
+                "km"
+              ) < filterValue
+            );
+          });
+        }
+        res.json(filteredPosts);
+      }
+    });
+});
+
+const sizeEstimate = (post) => {
+  let size = null;
+  if (post.items.length <= 3) {
+    size = "small";
+  } else if (post.items.length <= 8) {
+    size = "medium";
+  } else {
+    size = "large";
   }
-  
-  ON SUCCESS:
-  Edits the given post
+  return size;
+};
 
+/* Route to edit a post
+   Returns the updated post
+
+   TODO: Everything
 */
 router.put("/:id", (req, res) => {
   User.findById(req.body.user)
@@ -130,207 +188,108 @@ router.put("/:id", (req, res) => {
     });
 });
 
-const sizeEstimate = (post) => {
-  let size = null;
-  if (post.items.length <= 3) {
-    size = "small";
-  } else if (post.items.length <= 8) {
-    size = "medium";
-  } else {
-    size = "large";
-  }
-  return size;
-};
+/* Route to delete a post
+   Returns the deleted post
 
-
-/* 
-  
-  DELETE route to delete a post. Only authors of posts and admins can
-  delete posts.
-
-  BODY:
-  {
-   "post": <ID of the post to be deleted>,
-   "currentUserID": <ID of user deleting the post> 
-  }
-
-  ON SUCCESS:
-  Delete the request and return all incomplete and non-active
-  posts.
-
+   TODO: Everything
 */
 router.delete("/", (req, res) => {
-  const curr_user = req.session.user;
-
-  if (!curr_user) {
-    res.sendStatus(401);
-  } else {
-    User.findById(curr_user)
-      .then((u) => {
-        if (!u.admin && u.id !== currentUserID) {
-          res.sendStatus(401);
-        } else {
-          User.findById(req.body.user)
-            .then((user) => {
-              if (!user) {
-                res.sendStatus(404);
-              } else {
-                Post.findById(req.body.post).then((post) => {
-                  if (!post) {
-                    res.sendStatus(404);
-                  } else {
-                    if (
-                      user.admin ||
-                      post.author.toString() === req.body.user
-                    ) {
-                      Post.findByIdAndDelete(req.body.post).then((post) => {
-                        Post.find({ completed: false, active: false })
-                          .populate("author")
-                          .exec((err, transaction) => {
-                            if (err) {
-                              res.sendStatus(500);
-                            } else {
-                              res.json(transaction);
-                            }
-                          });
-                      });
+  User.findById(req.body.user)
+    .then((user) => {
+      if (!user) {
+        res.sendStatus(404);
+      } else {
+        Post.findById(req.body.post).then((post) => {
+          if (!post) {
+            res.sendStatus(404);
+          } else {
+            if (user.admin || post.author.toString() === req.body.user) {
+              Post.findByIdAndDelete(req.body.post).then((post) => {
+                Post.find({ completed: false, active: false })
+                  .populate("author")
+                  .exec((err, transaction) => {
+                    if (err) {
+                      res.sendStatus(500);
                     } else {
-                      res.sendStatus(400);
+                      res.json(transaction);
                     }
-                  }
-                });
-              }
-            })
-            .catch((e) => {
-              res.sendStatus(500);
-            });
-        }
-      })
-      .catch((error) => {
-        res.sendStatus(401);
-      });
-  }
-});
-
-/*
-  PUT request to accept a user post. Only logged in users can
-  accept posts.
-
-  BODY:
-  {
-    "user": <ID of the user accepting the post>
-  }
-
-  PARAMS: id -> id of the post being accepted
-*/
-
-router.put("/accept/:id", (req, res) => {
-  const curr_user = req.session.user;
-
-  if (!curr_user) {
-    res.sendStatus(401);
-  } else {
-    User.findById(curr_user)
-      .then((u) => {
-        if (u) {
-          Post.findById(req.params.id).then((post) => {
-            if (post) {
-              User.findById(req.body.user).then((user) => {
-                if (user) {
-                  post.active = true;
-                  post.save().then((post) => {
-                    user.active_post = post._id;
-                    user.save().then((savedUser) => {
-                      User.findById(savedUser._id)
-                        .populate({
-                          path: "active_post",
-                          model: "Post",
-                          populate: { path: "author", model: "User" },
-                        })
-                        .exec((err, transaction) => {
-                          if (err) {
-                            res.sendStatus(500);
-                          } else {
-                            res.json({ currentUser: transaction });
-                          }
-                        });
-                    });
                   });
-                } else {
-                  res.sendStatus(404);
-                }
               });
             } else {
-              res.sendStatus(404);
+              res.sendStatus(400);
             }
-          });
-        } else {
-          res.sendStatus(400);
-        }
-      })
-      .catch((error) => {
-        res.sendStatus(400);
-      });
-  }
+          }
+        });
+      }
+    })
+    .catch((e) => {
+      res.sendStatus(500);
+    });
 });
 
-
-/*
-  PUT request to complete a user post. Only logged in users can
-  complete posts.
-
-  BODY:
-  {
-    "user": <ID of the user completing the post>
-  }
-
-  PARAMS: id -> id of the post being completed
-*/
+router.put("/accept/:id", (req, res) => {
+  Post.findById(req.params.id).then((post) => {
+    if (post) {
+      User.findById(req.body.user).then((user) => {
+        if (user) {
+          post.active = true;
+          post.save().then((post) => {
+            user.active_post = post._id;
+            user.save().then((savedUser) => {
+              User.findById(savedUser._id)
+                .populate({
+                  path: "active_post",
+                  model: "Post",
+                  populate: { path: "author", model: "User" },
+                })
+                .exec((err, transaction) => {
+                  if (err) {
+                    res.sendStatus(500);
+                  } else {
+                    res.json({ currentUser: transaction });
+                  }
+                });
+            });
+          });
+        } else {
+          res.sendStatus(404);
+        }
+      });
+    } else {
+      res.sendStatus(404);
+    }
+  });
+});
 
 router.put("/complete/:id", (req, res) => {
-  const curr_user = req.session.user;
-
-  if (!curr_user) {
-    req.sendStatus(401);
-  } else {
-    User.findById(curr_user).then((u) => {
-      if (u) {
-        Post.findById(req.params.id).then((post) => {
-          if (post) {
-            post.completed = true;
-            post.active = false;
-            post.save().then((savedPost) => {
-              User.findById(req.body.user).then((user) => {
-                if (user) {
-                  user.active_post = null;
-                  user.save().then((savedUser) => {
-                    Post.find({ completed: false, active: false })
-                      .populate("author")
-                      .exec((err, transaction) => {
-                        if (err) {
-                          res.sendStatus(500);
-                        } else {
-                          res.json({
-                            currentUser: savedUser,
-                            posts: transaction,
-                          });
-                        }
-                      });
-                  });
-                } else {
-                  res.sendStatus(404);
-                }
-              });
+  Post.findById(req.params.id).then((post) => {
+    if (post) {
+      post.completed = true;
+      post.active = false;
+      post.save().then((savedPost) => {
+        User.findById(req.body.user).then((user) => {
+          if (user) {
+            user.active_post = null;
+            user.save().then((savedUser) => {
+              Post.find({ completed: false, active: false })
+                .populate("author")
+                .exec((err, transaction) => {
+                  if (err) {
+                    res.sendStatus(500);
+                  } else {
+                    res.json({ currentUser: savedUser, posts: transaction });
+                  }
+                });
             });
           } else {
             res.sendStatus(404);
           }
         });
-      } else {
-        res.sendStatus(400);
-      }
-    });
-  }
+      });
+    } else {
+      res.sendStatus(404);
+    }
+  });
 });
 
 router.get("/users/:id", (req, res) => {
