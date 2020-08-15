@@ -109,35 +109,35 @@ router.get("/check-session", (req, res) => {
 */
 router.get("/", (req, res) => {
 
-  if(!req.session.user){
+  if (!req.session.user) {
     res.sendStatus(401);
-  }else{
+  } else {
     // Find the user from the database
     User.findById(req.session.user)
-    .then((user) => {
-      if(!user){
-        // If the user is not a valid user
-        res.sendStatus(400)
-      }else if(!user.admin){
-        // Only admins can get the data of all users
-        res.sendStatus(403)
-      }else{
-        // Return all the users
-        User.find()
-        .then((users) => {
-          res.json(users);
-        })
-        .catch((e) => {
-          res.sendStatus(500);
-        });
-      }
-    })
-    .catch((error) => {
-      res.sendStatus(404);
-    })
+      .then((user) => {
+        if (!user) {
+          // If the user is not a valid user
+          res.sendStatus(400)
+        } else if (!user.admin) {
+          // Only admins can get the data of all users
+          res.sendStatus(403)
+        } else {
+          // Return all the users
+          User.find()
+            .then((users) => {
+              res.json(users);
+            })
+            .catch((e) => {
+              res.sendStatus(500);
+            });
+        }
+      })
+      .catch((error) => {
+        res.sendStatus(404);
+      })
 
   }
-  
+
 });
 
 /*
@@ -157,28 +157,28 @@ router.get("/:id", (req, res) => {
 
   // Get the current user from the database.
   User.findById(curr_user)
-  .then((curr) => {
-    if(!curr){
-      res.sendStatus(401)
-    }else if(req.session.user === curr.id || curr.admin){
-      User.findById(id)
-        .then((user) => {
-          if (!user) {
-            res.status(404).send("Resource not found");
-          } else {
-            res.send(user);
-          }
-        })
-        .catch((error) => {
-          res.status(500).send("Internal Server Error");
-        });
-    }else{
-      res.sendStatus(403);
-    }
-  })
-  .catch((error) => {
-    res.sendStatus(404)
-  })
+    .then((curr) => {
+      if (!curr) {
+        res.sendStatus(401)
+      } else if (req.session.user === curr.id || curr.admin) {
+        User.findById(id)
+          .then((user) => {
+            if (!user) {
+              res.status(404).send("Resource not found");
+            } else {
+              res.send(user);
+            }
+          })
+          .catch((error) => {
+            res.status(500).send("Internal Server Error");
+          });
+      } else {
+        res.sendStatus(403);
+      }
+    })
+    .catch((error) => {
+      res.sendStatus(404)
+    })
 });
 
 
@@ -248,36 +248,36 @@ router.put("/", (req, res) => {
   const curr_user = req.session.user;
 
   User.findById(curr_user)
-  .then((curr) => {
-    if(!curr.admin){
-      res.sendStatus(401)
-    }else{
-      User.findOne({ email: req.body.email })
-        .then((user) => {
-          if (!user) {
-            res.sendStatus(404);
-          } else {
-            if (user.admin) {
-              res.status(400).send("Bad Request");
+    .then((curr) => {
+      if (!curr.admin) {
+        res.sendStatus(401)
+      } else {
+        User.findOne({ email: req.body.email })
+          .then((user) => {
+            if (!user) {
+              res.sendStatus(404);
             } else {
-              user.admin = true;
-              user.save().then((u) => {
-                User.find().then((users) => {
-                  res.json(users);
+              if (user.admin) {
+                res.status(400).send("Bad Request");
+              } else {
+                user.admin = true;
+                user.save().then((u) => {
+                  User.find().then((users) => {
+                    res.json(users);
+                  });
                 });
-              });
+              }
             }
-          }
-        })
-        .catch((e) => {
-          res.sendStatus(500);
-        });
-    }
-  })
-  .catch((error) => {
-    res.sendStatus(401);
-  })
-  
+          })
+          .catch((e) => {
+            res.sendStatus(500);
+          });
+      }
+    })
+    .catch((error) => {
+      res.sendStatus(401);
+    })
+
 });
 
 /*
@@ -304,9 +304,9 @@ router.patch("/:id", multipartMiddleware, (req, res) => {
   }
 
   const curr_user = req.session.user;
-  if(curr_user !== id){
+  if (curr_user !== id) {
     res.sendStatus(401);
-  }else{
+  } else {
     fieldsToUpdate = {};
     for (let key in req.body) {
       if (req.body[key] !== "") {
@@ -330,7 +330,7 @@ router.patch("/:id", multipartMiddleware, (req, res) => {
         res.status(400).send("Bad Request");
       });
   }
-  
+
 });
 
 /* 
@@ -345,28 +345,28 @@ router.delete("/:id", (req, res) => {
   const curr_user = req.session.user;
 
   User.findById(curr_user)
-  .then((curr) => {
-    if(!curr.admin){
-      res.sendStatus(401)
-    }else{
-      User.findByIdAndRemove(id)
-      .then((user) => {
-        if (!user) {
-          res.status(404).send();
-        } else {
-          User.find().then((users) => {
-            res.json(users);
+    .then((curr) => {
+      if (!curr.admin) {
+        res.sendStatus(401)
+      } else {
+        User.findByIdAndRemove(id)
+          .then((user) => {
+            if (!user) {
+              res.status(404).send();
+            } else {
+              User.find().then((users) => {
+                res.json(users);
+              });
+            }
+          })
+          .catch((error) => {
+            res.status(500).send();
           });
-        }
-      })
-      .catch((error) => {
-        res.status(500).send();
-      });
-    }
-  })
-  .catch((error) => {
-    res.sendStatus(401);
-  })
+      }
+    })
+    .catch((error) => {
+      res.sendStatus(401);
+    })
 
 });
 
