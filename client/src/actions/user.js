@@ -59,6 +59,10 @@ export const register = (signupComp) => {
       notifyError("Something went wrong");
     } else if (response.status === 417) {
       notifyError("Passwords do not match");
+    } else if (response.status === 418) {
+      notifyError("Last name is required");
+    } else if (response.status === 419) {
+      notifyError("First name is required");
     } else if (response.status === 200) {
       const data = await response.json();
       dispatch({ type: PAYLOAD_TYPES.LOGIN, payload: data });
