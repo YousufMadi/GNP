@@ -204,17 +204,17 @@ Arguments:
 const sizeEstimate = (post) => {
   let size = null;
   if (post.items.length <= 3) {
-    size = "small";
+    size = "Small";
   } else if (post.items.length <= 8) {
-    size = "medium";
+    size = "Medium";
   } else {
-    size = "large";
+    size = "Large";
   }
   return size;
 };
 
 export const getNumPostsByUserId = async (id) => {
-  const url = `/posts/users/${id}`
+  const url = `/posts/users/${id}`;
   const request = new Request(url, {
     method: "get",
     headers: {
@@ -229,7 +229,7 @@ export const getNumPostsByUserId = async (id) => {
   } else {
     notifyError("Something went wrong, couldn't user posts");
   }
-}
+};
 
 export const getCompletedPosts = async () => {
   const request = new Request("/posts/completed", {
@@ -241,14 +241,14 @@ export const getCompletedPosts = async () => {
   });
 
   const response = await fetch(request);
-  if(response.status === 200){
+  if (response.status === 200) {
     const posts = await response.json();
-    console.log(posts)
+    console.log(posts);
     return posts;
-  }else{
-    notifyError("Unable to get completed posts")
+  } else {
+    notifyError("Unable to get completed posts");
   }
-}
+};
 
 export const getPendingPosts = async () => {
   const request = new Request("/posts/pending", {
@@ -260,23 +260,22 @@ export const getPendingPosts = async () => {
   });
 
   const response = await fetch(request);
-  if(response.status === 200){
+  if (response.status === 200) {
     const posts = await response.json();
-    return posts;  
-  }else{
-    notifyError("Unable to get pending posts")
+    return posts;
+  } else {
+    notifyError("Unable to get pending posts");
   }
-  
-}
+};
 
 export const getNumCompletedPosts = async () => {
   const completedPosts = await getCompletedPosts();
-  console.log(completedPosts)
-  return completedPosts.length
-}
+  console.log(completedPosts);
+  return completedPosts.length;
+};
 
 export const getNumPendingPosts = async () => {
   const pendingPosts = await getPendingPosts();
-  console.log(pendingPosts)
-  return pendingPosts.length
-}
+  console.log(pendingPosts);
+  return pendingPosts.length;
+};

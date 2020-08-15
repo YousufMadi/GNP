@@ -62,8 +62,38 @@
   transition: all 0.2s ease-in-out;
 }
 
-.marker-description {
+.marker-container{
+  max-width: 200px;
+}
+.marker-author-info{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.marker-author-name{
+  margin-left: 0.5em;  
   color: black;
+  font-weight: bold;
+  text-align: center;
+}
+
+.marker-author-pic{
+  text-align: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+
+.marker-size{
+  margin: 0.2em 0;
+  color: black;
+  font-weight: bold;
+  text-align: center;
+}
+.marker-description {
+  margin-top: 1em;
+  color: black;
+  text-align: center;
 }
 
 .google-maps-section.hide {
