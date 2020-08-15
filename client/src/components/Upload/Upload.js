@@ -24,14 +24,7 @@ class Upload extends React.Component {
         <label>Profile picture:</label>
         <input name="profile_picture"
                type="file"
-               onChange={(e) => this.uploadProfilePic(e)}/>
-        
-        <button className="remove-profile-pci">
-          <i
-            className="fas fa-trash"
-          ></i>
-        </button>
-        
+               onChange={(e) => this.uploadProfilePic(e)}/>        
       </div>
     )
   }

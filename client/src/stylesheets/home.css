@@ -42,6 +42,11 @@
   width: 100%;
 }
 
+.author{
+  font-size: 0.6em;
+  font-style: italic;
+}
+
 /* DESCRIPTIONS */
 
 .description{

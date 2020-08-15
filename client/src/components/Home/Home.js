@@ -15,7 +15,8 @@ class Home extends React.Component {
               <h1>The Good Neighbour</h1>
               <p>
                 “Because that’s what kindness is. It’s not doing something for
-                 someone else because they can’t, but because you can.”
+                 someone else because they can’t, but because you can.
+                 <span className="author"> - Andrew Iskander.</span>”
               </p>
               <div className="hero-img-container">
                 <img className="hero-img"/>
