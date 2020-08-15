@@ -63,27 +63,6 @@ router.put("/filter", (req, res) => {
       if (err) {
         res.sendStatus(500);
       } else {
-        const paymentFilter = transaction.filter((post) => post.reimbursement === reimbursement);
-        const sizeFilter = paymentFilter.filter((post) => sizeEstimate(post) === size);
-        // console.log(sizeFilter);
-        // sizeFilter.forEach((post) => console.log(userLocation.location.lat));
-        const distFilter = sizeFilter.filter((post) => {
-          return (
-            convertDistance(
-              getDistance(
-                {
-                  latitude: userLocation.lat,
-                  longitude: userLocation.lng
-                },
-                {
-                  latitude: post.location.lat,
-                  longitude: post.location.lng
-                }
-              ), "km"
-            ) < Number(distance)
-          );
-        });
-        res.json(distFilter)
         let filteredPosts = transaction;
         // Filter by payment
         if (reimbursement !== null && reimbursement !== "any") {
@@ -304,7 +283,7 @@ router.get("/users/:id", (req, res) => {
     });
 });
 
-router.get('/completed', (req, res) => {
+router.get("/completed", (req, res) => {
   Post.find({ completed: true })
     .populate("author")
     .exec((err, transaction) => {
@@ -314,21 +293,19 @@ router.get('/completed', (req, res) => {
         res.json(transaction);
       }
     });
-})
+});
 
-router.get('/pending', (req, res) => {
+router.get("/pending", (req, res) => {
   Post.find({ completed: false })
     .populate("author")
     .exec((err, transaction) => {
       if (err) {
         res.sendStatus(500);
       } else {
-        console.log(transaction)
+        console.log(transaction);
         res.json(transaction);
       }
     });
-})
-
-
+});
 
 module.exports = router;
