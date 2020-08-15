@@ -21,14 +21,6 @@ export const readCookie = () => {
       const data = await response.json();
       dispatch({ type: PAYLOAD_TYPES.SET_COOKIE, payload: data });
     }
-    // if (response.status === 400) {
-    //   notifyError("Something went wrong");
-    // } else if (response.status === 500 || response.status === 404) {
-    //   notifyError("Something went wrong");
-    // } else if (response.status === 200) {
-    //   const data = await response.json();
-    //   dispatch({ type: PAYLOAD_TYPES.SET_COOKIE, payload: data });
-    // }
   };
 };
 

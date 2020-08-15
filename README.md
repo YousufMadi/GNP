@@ -62,4 +62,9 @@ Users can also filter requests using the sidebar by:
 - __Size of favour__
 - __Method of reimbursement__
 
-Another neat feature in the sidebar is the map. This displays all the requests in the timeline which enables the user to click on the location in the map and find its associating post in the timeline.
+
+## New features
+We implemented quite a couple of new features while sticking to the original design.
+
+1. __Google Maps__: One of the coolest features implemented is Maps which is visible in the timeline. On this dynamic map exists all the requests in a convenient view, making it easier for the volunteer to select a request to complete. Once a volunteer accepts a request to complete, the active view appears which only contains the request information about the accepted request. The Map updates to provide the location to where items need to be delivered, making it very convenient for the volunteer.
+2. __Image Uploads__: Using cloudinary, we were able to allow for image uploads. When a user signs up, they are provided with a default profile image which routes to a link to cloudinary. A user can update their profile image from the settings page.
