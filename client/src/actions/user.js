@@ -59,6 +59,8 @@ export const register = (signupComp) => {
       notifyError("Last name is required");
     } else if (response.status === 419) {
       notifyError("First name is required");
+    } else if (response.status === 420) {
+      notifyError("Email already in use");
     } else if (response.status === 200) {
       const data = await response.json();
       dispatch({ type: PAYLOAD_TYPES.LOGIN, payload: data });

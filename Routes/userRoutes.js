@@ -186,8 +186,12 @@ router.post("/", (req, res) => {
             "https://res.cloudinary.com/good-neighbour/image/upload/v1597524012/no-profile-pic_dqzqam.jpg",
         });
 
+
+
         newUser.save().then((user) => {
           res.json({ currentUser: user });
+        }).catch((e) => {
+          res.sendStatus(420);
         });
       })
       .catch(function (err) {
@@ -319,7 +323,7 @@ router.delete("/:id", (req, res) => {
   ON SUCCESS:
   Update the profile picture
 
-*/ 
+*/
 router.post("/image/:id", async (req, res) => {
   const file = req.body.data;
   const id = req.params.id;
