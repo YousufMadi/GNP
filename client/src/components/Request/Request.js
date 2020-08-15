@@ -21,6 +21,7 @@ class Request extends React.Component {
   componentDidUpdate() {
     if (
       this.state.postUser &&
+      this.props.post.author &&
       this.props.post.author._id !== this.state.postUser._id
     ) {
       this.setState({ postUser: this.props.post.author });
