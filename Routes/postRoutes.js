@@ -304,7 +304,6 @@ router.get("/users/:id", (req, res) => {
     });
 });
 
-<<<<<<< HEAD
 router.get('/completed', (req, res) => {
   Post.find({ completed: true })
     .populate("author")
@@ -333,6 +332,3 @@ router.get('/pending', (req, res) => {
 
 
 module.exports = router;
-=======
-module.exports = router;
->>>>>>> 2bcf58131b5645de9c8717ad2744ade923034ae3
