@@ -46,7 +46,7 @@ export const register = (signupComp) => {
     });
     const response = await fetch(request);
     if (response.status === 400) {
-      notifyError("Invalid login credentials");
+      notifyError("Something went wrong");
     } else if (response.status === 500 || response.status === 404) {
       notifyError("Something went wrong");
     } else if (response.status === 417) {
