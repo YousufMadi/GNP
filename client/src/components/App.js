@@ -46,7 +46,7 @@ class App extends React.Component {
     this.props.readCookie();
   }
 
-  componentDidMount() { }
+  componentDidMount() {}
 
   render() {
     return (

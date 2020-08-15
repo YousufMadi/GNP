@@ -1,5 +1,4 @@
 import React from "react";
-import { notifySuccess } from "../../Utils/notificationUtils";
 import "../../stylesheets/userupdateform.css";
 
 import { connect } from "react-redux";
@@ -12,14 +11,12 @@ class UserUpdateForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
       first_name: "",
       last_name: "",
       email: "",
       password: "",
     };
   }
-
 
   formSubmit = (e) => {
     e.preventDefault();
@@ -34,7 +31,6 @@ class UserUpdateForm extends React.Component {
     this.setState({
       [name]: value,
     });
-
   };
 
   render() {
@@ -114,4 +110,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { getUserById, updateUser })(UserUpdateForm);
+export default connect(mapStateToProps, { getUserById, updateUser })(
+  UserUpdateForm
+);

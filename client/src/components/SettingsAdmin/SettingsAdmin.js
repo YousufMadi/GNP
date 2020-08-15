@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 
 import { Redirect } from "react-router-dom";
 
-import { getUserById, getAllUsers } from "../../actions/user";
+import { getUserById } from "../../actions/user";
 
 const SettingsAdmin = (props) => {
   const adminOptions = {
@@ -41,7 +41,7 @@ const SettingsAdmin = (props) => {
   const currentUser = props.currentUser;
   if (currentUser === null) {
     return <Redirect to="/login" />;
-  }else if(!currentUser.admin){
+  } else if (!currentUser.admin) {
     return <Redirect to="/settings" />;
   }
 
@@ -78,17 +78,11 @@ const SettingsAdmin = (props) => {
             Personal Settings
           </button>
         </div>
-       <div className="content">
-          {adminOption && (
-            <SelectedOption
-            />
-          )}
-        </div>
+        <div className="content">{adminOption && <SelectedOption />}</div>
       </div>
     </div>
   );
 };
-
 
 const mapStateToProps = (state) => {
   return {

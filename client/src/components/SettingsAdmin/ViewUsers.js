@@ -2,7 +2,7 @@ import React from "react";
 import CreateAdmin from "./CreateAdmin";
 import { getAllUsers, deleteUser, promoteUser } from "../../actions/user";
 
-import { notifySuccess, notifyError } from "../../Utils/notificationUtils";
+import { notifyError } from "../../Utils/notificationUtils";
 
 class ViewUsers extends React.Component {
   state = {

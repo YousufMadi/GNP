@@ -39,11 +39,7 @@ class ActiveRequest extends React.Component {
     if (this.props.currentUser.active_post !== null) {
       return (
         <>
-          <Sidebar
-            active_post={true}
-            posts={[this.props.currentUser.active_post]}
-            changeFilterState={this.props.changeFilterState}
-          />
+          <Sidebar currentUserLocation={this.props.currentUserLocation} />
           <div className="timeline">
             <div className="active-request-container">
               <div className="active-request-header">

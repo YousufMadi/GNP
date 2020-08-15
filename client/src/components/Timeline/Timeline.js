@@ -196,10 +196,7 @@ class Timeline extends React.Component {
   render() {
     if (this.props.currentUser.active_post !== null) {
       return (
-        <ActiveRequest
-          currentUserLocation={this.state.currentUserLocation}
-          changeFilterState={this.handleFilterChange}
-        />
+        <ActiveRequest currentUserLocation={this.state.currentUserLocation} />
       );
     } else {
       if (this.props.posts != null) {
@@ -229,7 +226,7 @@ class Timeline extends React.Component {
 
         return (
           <>
-            <Sidebar changeFilterState={this.props.changeFilterState} />
+            <Sidebar currentUserLocation={this.state.currentUserLocation} />
             <div className="timeline">
               {this.renderGoogleMap(currentPosts)}
               <NewRequest currentUser={this.props.currentUser} />
