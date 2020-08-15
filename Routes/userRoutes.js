@@ -5,11 +5,14 @@ const router = express.Router();
 const { mongoose } = require("../db/mongoose");
 const { User } = require("../models/user");
 const { Post } = require("../models/post");
-const { registrationSchema } = require("../Auth.js");
+const { registrationSchema, updateSchema } = require("../Auth.js");
 const multipart = require("connect-multiparty");
 const multipartMiddleware = multipart();
 
 const session = require("express-session");
+
+const bcrypt = require("bcryptjs");
+
 
 const bodyParser = require("body-parser");
 router.use(bodyParser.json());
@@ -46,6 +49,7 @@ router.post("/login", async (req, res) => {
       res.sendStatus(400);
     });
 });
+
 
 router.get("/logout", (req, res) => {
   // Remove the session
@@ -119,6 +123,7 @@ router.post("/", (req, res) => {
     password: req.body.password,
   });
 
+
   if (req.body.password === req.body.password_confirmation) {
     registrationSchema
       .validate(yupRegister)
@@ -167,6 +172,18 @@ router.put("/", (req, res) => {
     });
 });
 
+
+const hashPassword = async (key, user, req) =>
+  await new Promise((resolve, reject) => {
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(req.body[key], salt, (err, hash) => {
+        console.log(key, "->", hash)
+        resolve(hash);
+      })
+      // TODO - add if (err) return reject(err)
+    })
+  });
+
 /* Route to edit user information 
    Returns the updated user model
 
@@ -178,28 +195,50 @@ router.patch("/:id", multipartMiddleware, (req, res) => {
     return;
   }
 
-  fieldsToUpdate = {};
-  for (let key in req.body) {
-    if (req.body[key] !== "") {
-      fieldsToUpdate[key] = req.body[key];
-    }
-  }
+  if (req.body.password === req.body.confirm_password) {
+    User.findOne(
+      { _id: id },
+      // { $set: fieldsToUpdate },
+      // { new: true, useFindAndModify: false, runValidators: true }
+    )
+      .then(async (user) => {
+        if (!user) {
+          res.status(404).send("Resource not found");
+        } else {
+          console.log("user before change", user)
+          // map user changes
+          for (let key in req.body) {
+            if (!!req.body[key]) {
+              console.log(String(key))
+              if (String(key) === 'password' || String(key) === 'confirm_password') {
+                user[key] = await hashPassword(key, user, req);
+              } else {
+                user[key] = req.body[key];
+              }
+            }
+          }
 
-  User.findOneAndUpdate(
-    { _id: id },
-    { $set: fieldsToUpdate },
-    { new: true, useFindAndModify: false, runValidators: true }
-  )
-    .then((user) => {
-      if (!user) {
-        res.status(404).send("Resource not found");
-      } else {
-        res.json({ currentUser: user });
-      }
-    })
-    .catch((error) => {
-      res.status(400).send("Bad Request");
-    });
+          console.log("new user", user);
+
+          const updateFieldsYup = updateSchema.cast(user);
+          updateSchema.validate(updateFieldsYup).then((good) => {
+
+            user.save().then(updatedUser => {
+              console.log("updated user", updatedUser)
+              res.json({ currentUser: updatedUser });
+            })
+          }).catch((e) => {
+            res.status(400).send("Invalid Form");
+          });
+        }
+      })
+      .catch((error) => {
+        res.status(400).send("Bad Request");
+      });
+
+  } else {
+    res.status(417).send("Passwords do not match");
+  }
 });
 
 /* Route to delete a user

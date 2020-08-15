@@ -1,6 +1,9 @@
 import { notifySuccess, notifyError } from "../Utils/notificationUtils";
 import { TL_PAYLOAD_TYPES } from "./timeline";
 
+const bcrypt = require("bcryptjs");
+
+
 export const PAYLOAD_TYPES = {
   REGISTER: "REGISTER",
   LOGIN: "LOGIN",
@@ -65,6 +68,7 @@ export const register = (signupComp) => {
     }
   };
 };
+
 /*
 
 Log in a given user
@@ -124,10 +128,15 @@ export const updateUser = (id, updateComp) => {
       },
     });
     const response = await fetch(request);
+
+    console.log(response);
+
     if (response.status === 400) {
       notifyError("Profile not updated due to invalid information");
     } else if (response.status === 500 || response.status === 404) {
       notifyError("Something went wrong");
+    } else if (response.status === 417) {
+      notifyError("Passwords do not match");
     } else if (response.status === 200) {
       const data = await response.json();
       dispatch({ type: PAYLOAD_TYPES.UPDATE_USER, payload: data });
@@ -135,6 +144,20 @@ export const updateUser = (id, updateComp) => {
     }
   };
 };
+
+// UserSchema.pre("save", function (next) {
+//   const user = this;
+//   if (user.isModified("password")) {
+//     bcrypt.genSalt(10, (err, salt) => {
+//       bcrypt.hash(user.password, salt, (err, hash) => {
+//         user.password = hash;
+//         next();
+//       });
+//     });
+//   } else {
+//     next();
+//   }
+// });
 
 /*
 

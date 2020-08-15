@@ -8,7 +8,15 @@ const registrationSchema = object({
     password: string().required()
 })
 
-module.exports = { registrationSchema };
+const updateSchema = object({
+    first_name: string(),
+    last_name: string(),
+    email: string().email(),
+    password: string(),
+    confirm_password: string()
+})
+
+module.exports = { registrationSchema, updateSchema };
 
 
 

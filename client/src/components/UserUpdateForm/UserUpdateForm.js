@@ -15,6 +15,7 @@ class UserUpdateForm extends React.Component {
       last_name: "",
       email: "",
       password: "",
+      confirm_password: ""
     };
   }
 
@@ -80,6 +81,17 @@ class UserUpdateForm extends React.Component {
               name="password"
               type="password"
               placeholder="Password"
+              onChange={this.handleChange}
+            ></input>
+            {/*<p className="error_msg">{this.state.password_error}</p>*/}
+          </div>
+
+          <div className="update-input-container">
+            <label>Confirm Password</label>
+            <input
+              name="confirm_password"
+              type="password"
+              placeholder="Confirm Password"
               onChange={this.handleChange}
             ></input>
             {/*<p className="error_msg">{this.state.password_error}</p>*/}
