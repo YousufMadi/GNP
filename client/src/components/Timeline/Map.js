@@ -1,5 +1,6 @@
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
+
 import {
   GoogleMap,
   withScriptjs,
@@ -9,6 +10,7 @@ import {
   Circle,
   DirectionsRenderer,
 } from "react-google-maps";
+import { getSizeEstimate } from "../../actions/timeline";
 
 class Map extends React.Component {
   /*
@@ -140,8 +142,23 @@ class Map extends React.Component {
               position={this.state.mapSelectedPost.location}
               onCloseClick={() => this.setSelectedRequest(null)}
             >
-              <div className="marker-description">
-                {this.state.mapSelectedPost.description}
+              <div className="marker-container">
+                <div className="marker-author-info">
+                  <img
+                    className="marker-author-pic"
+                    src={this.state.mapSelectedPost.author.profile_picture}
+                    alt="author"
+                  />
+                  <span className="marker-author-name">
+                    {this.state.mapSelectedPost.author.first_name}'s Request
+                  </span>
+                </div>
+                <div className="marker-size">
+                  {getSizeEstimate(this.state.mapSelectedPost)}
+                </div>
+                <div className="marker-description">
+                  {this.state.mapSelectedPost.description}
+                </div>
               </div>
             </InfoWindow>
           ) : null}
@@ -152,8 +169,24 @@ class Map extends React.Component {
               position={this.props.highlightedPost.location}
               onCloseClick={() => this.setSelectedRequest(null)}
             >
-              <div className="marker-description">
-                {this.props.highlightedPost.description}
+              <div className="marker-container">
+                <div className="marker-author-info">
+                  <img
+                    className="marker-author-pic"
+                    src={this.props.highlightedPost.author.profile_picture}
+                    alt="author"
+                  />
+                  <span className="marker-author-name">
+                    {this.props.highlightedPost.author.first_name}'s Request
+                  </span>
+                </div>
+                <div className="marker-size">
+                  {getSizeEstimate(this.props.highlightedPost)}
+                </div>
+
+                <div className="marker-description">
+                  {this.props.highlightedPost.description}
+                </div>
               </div>
             </InfoWindow>
           ) : null}
