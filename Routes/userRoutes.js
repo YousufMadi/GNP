@@ -129,7 +129,7 @@ router.post("/", (req, res) => {
           email: req.body.email,
           password: req.body.password,
           profile_picture:
-            "https://res.cloudinary.com/good-neighbour/image/upload/v1597314358/no-profile-pic_edm3bf.jpg",
+            "https://res.cloudinary.com/good-neighbour/image/upload/v1597524012/no-profile-pic_dqzqam.jpg",
         });
 
         newUser.save().then((user) => {
