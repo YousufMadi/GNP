@@ -26,20 +26,6 @@ router.use(
   })
 );
 
-
-/*
-  POST request to login a given user.
-
-  Body:
-  {
-    email: <email>,
-    password: <password>
-  }
-
-  ON SUCCESS: 
-  The response returned contains all the information stored on the
-  database about the logged in user.
-*/
 router.post("/login", async (req, res) => {
   User.findByEmailPassword(req.body.email, req.body.password)
     .then((user) => {
@@ -61,10 +47,6 @@ router.post("/login", async (req, res) => {
     });
 });
 
-
-/*
-  GET request to logout a given user.
-*/
 router.get("/logout", (req, res) => {
   // Remove the session
   req.session.destroy((error) => {
@@ -76,9 +58,6 @@ router.get("/logout", (req, res) => {
   });
 });
 
-/*
-  Route to check if a user is logged in on the session cookie.
-*/
 router.get("/check-session", (req, res) => {
   if (req.session.user) {
     User.findById(req.session.user)
@@ -106,104 +85,32 @@ router.get("/check-session", (req, res) => {
   }
 });
 
-
-/*
-  GET route to get all the users in the database. Only logged
-  in users who are admins should be allowed to make this request.
-
-  ON SUCCESS:
-  Return the information about all the users in the database
-*/
 router.get("/", (req, res) => {
-
-  if(!req.session.user){
-    res.sendStatus(401);
-  }else{
-    // Find the user from the database
-    User.findById(req.session.user)
-    .then((user) => {
-      if(!user){
-        // If the user is not a valid user
-        res.sendStatus(400)
-      }else if(!user.admin){
-        // Only admins can get the data of all users
-        res.sendStatus(403)
-      }else{
-        // Return all the users
-        User.find()
-        .then((users) => {
-          res.json(users);
-        })
-        .catch((e) => {
-          res.sendStatus(500);
-        });
-      }
+  User.find()
+    .then((users) => {
+      res.json(users);
     })
-    .catch((error) => {
-      res.sendStatus(404);
-    })
-
-  }
-  
+    .catch((e) => {
+      res.sendStatus(500);
+    });
 });
 
-/*
-  GET request to get the information about a user with the
-  given id. Only logged in users can make this request to
-  their own ids. Other users (excluding admins) cannot make
-  this request.
-
-  ON SUCCESS:
-  Return the information stored in the database about the user
-*/
 router.get("/:id", (req, res) => {
   const id = req.params.id;
 
-  // Confirm if the user is logged in
-  const curr_user = req.session.user;
-
-  // Get the current user from the database.
-  User.findById(curr_user)
-  .then((curr) => {
-    if(!curr){
-      res.sendStatus(401)
-    }else if(req.session.user === curr.id || curr.admin){
-      User.findById(id)
-        .then((user) => {
-          if (!user) {
-            res.status(404).send("Resource not found");
-          } else {
-            res.send(user);
-          }
-        })
-        .catch((error) => {
-          res.status(500).send("Internal Server Error");
-        });
-    }else{
-      res.sendStatus(403);
-    }
-  })
-  .catch((error) => {
-    res.sendStatus(404)
-  })
+  User.findById(id)
+    .then((user) => {
+      if (!user) {
+        res.status(404).send("Resource not found");
+      } else {
+        res.send(user);
+      }
+    })
+    .catch((error) => {
+      res.status(500).send("Internal Server Error");
+    });
 });
 
-
-/*
-  POST request to register a new user onto the website.
-
-  BODY:
-  {
-    first_name: <first name>,
-    last_name: <last name>,
-    email: <email>,
-    password: <password>,
-    password_confirmation: <password>,
-  }
-
-  ON SUCCESS:
-  Return the information stored in the database about the user
-*/
 router.post("/", (req, res) => {
   const yupRegister = registrationSchema.cast({
     firstName: req.body.first_name,
@@ -237,71 +144,32 @@ router.post("/", (req, res) => {
   }
 });
 
-
-/*
-  PUT request to promote a given user to admin role. Only logged
-  in admins are permitted to make this request
-
-  BODY:
-  {
-    "email": <email of the user to promote>
-  }
-
-  ON SUCCESS:
-  Return the information stored in the database about the promoted
-  user.
-*/
 router.put("/", (req, res) => {
-  const curr_user = req.session.user;
-
-  User.findById(curr_user)
-  .then((curr) => {
-    if(!curr.admin){
-      res.sendStatus(401)
-    }else{
-      User.findOne({ email: req.body.email })
-        .then((user) => {
-          if (!user) {
-            res.sendStatus(404);
-          } else {
-            if (user.admin) {
-              res.status(400).send("Bad Request");
-            } else {
-              user.admin = true;
-              user.save().then((u) => {
-                User.find().then((users) => {
-                  res.json(users);
-                });
-              });
-            }
-          }
-        })
-        .catch((e) => {
-          res.sendStatus(500);
-        });
-    }
-  })
-  .catch((error) => {
-    res.sendStatus(401);
-  })
-  
+  User.findOne({ email: req.body.email })
+    .then((user) => {
+      if (!user) {
+        res.sendStatus(404);
+      } else {
+        if (user.admin) {
+          res.status(400).send("Bad Request");
+        } else {
+          user.admin = true;
+          user.save().then((u) => {
+            User.find().then((users) => {
+              res.json(users);
+            });
+          });
+        }
+      }
+    })
+    .catch((e) => {
+      res.sendStatus(500);
+    });
 });
 
-/*
-  PATCH request to edit information about a user. Only logged
-  in users can edit their own profiles. All fields are optional
-  and only those attributes that are provided are updated.
- 
-  BODY:
-  {
-    "first_name": <first name> (optional),
-    "last_name": <lastt name> (optional),
-    "email": <email> (optional),
-    "password": <password> (optional),
-  }
+/* Route to edit user information 
+   Returns the updated user model
 
-  ON SUCCESS:
-  Return the updated information stord in the database
 */
 router.patch("/:id", multipartMiddleware, (req, res) => {
   const id = req.params.id;
@@ -310,71 +178,51 @@ router.patch("/:id", multipartMiddleware, (req, res) => {
     return;
   }
 
-  const curr_user = req.session.user;
-  if(curr_user !== id){
-    res.sendStatus(401);
-  }else{
-    fieldsToUpdate = {};
-    for (let key in req.body) {
-      if (req.body[key] !== "") {
-        fieldsToUpdate[key] = req.body[key];
-      }
+  fieldsToUpdate = {};
+  for (let key in req.body) {
+    if (req.body[key] !== "") {
+      fieldsToUpdate[key] = req.body[key];
     }
-
-    User.findOneAndUpdate(
-      { _id: id },
-      { $set: fieldsToUpdate },
-      { new: true, useFindAndModify: false, runValidators: true }
-    )
-      .then((user) => {
-        if (!user) {
-          res.status(404).send("Resource not found");
-        } else {
-          res.json({ currentUser: user });
-        }
-      })
-      .catch((error) => {
-        res.status(400).send("Bad Request");
-      });
   }
-  
+
+  User.findOneAndUpdate(
+    { _id: id },
+    { $set: fieldsToUpdate },
+    { new: true, useFindAndModify: false, runValidators: true }
+  )
+    .then((user) => {
+      if (!user) {
+        res.status(404).send("Resource not found");
+      } else {
+        res.json({ currentUser: user });
+      }
+    })
+    .catch((error) => {
+      res.status(400).send("Bad Request");
+    });
 });
 
-/* 
-  DELETE request to delete a user with the given id. Only admins
-  can delete users.
+/* Route to delete a user
+   Returns the deleted user
 
-  ON SUCCESS:
-  Return all the users in the database except the deleted user
 */
 router.delete("/:id", (req, res) => {
   const id = req.params.id;
-  const curr_user = req.session.user;
 
-  User.findById(curr_user)
-  .then((curr) => {
-    if(!curr.admin){
-      res.sendStatus(401)
-    }else{
-      User.findByIdAndRemove(id)
-      .then((user) => {
-        if (!user) {
-          res.status(404).send();
-        } else {
-          User.find().then((users) => {
-            res.json(users);
-          });
-        }
-      })
-      .catch((error) => {
-        res.status(500).send();
-      });
-    }
-  })
-  .catch((error) => {
-    res.sendStatus(401);
-  })
-
+  // Delete a student by their id
+  User.findByIdAndRemove(id)
+    .then((user) => {
+      if (!user) {
+        res.status(404).send();
+      } else {
+        User.find().then((users) => {
+          res.json(users);
+        });
+      }
+    })
+    .catch((error) => {
+      res.status(500).send();
+    });
 });
 
 module.exports = router;
