@@ -5,7 +5,7 @@ export const addImage = (id, img) => {
 
   return async (dispatch) => {
     // Create our request constructor with all the parameters we need
-    const url = "/image/" + id;
+    const url = "/users/image/" + id;
     const request = new Request(url, {
         method: "post",
         body: JSON.stringify({data: img}),

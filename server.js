@@ -11,12 +11,10 @@ const { Post } = require("./models/post");
 const { User } = require("./models/user");
 const { Image } = require("./models/image");
 
-app.use("/users", require("./Routes/userRoutes"));
-app.use("/posts", require("./Routes/postRoutes"));
-
 // body-parser: middleware for parsing HTTP JSON body into a usable object
 const bodyParser = require("body-parser");
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: "5mb" }))
 
 // express-session for managing user sessions
 const session = require("express-session");
@@ -37,46 +35,27 @@ cloudinary.config({
   api_secret: "dIApzPK2RndvFgqHMFXYht4y7A8",
 });
 
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(
+  session({
+    secret: "oursecret",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      expires: 600000,
+      httpOnly: true,
+    },
+  })
+);
+
+app.use("/users", require("./Routes/userRoutes"));
+app.use("/posts", require("./Routes/postRoutes"));
+
 
 /*** Session handling ***/
 
-app.post("/image/:id", async (req, res) => {
-  const file = req.body.data;
-  const id = req.params.id;
 
-  User.findById(id)
-    .then((user) => {
-      if (!user) {
-        res.status(404).send("Resource not found");
-      } else {
-        cloudinary.uploader
-          .upload(file, {
-            upload_preset: "ml_default",
-          })
-          .then((uploadedResponse) => {
-            user.profile_picture = uploadedResponse.secure_url;
-            user.save();
-            user
-              .populate({
-                path: "active_post",
-                model: "Post",
-                populate: { path: "author", model: "User" },
-              })
-              .execPopulate()
-              .then((populatedUser) => {
-                res.json({ currentUser: populatedUser });
-              });
-          })
-          .catch((error) => {
-            res.status(500).send("Internal Server Error!"); // server error
-          });
-      }
-    })
-    .catch((error) => {
-      res.status(500).send("Internal Server Error!"); // server error
-    });
-});
 
 /****************** WEBPAGE ROUTES ************************/
 

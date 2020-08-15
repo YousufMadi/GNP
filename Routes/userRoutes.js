@@ -9,24 +9,17 @@ const { registrationSchema } = require("../Auth.js");
 const multipart = require("connect-multiparty");
 const multipartMiddleware = multipart();
 
-const session = require("express-session");
-
 const bodyParser = require("body-parser");
-router.use(bodyParser.json());
+router.use(bodyParser.json({ limit: "50mb" }))
 
-router.use(
-  session({
-    secret: "oursecret",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      expires: 600000,
-      httpOnly: true,
-    },
-  })
-);
+router.use(bodyParser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }))
 
-
+const cloudinary = require("cloudinary").v2;
+cloudinary.config({
+  cloud_name: "good-neighbour",
+  api_key: "246527538834138",
+  api_secret: "dIApzPK2RndvFgqHMFXYht4y7A8",
+});
 /*
   POST request to login a given user.
 
@@ -375,6 +368,43 @@ router.delete("/:id", (req, res) => {
     res.sendStatus(401);
   })
 
+});
+
+router.post("/image/:id", async (req, res) => {
+  const file = req.body.data;
+  const id = req.params.id;
+
+  User.findById(id)
+    .then((user) => {
+      if (!user) {
+        res.status(404).send("Resource not found");
+      } else {
+        cloudinary.uploader
+          .upload(file, {
+            upload_preset: "ml_default",
+          })
+          .then((uploadedResponse) => {
+            user.profile_picture = uploadedResponse.secure_url;
+            user.save();
+            user
+              .populate({
+                path: "active_post",
+                model: "Post",
+                populate: { path: "author", model: "User" },
+              })
+              .execPopulate()
+              .then((populatedUser) => {
+                res.json({ currentUser: populatedUser });
+              });
+          })
+          .catch((error) => {
+            res.status(500).send("Internal Server Error!");
+          });
+      }
+    })
+    .catch((error) => {
+      res.status(500).send("Internal Server Error!");
+    });
 });
 
 module.exports = router;
