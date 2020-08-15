@@ -15,7 +15,6 @@ const session = require("express-session");
 const bodyParser = require("body-parser");
 router.use(bodyParser.json());
 
-
 router.use(
   session({
     secret: "oursecret",
@@ -122,33 +121,29 @@ router.post("/", (req, res) => {
   });
 
   if (req.body.password === req.body.password_confirmation) {
-    registrationSchema.validate(yupRegister).then((good) => {
+    registrationSchema
+      .validate(yupRegister)
+      .then((good) => {
+        const newUser = new User({
+          first_name: req.body.first_name,
+          last_name: req.body.last_name,
+          email: req.body.email,
+          password: req.body.password,
+          profile_picture:
+            "https://res.cloudinary.com/good-neighbour/image/upload/v1597314358/no-profile-pic_edm3bf.jpg",
+        });
 
-      const newUser = new User({
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        email: req.body.email,
-        password: req.body.password,
-        profile_picture: "https://res.cloudinary.com/good-neighbour/image/upload/v1597314358/no-profile-pic_edm3bf.jpg",
-      });
-
-      console.log()
-
-      newUser.save().then(
-        (user) => {
+        newUser.save().then((user) => {
           res.json({ currentUser: user });
-        }
-      );
-    }).catch((bad) => {
-      console.log(bad.errors);
-      console.log("Invalid Forms")
-      res.status(400).send("Invalid Form");
-    });
+        });
+      })
+      .catch((e) => {
+        res.status(400).send("Invalid Form");
+      });
   } else {
-    res.status(417).send("Bad Password")
+    res.status(417).send("Bad Password");
   }
-}
-);
+});
 
 router.put("/", (req, res) => {
   User.findOne({ email: req.body.email })

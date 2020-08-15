@@ -13,7 +13,7 @@ const user = require("../models/user");
 router.use(bodyParser.json());
 
 router.get("/", (req, res) => {
-  Post.find({ completed: false })
+  Post.find({ completed: false, active: false })
     .populate("author")
     .exec((err, transaction) => {
       if (err) {
@@ -33,9 +33,10 @@ router.post("/", (req, res) => {
     items: req.body.post.items,
     location: req.body.post.location,
     completed: false,
+    active: false,
   })
     .then((post) => {
-      Post.find({ completed: false })
+      Post.find({ completed: false, active: false })
         .populate("author")
         .exec((err, transaction) => {
           if (err) {
@@ -56,7 +57,7 @@ router.put("/filter", (req, res) => {
   const reimbursement = req.body.reimbursement;
   const size = req.body.size;
 
-  Post.find({ completed: false })
+  Post.find({ completed: false, active: false })
     .populate("author")
     .exec((err, transaction) => {
       if (err) {
@@ -145,7 +146,7 @@ router.put("/:id", (req, res) => {
             post.items = req.body.post.items;
             post.reimbursement = req.body.post.reimbursement;
             post.save().then((p) => {
-              Post.find({ completed: false })
+              Post.find({ completed: false, active: false })
                 .populate("author")
                 .exec((err, transaction) => {
                   if (err) {
@@ -183,7 +184,7 @@ router.delete("/", (req, res) => {
           } else {
             if (user.admin || post.author.toString() === req.body.user) {
               Post.findByIdAndDelete(req.body.post).then((post) => {
-                Post.find({ completed: false })
+                Post.find({ completed: false, active: false })
                   .populate("author")
                   .exec((err, transaction) => {
                     if (err) {
@@ -210,21 +211,24 @@ router.put("/accept/:id", (req, res) => {
     if (post) {
       User.findById(req.body.user).then((user) => {
         if (user) {
-          user.active_post = post._id;
-          user.save().then((savedUser) => {
-            User.findById(savedUser._id)
-              .populate({
-                path: "active_post",
-                model: "Post",
-                populate: { path: "author", model: "User" },
-              })
-              .exec((err, transaction) => {
-                if (err) {
-                  res.sendStatus(500);
-                } else {
-                  res.json({ currentUser: transaction });
-                }
-              });
+          post.active = true;
+          post.save().then((post) => {
+            user.active_post = post._id;
+            user.save().then((savedUser) => {
+              User.findById(savedUser._id)
+                .populate({
+                  path: "active_post",
+                  model: "Post",
+                  populate: { path: "author", model: "User" },
+                })
+                .exec((err, transaction) => {
+                  if (err) {
+                    res.sendStatus(500);
+                  } else {
+                    res.json({ currentUser: transaction });
+                  }
+                });
+            });
           });
         } else {
           res.sendStatus(404);
@@ -240,12 +244,13 @@ router.put("/complete/:id", (req, res) => {
   Post.findById(req.params.id).then((post) => {
     if (post) {
       post.completed = true;
+      post.active = false;
       post.save().then((savedPost) => {
         User.findById(req.body.user).then((user) => {
           if (user) {
             user.active_post = null;
             user.save().then((savedUser) => {
-              Post.find({ completed: false })
+              Post.find({ completed: false, active: false })
                 .populate("author")
                 .exec((err, transaction) => {
                   if (err) {
@@ -270,13 +275,12 @@ router.get("/users/:id", (req, res) => {
   const id = req.params.id;
 
   Post.find({ author: id })
-  .then((posts) => {
-    console.log(posts.length)
-    res.json(posts.length);
-  })
-  .catch((error) => {
-    res.sendStatus(404);
-  })
-})
+    .then((posts) => {
+      res.json(posts.length);
+    })
+    .catch((error) => {
+      res.sendStatus(404);
+    });
+});
 
 module.exports = router;
