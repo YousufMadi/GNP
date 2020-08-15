@@ -1,5 +1,3 @@
-import { getDistance, convertDistance } from "geolib";
-import { PAYLOAD_TYPES } from "./user";
 import { notifySuccess, notifyError } from "../Utils/notificationUtils";
 
 export const TL_PAYLOAD_TYPES = {
@@ -151,15 +149,18 @@ Arguments:
   - currentUserLocation: The current location of the user
 */
 
-export const filterPosts = (filter, currentUserId, currentUserLocation) => {
+export const filterPosts = (filter, currentUserLocation) => {
   return async (dispatch) => {
-    const request = new Request(`/posts/${currentUserId}`, {
-      method: "get",
+    const request = new Request(`/posts/filter`, {
+      method: "put",
       body: JSON.stringify({
-        distance: filter.distance,
-        size: filter.size,
-        reimbursement: filter.reimbursement,
-        currLocation: currentUserLocation
+        distance: filter.filterDistance,
+        size: filter.filterSize,
+        reimbursement: filter.filterPayment,
+        currLocation: {
+          latitude: currentUserLocation.latitude,
+          longitude: currentUserLocation.longitude,
+        },
       }),
       headers: {
         Accept: "application/json, text/plain, */*",
@@ -171,8 +172,7 @@ export const filterPosts = (filter, currentUserId, currentUserLocation) => {
       const data = await response.json();
       dispatch({ type: TL_PAYLOAD_TYPES.FILTER_POSTS, payload: data });
     }
-
-  }
+  };
 };
 
 /*

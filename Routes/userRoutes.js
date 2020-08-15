@@ -5,7 +5,7 @@ const router = express.Router();
 const { mongoose } = require("../db/mongoose");
 const { User } = require("../models/user");
 const { Post } = require("../models/post");
-
+const { registrationSchema } = require("../Auth.js");
 const multipart = require("connect-multiparty");
 const multipartMiddleware = multipart();
 
@@ -13,7 +13,6 @@ const session = require("express-session");
 
 const bodyParser = require("body-parser");
 router.use(bodyParser.json());
-
 
 router.use(
   session({
@@ -67,15 +66,15 @@ router.get("/check-session", (req, res) => {
           res.status(404).send("Resource not found");
         } else {
           user
-          .populate({
-            path: "active_post",
-            model: "Post",
-            populate: { path: "author", model: "User" },
-          })
-          .execPopulate()
-          .then((populatedUser) => {
-            res.json({ currentUser: populatedUser });
-          });
+            .populate({
+              path: "active_post",
+              model: "Post",
+              populate: { path: "author", model: "User" },
+            })
+            .execPopulate()
+            .then((populatedUser) => {
+              res.json({ currentUser: populatedUser });
+            });
         }
       })
       .catch((error) => {
@@ -120,32 +119,28 @@ router.post("/", (req, res) => {
     password: req.body.password,
   });
 
-  if (req.body.password === req.body.confirmPassword) {
-    registrationSchema.validate(yupRegister).then((good) => {
-      console.log(good);
+  if (req.body.password === req.body.password_confirmation) {
+    registrationSchema
+      .validate(yupRegister)
+      .then((good) => {
+        const newUser = new User({
+          first_name: req.body.first_name,
+          last_name: req.body.last_name,
+          email: req.body.email,
+          password: req.body.password,
+          profile_picture:
+            "https://res.cloudinary.com/good-neighbour/image/upload/v1597314358/no-profile-pic_edm3bf.jpg",
+        });
 
-      const newUser = new User({
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        email: req.body.email,
-        password: req.body.password,
-        profile_picture: "https://res.cloudinary.com/good-neighbour/image/upload/v1597314358/no-profile-pic_edm3bf.jpg",
-      });
-
-      newUser.save().then(
-        (user) => {
+        newUser.save().then((user) => {
           res.json({ currentUser: user });
-        },
-        (e) => {
-          res.sendStatus(400);
-        }
-      );
-    }).catch((bad) => {
-      console.log(bad.errors);
-      res.status(400).send("Invalid Form");
-    });
+        });
+      })
+      .catch((e) => {
+        res.status(400).send("Invalid Form");
+      });
   } else {
-    res.status(400).send("Passwords do not match")
+    res.status(417).send("Bad Password");
   }
 });
 

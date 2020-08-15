@@ -11,8 +11,8 @@ const { Post } = require("./models/post");
 const { User } = require("./models/user");
 const { Image } = require("./models/image");
 
-app.use("/users", require('./Routes/userRoutes'))
-app.use("/posts", require('./Routes/postRoutes'))
+app.use("/users", require("./Routes/userRoutes"));
+app.use("/posts", require("./Routes/postRoutes"));
 
 // body-parser: middleware for parsing HTTP JSON body into a usable object
 const bodyParser = require("body-parser");
@@ -27,9 +27,6 @@ const multipartMiddleware = multipart();
 
 // yup validation
 const { registrationSchema } = require("./Auth");
-
-// get distance function
-const { getDistance, convertDistance } = require("geolib");
 
 // cloudinary: configure using credentials found on your Cloudinary Dashboard
 // sign up for a free account here: https://cloudinary.com/users/register/free
@@ -86,7 +83,6 @@ app.post("/image/:id", async (req, res) => {
 // Serve the build
 app.use(express.static(__dirname + "/client/build"));
 
-
 // All routes other than API routes will go to index.html
 app.get("*", (req, res) => {
   // check for page routes that we expect in the frontend to provide correct status code.
@@ -106,8 +102,6 @@ app.get("*", (req, res) => {
   // send index.html
   res.sendFile(__dirname + "/client/build/index.html");
 });
-
-
 
 /*************************************************/
 // Express server listening...

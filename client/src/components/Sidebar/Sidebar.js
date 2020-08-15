@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import "../../stylesheets/sidebar.css";
 
 import { logout } from "../../actions/user";
+import { filterPosts } from "../../actions/timeline";
 
 class Sidebar extends React.Component {
   /* Initializing this component's state with 
@@ -36,7 +37,7 @@ class Sidebar extends React.Component {
     const filterRequest = {
       ...this.state,
     };
-    this.props.changeFilterState(filterRequest);
+    this.props.filterPosts(filterRequest, this.props.currentUserLocation);
   };
 
   /* This functions is responsible for retrieving the rating, in terms of stars, associated with the author's account */
@@ -132,4 +133,4 @@ const mapStateToProps = (state) => {
     currentUser: state.auth.currentUser,
   };
 };
-export default connect(mapStateToProps, { logout })(Sidebar);
+export default connect(mapStateToProps, { logout, filterPosts })(Sidebar);
