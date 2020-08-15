@@ -302,7 +302,6 @@ router.get("/pending", (req, res) => {
       if (err) {
         res.sendStatus(500);
       } else {
-        console.log(transaction);
         res.json(transaction);
       }
     });

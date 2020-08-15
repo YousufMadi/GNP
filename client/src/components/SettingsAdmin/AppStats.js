@@ -3,7 +3,7 @@ import React from "react";
 import { getNumUsers } from "../../actions/user";
 import { getNumCompletedPosts, getNumPendingPosts } from "../../actions/timeline";
 
-class AppStats extends React.Component{
+class AppStats extends React.Component {
 
   state = {
     num_users: 0,
@@ -11,12 +11,12 @@ class AppStats extends React.Component{
     num_requests_pending: 0,
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.getAllUserCount();
     this.getPostInfo();
   }
 
-  async getAllUserCount(){
+  async getAllUserCount() {
     const num_users = await getNumUsers();
 
     this.setState({
@@ -24,10 +24,9 @@ class AppStats extends React.Component{
     })
   }
 
-  async getPostInfo(){
+  async getPostInfo() {
     const num_requests_completed = await getNumCompletedPosts();
     const num_requests_pending = await getNumPendingPosts();
-    console.log(num_requests_pending)
 
     this.setState({
       num_requests_completed,

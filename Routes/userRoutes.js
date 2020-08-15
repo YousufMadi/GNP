@@ -137,7 +137,6 @@ router.post("/", (req, res) => {
         });
       })
       .catch(function (err) {
-        console.log(err.errors)
         if (err.errors[0] === 'lastName is a required field') {
           res.sendStatus(418)
         } else if (err.errors[0] === 'firstName is a required field') {
