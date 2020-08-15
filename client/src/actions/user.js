@@ -13,6 +13,10 @@ export const PAYLOAD_TYPES = {
   COMPLETE_POST: "COMPLETE_POST",
 };
 
+
+/*
+  Function to read cookie
+*/
 export const readCookie = () => {
   return async (dispatch) => {
     const url = "/users/check-session";
@@ -272,7 +276,7 @@ export const promoteUser = async (email) => {
 Accept a request action creator
 
 Arguments:
-  - post: The id of the post to request
+  - post: The id of the post to accept
   - user: The current user's id
 
   Response is the updated current user with an active post

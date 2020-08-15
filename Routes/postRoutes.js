@@ -12,6 +12,14 @@ const bodyParser = require("body-parser");
 const user = require("../models/user");
 router.use(bodyParser.json());
 
+/*
+  GET route to get all the posts which have not been completed and are
+  not active.
+
+  ON SUCCESS:
+  Return all the pending and non-active posts.
+
+*/
 router.get("/", (req, res) => {
   Post.find({ completed: false, active: false })
     .populate("author")
@@ -24,6 +32,20 @@ router.get("/", (req, res) => {
     });
 });
 
+
+/*
+  POST request to create a new post.
+
+  BODY:
+  {
+    "author": <id of the user creating the post>,
+    "reimbursement": <reimburesement type> ("Cash", "E-transfer" or "Cheque"),
+    "description": <description of post>,
+    "items": [<Item Objects>],
+    "location": <Location object from Google API>
+  }
+
+*/
 router.post("/", (req, res) => {
   Post.create({
     author: req.body.user,
@@ -51,6 +73,21 @@ router.post("/", (req, res) => {
     });
 });
 
+/*
+  
+  PUT route to filter posts.
+
+  BODY:
+  {
+    "currLocation": <user's current location> (used by google maps API),
+    "distance": <filter by this distance>,
+    "reimbursement": <filter by this reimbursement type>,
+    "size": <filter by the size of the request>
+  }
+
+  ON SUCCESS:
+  Returns the filtered posts
+*/
 router.put("/filter", (req, res) => {
   const userLocation = req.body.currLocation;
   const distance = req.body.distance;
@@ -117,6 +154,9 @@ router.put("/filter", (req, res) => {
     });
 });
 
+/*
+  Helper function for route filtering
+*/
 const sizeEstimate = (post) => {
   let size = null;
   if (post.items.length <= 3) {
@@ -129,10 +169,20 @@ const sizeEstimate = (post) => {
   return size;
 };
 
-/* Route to edit a post
-   Returns the updated post
-
-   TODO: Everything
+/* 
+  PUT route to make edits to existing posts. 
+  
+  PARAMS: id -> id of the post that is being edited.
+  BODY:
+  {
+    "reimbursement": <Cash, E-transfer or Cheque>,
+    "description": <Description of the post>,
+    "items": <[Item objects]>,
+    "user": "The current users's id"
+  }
+  
+  ON SUCCESS:
+  Edits the given post
 */
 router.put("/:id", (req, res) => {
   User.findById(req.body.user)
@@ -167,10 +217,17 @@ router.put("/:id", (req, res) => {
     });
 });
 
-/* Route to delete a post
-   Returns the deleted post
+/* 
+  DELETE route to delete a post. 
+  BODY:
+  {
+   "post": <ID of the post to be deleted>,
+   "currentUserID": <ID of user deleting the post> 
+  }
 
-   TODO: Everything
+  ON SUCCESS:
+  Delete the request and return all incomplete and non-active
+  posts.
 */
 router.delete("/", (req, res) => {
   User.findById(req.body.user)
@@ -206,6 +263,17 @@ router.delete("/", (req, res) => {
     });
 });
 
+/*
+  PUT request to accept a user post. 
+
+  PARAMS: The id of the post to accept
+
+  BODY:
+  {
+    "user": <ID of the user accepting the post>
+  }
+*/
+
 router.put("/accept/:id", (req, res) => {
   Post.findById(req.params.id).then((post) => {
     if (post) {
@@ -240,6 +308,16 @@ router.put("/accept/:id", (req, res) => {
   });
 });
 
+/*
+  PUT request to complete a user post. 
+  
+  PARAMS: id -> id of the post being completed
+
+  BODY:
+  {
+    "user": <ID of the user completing the post>
+  }
+*/
 router.put("/complete/:id", (req, res) => {
   Post.findById(req.params.id).then((post) => {
     if (post) {
@@ -271,6 +349,14 @@ router.put("/complete/:id", (req, res) => {
   });
 });
 
+/*
+  GET the posts associated with the given user id. 
+
+  PARAMS: id -> get posts of this user's id
+
+  ON SUCCESS:
+  Return the posts of the given user
+*/
 router.get("/users/:id", (req, res) => {
   const id = req.params.id;
 
@@ -283,6 +369,12 @@ router.get("/users/:id", (req, res) => {
     });
 });
 
+/*
+  GET all completed posts. 
+
+  ON SUCCESS:
+  Return all the completed posts
+*/
 router.get("/completed", (req, res) => {
   Post.find({ completed: true })
     .populate("author")
@@ -295,6 +387,12 @@ router.get("/completed", (req, res) => {
     });
 });
 
+/*
+  GET all pending posts.
+  
+  ON SUCCESS:
+  Return all the pending posts
+*/
 router.get("/pending", (req, res) => {
   Post.find({ completed: false })
     .populate("author")
