@@ -175,31 +175,22 @@ router.patch("/:id", multipartMiddleware, (req, res) => {
   const id = req.params.id;
   if (mongoose.connection.readyState != 1) {
     res.status(500).send("Internal server error");
-    return;
+  } else {
+    User.findById(id)
+      .then((user) => {
+        for (let key in req.body) {
+          if (req.body[key] !== "") {
+            user[key] = req.body[key];
+          }
+        }
+        user.save().then((user) => {
+          res.json({ currentUser: user });
+        });
+      })
+      .catch((e) => {
+        res.status(400).send("Bad Request");
+      });
   }
-
-  fieldsToUpdate = {};
-  for (let key in req.body) {
-    if (req.body[key] !== "") {
-      fieldsToUpdate[key] = req.body[key];
-    }
-  }
-
-  User.findOneAndUpdate(
-    { _id: id },
-    { $set: fieldsToUpdate },
-    { new: true, useFindAndModify: false, runValidators: true }
-  )
-    .then((user) => {
-      if (!user) {
-        res.status(404).send("Resource not found");
-      } else {
-        res.json({ currentUser: user });
-      }
-    })
-    .catch((error) => {
-      res.status(400).send("Bad Request");
-    });
 });
 
 /* Route to delete a user
