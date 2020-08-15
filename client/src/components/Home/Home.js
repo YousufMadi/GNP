@@ -11,18 +11,21 @@ class Home extends React.Component {
         <Navbar />
         <div className="home-container">
           <div className="slide">
-            {/* <section className="hero"></section> */}
-            {/* <section className="mission">
-            <h3>Our Mission</h3>
-            <p>
-              Providing an easy and convenient way to meet the needs of the
-              elderly population and those affected by COVID-19
-            </p>
-          </section> */}
+            <section className="hero">
+              <h1>The Good Neighbour</h1>
+              <p>
+                “Because that’s what kindness is. It’s not doing something for
+                 someone else because they can’t, but because you can.”
+              </p>
+              <div className="hero-img-container">
+                <img className="hero-img"/>
+              </div>
+
+            </section>
 
             <section className="description">
               <div className="about">
-                <h2>What We Do?</h2>
+                <h2>Who We Are?</h2>
                 <p>
                   The Good Neighbour project is a community-based organization
                   that aims at providing to the needs of the elderly population
@@ -32,11 +35,15 @@ class Home extends React.Component {
                   back to the community?
               </p>
               </div>
-              <div className="who-we-are-img"></div>
+              <div className="description-img-container">
+                <img className="who-we-are-img"/>
+              </div>
             </section>
 
             <section className="description">
-              <div className="what-we-do-img"></div>
+              <div className="description-img-container">
+                <img className="what-we-do-img"/>
+              </div>
               <div className="about">
                 <h2>Get Involved</h2>
                 <p>
@@ -49,29 +56,6 @@ class Home extends React.Component {
               </p>
               </div>
             </section>
-
-            {/* <section className="counter">
-            <div>
-              <h3>Volunteers</h3>
-              <p>30</p>
-            </div>
-            <div>
-              <h3>People Helped</h3>
-              <p>55</p>
-            </div>
-          </section> */}
-
-            {/* <section className="contact">
-            <h2>Contact us</h2>
-            <p>
-              If you have any questions or concerns, feel free to contact us
-              directly at:
-            </p>
-            <p>
-              Email: good.neighbour@gmail.com<br></br>
-              Phone: 999-999-9999
-            </p>
-          </section> */}
           </div>
         </div>
       </>

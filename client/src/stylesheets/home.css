@@ -1,7 +1,7 @@
 /* HOME CONTAINER */
 
 .home-container{
-  background-color: white ;
+  background-color: #f5f5f5;
 }
 
 /* HERO */
@@ -9,51 +9,45 @@
 .hero{
   height: 35em;
   width: 100%;
-  background-image: url(../images/hero.jpg);
-  background-size: cover;
-}
-
-/* MISSION */
-
-.mission{
-  text-align: center;
-  padding: 1.5em 0;
-}
-
-.mission p{
-  width: 70%;
-  margin: auto;
-  padding: 0.5em 0 1em;
-  font-size: 2em;
-  border-bottom: 1px solid rgba(0,0,0,0.1);
-}
-
-/* STATS */
-
-.counter{
   display: flex;
-  text-align: center;
-  margin: 0em auto 2em;
-
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 8px 6px -6px black;
 }
 
-.counter div{
+.hero h1{
+  font-size: 6em;
+  margin: 0.5em auto 0;
+  flex: 1.2;
+}
+
+.hero p{
+  font-size: 1.5em;
+  font-style: italic;
+  text-align: center;
+  width: 70%;
   flex: 1;
 }
 
-.counter p{
-  padding: 0.5em 0 0;
-  font-size: 1.5em;
+.hero-img-container{
+  flex: 1;
+  width: 35%;
+  margin-bottom: -0.2em;
 }
 
+.hero-img{
+  content: url(../images/neighbours.svg);
+  height: 100%;
+  width: 100%;
+}
 
 /* DESCRIPTIONS */
 
 .description{
   display: flex;
-  height: 21em;
-  background-color: #f7f9fb;
-
+  margin-top: 6em;
+  height: 22em;
 }
 
 .about{
@@ -64,42 +58,24 @@
 }
 
 .about p{
+  font-size: 1.4em;
   margin: auto;
-  width: 70%;
+  width: 75%;
   padding: 1em 0 0;
 }
 
-.who-we-are-img{
+.description-img-container{
   flex: 1;
-  clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+.who-we-are-img{
+  content: url(../images/who-we-are.svg);
   height: 100%;
   width: 100%;
-  background-image: url(../images/who-we-are.jpg);
-  background-size: cover;
 }
 
 .what-we-do-img{
-  flex: 1;
-  clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
+  content: url(../images/what-we-do.svg);
   height: 100%;
   width: 100%;
-  background-image: url(../images/what-we-do.jpg);
-  background-size: cover; 
 }
-
-.contact{
-  text-align: center;
-  margin: 1.5em 0 0;
-}
-
-.contact h2{
-  text-transform: uppercase;
-  padding-bottom: 0.5em;
-}
-
-.contact p{
-  width: 60%;
-  padding: 0.4em 0 0;
-  margin: auto;
-}
-
