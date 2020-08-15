@@ -12,11 +12,11 @@
 /* Profile header */
 
 .profile-header {
-  display: inline-block;
+  display: block;
   text-align: center;
-  width: 30%;
-  margin: 1.5em;
-  font-size: xx-small;
+  width: 50%;
+  margin: 1.5em auto;
+  font-size: small;
 }
 
 .profile-header img {
@@ -41,9 +41,10 @@
 }
 /* Sidebar tabs */
 #sidebar-tabs {
-  display: inline-block;
-  width: 50%;
+  display: block;
+  width: 90%;
   vertical-align: top;
+  margin: auto;
   margin-top: 1em;
 }
 #sidebar-tabs a {
@@ -88,7 +89,7 @@
 }
 
 .dropdown-filters {
-  margin-top: 1em;
+  margin-top: 2em;
   display: block;
   width: 100%;
   color: #fff;

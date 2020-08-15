@@ -40,15 +40,6 @@ class Sidebar extends React.Component {
     this.props.filterPosts(filterRequest, this.props.currentUserLocation);
   };
 
-  /* This functions is responsible for retrieving the rating, in terms of stars, associated with the author's account */
-  renderRating() {
-    let renderStarsReturn = [];
-    for (let i = 0; i < this.props.currentUser.rating; i++) {
-      renderStarsReturn.push(<i key={i} className="fas fa-star"></i>);
-    }
-    return renderStarsReturn;
-  }
-
   /* Render Functions */
   renderProfile() {
     const currentUser = this.props.currentUser;
@@ -60,7 +51,6 @@ class Sidebar extends React.Component {
             <p>
               {currentUser.first_name} {currentUser.last_name}
             </p>
-            <div id="profile-rating">{this.renderRating()}</div>
           </div>
         </div>
         <div id="sidebar-tabs">

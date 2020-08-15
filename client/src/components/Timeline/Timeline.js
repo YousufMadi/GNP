@@ -126,7 +126,7 @@ class Timeline extends React.Component {
         )}
 
         <div className="current-page">Page {this.state.currentPage}</div>
-        {this.state.currentPage * this.state.postsPerPage >
+        {this.state.currentPage * this.state.postsPerPage >=
         this.props.posts.length ? (
           <div className="navigate-page disabled">
             Next Page

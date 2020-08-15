@@ -6,15 +6,6 @@ import { getSizeEstimate } from "../../actions/timeline";
 
 Modal.setAppElement("#root");
 class ConfirmationModal extends React.Component {
-  /* This functions is responsible for retrieving the rating, in terms of stars, associated with the author's account */
-  renderRating(author) {
-    let renderStarsReturn = [];
-    for (let i = 0; i < author.rating; i++) {
-      renderStarsReturn.push(<i key={i} className="fas fa-star"></i>);
-    }
-    return renderStarsReturn;
-  }
-
   /* 
 
   ------- Render function ----------
@@ -71,11 +62,6 @@ class ConfirmationModal extends React.Component {
               ></img>
               <div className="profile-info">
                 <p>{this.props.confirmation.selectedPost.author.first_name}</p>
-                <div id="profile-rating">
-                  {this.renderRating(
-                    this.props.confirmation.selectedPost.author
-                  )}
-                </div>
               </div>
             </div>
             <div className="confirmation-size">
