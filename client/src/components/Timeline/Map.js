@@ -34,7 +34,6 @@ class Map extends React.Component {
   }
 
   componentDidUpdate(prevState) {
-    console.log(prevState);
     if (
       this.state.activeRequest &&
       this.props.currentUserLocation &&

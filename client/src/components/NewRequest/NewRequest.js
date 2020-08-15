@@ -4,7 +4,7 @@ import AutoComplete from "react-google-autocomplete";
 
 import "../../stylesheets/newrequest.css";
 import ItemsList from "../ItemsList/ItemsList";
-import { notifySuccess, notifyInfo } from "../../Utils/notificationUtils";
+import { notifyInfo } from "../../Utils/notificationUtils";
 
 import { createPost } from "../../actions/timeline";
 

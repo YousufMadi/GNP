@@ -26,6 +26,11 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         posts: action.payload,
       };
+    case TL_PAYLOAD_TYPES.FILTER_POSTS:
+      return {
+        ...state,
+        posts: action.payload,
+      };
     default:
       return state;
   }

@@ -9,6 +9,7 @@ const moment = require("moment");
 const { getDistance, convertDistance } = require("geolib");
 
 const bodyParser = require("body-parser");
+const user = require("../models/user");
 router.use(bodyParser.json());
 
 router.get("/", (req, res) => {
@@ -49,9 +50,7 @@ router.post("/", (req, res) => {
     });
 });
 
-
-router.get("/:id", (req, res) => {
-  const currentUser = req.params._id;
+router.put("/filter", (req, res) => {
   const userLocation = req.body.currLocation;
   const distance = req.body.distance;
   const reimbursement = req.body.reimbursement;
@@ -63,45 +62,71 @@ router.get("/:id", (req, res) => {
       if (err) {
         res.sendStatus(500);
       } else {
-        const paymentFilter = transaction.filter((post) => post.reimbursement === reimbursement);
-        // console.log(paymentFilter);
-        const sizeFilter = paymentFilter.filter((post) => sizeEstimate(post) === size);
-        // console.log(sizeFilter);
-        // sizeFilter.forEach((post) => console.log(userLocation.location.lat));
-        const distFilter = sizeFilter.filter((post) => {
-          return (
-            convertDistance(
-              getDistance(
-                {
-                  latitude: userLocation.lat,
-                  longitude: userLocation.lng
-                },
-                {
-                  latitude: post.location.lat,
-                  longitude: post.location.lng
-                }
-              ), "km"
-            ) < Number(distance)
-          );
-        });
-        res.json(distFilter)
+        let filteredPosts = transaction;
+        // Filter by payment
+        if (reimbursement !== null && reimbursement !== "any") {
+          filteredPosts = filteredPosts.filter((post) => {
+            return reimbursement === post.reimbursement.toLowerCase();
+          });
+        }
+        // Filter by size
+        if (size !== null && size !== "any") {
+          filteredPosts = filteredPosts.filter((post) => {
+            return sizeEstimate(post) === size;
+          });
+        }
+        // Filter by distance
+        if (
+          distance !== null &&
+          distance !== "any" &&
+          userLocation &&
+          userLocation.latitude &&
+          userLocation.longitude
+        ) {
+          let filterValue = null;
+          if (distance === "1") {
+            filterValue = 1;
+          } else if (distance === "5") {
+            filterValue = 5;
+          } else if (distance === "20") {
+            filterValue = 20;
+          } else if (distance === "21") {
+            filterValue = 40075;
+          }
+          filteredPosts = filteredPosts.filter((post) => {
+            return (
+              convertDistance(
+                getDistance(
+                  {
+                    latitude: userLocation.latitude,
+                    longitude: userLocation.longitude,
+                  },
+                  {
+                    latitude: post.location.lat,
+                    longitude: post.location.lng,
+                  }
+                ),
+                "km"
+              ) < filterValue
+            );
+          });
+        }
+        res.json(filteredPosts);
       }
     });
-
 });
 
 const sizeEstimate = (post) => {
   let size = null;
   if (post.items.length <= 3) {
-    size = "Small";
+    size = "small";
   } else if (post.items.length <= 8) {
-    size = "Medium";
+    size = "medium";
   } else {
-    size = "Large";
+    size = "large";
   }
   return size;
 };
-
 
 /* Route to edit a post
    Returns the updated post
