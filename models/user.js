@@ -50,10 +50,6 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: null,
   },
-  rating: {
-    type: Number,
-    default: 5,
-  },
 });
 
 // Middleware to hash password on the create.
