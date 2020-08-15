@@ -15,7 +15,7 @@ const default_state = {
   last_name: "",
   email: "",
   password: "",
-  // password_confirmation: "",
+  password_confirmation: "",
 };
 
 class Signup extends React.Component {
