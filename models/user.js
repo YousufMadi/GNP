@@ -2,15 +2,6 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 
-// // create an image schema
-// const imageSchema = mongoose.Schema({
-//   image_url: {
-//     type: String,
-//     required: true
-//   },
-//   created_at: String
-// });
-
 const UserSchema = new mongoose.Schema({
   email: {
     type: String,

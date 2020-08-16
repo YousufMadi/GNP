@@ -13,6 +13,7 @@ const session = require("express-session");
 
 const bodyParser = require("body-parser");
 router.use(bodyParser.json());
+router.use(express.urlencoded({limit: '1mb'}));
 
 const cloudinary = require("cloudinary").v2;
 cloudinary.config({
