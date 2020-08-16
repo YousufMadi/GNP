@@ -46,7 +46,6 @@ class ViewUsers extends React.Component {
             {user.first_name} {user.last_name}
           </td>
           <td>{user.email}</td>
-          {/* <td>{user.rating}</td> */}
           <td>
             <button className="remove-user">
               <i
@@ -75,9 +74,6 @@ class ViewUsers extends React.Component {
               <th className="email-col" scope="col">
                 Email
               </th>
-              {/* <th className="rating-col" scope="col">
-                Rating
-              </th> */}
               <th className="remove-col" scope="col">
                 Delete User
               </th>
