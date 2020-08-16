@@ -92,6 +92,7 @@ class Timeline extends React.Component {
      This function will require database calls in later phases which will fix our current deleting issue. */
   handleAcceptPost = (post) => {
     this.handleCloseModal();
+    this.setState({ currentPage: 1 });
     this.props.acceptPost(post._id, this.props.currentUser._id);
   };
 
@@ -121,7 +122,7 @@ class Timeline extends React.Component {
             onClick={() => this.handlePageClick(-1)}
           >
             <i className="fas fa-angle-double-left"></i>
-            Previos Page
+            Previous Page
           </div>
         )}
 
