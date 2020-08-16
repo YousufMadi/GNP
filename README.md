@@ -69,6 +69,6 @@ Users can also filter requests using the sidebar by:
 We implemented quite a couple of new features while sticking to the original design.
 
 1. __Google Maps__: One of the coolest features implemented is Maps which is visible in the timeline. On this dynamic map exists all the requests in a convenient view, making it easier for the volunteer to select a request to complete. Once a volunteer accepts a request to complete, the active view appears which only contains the request information about the accepted request. The Map updates to provide the location to where items need to be delivered, making it very convenient for the volunteer.
-2. __Image Uploads__: Using cloudinary, we were able to allow for image uploads. When a user signs up, they are provided with a default profile image which routes to a link to cloudinary. A user can update their profile image from the settings page.
+2. __Image Uploads__: Using cloudinary, we were able to allow for image uploads. When a user signs up, they are provided with a default profile image which routes to a link to cloudinary. A user can update their profile image from the settings page. Please note that only small image uploads work.
 
 URL: https://powerful-ridge-92861.herokuapp.com/
